@@ -1,0 +1,3829 @@
+{
+   "ARR-01 wyswietlTablice" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wyswietlTablice",
+         " * opis funkcji: wyświetla wszystkie elementy tablicy w postaci \"<indeks>: <wartość>\"",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wyswietlTablice(const int tab[], int n)",
+         "{",
+         "    for (int i = 0; i < n; i++)",
+         "        cout << i << \": \" << tab[i] << endl;",
+         "}"
+      ],
+      "description" : "[ARR-01] display every element as \"index: value\" (exam format)",
+      "prefix" : [
+         "arr01",
+         "wyswietlTablice"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-02 wyswietlWLinii" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wyswietlWLinii",
+         " * opis funkcji: wyświetla elementy tablicy w jednym wierszu, oddzielone spacjami",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wyswietlWLinii(const int tab[], int n)",
+         "{",
+         "    for (int i = 0; i < n; i++)",
+         "        cout << tab[i] << \" \";",
+         "    cout << endl;",
+         "}"
+      ],
+      "description" : "[ARR-02] display the array in one line, separated by spaces",
+      "prefix" : [
+         "arr02",
+         "wyswietlWLinii"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-03 suma" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: suma",
+         " * opis funkcji: oblicza sumę elementów tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: int - suma elementów",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int suma(const int tab[], int n)",
+         "{",
+         "    int s = 0;",
+         "    for (int i = 0; i < n; i++)",
+         "        s += tab[i];",
+         "    return s;",
+         "}"
+      ],
+      "description" : "[ARR-03] sum of all elements",
+      "prefix" : [
+         "arr03",
+         "suma"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-04 srednia" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: srednia",
+         " * opis funkcji: oblicza średnią arytmetyczną elementów tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: double - średnia elementów (0 dla pustej tablicy)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "double srednia(const int tab[], int n)",
+         "{",
+         "    if (n == 0) return 0;",
+         "    int s = 0;",
+         "    for (int i = 0; i < n; i++)",
+         "        s += tab[i];",
+         "    return (double)s / n;",
+         "}"
+      ],
+      "description" : "[ARR-04] average (double - no integer division)",
+      "prefix" : [
+         "arr04",
+         "srednia"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-05 minimum" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: minimum",
+         " * opis funkcji: wyszukuje najmniejszą wartość w tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy (co najmniej 1)",
+         " * zwracany typ i opis: int - najmniejsza wartość",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int minimum(const int tab[], int n)",
+         "{",
+         "    int min = tab[0];",
+         "    for (int i = 1; i < n; i++)",
+         "        if (tab[i] < min)",
+         "            min = tab[i];",
+         "    return min;",
+         "}"
+      ],
+      "description" : "[ARR-05] smallest element (minimum)",
+      "prefix" : [
+         "arr05",
+         "minimum"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-06 maksimum" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: maksimum",
+         " * opis funkcji: wyszukuje największą wartość w tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy (co najmniej 1)",
+         " * zwracany typ i opis: int - największa wartość",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int maksimum(const int tab[], int n)",
+         "{",
+         "    int max = tab[0];",
+         "    for (int i = 1; i < n; i++)",
+         "        if (tab[i] > max)",
+         "            max = tab[i];",
+         "    return max;",
+         "}"
+      ],
+      "description" : "[ARR-06] largest element (maximum)",
+      "prefix" : [
+         "arr06",
+         "maksimum"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-07 znajdzEkstrema" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: znajdzEkstrema",
+         " * opis funkcji: wyszukuje najmniejszą i największą wartość w tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy (co najmniej 1)",
+         " *            min - (wyjście) najmniejsza wartość",
+         " *            max - (wyjście) największa wartość",
+         " * zwracany typ i opis: brak (wyniki przez parametry referencyjne min i max)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void znajdzEkstrema(const int tab[], int n, int &min, int &max)",
+         "{",
+         "    min = max = tab[0];",
+         "    for (int i = 1; i < n; i++)",
+         "    {",
+         "        if (tab[i] < min) min = tab[i];",
+         "        if (tab[i] > max) max = tab[i];",
+         "    }",
+         "}"
+      ],
+      "description" : "[ARR-07] min AND max in one pass, \"returned\" through & parameters (\"wartosci ekstremalne\")",
+      "prefix" : [
+         "arr07",
+         "znajdzEkstrema"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-08 indeksMinimum" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: indeksMinimum",
+         " * opis funkcji: wyszukuje indeks najmniejszego elementu tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy (co najmniej 1)",
+         " * zwracany typ i opis: int - indeks najmniejszego elementu (pierwszego, jeśli jest ich kilka)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int indeksMinimum(const int tab[], int n)",
+         "{",
+         "    int indeks = 0;",
+         "    for (int i = 1; i < n; i++)",
+         "        if (tab[i] < tab[indeks])",
+         "            indeks = i;",
+         "    return indeks;",
+         "}"
+      ],
+      "description" : "[ARR-08] INDEX of the smallest element",
+      "prefix" : [
+         "arr08",
+         "indeksMinimum"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-09 indeksMaksimum" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: indeksMaksimum",
+         " * opis funkcji: wyszukuje indeks największego elementu tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy (co najmniej 1)",
+         " * zwracany typ i opis: int - indeks największego elementu (pierwszego, jeśli jest ich kilka)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int indeksMaksimum(const int tab[], int n)",
+         "{",
+         "    int indeks = 0;",
+         "    for (int i = 1; i < n; i++)",
+         "        if (tab[i] > tab[indeks])",
+         "            indeks = i;",
+         "    return indeks;",
+         "}"
+      ],
+      "description" : "[ARR-09] INDEX of the largest element",
+      "prefix" : [
+         "arr09",
+         "indeksMaksimum"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-10 iloczyn" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: iloczyn",
+         " * opis funkcji: oblicza iloczyn wszystkich elementów tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: long long - iloczyn elementów",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "long long iloczyn(const int tab[], int n)",
+         "{",
+         "    long long wynik = 1;",
+         "    for (int i = 0; i < n; i++)",
+         "        wynik *= tab[i];",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[ARR-10] product of all elements (long long - big results)",
+      "prefix" : [
+         "arr10",
+         "iloczyn"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-11 wyswietlPodzielne" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wyswietlPodzielne",
+         " * opis funkcji: wyświetla wartości tablicy podzielne przez podany dzielnik i zlicza je",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " *            dzielnik - liczba, przez którą sprawdzana jest podzielność",
+         " * zwracany typ i opis: int - liczba wartości podzielnych przez dzielnik",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int wyswietlPodzielne(const int tab[], int n, int dzielnik)",
+         "{",
+         "    int ile = 0;",
+         "    for (int i = 0; i < n; i++)",
+         "    {",
+         "        if (tab[i] % dzielnik == 0)",
+         "        {",
+         "            cout << tab[i] << \" \";",
+         "            ile++;",
+         "        }",
+         "    }",
+         "    cout << endl;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[ARR-11] display values divisible by k AND return how many there are (exam wording)",
+      "prefix" : [
+         "arr11",
+         "wyswietlPodzielne"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-12 zliczParzyste" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczParzyste",
+         " * opis funkcji: zlicza parzyste elementy tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: int - liczba elementów parzystych",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int zliczParzyste(const int tab[], int n)",
+         "{",
+         "    int ile = 0;",
+         "    for (int i = 0; i < n; i++)",
+         "        if (tab[i] % 2 == 0)        // odd: != 0, bigger than x: tab[i] > x, ...",
+         "            ile++;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[ARR-12] count elements meeting a condition (here: even) - change the if for other conditions",
+      "prefix" : [
+         "arr12",
+         "zliczParzyste"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-13 wyszukajPierwszy" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wyszukajPierwszy",
+         " * opis funkcji: wyszukuje pierwsze wystąpienie wartości w tablicy (wyszukiwanie liniowe)",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " *            szukana - szukana wartość",
+         " * zwracany typ i opis: int - indeks znalezionego elementu lub -1, gdy go nie ma",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int wyszukajPierwszy(const int tab[], int n, int szukana)",
+         "{",
+         "    for (int i = 0; i < n; i++)",
+         "        if (tab[i] == szukana)",
+         "            return i;",
+         "    return -1;",
+         "}"
+      ],
+      "description" : "[ARR-13] linear search: index of the FIRST occurrence or -1",
+      "prefix" : [
+         "arr13",
+         "wyszukajPierwszy"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-14 wyszukajWszystkie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wyszukajWszystkie",
+         " * opis funkcji: wyszukuje wszystkie wystąpienia wartości w tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " *            szukana - szukana wartość",
+         " * zwracany typ i opis: vector<int> - indeksy znalezionych elementów lub {-1}, gdy brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "vector<int> wyszukajWszystkie(const int tab[], int n, int szukana)",
+         "{",
+         "    vector<int> indeksy;",
+         "    for (int i = 0; i < n; i++)",
+         "        if (tab[i] == szukana)",
+         "            indeksy.push_back(i);",
+         "    if (indeksy.empty())",
+         "        indeksy.push_back(-1);",
+         "    return indeksy;",
+         "}"
+      ],
+      "description" : "[ARR-14] ALL occurrences: vector of indexes, or {-1} when not found (exam: \"zwraca indeksy lub -1\")",
+      "prefix" : [
+         "arr14",
+         "wyszukajWszystkie"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-15 zliczWystapienia" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczWystapienia",
+         " * opis funkcji: zlicza, ile razy podana wartość występuje w tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " *            wartosc - zliczana wartość",
+         " * zwracany typ i opis: int - liczba wystąpień",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int zliczWystapienia(const int tab[], int n, int wartosc)",
+         "{",
+         "    int ile = 0;",
+         "    for (int i = 0; i < n; i++)",
+         "        if (tab[i] == wartosc)",
+         "            ile++;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[ARR-15] how many times a value occurs",
+      "prefix" : [
+         "arr15",
+         "zliczWystapienia"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-16 wyszukajZWartownikiem" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wyszukajZWartownikiem",
+         " * opis funkcji: wyszukuje wartość metodą z wartownikiem - szukana wartość jest wstawiana",
+         " *               za ostatni element, dzięki czemu pętla nie sprawdza końca tablicy",
+         " * parametry: tab - tablica o rozmiarze co najmniej n + 1",
+         " *            n - liczba elementów z danymi",
+         " *            szukana - szukana wartość",
+         " * zwracany typ i opis: int - indeks znalezionego elementu lub -1, gdy go nie ma",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int wyszukajZWartownikiem(int tab[], int n, int szukana)",
+         "{",
+         "    tab[n] = szukana;            // the sentinel",
+         "    int i = 0;",
+         "    while (tab[i] != szukana)",
+         "        i++;",
+         "    return (i < n) ? i : -1;     // stopped on the sentinel -> not found",
+         "}"
+      ],
+      "description" : "[ARR-16] SENTINEL search (wartownik): array needs ONE free slot after the data (size n + 1)",
+      "prefix" : [
+         "arr16",
+         "wyszukajZWartownikiem"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-17 wyszukajBinarnie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wyszukajBinarnie",
+         " * opis funkcji: wyszukuje wartość w posortowanej rosnąco tablicy metodą połowienia przedziału",
+         " * parametry: tab - tablica posortowana rosnąco",
+         " *            n - liczba elementów tablicy",
+         " *            szukana - szukana wartość",
+         " * zwracany typ i opis: int - indeks znalezionego elementu lub -1, gdy go nie ma",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int wyszukajBinarnie(const int tab[], int n, int szukana)",
+         "{",
+         "    int lewy = 0, prawy = n - 1;",
+         "    while (lewy <= prawy)",
+         "    {",
+         "        int srodek = (lewy + prawy) / 2;",
+         "        if (tab[srodek] == szukana) return srodek;",
+         "        if (tab[srodek] < szukana) lewy = srodek + 1;",
+         "        else prawy = srodek - 1;",
+         "    }",
+         "    return -1;",
+         "}"
+      ],
+      "description" : "[ARR-17] BINARY search - the array MUST be sorted ascending",
+      "prefix" : [
+         "arr17",
+         "wyszukajBinarnie"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-18 odwrocTablice" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: odwrocTablice",
+         " * opis funkcji: odwraca kolejność elementów tablicy",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void odwrocTablice(int tab[], int n)",
+         "{",
+         "    for (int i = 0; i < n / 2; i++)",
+         "        swap(tab[i], tab[n - 1 - i]);",
+         "}"
+      ],
+      "description" : "[ARR-18] reverse the array in place",
+      "prefix" : [
+         "arr18",
+         "odwrocTablice"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-19 zliczKazdaWartosc" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczKazdaWartosc",
+         " * opis funkcji: zlicza wystąpienia każdej wartości z przedziału min..max i je wyświetla",
+         " * parametry: tab - tablica liczb całkowitych z przedziału min..max",
+         " *            n - liczba elementów tablicy",
+         " *            min - najmniejsza możliwa wartość",
+         " *            max - największa możliwa wartość",
+         " * zwracany typ i opis: vector<int> - licznik[w - min] = liczba wystąpień wartości w",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "vector<int> zliczKazdaWartosc(const int tab[], int n, int min, int max)",
+         "{",
+         "    vector<int> licznik(max - min + 1, 0);",
+         "    for (int i = 0; i < n; i++)",
+         "        licznik[tab[i] - min]++;",
+         "    for (int w = min; w <= max; w++)",
+         "        cout << w << \": \" << licznik[w - min] << endl;",
+         "    return licznik;",
+         "}"
+      ],
+      "description" : "[ARR-19] histogram: how many times each value min..max occurs (e.g. dice faces 1..6)",
+      "prefix" : [
+         "arr19",
+         "zliczKazdaWartosc"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-20 czyPosortowana" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyPosortowana",
+         " * opis funkcji: sprawdza, czy elementy tablicy są uporządkowane niemalejąco",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: bool - true, gdy tablica jest posortowana rosnąco",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyPosortowana(const int tab[], int n)",
+         "{",
+         "    for (int i = 1; i < n; i++)",
+         "        if (tab[i - 1] > tab[i])",
+         "            return false;",
+         "    return true;",
+         "}"
+      ],
+      "description" : "[ARR-20] is the array sorted ascending?",
+      "prefix" : [
+         "arr20",
+         "czyPosortowana"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-21 usunElement" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: usunElement",
+         " * opis funkcji: usuwa element o podanym indeksie, przesuwając dalsze elementy w lewo",
+         " * parametry: tab - tablica liczb całkowitych",
+         " *            n - (wejście/wyjście) liczba elementów, zmniejszana o 1",
+         " *            indeks - indeks usuwanego elementu",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void usunElement(int tab[], int &n, int indeks)",
+         "{",
+         "    if (indeks < 0 || indeks >= n) return;",
+         "    for (int i = indeks; i < n - 1; i++)",
+         "        tab[i] = tab[i + 1];",
+         "    n--;",
+         "}"
+      ],
+      "description" : "[ARR-21] remove the element at an index (shift left, size decreases)",
+      "prefix" : [
+         "arr21",
+         "usunElement"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-22 utworzTabliceLosowa" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: utworzTabliceLosowa",
+         " * opis funkcji: tworzy tablicę dynamiczną o rozmiarze n i wypełnia ją losowo",
+         " *               (wywołujący musi zwolnić pamięć: delete[] tab;)",
+         " * parametry: n - liczba elementów",
+         " *            min - najmniejsza losowana wartość",
+         " *            max - największa losowana wartość",
+         " * zwracany typ i opis: int* - wskaźnik na utworzoną tablicę",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int *utworzTabliceLosowa(int n, int min, int max)",
+         "{",
+         "    int *tab = new int[n];",
+         "    for (int i = 0; i < n; i++)",
+         "        tab[i] = rand() % (max - min + 1) + min;",
+         "    return tab;",
+         "}"
+      ],
+      "description" : "[ARR-22] dynamic array: create with new[] and fill randomly (size given at runtime) - remember delete[]",
+      "prefix" : [
+         "arr22",
+         "utworzTabliceLosowa"
+      ],
+      "scope" : "cpp"
+   },
+   "ARR-23 wypelnijIWyswietl2D" : {
+      "body" : [
+         "const int KOLUMNY = 4;     // number of columns must be a constant for int tab[][KOLUMNY]",
+         "",
+         "/********************************************************",
+         " * nazwa funkcji: wypelnijIWyswietl2D",
+         " * opis funkcji: wypełnia tablicę dwuwymiarową liczbami losowymi 0..9, wyświetla ją",
+         " *               wierszami i podaje sumę każdego wiersza",
+         " * parametry: tab - tablica dwuwymiarowa o KOLUMNY kolumnach",
+         " *            wiersze - liczba wierszy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wypelnijIWyswietl2D(int tab[][KOLUMNY], int wiersze)",
+         "{",
+         "    for (int w = 0; w < wiersze; w++)",
+         "    {",
+         "        int sumaWiersza = 0;",
+         "        for (int k = 0; k < KOLUMNY; k++)",
+         "        {",
+         "            tab[w][k] = rand() % 10;",
+         "            sumaWiersza += tab[w][k];",
+         "            cout << tab[w][k] << \"\\\\t\";",
+         "        }",
+         "        cout << \"| suma: \" << sumaWiersza << endl;",
+         "    }",
+         "}"
+      ],
+      "description" : "[ARR-23] 2D array: fill randomly, display as a grid, row sums (fixed number of columns)",
+      "prefix" : [
+         "arr23",
+         "wypelnijIWyswietl2D"
+      ],
+      "scope" : "cpp"
+   },
+   "CLS-01 Osoba" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: Osoba",
+         " * opis klasy: przechowuje dane osoby (imię i wiek) z kontrolą poprawności wieku",
+         " * pola: imie - imię osoby",
+         " *       wiek - wiek osoby w latach (0..130)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class Osoba",
+         "{",
+         "private:",
+         "    string imie;",
+         "    int wiek;",
+         "",
+         "public:",
+         "    Osoba() : imie(\"brak\"), wiek(0) {}                       // default constructor",
+         "    Osoba(string imie, int wiek) : imie(imie), wiek(0)       // parameter constructor",
+         "    {",
+         "        setWiek(wiek);                                       // reuse the validation",
+         "    }",
+         "",
+         "    string getImie() const { return imie; }",
+         "    int getWiek() const { return wiek; }",
+         "",
+         "    void setImie(const string &noweImie) { imie = noweImie; }",
+         "",
+         "    /********************************************************",
+         "     * nazwa funkcji: setWiek",
+         "     * opis funkcji: ustawia wiek, jeśli mieści się w zakresie 0..130",
+         "     * parametry: nowyWiek - nowa wartość wieku",
+         "     * zwracany typ i opis: bool - true, gdy wartość była poprawna i została ustawiona",
+         "     * autor: <numer zdającego>",
+         "     ********************************************************/",
+         "    bool setWiek(int nowyWiek)",
+         "    {",
+         "        if (nowyWiek < 0 || nowyWiek > 130)",
+         "            return false;",
+         "        wiek = nowyWiek;",
+         "        return true;",
+         "    }",
+         "",
+         "    /********************************************************",
+         "     * nazwa funkcji: wyswietl",
+         "     * opis funkcji: wyświetla dane osoby",
+         "     * parametry: brak",
+         "     * zwracany typ i opis: brak",
+         "     * autor: <numer zdającego>",
+         "     ********************************************************/",
+         "    void wyswietl() const",
+         "    {",
+         "        cout << \"Imie: \" << imie << \", wiek: \" << wiek << endl;",
+         "    }",
+         "};"
+      ],
+      "description" : "[CLS-01] basic class: private fields, default + parameter constructor, getters, setters with validation, display",
+      "prefix" : [
+         "cls01",
+         "Osoba",
+         "setWiek",
+         "wyswietl"
+      ],
+      "scope" : "cpp"
+   },
+   "CLS-02 Notatka" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: Notatka",
+         " * opis klasy: notatka z automatycznie nadawanym numerem; klasa zlicza utworzone obiekty",
+         " * pola: licznik - (statyczne) liczba utworzonych notatek, wspólna dla wszystkich obiektów",
+         " *       id - numer notatki nadawany w konstruktorze",
+         " *       tytul - tytuł notatki",
+         " *       tresc - treść notatki",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class Notatka",
+         "{",
+         "private:",
+         "    static int licznik;          // ONE shared value for the whole class",
+         "    int id;",
+         "    string tytul;",
+         "    string tresc;",
+         "",
+         "public:",
+         "    Notatka(string tytul, string tresc) : tytul(tytul), tresc(tresc)",
+         "    {",
+         "        licznik++;",
+         "        id = licznik;            // 1, 2, 3, ...",
+         "    }",
+         "",
+         "    static int getLicznik() { return licznik; }   // call: Notatka::getLicznik()",
+         "    int getId() const { return id; }",
+         "",
+         "    /********************************************************",
+         "     * nazwa funkcji: wyswietl",
+         "     * opis funkcji: wyświetla numer, tytuł i treść notatki",
+         "     * parametry: brak",
+         "     * zwracany typ i opis: brak",
+         "     * autor: <numer zdającego>",
+         "     ********************************************************/",
+         "    void wyswietl() const",
+         "    {",
+         "        cout << \"[\" << id << \"] \" << tytul << \": \" << tresc << endl;",
+         "    }",
+         "};",
+         "int Notatka::licznik = 0;        // static field definition - OUTSIDE the class, exactly once"
+      ],
+      "description" : "[CLS-02] static counter of created objects + automatic id (id = 1, 2, 3 ...)",
+      "prefix" : [
+         "cls02",
+         "Notatka",
+         "wyswietl"
+      ],
+      "scope" : "cpp"
+   },
+   "CLS-03 Tablica" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: Tablica",
+         " * opis klasy: przechowuje tablicę liczb całkowitych wypełnioną losowo i wykonuje na niej operacje",
+         " * pola: tab - wskaźnik na dynamiczną tablicę liczb (dostępny tylko w tej klasie)",
+         " *       rozmiar - faktyczna liczba elementów tablicy",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class Tablica",
+         "{",
+         "private:                         // \"dostępne tylko w tej klasie, niedostępne dla klas potomnych\"",
+         "    int *tab;",
+         "    int rozmiar;",
+         "",
+         "public:",
+         "    /********************************************************",
+         "     * nazwa funkcji: Tablica (konstruktor)",
+         "     * opis funkcji: tworzy tablicę o podanym rozmiarze i wypełnia ją liczbami",
+         "     *               pseudolosowymi z zakresu 1..6",
+         "     * parametry: n - rozmiar tablicy",
+         "     * zwracany typ i opis: brak",
+         "     * autor: <numer zdającego>",
+         "     ********************************************************/",
+         "    Tablica(int n) : tab(new int[n]), rozmiar(n)",
+         "    {",
+         "        for (int i = 0; i < rozmiar; i++)",
+         "            tab[i] = rand() % 6 + 1;",
+         "    }",
+         "",
+         "    ~Tablica()                   // destructor frees the memory from new[]",
+         "    {",
+         "        delete[] tab;",
+         "    }",
+         "",
+         "    Tablica(const Tablica &) = delete;             // no copying (would double-delete)",
+         "    Tablica &operator=(const Tablica &) = delete;",
+         "",
+         "    /********************************************************",
+         "     * nazwa funkcji: wyswietl",
+         "     * opis funkcji: wyświetla elementy tablicy w postaci \"<indeks>: <wartość>\"",
+         "     * parametry: brak",
+         "     * zwracany typ i opis: brak",
+         "     * autor: <numer zdającego>",
+         "     ********************************************************/",
+         "    void wyswietl() const",
+         "    {",
+         "        for (int i = 0; i < rozmiar; i++)",
+         "            cout << i << \": \" << tab[i] << endl;",
+         "    }",
+         "",
+         "    /********************************************************",
+         "     * nazwa funkcji: suma",
+         "     * opis funkcji: oblicza sumę elementów tablicy",
+         "     * parametry: brak",
+         "     * zwracany typ i opis: int - suma elementów",
+         "     * autor: <numer zdającego>",
+         "     ********************************************************/",
+         "    int suma() const",
+         "    {",
+         "        int s = 0;",
+         "        for (int i = 0; i < rozmiar; i++)",
+         "            s += tab[i];",
+         "        return s;",
+         "    }",
+         "",
+         "    int getRozmiar() const { return rozmiar; }",
+         "    // + paste more methods from 03_arrays.cpp: drop the (tab, n) parameters, use tab and rozmiar",
+         "};"
+      ],
+      "description" : "[CLS-03] class with a DYNAMIC array: size in constructor, random fill 1..6, destructor; add methods from 03_arrays.cpp",
+      "prefix" : [
+         "cls03",
+         "Tablica",
+         "Tablica",
+         "wyswietl",
+         "suma"
+      ],
+      "scope" : "cpp"
+   },
+   "CLS-04 TablicaStala" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: TablicaStala",
+         " * opis klasy: przechowuje tablicę o stałym rozmiarze ROZMIAR wypełnianą losowo",
+         " * pola: ROZMIAR - (stała) liczba elementów tablicy",
+         " *       tab - tablica liczb całkowitych",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class TablicaStala",
+         "{",
+         "private:",
+         "    static const int ROZMIAR = 10;",
+         "    int tab[ROZMIAR];",
+         "",
+         "public:",
+         "    /********************************************************",
+         "     * nazwa funkcji: wypelnij",
+         "     * opis funkcji: wypełnia tablicę liczbami pseudolosowymi z przedziału min..max",
+         "     * parametry: min - najmniejsza losowana wartość",
+         "     *            max - największa losowana wartość",
+         "     * zwracany typ i opis: brak",
+         "     * autor: <numer zdającego>",
+         "     ********************************************************/",
+         "    void wypelnij(int min, int max)",
+         "    {",
+         "        for (int i = 0; i < ROZMIAR; i++)",
+         "            tab[i] = rand() % (max - min + 1) + min;",
+         "    }",
+         "",
+         "    void wyswietl() const",
+         "    {",
+         "        for (int i = 0; i < ROZMIAR; i++)",
+         "            cout << tab[i] << \" \";",
+         "        cout << endl;",
+         "    }",
+         "",
+         "    /********************************************************",
+         "     * nazwa funkcji: maksimum",
+         "     * opis funkcji: wyszukuje największą wartość w tablicy",
+         "     * parametry: brak",
+         "     * zwracany typ i opis: int - największa wartość",
+         "     * autor: <numer zdającego>",
+         "     ********************************************************/",
+         "    int maksimum() const",
+         "    {",
+         "        int max = tab[0];",
+         "        for (int i = 1; i < ROZMIAR; i++)",
+         "            if (tab[i] > max)",
+         "                max = tab[i];",
+         "        return max;",
+         "    }",
+         "};"
+      ],
+      "description" : "[CLS-04] class with a STATIC array of fixed size (const ROZMIAR) - fill, display, find max",
+      "prefix" : [
+         "cls04",
+         "TablicaStala",
+         "wypelnij",
+         "maksimum"
+      ],
+      "scope" : "cpp"
+   },
+   "CLS-05 Pojazd" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: Pojazd",
+         " * opis klasy: klasa bazowa opisująca pojazd",
+         " * pola: marka - marka pojazdu (dostępna w klasach pochodnych)",
+         " *       rok - rok produkcji (dostępny w klasach pochodnych)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class Pojazd",
+         "{",
+         "protected:                       // visible in derived classes, NOT in main",
+         "    string marka;",
+         "    int rok;",
+         "",
+         "public:",
+         "    Pojazd(string marka, int rok) : marka(marka), rok(rok) {}",
+         "    virtual ~Pojazd() {}         // always virtual destructor in a base class",
+         "",
+         "    virtual void wyswietl() const",
+         "    {",
+         "        cout << \"Pojazd: \" << marka << \", rok \" << rok << endl;",
+         "    }",
+         "};",
+         "",
+         "/********************************************************",
+         " * nazwa klasy: Samochod",
+         " * opis klasy: samochód - klasa pochodna klasy Pojazd, dodaje liczbę drzwi",
+         " * pola: drzwi - liczba drzwi",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class Samochod : public Pojazd",
+         "{",
+         "private:",
+         "    int drzwi;",
+         "",
+         "public:",
+         "    Samochod(string marka, int rok, int drzwi) : Pojazd(marka, rok), drzwi(drzwi) {}   // base ctor FIRST",
+         "",
+         "    void wyswietl() const override",
+         "    {",
+         "        cout << \"Samochod: \" << marka << \", rok \" << rok << \", drzwi: \" << drzwi << endl;",
+         "    }",
+         "};"
+      ],
+      "description" : "[CLS-05] inheritance: base class with protected fields, derived class calls the BASE constructor, virtual + override",
+      "prefix" : [
+         "cls05",
+         "Pojazd",
+         "Samochod"
+      ],
+      "scope" : "cpp"
+   },
+   "CLS-06 Figura" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: Figura",
+         " * opis klasy: abstrakcyjna klasa bazowa figur - nie można tworzyć jej obiektów",
+         " * pola: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class Figura",
+         "{",
+         "public:",
+         "    virtual double pole() const = 0;          // pure virtual -> every derived class MUST define it",
+         "    virtual string nazwa() const = 0;",
+         "    virtual ~Figura() {}",
+         "};",
+         "",
+         "/********************************************************",
+         " * nazwa klasy: Kolo",
+         " * opis klasy: koło - klasa pochodna klasy Figura",
+         " * pola: r - promień koła",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class Kolo : public Figura",
+         "{",
+         "private:",
+         "    double r;",
+         "",
+         "public:",
+         "    Kolo(double r) : r(r) {}",
+         "    double pole() const override { return 3.14159265358979 * r * r; }   // (M_PI is not standard C++)",
+         "    string nazwa() const override { return \"Kolo\"; }",
+         "};",
+         "",
+         "/********************************************************",
+         " * nazwa klasy: Prostokat",
+         " * opis klasy: prostokąt - klasa pochodna klasy Figura",
+         " * pola: a, b - długości boków",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class Prostokat : public Figura",
+         "{",
+         "private:",
+         "    double a, b;",
+         "",
+         "public:",
+         "    Prostokat(double a, double b) : a(a), b(b) {}",
+         "    double pole() const override { return a * b; }",
+         "    string nazwa() const override { return \"Prostokat\"; }",
+         "};",
+         "// usage:  Figura *figury[] = { new Kolo(1), new Prostokat(2, 3) };",
+         "//         for (Figura *f : figury) { cout << f->nazwa() << \" \" << f->pole() << endl; delete f; }"
+      ],
+      "description" : "[CLS-06] abstract base class (pure virtual = 0) + 2 derived classes + polymorphism through Figura*",
+      "prefix" : [
+         "cls06",
+         "Figura",
+         "Kolo",
+         "Prostokat"
+      ],
+      "scope" : "cpp"
+   },
+   "CLS-07 Punkt" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: Punkt",
+         " * opis klasy: punkt na płaszczyźnie z przeciążonymi operatorami +, == oraz <<",
+         " * pola: x, y - współrzędne punktu",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class Punkt",
+         "{",
+         "private:",
+         "    double x, y;",
+         "",
+         "public:",
+         "    Punkt(double x = 0, double y = 0) : x(x), y(y) {}",
+         "",
+         "    Punkt operator+(const Punkt &inny) const          // p1 + p2",
+         "    {",
+         "        return Punkt(x + inny.x, y + inny.y);",
+         "    }",
+         "",
+         "    bool operator==(const Punkt &inny) const          // p1 == p2",
+         "    {",
+         "        return x == inny.x && y == inny.y;",
+         "    }",
+         "",
+         "    friend ostream &operator<<(ostream &out, const Punkt &p)   // cout << p",
+         "    {",
+         "        out << \"(\" << p.x << \", \" << p.y << \")\";",
+         "        return out;",
+         "    }",
+         "};"
+      ],
+      "description" : "[CLS-07] operators for your class: + (member), == (member), << (friend, for cout)",
+      "prefix" : [
+         "cls07",
+         "Punkt"
+      ],
+      "scope" : "cpp"
+   },
+   "CLS-08 Uczen" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa struktury: Uczen",
+         " * opis struktury: dane ucznia - imię i średnia ocen",
+         " * pola: imie - imię ucznia",
+         " *       srednia - średnia ocen",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "struct Uczen",
+         "{",
+         "    string imie;",
+         "    double srednia;",
+         "};",
+         "",
+         "/********************************************************",
+         " * nazwa funkcji: wyswietlUczniow",
+         " * opis funkcji: wyświetla dane wszystkich uczniów z tablicy",
+         " * parametry: uczniowie - tablica uczniów",
+         " *            n - liczba uczniów",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wyswietlUczniow(const Uczen uczniowie[], int n)",
+         "{",
+         "    for (int i = 0; i < n; i++)",
+         "        cout << i + 1 << \". \" << uczniowie[i].imie << \" - \" << uczniowie[i].srednia << endl;",
+         "}",
+         "",
+         "/********************************************************",
+         " * nazwa funkcji: najlepszyUczen",
+         " * opis funkcji: wyszukuje ucznia z najwyższą średnią",
+         " * parametry: uczniowie - tablica uczniów",
+         " *            n - liczba uczniów (co najmniej 1)",
+         " * zwracany typ i opis: int - indeks ucznia z najwyższą średnią",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int najlepszyUczen(const Uczen uczniowie[], int n)",
+         "{",
+         "    int najlepszy = 0;",
+         "    for (int i = 1; i < n; i++)",
+         "        if (uczniowie[i].srednia > uczniowie[najlepszy].srednia)",
+         "            najlepszy = i;",
+         "    return najlepszy;",
+         "}"
+      ],
+      "description" : "[CLS-08] struct + array of structs: fill, display all, find the best by a field",
+      "prefix" : [
+         "cls08",
+         "Uczen",
+         "wyswietlUczniow",
+         "najlepszyUczen"
+      ],
+      "scope" : "cpp"
+   },
+   "EXC-01 BladDanych" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: BladDanych",
+         " * opis klasy: własny wyjątek zgłaszany przy niepoprawnych danych",
+         " * pola: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class BladDanych : public exception",
+         "{",
+         "public:",
+         "    const char *what() const noexcept override",
+         "    {",
+         "        return \"Niepoprawne dane\";",
+         "    }",
+         "};"
+      ],
+      "description" : "[EXC-01] own exception class derived from std::exception (fixed message via what())",
+      "prefix" : [
+         "exc01",
+         "BladDanych"
+      ],
+      "scope" : "cpp"
+   },
+   "EXC-02 BladZakresu" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: BladZakresu",
+         " * opis klasy: własny wyjątek z dowolnym komunikatem, zgłaszany przy wartości spoza zakresu",
+         " * pola: brak (komunikat przechowuje klasa bazowa runtime_error)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "class BladZakresu : public runtime_error",
+         "{",
+         "public:",
+         "    BladZakresu(const string &komunikat) : runtime_error(komunikat) {}",
+         "};"
+      ],
+      "description" : "[EXC-02] own exception class with ANY message (derived from runtime_error)",
+      "prefix" : [
+         "exc02",
+         "BladZakresu"
+      ],
+      "scope" : "cpp"
+   },
+   "EXC-03 podziel" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: podziel",
+         " * opis funkcji: dzieli dwie liczby; przy dzieleniu przez zero zgłasza wyjątek runtime_error",
+         " * parametry: a - dzielna",
+         " *            b - dzielnik",
+         " * zwracany typ i opis: double - iloraz a / b",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "double podziel(double a, double b)",
+         "{",
+         "    if (b == 0)",
+         "        throw runtime_error(\"Dzielenie przez zero!\");",
+         "    return a / b;",
+         "}"
+      ],
+      "description" : "[EXC-03] function that THROWS on bad input (division by zero)",
+      "prefix" : [
+         "exc03",
+         "podziel"
+      ],
+      "scope" : "cpp"
+   },
+   "EXC-04 bezpieczneStoi" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: bezpieczneStoi",
+         " * opis funkcji: zamienia napis na liczbę całkowitą, przechwytując wyjątki funkcji stoi",
+         " * parametry: tekst - napis do zamiany",
+         " *            wynik - (wyjście) liczba, gdy zamiana się udała",
+         " * zwracany typ i opis: bool - true, gdy napis był poprawną liczbą",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool bezpieczneStoi(const string &tekst, int &wynik)",
+         "{",
+         "    try",
+         "    {",
+         "        size_t uzyte;",
+         "        wynik = stoi(tekst, &uzyte);",
+         "        return uzyte == tekst.length();          // \"12abc\" -> false",
+         "    }",
+         "    catch (const invalid_argument &) { return false; }   // \"abc\"",
+         "    catch (const out_of_range &)     { return false; }   // \"99999999999\"",
+         "}"
+      ],
+      "description" : "[EXC-04] safe text -> int: true/false instead of a crash (catches stoi exceptions)",
+      "prefix" : [
+         "exc04",
+         "bezpieczneStoi"
+      ],
+      "scope" : "cpp"
+   },
+   "EXC-05 sprawdzWiek" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sprawdzWiek",
+         " * opis funkcji: sprawdza podany tekst jako wiek i zgłasza wyjątki różnych typów:",
+         " *               int - liczba ujemna, BladZakresu - wiek powyżej 130,",
+         " *               invalid_argument - tekst nie jest liczbą",
+         " * parametry: tekst - wiek podany jako napis",
+         " * zwracany typ i opis: int - poprawny wiek",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int sprawdzWiek(const string &tekst)",
+         "{",
+         "    int wiek = stoi(tekst);                       // throws invalid_argument for \"abc\"",
+         "    if (wiek < 0) throw wiek;                     // throw a value of type int",
+         "    if (wiek > 130) throw BladZakresu(\"Wiek powyzej 130 lat\");",
+         "    return wiek;",
+         "}",
+         "// usage (catch the MOST specific types first, catch(...) last):",
+         "//    try { int w = sprawdzWiek(tekst); cout << \"OK \" << w; }",
+         "//    catch (int w)                        { cout << \"Wiek ujemny: \" << w; }",
+         "//    catch (const BladZakresu &e)         { cout << e.what(); }",
+         "//    catch (const invalid_argument &)     { cout << \"To nie jest liczba\"; }",
+         "//    catch (const exception &e)           { cout << \"Inny blad: \" << e.what(); }",
+         "//    catch (...)                          { cout << \"Nieznany blad\"; }"
+      ],
+      "description" : "[EXC-05] full pattern: read -> validate -> throw -> catch by type (int / own class / std::exception / ...) (needs EXC-02)",
+      "prefix" : [
+         "exc05",
+         "sprawdzWiek"
+      ],
+      "scope" : "cpp"
+   },
+   "FILE-01 zapiszDoPliku" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zapiszDoPliku",
+         " * opis funkcji: zapisuje elementy tablicy do pliku tekstowego (nadpisuje plik)",
+         " * parametry: nazwaPliku - nazwa pliku",
+         " *            tab - tablica liczb",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: bool - true, gdy zapis się udał",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool zapiszDoPliku(const string &nazwaPliku, const int tab[], int n)",
+         "{",
+         "    ofstream plik(nazwaPliku);",
+         "    if (!plik) return false;",
+         "    for (int i = 0; i < n; i++)",
+         "        plik << tab[i] << \" \";",
+         "    plik << endl;",
+         "    return true;                 // file closes automatically at the end of the function",
+         "}"
+      ],
+      "description" : "[FILE-01] write an array to a text file (overwrites), numbers separated by spaces",
+      "prefix" : [
+         "file01",
+         "zapiszDoPliku"
+      ],
+      "scope" : "cpp"
+   },
+   "FILE-02 dopiszDoPliku" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: dopiszDoPliku",
+         " * opis funkcji: dopisuje wiersz tekstu na końcu pliku (plik jest tworzony, jeśli nie istnieje)",
+         " * parametry: nazwaPliku - nazwa pliku",
+         " *            tekst - dopisywany wiersz",
+         " * zwracany typ i opis: bool - true, gdy zapis się udał",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool dopiszDoPliku(const string &nazwaPliku, const string &tekst)",
+         "{",
+         "    ofstream plik(nazwaPliku, ios::app);",
+         "    if (!plik) return false;",
+         "    plik << tekst << endl;",
+         "    return true;",
+         "}"
+      ],
+      "description" : "[FILE-02] append one line at the END of a file (ios::app)",
+      "prefix" : [
+         "file02",
+         "dopiszDoPliku"
+      ],
+      "scope" : "cpp"
+   },
+   "FILE-03 wczytajLiczbyZPliku" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wczytajLiczbyZPliku",
+         " * opis funkcji: wczytuje wszystkie liczby całkowite z pliku tekstowego",
+         " * parametry: nazwaPliku - nazwa pliku",
+         " * zwracany typ i opis: vector<int> - wczytane liczby (pusty, gdy pliku nie ma)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "vector<int> wczytajLiczbyZPliku(const string &nazwaPliku)",
+         "{",
+         "    vector<int> liczby;",
+         "    ifstream plik(nazwaPliku);",
+         "    if (!plik)",
+         "    {",
+         "        cerr << \"Nie mozna otworzyc pliku \" << nazwaPliku << endl;",
+         "        return liczby;",
+         "    }",
+         "    int x;",
+         "    while (plik >> x)            // NOT while (!plik.eof()) - that reads the last number twice",
+         "        liczby.push_back(x);",
+         "    return liczby;",
+         "}"
+      ],
+      "description" : "[FILE-03] read ALL numbers from a file into a vector (correct loop: while (plik >> x))",
+      "prefix" : [
+         "file03",
+         "wczytajLiczbyZPliku"
+      ],
+      "scope" : "cpp"
+   },
+   "FILE-04 wczytajLinieZPliku" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wczytajLinieZPliku",
+         " * opis funkcji: wczytuje kolejne wiersze pliku tekstowego",
+         " * parametry: nazwaPliku - nazwa pliku",
+         " * zwracany typ i opis: vector<string> - wczytane wiersze (pusty, gdy pliku nie ma)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "vector<string> wczytajLinieZPliku(const string &nazwaPliku)",
+         "{",
+         "    vector<string> linie;",
+         "    ifstream plik(nazwaPliku);",
+         "    string linia;",
+         "    while (getline(plik, linia))",
+         "        linie.push_back(linia);",
+         "    return linie;",
+         "}"
+      ],
+      "description" : "[FILE-04] read a file line by line into a vector<string>",
+      "prefix" : [
+         "file04",
+         "wczytajLinieZPliku"
+      ],
+      "scope" : "cpp"
+   },
+   "FILE-05 Rekord" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa struktury: Rekord",
+         " * opis struktury: jeden wiersz danych z pliku: imię, wiek, ocena",
+         " * pola: imie, wiek, ocena",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "struct Rekord",
+         "{",
+         "    string imie;",
+         "    int wiek;",
+         "    double ocena;",
+         "};",
+         "",
+         "/********************************************************",
+         " * nazwa funkcji: wczytajRekordy",
+         " * opis funkcji: wczytuje z pliku wiersze w formacie imie;wiek;ocena",
+         " * parametry: nazwaPliku - nazwa pliku",
+         " * zwracany typ i opis: vector<Rekord> - wczytane rekordy",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "vector<Rekord> wczytajRekordy(const string &nazwaPliku)",
+         "{",
+         "    vector<Rekord> rekordy;",
+         "    ifstream plik(nazwaPliku);",
+         "    string linia;",
+         "    while (getline(plik, linia))",
+         "    {",
+         "        stringstream ss(linia);",
+         "        string imie, wiek, ocena;",
+         "        if (getline(ss, imie, ';') && getline(ss, wiek, ';') && getline(ss, ocena, ';'))",
+         "            rekordy.push_back({imie, stoi(wiek), stod(ocena)});",
+         "    }",
+         "    return rekordy;",
+         "}"
+      ],
+      "description" : "[FILE-05] read records \"name;age;grade\" (one per line) into a vector of structs",
+      "prefix" : [
+         "file05",
+         "Rekord",
+         "wczytajRekordy"
+      ],
+      "scope" : "cpp"
+   },
+   "FILE-06 czyPlikIstnieje" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyPlikIstnieje",
+         " * opis funkcji: sprawdza, czy plik o podanej nazwie można otworzyć do odczytu",
+         " * parametry: nazwaPliku - nazwa pliku",
+         " * zwracany typ i opis: bool - true, gdy plik istnieje",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyPlikIstnieje(const string &nazwaPliku)",
+         "{",
+         "    ifstream plik(nazwaPliku);",
+         "    return plik.good();",
+         "}"
+      ],
+      "description" : "[FILE-06] does a file exist (can it be opened)?",
+      "prefix" : [
+         "file06",
+         "czyPlikIstnieje"
+      ],
+      "scope" : "cpp"
+   },
+   "IO-01 wczytajLiczbe" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wczytajLiczbe",
+         " * opis funkcji: wyświetla komunikat i wczytuje liczbę całkowitą z zakresu min..max;",
+         " *               pyta ponownie, dopóki użytkownik nie poda poprawnej wartości",
+         " * parametry: komunikat - tekst wyświetlany użytkownikowi",
+         " *            min - najmniejsza dopuszczalna wartość",
+         " *            max - największa dopuszczalna wartość",
+         " * zwracany typ i opis: int - poprawna liczba podana przez użytkownika",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int wczytajLiczbe(const string &komunikat, int min, int max)",
+         "{",
+         "    int liczba;",
+         "    while (true)",
+         "    {",
+         "        cout << komunikat;",
+         "        if (cin >> liczba && liczba >= min && liczba <= max)",
+         "            return liczba;",
+         "        cout << \"Niepoprawna wartosc. Podaj liczbe od \" << min << \" do \" << max << \".\" << endl;",
+         "        cin.clear();                                            // reset the error (e.g. after letters)",
+         "        cin.ignore(numeric_limits<streamsize>::max(), '\\\\n');   // throw away the rest of the line",
+         "    }",
+         "}"
+      ],
+      "description" : "[IO-01] read an int from a range, ask again until the input is valid (letters too)",
+      "prefix" : [
+         "io01",
+         "wczytajLiczbe"
+      ],
+      "scope" : "cpp"
+   },
+   "IO-02 wczytajLiczbeRzeczywista" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wczytajLiczbeRzeczywista",
+         " * opis funkcji: wyświetla komunikat i wczytuje liczbę rzeczywistą; pyta ponownie przy błędzie",
+         " * parametry: komunikat - tekst wyświetlany użytkownikowi",
+         " * zwracany typ i opis: double - liczba podana przez użytkownika",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "double wczytajLiczbeRzeczywista(const string &komunikat)",
+         "{",
+         "    double liczba;",
+         "    cout << komunikat;",
+         "    while (!(cin >> liczba))",
+         "    {",
+         "        cin.clear();",
+         "        cin.ignore(numeric_limits<streamsize>::max(), '\\\\n');",
+         "        cout << \"To nie jest liczba. \" << komunikat;",
+         "    }",
+         "    return liczba;",
+         "}"
+      ],
+      "description" : "[IO-02] read a real number (double), ask again on wrong input",
+      "prefix" : [
+         "io02",
+         "wczytajLiczbeRzeczywista"
+      ],
+      "scope" : "cpp"
+   },
+   "IO-03 wczytajTekst" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wczytajTekst",
+         " * opis funkcji: wyświetla komunikat i wczytuje cały wiersz tekstu (razem ze spacjami)",
+         " * parametry: komunikat - tekst wyświetlany użytkownikowi",
+         " * zwracany typ i opis: string - wczytany tekst",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string wczytajTekst(const string &komunikat)",
+         "{",
+         "    string tekst;",
+         "    cout << komunikat;",
+         "    getline(cin >> ws, tekst);   // ws skips the '\\\\n' left by an earlier cin >> (and leading spaces)",
+         "    return tekst;",
+         "}"
+      ],
+      "description" : "[IO-03] read a whole line of text (with spaces), safe after a previous cin >>",
+      "prefix" : [
+         "io03",
+         "wczytajTekst"
+      ],
+      "scope" : "cpp"
+   },
+   "IO-04 zapytajTakNie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zapytajTakNie",
+         " * opis funkcji: zadaje pytanie i czeka na odpowiedź t/n (wielkość liter nie ma znaczenia)",
+         " * parametry: pytanie - tekst pytania",
+         " * zwracany typ i opis: bool - true dla odpowiedzi 't', false dla 'n'",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool zapytajTakNie(const string &pytanie)",
+         "{",
+         "    char odp;",
+         "    while (true)",
+         "    {",
+         "        cout << pytanie;",
+         "        if (!(cin >> odp)) return false;      // end of input -> treat as \"no\"",
+         "        if (odp == 't' || odp == 'T') return true;",
+         "        if (odp == 'n' || odp == 'N') return false;",
+         "        cout << \"Wpisz t lub n.\" << endl;",
+         "    }",
+         "}"
+      ],
+      "description" : "[IO-04] yes/no question (t/n) -> bool; use as: do { ... } while (zapytajTakNie(\"Jeszcze raz? (t/n): \"));",
+      "prefix" : [
+         "io04",
+         "zapytajTakNie"
+      ],
+      "scope" : "cpp"
+   },
+   "IO-05 menu" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: menu",
+         " * opis funkcji: wyświetla menu i wykonuje wybraną opcję, dopóki użytkownik nie wybierze 0",
+         " * parametry: brak",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void menu()",
+         "{",
+         "    int wybor;",
+         "    do",
+         "    {",
+         "        cout << \"\\\\n===== MENU =====\" << endl;",
+         "        cout << \"1. Opcja pierwsza\" << endl;",
+         "        cout << \"2. Opcja druga\" << endl;",
+         "        cout << \"0. Koniec\" << endl;",
+         "        cout << \"Wybierz: \";",
+         "        if (!(cin >> wybor)) wybor = 0;       // end of input / letters -> exit",
+         "",
+         "        switch (wybor)",
+         "        {",
+         "        case 1:",
+         "            cout << \"Wybrano opcje 1\" << endl;   // <- call your function here",
+         "            break;",
+         "        case 2:",
+         "            cout << \"Wybrano opcje 2\" << endl;",
+         "            break;",
+         "        case 0:",
+         "            cout << \"Koniec programu.\" << endl;",
+         "            break;",
+         "        default:",
+         "            cout << \"Nie ma takiej opcji.\" << endl;",
+         "        }",
+         "    } while (wybor != 0);",
+         "}"
+      ],
+      "description" : "[IO-05] menu loop: do-while + switch, ends on 0 (put your function calls in the cases)",
+      "prefix" : [
+         "io05",
+         "menu"
+      ],
+      "scope" : "cpp"
+   },
+   "IO-06 wypiszWiersz" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wypiszWiersz",
+         " * opis funkcji: wypisuje etykietę i wartość w równych kolumnach, z dwoma miejscami po przecinku",
+         " * parametry: etykieta - opis wartości",
+         " *            wartosc - liczba do wypisania",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wypiszWiersz(const string &etykieta, double wartosc)",
+         "{",
+         "    cout << left << setw(22) << etykieta",
+         "         << right << setw(12) << fixed << setprecision(2) << wartosc << endl;",
+         "    cout.unsetf(ios::fixed);                 // restore default number formatting",
+         "    cout << setprecision(6);",
+         "}"
+      ],
+      "description" : "[IO-06] print one aligned \"label   value\" row with 2 decimal places (tables of results)",
+      "prefix" : [
+         "io06",
+         "wypiszWiersz"
+      ],
+      "scope" : "cpp"
+   },
+   "IO-07 wypiszLinie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wypiszLinie",
+         " * opis funkcji: wypisuje linię złożoną z podanego znaku",
+         " * parametry: znak - znak, z którego składa się linia",
+         " *            dlugosc - liczba znaków",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wypiszLinie(char znak = '-', int dlugosc = 40)",
+         "{",
+         "    for (int i = 0; i < dlugosc; i++) cout << znak;",
+         "    cout << endl;",
+         "}"
+      ],
+      "description" : "[IO-07] print a separator line, e.g. ----------",
+      "prefix" : [
+         "io07",
+         "wypiszLinie"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-01 czyPierwsza" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyPierwsza",
+         " * opis funkcji: sprawdza, czy liczba jest pierwsza (dzielniki sprawdzane do pierwiastka z n)",
+         " * parametry: n - sprawdzana liczba",
+         " * zwracany typ i opis: bool - true, gdy n jest liczbą pierwszą",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyPierwsza(int n)",
+         "{",
+         "    if (n < 2) return false;",
+         "    for (int d = 2; d * d <= n; d++)",
+         "        if (n % d == 0)",
+         "            return false;",
+         "    return true;",
+         "}"
+      ],
+      "description" : "[NUM-01] is n a prime number? (checks divisors up to sqrt(n))",
+      "prefix" : [
+         "num01",
+         "czyPierwsza"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-02 sitoEratostenesa" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sitoEratostenesa",
+         " * opis funkcji: wyznacza wszystkie liczby pierwsze nie większe od n metodą sita Eratostenesa -",
+         " *               wykreśla wielokrotności kolejnych liczb pierwszych",
+         " * parametry: n - górna granica przedziału",
+         " * zwracany typ i opis: vector<int> - liczby pierwsze z przedziału 2..n",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "vector<int> sitoEratostenesa(int n)",
+         "{",
+         "    vector<bool> pierwsza(n + 1, true);",
+         "    vector<int> wynik;",
+         "    for (int i = 2; i <= n; i++)",
+         "    {",
+         "        if (!pierwsza[i]) continue;",
+         "        wynik.push_back(i);",
+         "        for (long long j = (long long)i * i; j <= n; j += i)",
+         "            pierwsza[j] = false;               // cross out the multiples",
+         "    }",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[NUM-02] sieve of Eratosthenes: all primes <= n (returns them in a vector)",
+      "prefix" : [
+         "num02",
+         "sitoEratostenesa"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-03 wypiszPierwszeWPrzedziale" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wypiszPierwszeWPrzedziale",
+         " * opis funkcji: wypisuje liczby pierwsze z przedziału a..b i zwraca ich liczbę",
+         " * parametry: a - początek przedziału",
+         " *            b - koniec przedziału",
+         " * zwracany typ i opis: int - liczba znalezionych liczb pierwszych",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int wypiszPierwszeWPrzedziale(int a, int b)",
+         "{",
+         "    int ile = 0;",
+         "    for (int i = a; i <= b; i++)",
+         "        if (czyPierwsza(i))",
+         "        {",
+         "            cout << i << \" \";",
+         "            ile++;",
+         "        }",
+         "    cout << endl;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[NUM-03] print primes in a range a..b (needs NUM-01)",
+      "prefix" : [
+         "num03",
+         "wypiszPierwszeWPrzedziale"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-04 nwd" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: nwd",
+         " * opis funkcji: wyznacza największy wspólny dzielnik dwóch liczb algorytmem Euklidesa",
+         " *               (wersja z resztą z dzielenia)",
+         " * parametry: a - pierwsza liczba",
+         " *            b - druga liczba",
+         " * zwracany typ i opis: int - największy wspólny dzielnik a i b",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int nwd(int a, int b)",
+         "{",
+         "    while (b != 0)",
+         "    {",
+         "        int reszta = a % b;",
+         "        a = b;",
+         "        b = reszta;",
+         "    }",
+         "    return a;",
+         "}"
+      ],
+      "description" : "[NUM-04] NWD (GCD) - Euclid, modulo version (fast)",
+      "prefix" : [
+         "num04",
+         "nwd"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-05 nwdOdejmowanie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: nwdOdejmowanie",
+         " * opis funkcji: wyznacza największy wspólny dzielnik dwóch liczb dodatnich algorytmem",
+         " *               Euklidesa w wersji z odejmowaniem (większą liczbę zmniejsza się o mniejszą)",
+         " * parametry: a - pierwsza liczba",
+         " *            b - druga liczba",
+         " * zwracany typ i opis: int - największy wspólny dzielnik a i b",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int nwdOdejmowanie(int a, int b)",
+         "{",
+         "    if (a == 0) return b;          // without this the loop below never ends",
+         "    if (b == 0) return a;",
+         "    while (a != b)",
+         "    {",
+         "        if (a > b)",
+         "            a = a - b;",
+         "        else",
+         "            b = b - a;",
+         "    }",
+         "    return a;",
+         "}"
+      ],
+      "description" : "[NUM-05] NWD (GCD) - Euclid, SUBTRACTION version (exam classic)",
+      "prefix" : [
+         "num05",
+         "nwdOdejmowanie"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-06 nwdRekurencyjnie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: nwdRekurencyjnie",
+         " * opis funkcji: wyznacza największy wspólny dzielnik rekurencyjnie: nwd(a, b) = nwd(b, a % b)",
+         " * parametry: a - pierwsza liczba",
+         " *            b - druga liczba",
+         " * zwracany typ i opis: int - największy wspólny dzielnik a i b",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int nwdRekurencyjnie(int a, int b)",
+         "{",
+         "    if (b == 0) return a;",
+         "    return nwdRekurencyjnie(b, a % b);",
+         "}"
+      ],
+      "description" : "[NUM-06] NWD (GCD) - recursive version",
+      "prefix" : [
+         "num06",
+         "nwdRekurencyjnie"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-07 nww" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: nww",
+         " * opis funkcji: wyznacza najmniejszą wspólną wielokrotność dwóch liczb",
+         " * parametry: a - pierwsza liczba",
+         " *            b - druga liczba",
+         " * zwracany typ i opis: long long - najmniejsza wspólna wielokrotność a i b",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "long long nww(int a, int b)",
+         "{",
+         "    return (long long)a / nwd(a, b) * b;      // divide first -> no overflow",
+         "}"
+      ],
+      "description" : "[NUM-07] NWW (LCM) = a / NWD(a, b) * b (needs NUM-04)",
+      "prefix" : [
+         "num07",
+         "nww"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-08 silnia" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: silnia",
+         " * opis funkcji: oblicza silnię liczby n iteracyjnie",
+         " * parametry: n - liczba nieujemna (maks. 20)",
+         " * zwracany typ i opis: long long - wartość n!",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "long long silnia(int n)",
+         "{",
+         "    long long wynik = 1;",
+         "    for (int i = 2; i <= n; i++)",
+         "        wynik *= i;",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[NUM-08] factorial n! with a loop (long long fits up to 20!)",
+      "prefix" : [
+         "num08",
+         "silnia"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-09 silniaRekurencyjnie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: silniaRekurencyjnie",
+         " * opis funkcji: oblicza silnię liczby n rekurencyjnie: n! = n * (n-1)!, 0! = 1",
+         " * parametry: n - liczba nieujemna (maks. 20)",
+         " * zwracany typ i opis: long long - wartość n!",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "long long silniaRekurencyjnie(int n)",
+         "{",
+         "    if (n <= 1) return 1;",
+         "    return n * silniaRekurencyjnie(n - 1);",
+         "}"
+      ],
+      "description" : "[NUM-09] factorial n! recursive",
+      "prefix" : [
+         "num09",
+         "silniaRekurencyjnie"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-10 fibonacci" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: fibonacci",
+         " * opis funkcji: oblicza n-ty wyraz ciągu Fibonacciego iteracyjnie (F0 = 0, F1 = 1)",
+         " * parametry: n - numer wyrazu (n >= 0)",
+         " * zwracany typ i opis: long long - n-ty wyraz ciągu",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "long long fibonacci(int n)",
+         "{",
+         "    long long a = 0, b = 1;",
+         "    for (int i = 0; i < n; i++)",
+         "    {",
+         "        long long nastepny = a + b;",
+         "        a = b;",
+         "        b = nastepny;",
+         "    }",
+         "    return a;",
+         "}"
+      ],
+      "description" : "[NUM-10] n-th Fibonacci number with a loop (F0 = 0, F1 = 1)",
+      "prefix" : [
+         "num10",
+         "fibonacci"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-11 fibonacciRekurencyjnie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: fibonacciRekurencyjnie",
+         " * opis funkcji: oblicza n-ty wyraz ciągu Fibonacciego rekurencyjnie: F(n) = F(n-1) + F(n-2)",
+         " * parametry: n - numer wyrazu (n >= 0)",
+         " * zwracany typ i opis: long long - n-ty wyraz ciągu",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "long long fibonacciRekurencyjnie(int n)",
+         "{",
+         "    if (n < 2) return n;",
+         "    return fibonacciRekurencyjnie(n - 1) + fibonacciRekurencyjnie(n - 2);",
+         "}"
+      ],
+      "description" : "[NUM-11] n-th Fibonacci number recursive (slow for n > 35)",
+      "prefix" : [
+         "num11",
+         "fibonacciRekurencyjnie"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-12 wypiszCiagFibonacciego" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wypiszCiagFibonacciego",
+         " * opis funkcji: wypisuje n pierwszych wyrazów ciągu Fibonacciego",
+         " * parametry: n - liczba wyrazów do wypisania",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wypiszCiagFibonacciego(int n)",
+         "{",
+         "    long long a = 0, b = 1;",
+         "    for (int i = 0; i < n; i++)",
+         "    {",
+         "        cout << a << \" \";",
+         "        long long nastepny = a + b;",
+         "        a = b;",
+         "        b = nastepny;",
+         "    }",
+         "    cout << endl;",
+         "}"
+      ],
+      "description" : "[NUM-12] print the first n Fibonacci numbers",
+      "prefix" : [
+         "num12",
+         "wypiszCiagFibonacciego"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-13 sumaCyfr" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sumaCyfr",
+         " * opis funkcji: oblicza sumę cyfr liczby całkowitej",
+         " * parametry: n - liczba całkowita",
+         " * zwracany typ i opis: int - suma cyfr",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int sumaCyfr(int n)",
+         "{",
+         "    if (n < 0) n = -n;",
+         "    int s = 0;",
+         "    while (n > 0)",
+         "    {",
+         "        s += n % 10;       // last digit",
+         "        n /= 10;           // remove the last digit",
+         "    }",
+         "    return s;",
+         "}"
+      ],
+      "description" : "[NUM-13] sum of the digits of a number",
+      "prefix" : [
+         "num13",
+         "sumaCyfr"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-14 liczbaCyfr" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: liczbaCyfr",
+         " * opis funkcji: zlicza cyfry liczby całkowitej",
+         " * parametry: n - liczba całkowita",
+         " * zwracany typ i opis: int - liczba cyfr (dla 0 zwraca 1)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int liczbaCyfr(int n)",
+         "{",
+         "    if (n == 0) return 1;",
+         "    if (n < 0) n = -n;",
+         "    int ile = 0;",
+         "    while (n > 0)",
+         "    {",
+         "        ile++;",
+         "        n /= 10;",
+         "    }",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[NUM-14] how many digits a number has",
+      "prefix" : [
+         "num14",
+         "liczbaCyfr"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-15 odwrocLiczbe" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: odwrocLiczbe",
+         " * opis funkcji: zapisuje cyfry liczby w odwrotnej kolejności",
+         " * parametry: n - liczba nieujemna",
+         " * zwracany typ i opis: int - liczba o odwróconej kolejności cyfr",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int odwrocLiczbe(int n)",
+         "{",
+         "    int wynik = 0;",
+         "    while (n > 0)",
+         "    {",
+         "        wynik = wynik * 10 + n % 10;",
+         "        n /= 10;",
+         "    }",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[NUM-15] reverse the digits: 1230 -> 321",
+      "prefix" : [
+         "num15",
+         "odwrocLiczbe"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-16 czyPalindromLiczbowy" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyPalindromLiczbowy",
+         " * opis funkcji: sprawdza, czy liczba czytana od tyłu jest taka sama (np. 12321)",
+         " * parametry: n - liczba nieujemna",
+         " * zwracany typ i opis: bool - true, gdy liczba jest palindromem",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyPalindromLiczbowy(int n)",
+         "{",
+         "    int kopia = n, odwrocona = 0;",
+         "    while (kopia > 0)",
+         "    {",
+         "        odwrocona = odwrocona * 10 + kopia % 10;",
+         "        kopia /= 10;",
+         "    }",
+         "    return odwrocona == n;",
+         "}"
+      ],
+      "description" : "[NUM-16] is the number a palindrome (12321)?",
+      "prefix" : [
+         "num16",
+         "czyPalindromLiczbowy"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-17 sumaDzielnikow" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sumaDzielnikow",
+         " * opis funkcji: oblicza sumę dzielników właściwych liczby (mniejszych od niej)",
+         " * parametry: n - liczba naturalna",
+         " * zwracany typ i opis: int - suma dzielników właściwych",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int sumaDzielnikow(int n)",
+         "{",
+         "    int s = 0;",
+         "    for (int d = 1; d <= n / 2; d++)",
+         "        if (n % d == 0)",
+         "            s += d;",
+         "    return s;",
+         "}"
+      ],
+      "description" : "[NUM-17] sum of proper divisors (without the number itself)",
+      "prefix" : [
+         "num17",
+         "sumaDzielnikow"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-18 czyDoskonala" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyDoskonala",
+         " * opis funkcji: sprawdza, czy liczba jest doskonała (równa sumie swoich dzielników właściwych)",
+         " * parametry: n - liczba naturalna",
+         " * zwracany typ i opis: bool - true, gdy liczba jest doskonała",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyDoskonala(int n)",
+         "{",
+         "    if (n < 2) return false;",
+         "    int s = 0;",
+         "    for (int d = 1; d <= n / 2; d++)",
+         "        if (n % d == 0)",
+         "            s += d;",
+         "    return s == n;",
+         "}"
+      ],
+      "description" : "[NUM-18] is it a perfect number (6 = 1+2+3, 28, 496)?",
+      "prefix" : [
+         "num18",
+         "czyDoskonala"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-19 wypiszDzielniki" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wypiszDzielniki",
+         " * opis funkcji: wypisuje wszystkie dzielniki liczby i zwraca ich liczbę",
+         " * parametry: n - liczba naturalna",
+         " * zwracany typ i opis: int - liczba dzielników",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int wypiszDzielniki(int n)",
+         "{",
+         "    int ile = 0;",
+         "    for (int d = 1; d <= n; d++)",
+         "        if (n % d == 0)",
+         "        {",
+         "            cout << d << \" \";",
+         "            ile++;",
+         "        }",
+         "    cout << endl;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[NUM-19] print all divisors of n",
+      "prefix" : [
+         "num19",
+         "wypiszDzielniki"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-20 rozkladNaCzynniki" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: rozkladNaCzynniki",
+         " * opis funkcji: wypisuje rozkład liczby na czynniki pierwsze",
+         " * parametry: n - liczba naturalna większa od 1",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void rozkladNaCzynniki(int n)",
+         "{",
+         "    cout << n << \" =\";",
+         "    bool pierwszy = true;",
+         "    for (int d = 2; d * d <= n; d++)",
+         "        while (n % d == 0)",
+         "        {",
+         "            cout << (pierwszy ? \" \" : \" * \") << d;",
+         "            pierwszy = false;",
+         "            n /= d;",
+         "        }",
+         "    if (n > 1) cout << (pierwszy ? \" \" : \" * \") << n;",
+         "    cout << endl;",
+         "}"
+      ],
+      "description" : "[NUM-20] prime factorization: 360 = 2 * 2 * 2 * 3 * 3 * 5",
+      "prefix" : [
+         "num20",
+         "rozkladNaCzynniki"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-21 potega" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: potega",
+         " * opis funkcji: oblicza podstawa^wykladnik metodą szybkiego potęgowania",
+         " * parametry: podstawa - podstawa potęgi",
+         " *            wykladnik - wykładnik nieujemny",
+         " * zwracany typ i opis: long long - wartość potęgi",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "long long potega(long long podstawa, int wykladnik)",
+         "{",
+         "    long long wynik = 1;",
+         "    while (wykladnik > 0)",
+         "    {",
+         "        if (wykladnik % 2 == 1) wynik *= podstawa;",
+         "        podstawa *= podstawa;",
+         "        wykladnik /= 2;",
+         "    }",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[NUM-21] power a^b, fast (squaring), integers",
+      "prefix" : [
+         "num21",
+         "potega"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-22 czyArmstronga" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyArmstronga",
+         " * opis funkcji: sprawdza, czy liczba jest równa sumie swoich cyfr podniesionych do potęgi",
+         " *               równej liczbie cyfr (liczba Armstronga)",
+         " * parametry: n - liczba naturalna",
+         " * zwracany typ i opis: bool - true, gdy n jest liczbą Armstronga",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyArmstronga(int n)",
+         "{",
+         "    int cyfry = 0;",
+         "    for (int t = n; t > 0; t /= 10) cyfry++;",
+         "    long long s = 0;",
+         "    for (int t = n; t > 0; t /= 10)",
+         "    {",
+         "        long long p = 1;",
+         "        for (int k = 0; k < cyfry; k++) p *= t % 10;",
+         "        s += p;",
+         "    }",
+         "    return s == n;",
+         "}"
+      ],
+      "description" : "[NUM-22] Armstrong / narcissistic number (153 = 1^3 + 5^3 + 3^3)",
+      "prefix" : [
+         "num22",
+         "czyArmstronga"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-23 czyPrzestepny" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyPrzestepny",
+         " * opis funkcji: sprawdza, czy rok jest przestępny",
+         " * parametry: rok - sprawdzany rok",
+         " * zwracany typ i opis: bool - true dla roku przestępnego",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyPrzestepny(int rok)",
+         "{",
+         "    return (rok % 4 == 0 && rok % 100 != 0) || rok % 400 == 0;",
+         "}"
+      ],
+      "description" : "[NUM-23] leap year?",
+      "prefix" : [
+         "num23",
+         "czyPrzestepny"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-24 naSystem" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: naSystem",
+         " * opis funkcji: zamienia liczbę dziesiętną na zapis w systemie o podanej podstawie (2..16)",
+         " *               metodą kolejnych dzieleń - reszty czytane od końca",
+         " * parametry: liczba - liczba nieujemna w systemie dziesiętnym",
+         " *            podstawa - podstawa systemu docelowego (2..16)",
+         " * zwracany typ i opis: string - zapis liczby w nowym systemie",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string naSystem(int liczba, int podstawa)",
+         "{",
+         "    if (liczba == 0) return \"0\";",
+         "    const string cyfry = \"0123456789ABCDEF\";",
+         "    string wynik;",
+         "    while (liczba > 0)",
+         "    {",
+         "        wynik += cyfry[liczba % podstawa];",
+         "        liczba /= podstawa;",
+         "    }",
+         "    reverse(wynik.begin(), wynik.end());",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[NUM-24] decimal -> any base 2..16 (binary, octal, hex) as text",
+      "prefix" : [
+         "num24",
+         "naSystem"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-25 zSystemu" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zSystemu",
+         " * opis funkcji: zamienia zapis liczby w systemie o podanej podstawie na liczbę dziesiętną",
+         " *               (schemat Hornera)",
+         " * parametry: zapis - cyfry liczby, np. \"1011\" lub \"FF\"",
+         " *            podstawa - podstawa systemu (2..16)",
+         " * zwracany typ i opis: int - wartość dziesiętna",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int zSystemu(const string &zapis, int podstawa)",
+         "{",
+         "    int wynik = 0;",
+         "    for (char c : zapis)",
+         "    {",
+         "        int cyfra = isdigit(c) ? c - '0' : toupper(c) - 'A' + 10;",
+         "        wynik = wynik * podstawa + cyfra;",
+         "    }",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[NUM-25] any base 2..16 -> decimal (Horner's scheme)",
+      "prefix" : [
+         "num25",
+         "zSystemu"
+      ],
+      "scope" : "cpp"
+   },
+   "NUM-26 zaokraglij" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zaokraglij",
+         " * opis funkcji: zaokrągla liczbę do podanej liczby miejsc po przecinku",
+         " * parametry: x - liczba do zaokrąglenia",
+         " *            miejsca - liczba miejsc po przecinku",
+         " * zwracany typ i opis: double - zaokrąglona liczba",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "double zaokraglij(double x, int miejsca)",
+         "{",
+         "    double mnoznik = pow(10, miejsca);",
+         "    return round(x * mnoznik) / mnoznik;",
+         "}"
+      ],
+      "description" : "[NUM-26] round to k decimal places (e.g. 3.14159 -> 3.14)",
+      "prefix" : [
+         "num26",
+         "zaokraglij"
+      ],
+      "scope" : "cpp"
+   },
+   "PESEL-01 czyPoprawnyFormatPesel" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyPoprawnyFormatPesel",
+         " * opis funkcji: sprawdza, czy napis składa się dokładnie z 11 cyfr",
+         " * parametry: pesel - sprawdzany numer PESEL",
+         " * zwracany typ i opis: bool - true, gdy format jest poprawny",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyPoprawnyFormatPesel(const string &pesel)",
+         "{",
+         "    if (pesel.length() != 11) return false;",
+         "    for (char c : pesel)",
+         "        if (!isdigit(c))",
+         "            return false;",
+         "    return true;",
+         "}"
+      ],
+      "description" : "[PESEL-01] is it exactly 11 digits?",
+      "prefix" : [
+         "pesel01",
+         "czyPoprawnyFormatPesel"
+      ],
+      "scope" : "cpp"
+   },
+   "PESEL-02 cyfraKontrolnaPesel" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: cyfraKontrolnaPesel",
+         " * opis funkcji: oblicza cyfrę kontrolną numeru PESEL z wagami 1 3 7 9 1 3 7 9 1 3",
+         " * parametry: pesel - numer PESEL (co najmniej 10 cyfr)",
+         " * zwracany typ i opis: int - obliczona cyfra kontrolna (0..9)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int cyfraKontrolnaPesel(const string &pesel)",
+         "{",
+         "    const int wagi[10] = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};",
+         "    int suma = 0;",
+         "    for (int i = 0; i < 10; i++)",
+         "        suma += (pesel[i] - '0') * wagi[i];        // - '0' : char digit -> number",
+         "    return (10 - suma % 10) % 10;",
+         "}"
+      ],
+      "description" : "[PESEL-02] compute the control digit from the first 10 digits",
+      "prefix" : [
+         "pesel02",
+         "cyfraKontrolnaPesel"
+      ],
+      "scope" : "cpp"
+   },
+   "PESEL-03 czyPoprawnyPesel" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyPoprawnyPesel",
+         " * opis funkcji: sprawdza format numeru PESEL (11 cyfr) oraz zgodność cyfry kontrolnej",
+         " * parametry: pesel - sprawdzany numer PESEL",
+         " * zwracany typ i opis: bool - true, gdy PESEL jest poprawny",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyPoprawnyPesel(const string &pesel)",
+         "{",
+         "    if (pesel.length() != 11) return false;",
+         "    for (char c : pesel)",
+         "        if (!isdigit(c)) return false;",
+         "",
+         "    const int wagi[10] = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};",
+         "    int suma = 0;",
+         "    for (int i = 0; i < 10; i++)",
+         "        suma += (pesel[i] - '0') * wagi[i];",
+         "    int kontrolna = (10 - suma % 10) % 10;",
+         "    return kontrolna == pesel[10] - '0';",
+         "}"
+      ],
+      "description" : "[PESEL-03] full validation: format + checksum (self-contained)",
+      "prefix" : [
+         "pesel03",
+         "czyPoprawnyPesel"
+      ],
+      "scope" : "cpp"
+   },
+   "PESEL-04 plecZPesel" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: plecZPesel",
+         " * opis funkcji: sprawdza dziesiątą cyfrę numeru PESEL (indeks 9) - parzysta oznacza",
+         " *               kobietę, nieparzysta mężczyznę",
+         " * parametry: pesel - numer PESEL",
+         " * zwracany typ i opis: char - 'K' dla kobiety, 'M' dla mężczyzny",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "char plecZPesel(const string &pesel)",
+         "{",
+         "    if ((pesel[9] - '0') % 2 == 0)",
+         "        return 'K';",
+         "    return 'M';",
+         "}"
+      ],
+      "description" : "[PESEL-04] sex from PESEL: 'K' (woman) or 'M' (man)",
+      "prefix" : [
+         "pesel04",
+         "plecZPesel"
+      ],
+      "scope" : "cpp"
+   },
+   "PESEL-05 dataUrodzeniaZPesel" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: dataUrodzeniaZPesel",
+         " * opis funkcji: odczytuje datę urodzenia z numeru PESEL; stulecie wynika z dodatku",
+         " *               do miesiąca (+80: 1800, +0: 1900, +20: 2000, +40: 2100, +60: 2200)",
+         " * parametry: pesel - numer PESEL",
+         " *            dzien - (wyjście) dzień urodzenia",
+         " *            miesiac - (wyjście) miesiąc urodzenia",
+         " *            rok - (wyjście) rok urodzenia",
+         " * zwracany typ i opis: brak (wyniki przez parametry referencyjne)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void dataUrodzeniaZPesel(const string &pesel, int &dzien, int &miesiac, int &rok)",
+         "{",
+         "    rok = (pesel[0] - '0') * 10 + (pesel[1] - '0');",
+         "    miesiac = (pesel[2] - '0') * 10 + (pesel[3] - '0');",
+         "    dzien = (pesel[4] - '0') * 10 + (pesel[5] - '0');",
+         "",
+         "    if (miesiac > 80)      { rok += 1800; miesiac -= 80; }",
+         "    else if (miesiac > 60) { rok += 2200; miesiac -= 60; }",
+         "    else if (miesiac > 40) { rok += 2100; miesiac -= 40; }",
+         "    else if (miesiac > 20) { rok += 2000; miesiac -= 20; }",
+         "    else                   { rok += 1900; }",
+         "}"
+      ],
+      "description" : "[PESEL-05] birth date from PESEL (day, month, year through & parameters, all centuries)",
+      "prefix" : [
+         "pesel05",
+         "dataUrodzeniaZPesel"
+      ],
+      "scope" : "cpp"
+   },
+   "RND-01 losujLiczbe" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: losujLiczbe",
+         " * opis funkcji: losuje liczbę całkowitą z przedziału min..max (włącznie)",
+         " * parametry: min - dolna granica przedziału",
+         " *            max - górna granica przedziału",
+         " * zwracany typ i opis: int - wylosowana liczba",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int losujLiczbe(int min, int max)",
+         "{",
+         "    return rand() % (max - min + 1) + min;",
+         "}"
+      ],
+      "description" : "[RND-01] random int from min..max inclusive (rand) - needs srand(time(0)) once in main",
+      "prefix" : [
+         "rnd01",
+         "losujLiczbe"
+      ],
+      "scope" : "cpp"
+   },
+   "RND-02 wypelnijLosowo" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wypelnijLosowo",
+         " * opis funkcji: wypełnia tablicę liczbami pseudolosowymi z przedziału min..max",
+         " * parametry: tab - tablica do wypełnienia",
+         " *            n - liczba elementów tablicy",
+         " *            min - najmniejsza losowana wartość",
+         " *            max - największa losowana wartość",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wypelnijLosowo(int tab[], int n, int min, int max)",
+         "{",
+         "    for (int i = 0; i < n; i++)",
+         "        tab[i] = rand() % (max - min + 1) + min;",
+         "}"
+      ],
+      "description" : "[RND-02] fill an array with random ints min..max (e.g. dice 1..6)",
+      "prefix" : [
+         "rnd02",
+         "wypelnijLosowo"
+      ],
+      "scope" : "cpp"
+   },
+   "RND-03 losujBezPowtorzen" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: losujBezPowtorzen",
+         " * opis funkcji: wypełnia tablicę różnymi liczbami losowymi z przedziału min..max",
+         " *               (przedział musi mieć co najmniej n liczb)",
+         " * parametry: tab - tablica do wypełnienia",
+         " *            n - liczba elementów do wylosowania",
+         " *            min - dolna granica przedziału",
+         " *            max - górna granica przedziału",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void losujBezPowtorzen(int tab[], int n, int min, int max)",
+         "{",
+         "    for (int i = 0; i < n; i++)",
+         "    {",
+         "        bool powtorka;",
+         "        do",
+         "        {",
+         "            tab[i] = rand() % (max - min + 1) + min;",
+         "            powtorka = false;",
+         "            for (int j = 0; j < i; j++)",
+         "                if (tab[j] == tab[i]) { powtorka = true; break; }",
+         "        } while (powtorka);",
+         "    }",
+         "}"
+      ],
+      "description" : "[RND-03] fill an array with random ints WITHOUT repeats (lotto: 6 of 1..49)",
+      "prefix" : [
+         "rnd03",
+         "losujBezPowtorzen"
+      ],
+      "scope" : "cpp"
+   },
+   "RND-04 tasujTablice" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: tasujTablice",
+         " * opis funkcji: losowo przestawia elementy tablicy (algorytm Fishera-Yatesa)",
+         " * parametry: tab - tablica do potasowania",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void tasujTablice(int tab[], int n)",
+         "{",
+         "    for (int i = n - 1; i > 0; i--)",
+         "    {",
+         "        int j = rand() % (i + 1);",
+         "        swap(tab[i], tab[j]);",
+         "    }",
+         "}"
+      ],
+      "description" : "[RND-04] shuffle an array randomly (Fisher-Yates)",
+      "prefix" : [
+         "rnd04",
+         "tasujTablice"
+      ],
+      "scope" : "cpp"
+   },
+   "RND-05 losujRzeczywista" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: losujRzeczywista",
+         " * opis funkcji: losuje liczbę rzeczywistą z przedziału min..max",
+         " * parametry: min - dolna granica",
+         " *            max - górna granica",
+         " * zwracany typ i opis: double - wylosowana liczba",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "double losujRzeczywista(double min, double max)",
+         "{",
+         "    return min + (max - min) * rand() / RAND_MAX;",
+         "}"
+      ],
+      "description" : "[RND-05] random real number from min..max",
+      "prefix" : [
+         "rnd05",
+         "losujRzeczywista"
+      ],
+      "scope" : "cpp"
+   },
+   "RND-06 losujZnak" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: losujZnak",
+         " * opis funkcji: losuje jeden znak z podanego zbioru znaków",
+         " * parametry: znaki - napis zawierający dozwolone znaki",
+         " * zwracany typ i opis: char - wylosowany znak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "char losujZnak(const string &znaki)",
+         "{",
+         "    return znaki[rand() % znaki.length()];",
+         "}"
+      ],
+      "description" : "[RND-06] random character from a given set of characters",
+      "prefix" : [
+         "rnd06",
+         "losujZnak"
+      ],
+      "scope" : "cpp"
+   },
+   "RND-07 generujHaslo" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: generujHaslo",
+         " * opis funkcji: generuje hasło o podanej długości z małych liter oraz wybranych",
+         " *               grup znaków (wielkie litery, cyfry, znaki specjalne)",
+         " * parametry: dlugosc - liczba znaków hasła",
+         " *            wielkie - czy dodać wielkie litery",
+         " *            cyfry - czy dodać cyfry",
+         " *            specjalne - czy dodać znaki specjalne",
+         " * zwracany typ i opis: string - wygenerowane hasło",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string generujHaslo(int dlugosc, bool wielkie, bool cyfry, bool specjalne)",
+         "{",
+         "    string znaki = \"abcdefghijklmnopqrstuvwxyz\";",
+         "    if (wielkie)   znaki += \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\";",
+         "    if (cyfry)     znaki += \"0123456789\";",
+         "    if (specjalne) znaki += \"!@#\\$%^&*()_+-=\";",
+         "",
+         "    string haslo;",
+         "    for (int i = 0; i < dlugosc; i++)",
+         "        haslo += znaki[rand() % znaki.length()];",
+         "    return haslo;",
+         "}"
+      ],
+      "description" : "[RND-07] password generator: length + options (uppercase, digits, special chars)",
+      "prefix" : [
+         "rnd07",
+         "generujHaslo"
+      ],
+      "scope" : "cpp"
+   },
+   "RND-08 losujNowoczesnie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: losujNowoczesnie",
+         " * opis funkcji: losuje liczbę całkowitą z przedziału min..max generatorem mt19937",
+         " * parametry: min - dolna granica",
+         " *            max - górna granica",
+         " * zwracany typ i opis: int - wylosowana liczba",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int losujNowoczesnie(int min, int max)",
+         "{",
+         "    static mt19937 generator(random_device{}());     // created once, reused",
+         "    uniform_int_distribution<int> rozklad(min, max);",
+         "    return rozklad(generator);",
+         "}"
+      ],
+      "description" : "[RND-08] modern random int (mt19937) - better quality, no srand needed",
+      "prefix" : [
+         "rnd08",
+         "losujNowoczesnie"
+      ],
+      "scope" : "cpp"
+   },
+   "SORT-01 sortujBabelkowo" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sortujBabelkowo",
+         " * opis funkcji: sortuje tablicę rosnąco metodą bąbelkową - porównuje sąsiednie elementy",
+         " *               i zamienia je miejscami; kończy, gdy w przebiegu nie było zamiany",
+         " * parametry: tab - tablica do posortowania",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void sortujBabelkowo(int tab[], int n)",
+         "{",
+         "    for (int i = 0; i < n - 1; i++)",
+         "    {",
+         "        bool zamiana = false;",
+         "        for (int j = 0; j < n - 1 - i; j++)",
+         "        {",
+         "            if (tab[j] > tab[j + 1])            // <-  > ascending,  < descending",
+         "            {",
+         "                swap(tab[j], tab[j + 1]);",
+         "                zamiana = true;",
+         "            }",
+         "        }",
+         "        if (!zamiana) break;",
+         "    }",
+         "}"
+      ],
+      "description" : "[SORT-01] bubble sort ASCENDING (stops early when nothing was swapped)",
+      "prefix" : [
+         "sort01",
+         "sortujBabelkowo"
+      ],
+      "scope" : "cpp"
+   },
+   "SORT-02 sortujBabelkowoMalejaco" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sortujBabelkowoMalejaco",
+         " * opis funkcji: sortuje tablicę malejąco metodą bąbelkową",
+         " * parametry: tab - tablica do posortowania",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void sortujBabelkowoMalejaco(int tab[], int n)",
+         "{",
+         "    for (int i = 0; i < n - 1; i++)",
+         "    {",
+         "        bool zamiana = false;",
+         "        for (int j = 0; j < n - 1 - i; j++)",
+         "        {",
+         "            if (tab[j] < tab[j + 1])            // <-",
+         "            {",
+         "                swap(tab[j], tab[j + 1]);",
+         "                zamiana = true;",
+         "            }",
+         "        }",
+         "        if (!zamiana) break;",
+         "    }",
+         "}"
+      ],
+      "description" : "[SORT-02] bubble sort DESCENDING",
+      "prefix" : [
+         "sort02",
+         "sortujBabelkowoMalejaco"
+      ],
+      "scope" : "cpp"
+   },
+   "SORT-03 sortujPrzezWybieranie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sortujPrzezWybieranie",
+         " * opis funkcji: sortuje tablicę rosnąco przez wybieranie - w każdym kroku wyszukuje",
+         " *               najmniejszy element nieposortowanej części i zamienia go z elementem i",
+         " * parametry: tab - tablica do posortowania",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void sortujPrzezWybieranie(int tab[], int n)",
+         "{",
+         "    for (int i = 0; i < n - 1; i++)",
+         "    {",
+         "        int indeksMin = i;",
+         "        for (int j = i + 1; j < n; j++)",
+         "            if (tab[j] < tab[indeksMin])         // <-  < ascending,  > descending",
+         "                indeksMin = j;",
+         "        swap(tab[i], tab[indeksMin]);",
+         "    }",
+         "}"
+      ],
+      "description" : "[SORT-03] selection sort ASCENDING (find the minimum, put it at position i)",
+      "prefix" : [
+         "sort03",
+         "sortujPrzezWybieranie"
+      ],
+      "scope" : "cpp"
+   },
+   "SORT-04 sortujPrzezWybieranieMalejaco" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sortujPrzezWybieranieMalejaco",
+         " * opis funkcji: sortuje tablicę malejąco przez wybieranie - w każdym kroku wyszukuje",
+         " *               największy element nieposortowanej części i zamienia go z elementem i",
+         " * parametry: tab - tablica do posortowania",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void sortujPrzezWybieranieMalejaco(int tab[], int n)",
+         "{",
+         "    for (int i = 0; i < n - 1; i++)",
+         "    {",
+         "        int indeksMax = i;",
+         "        for (int j = i + 1; j < n; j++)",
+         "            if (tab[j] > tab[indeksMax])         // <-",
+         "                indeksMax = j;",
+         "        swap(tab[i], tab[indeksMax]);",
+         "    }",
+         "}"
+      ],
+      "description" : "[SORT-04] selection sort DESCENDING (find the maximum)",
+      "prefix" : [
+         "sort04",
+         "sortujPrzezWybieranieMalejaco"
+      ],
+      "scope" : "cpp"
+   },
+   "SORT-05 sortujPrzezWstawianie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sortujPrzezWstawianie",
+         " * opis funkcji: sortuje tablicę rosnąco przez wstawianie - kolejny element jest wstawiany",
+         " *               we właściwe miejsce posortowanej części tablicy",
+         " * parametry: tab - tablica do posortowania",
+         " *            n - liczba elementów tablicy",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void sortujPrzezWstawianie(int tab[], int n)",
+         "{",
+         "    for (int i = 1; i < n; i++)",
+         "    {",
+         "        int klucz = tab[i];",
+         "        int j = i - 1;",
+         "        while (j >= 0 && tab[j] > klucz)        // <-  > ascending,  < descending",
+         "        {",
+         "            tab[j + 1] = tab[j];",
+         "            j--;",
+         "        }",
+         "        tab[j + 1] = klucz;",
+         "    }",
+         "}"
+      ],
+      "description" : "[SORT-05] insertion sort ASCENDING (shift bigger elements right, insert the key)",
+      "prefix" : [
+         "sort05",
+         "sortujPrzezWstawianie"
+      ],
+      "scope" : "cpp"
+   },
+   "SORT-06 sortujSzybko" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sortujSzybko",
+         " * opis funkcji: sortuje rosnąco fragment tablicy algorytmem szybkiego sortowania (quicksort)",
+         " * parametry: tab - tablica do posortowania",
+         " *            lewy - indeks pierwszego elementu fragmentu",
+         " *            prawy - indeks ostatniego elementu fragmentu",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void sortujSzybko(int tab[], int lewy, int prawy)",
+         "{",
+         "    if (lewy >= prawy) return;",
+         "    int pivot = tab[(lewy + prawy) / 2];",
+         "    int i = lewy, j = prawy;",
+         "    while (i <= j)",
+         "    {",
+         "        while (tab[i] < pivot) i++;",
+         "        while (tab[j] > pivot) j--;",
+         "        if (i <= j)",
+         "        {",
+         "            swap(tab[i], tab[j]);",
+         "            i++;",
+         "            j--;",
+         "        }",
+         "    }",
+         "    sortujSzybko(tab, lewy, j);",
+         "    sortujSzybko(tab, i, prawy);",
+         "}"
+      ],
+      "description" : "[SORT-06] quicksort (fast, recursive) - call: sortujSzybko(tab, 0, n - 1)",
+      "prefix" : [
+         "sort06",
+         "sortujSzybko"
+      ],
+      "scope" : "cpp"
+   },
+   "SORT-07 sortujPrzezZliczanie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sortujPrzezZliczanie",
+         " * opis funkcji: sortuje rosnąco tablicę liczb z przedziału min..max przez zliczanie",
+         " *               wystąpień każdej wartości",
+         " * parametry: tab - tablica do posortowania",
+         " *            n - liczba elementów tablicy",
+         " *            min - najmniejsza możliwa wartość",
+         " *            max - największa możliwa wartość",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void sortujPrzezZliczanie(int tab[], int n, int min, int max)",
+         "{",
+         "    vector<int> licznik(max - min + 1, 0);",
+         "    for (int i = 0; i < n; i++)",
+         "        licznik[tab[i] - min]++;",
+         "    int k = 0;",
+         "    for (int w = min; w <= max; w++)",
+         "        for (int ile = 0; ile < licznik[w - min]; ile++)",
+         "            tab[k++] = w;",
+         "}"
+      ],
+      "description" : "[SORT-07] counting sort - for small value ranges (e.g. grades 1..6, dice)",
+      "prefix" : [
+         "sort07",
+         "sortujPrzezZliczanie"
+      ],
+      "scope" : "cpp"
+   },
+   "SORT-08 sortujBiblioteka" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: sortujBiblioteka",
+         " * opis funkcji: sortuje tablicę funkcją std::sort rosnąco lub malejąco",
+         " * parametry: tab - tablica do posortowania",
+         " *            n - liczba elementów tablicy",
+         " *            malejaco - true = sortowanie malejące, false = rosnące",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void sortujBiblioteka(int tab[], int n, bool malejaco)",
+         "{",
+         "    if (malejaco)",
+         "        sort(tab, tab + n, greater<int>());",
+         "    else",
+         "        sort(tab, tab + n);                  // vector: sort(v.begin(), v.end());",
+         "}"
+      ],
+      "description" : "[SORT-08] library sort std::sort - ascending / descending (when the task doesn't require your own algorithm)",
+      "prefix" : [
+         "sort08",
+         "sortujBiblioteka"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-01 naWielkie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: naWielkie",
+         " * opis funkcji: zamienia wszystkie litery napisu na wielkie",
+         " * parametry: tekst - napis do zamiany",
+         " * zwracany typ i opis: string - napis wielkimi literami",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string naWielkie(string tekst)",
+         "{",
+         "    for (char &c : tekst)            // & -> modifies the characters of the copy",
+         "        c = toupper(c);",
+         "    return tekst;",
+         "}"
+      ],
+      "description" : "[STR-01] text to UPPER case",
+      "prefix" : [
+         "str01",
+         "naWielkie"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-02 naMale" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: naMale",
+         " * opis funkcji: zamienia wszystkie litery napisu na małe",
+         " * parametry: tekst - napis do zamiany",
+         " * zwracany typ i opis: string - napis małymi literami",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string naMale(string tekst)",
+         "{",
+         "    for (char &c : tekst)",
+         "        c = tolower(c);",
+         "    return tekst;",
+         "}"
+      ],
+      "description" : "[STR-02] text to lower case",
+      "prefix" : [
+         "str02",
+         "naMale"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-03 zliczSamogloski" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczSamogloski",
+         " * opis funkcji: zlicza samogłoski (a, e, i, o, u, y) w napisie, bez względu na wielkość liter",
+         " * parametry: tekst - analizowany napis",
+         " * zwracany typ i opis: int - liczba samogłosek",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int zliczSamogloski(const string &tekst)",
+         "{",
+         "    const string samogloski = \"aeiouy\";",
+         "    int ile = 0;",
+         "    for (char c : tekst)",
+         "        if (samogloski.find(tolower(c)) != string::npos)",
+         "            ile++;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[STR-03] count vowels (a e i o u y, any case)",
+      "prefix" : [
+         "str03",
+         "zliczSamogloski"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-04 zliczSpolgloski" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczSpolgloski",
+         " * opis funkcji: zlicza spółgłoski w napisie (litery niebędące samogłoskami)",
+         " * parametry: tekst - analizowany napis",
+         " * zwracany typ i opis: int - liczba spółgłosek",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int zliczSpolgloski(const string &tekst)",
+         "{",
+         "    const string samogloski = \"aeiouy\";",
+         "    int ile = 0;",
+         "    for (char c : tekst)",
+         "        if (isalpha(c) && samogloski.find(tolower(c)) == string::npos)",
+         "            ile++;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[STR-04] count consonants (letters that are not vowels)",
+      "prefix" : [
+         "str04",
+         "zliczSpolgloski"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-05 zliczCyfry" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczCyfry",
+         " * opis funkcji: zlicza cyfry występujące w napisie",
+         " * parametry: tekst - analizowany napis",
+         " * zwracany typ i opis: int - liczba cyfr",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int zliczCyfry(const string &tekst)",
+         "{",
+         "    int ile = 0;",
+         "    for (char c : tekst)",
+         "        if (isdigit(c))",
+         "            ile++;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[STR-05] count digits in a text",
+      "prefix" : [
+         "str05",
+         "zliczCyfry"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-06 zliczZnak" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczZnak",
+         " * opis funkcji: zlicza wystąpienia podanego znaku w napisie",
+         " * parametry: tekst - analizowany napis",
+         " *            znak - zliczany znak",
+         " * zwracany typ i opis: int - liczba wystąpień znaku",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int zliczZnak(const string &tekst, char znak)",
+         "{",
+         "    int ile = 0;",
+         "    for (char c : tekst)",
+         "        if (c == znak)",
+         "            ile++;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[STR-06] count occurrences of one character",
+      "prefix" : [
+         "str06",
+         "zliczZnak"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-07 zliczSlowa" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczSlowa",
+         " * opis funkcji: zlicza słowa w napisie (słowa oddzielone białymi znakami)",
+         " * parametry: tekst - analizowany napis",
+         " * zwracany typ i opis: int - liczba słów",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "int zliczSlowa(const string &tekst)",
+         "{",
+         "    istringstream strumien(tekst);",
+         "    string slowo;",
+         "    int ile = 0;",
+         "    while (strumien >> slowo)",
+         "        ile++;",
+         "    return ile;",
+         "}"
+      ],
+      "description" : "[STR-07] count words (separated by spaces)",
+      "prefix" : [
+         "str07",
+         "zliczSlowa"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-08 podzielNaSlowa" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: podzielNaSlowa",
+         " * opis funkcji: dzieli napis na słowa oddzielone białymi znakami",
+         " * parametry: tekst - napis do podziału",
+         " * zwracany typ i opis: vector<string> - kolejne słowa",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "vector<string> podzielNaSlowa(const string &tekst)",
+         "{",
+         "    vector<string> slowa;",
+         "    istringstream strumien(tekst);",
+         "    string slowo;",
+         "    while (strumien >> slowo)",
+         "        slowa.push_back(slowo);",
+         "    return slowa;",
+         "}"
+      ],
+      "description" : "[STR-08] split a text into words -> vector<string>",
+      "prefix" : [
+         "str08",
+         "podzielNaSlowa"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-09 podzielWgSeparatora" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: podzielWgSeparatora",
+         " * opis funkcji: dzieli napis na części oddzielone podanym znakiem",
+         " * parametry: tekst - napis do podziału",
+         " *            separator - znak oddzielający części",
+         " * zwracany typ i opis: vector<string> - kolejne części napisu",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "vector<string> podzielWgSeparatora(const string &tekst, char separator)",
+         "{",
+         "    vector<string> czesci;",
+         "    stringstream strumien(tekst);",
+         "    string czesc;",
+         "    while (getline(strumien, czesc, separator))",
+         "        czesci.push_back(czesc);",
+         "    return czesci;",
+         "}"
+      ],
+      "description" : "[STR-09] split by a separator, e.g. \"Jan;17;4.5\" by ';' -> vector<string>",
+      "prefix" : [
+         "str09",
+         "podzielWgSeparatora"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-10 odwrocNapis" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: odwrocNapis",
+         " * opis funkcji: zwraca napis zapisany od końca",
+         " * parametry: tekst - napis do odwrócenia",
+         " * zwracany typ i opis: string - odwrócony napis",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string odwrocNapis(const string &tekst)",
+         "{",
+         "    string wynik;",
+         "    for (int i = tekst.length() - 1; i >= 0; i--)",
+         "        wynik += tekst[i];",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[STR-10] reverse a text",
+      "prefix" : [
+         "str10",
+         "odwrocNapis"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-11 czyPalindrom" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyPalindrom",
+         " * opis funkcji: sprawdza, czy napis czytany od tyłu jest taki sam",
+         " *               (pomija spacje i wielkość liter)",
+         " * parametry: tekst - sprawdzany napis",
+         " * zwracany typ i opis: bool - true, gdy napis jest palindromem",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyPalindrom(const string &tekst)",
+         "{",
+         "    string czysty;",
+         "    for (char c : tekst)",
+         "        if (c != ' ')",
+         "            czysty += tolower(c);",
+         "    int i = 0, j = (int)czysty.length() - 1;",
+         "    while (i < j)",
+         "    {",
+         "        if (czysty[i] != czysty[j]) return false;",
+         "        i++;",
+         "        j--;",
+         "    }",
+         "    return true;",
+         "}"
+      ],
+      "description" : "[STR-11] palindrome check, ignoring spaces and letter case (\"Kobyla ma maly bok\")",
+      "prefix" : [
+         "str11",
+         "czyPalindrom"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-12 usunSpacje" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: usunSpacje",
+         " * opis funkcji: usuwa wszystkie spacje z napisu",
+         " * parametry: tekst - napis wejściowy",
+         " * zwracany typ i opis: string - napis bez spacji",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string usunSpacje(const string &tekst)",
+         "{",
+         "    string wynik;",
+         "    for (char c : tekst)",
+         "        if (c != ' ')",
+         "            wynik += c;",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[STR-12] remove all spaces",
+      "prefix" : [
+         "str12",
+         "usunSpacje"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-13 zamienWszystkie" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zamienWszystkie",
+         " * opis funkcji: zamienia wszystkie wystąpienia fragmentu na inny fragment",
+         " * parametry: tekst - napis wejściowy",
+         " *            co - szukany fragment",
+         " *            naCo - fragment wstawiany w miejsce znalezionego",
+         " * zwracany typ i opis: string - napis po zamianie",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string zamienWszystkie(string tekst, const string &co, const string &naCo)",
+         "{",
+         "    if (co.empty()) return tekst;",
+         "    size_t pozycja = tekst.find(co);",
+         "    while (pozycja != string::npos)",
+         "    {",
+         "        tekst.replace(pozycja, co.length(), naCo);",
+         "        pozycja = tekst.find(co, pozycja + naCo.length());",
+         "    }",
+         "    return tekst;",
+         "}"
+      ],
+      "description" : "[STR-13] replace ALL occurrences of a fragment with another",
+      "prefix" : [
+         "str13",
+         "zamienWszystkie"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-14 szyfrujCezarem" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: szyfrujCezarem",
+         " * opis funkcji: szyfruje napis szyfrem Cezara - każda litera jest przesuwana w alfabecie",
+         " *               o klucz pozycji (z zawinięciem z 'z' na 'a'); inne znaki bez zmian",
+         " * parametry: tekst - napis do zaszyfrowania",
+         " *            klucz - przesunięcie (może być ujemne)",
+         " * zwracany typ i opis: string - zaszyfrowany napis",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string szyfrujCezarem(string tekst, int klucz)",
+         "{",
+         "    klucz = ((klucz % 26) + 26) % 26;          // any key -> 0..25",
+         "    for (char &c : tekst)",
+         "    {",
+         "        if (c >= 'a' && c <= 'z')",
+         "            c = 'a' + (c - 'a' + klucz) % 26;",
+         "        else if (c >= 'A' && c <= 'Z')",
+         "            c = 'A' + (c - 'A' + klucz) % 26;",
+         "    }",
+         "    return tekst;",
+         "}"
+      ],
+      "description" : "[STR-14] Caesar cipher with any key (keeps case, other chars unchanged); decrypt = key 26 - k",
+      "prefix" : [
+         "str14",
+         "szyfrujCezarem"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-15 deszyfrujCezarem" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: deszyfrujCezarem",
+         " * opis funkcji: odszyfrowuje napis zaszyfrowany szyfrem Cezara z podanym kluczem",
+         " * parametry: tekst - zaszyfrowany napis",
+         " *            klucz - klucz użyty do szyfrowania",
+         " * zwracany typ i opis: string - odszyfrowany napis",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string deszyfrujCezarem(const string &tekst, int klucz)",
+         "{",
+         "    return szyfrujCezarem(tekst, -klucz);",
+         "}"
+      ],
+      "description" : "[STR-15] Caesar decrypt (needs STR-14)",
+      "prefix" : [
+         "str15",
+         "deszyfrujCezarem"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-16 czyLiczbaCalkowita" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyLiczbaCalkowita",
+         " * opis funkcji: sprawdza, czy napis zawiera wyłącznie liczbę całkowitą (opcjonalnie z minusem)",
+         " * parametry: tekst - sprawdzany napis",
+         " * zwracany typ i opis: bool - true, gdy napis jest liczbą całkowitą",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyLiczbaCalkowita(const string &tekst)",
+         "{",
+         "    if (tekst.empty()) return false;",
+         "    size_t start = (tekst[0] == '-') ? 1 : 0;",
+         "    if (start == tekst.length()) return false;",
+         "    for (size_t i = start; i < tekst.length(); i++)",
+         "        if (!isdigit(tekst[i]))",
+         "            return false;",
+         "    return true;",
+         "}"
+      ],
+      "description" : "[STR-16] is the text a whole number (\"123\", \"-45\")? - check BEFORE stoi",
+      "prefix" : [
+         "str16",
+         "czyLiczbaCalkowita"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-17 kazdeSlowoWielka" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: kazdeSlowoWielka",
+         " * opis funkcji: zamienia pierwszą literę każdego słowa na wielką, a pozostałe na małe",
+         " * parametry: tekst - napis wejściowy",
+         " * zwracany typ i opis: string - napis z wielkimi pierwszymi literami słów",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string kazdeSlowoWielka(string tekst)",
+         "{",
+         "    bool poczatekSlowa = true;",
+         "    for (char &c : tekst)",
+         "    {",
+         "        if (c == ' ')",
+         "            poczatekSlowa = true;",
+         "        else",
+         "        {",
+         "            c = poczatekSlowa ? toupper(c) : tolower(c);",
+         "            poczatekSlowa = false;",
+         "        }",
+         "    }",
+         "    return tekst;",
+         "}"
+      ],
+      "description" : "[STR-17] capitalize every word: \"jan kowalski\" -> \"Jan Kowalski\"",
+      "prefix" : [
+         "str17",
+         "kazdeSlowoWielka"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-18 inicjaly" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: inicjaly",
+         " * opis funkcji: tworzy inicjały z pierwszych liter kolejnych słów",
+         " * parametry: tekst - imiona i nazwisko",
+         " * zwracany typ i opis: string - inicjały wielkimi literami",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string inicjaly(const string &tekst)",
+         "{",
+         "    istringstream strumien(tekst);",
+         "    string slowo, wynik;",
+         "    while (strumien >> slowo)",
+         "        wynik += toupper(slowo[0]);",
+         "    return wynik;",
+         "}"
+      ],
+      "description" : "[STR-18] initials: \"Jan Maria Rokita\" -> \"JMR\"",
+      "prefix" : [
+         "str18",
+         "inicjaly"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-19 zamienSlowa" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zamienSlowa",
+         " * opis funkcji: zamienia miejscami pierwszy i drugi człon napisu dwuczłonowego",
+         " * parametry: tekst - napis złożony z dwóch słów oddzielonych spacją",
+         " * zwracany typ i opis: string - napis z zamienionymi członami (bez zmian, gdy brak spacji)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "string zamienSlowa(const string &tekst)",
+         "{",
+         "    size_t spacja = tekst.find(' ');",
+         "    if (spacja == string::npos) return tekst;",
+         "    return tekst.substr(spacja + 1) + \" \" + tekst.substr(0, spacja);",
+         "}"
+      ],
+      "description" : "[STR-19] swap the two words of a 2-word text: \"Jan Kowalski\" -> \"Kowalski Jan\"",
+      "prefix" : [
+         "str19",
+         "zamienSlowa"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-20 czestoscLiter" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czestoscLiter",
+         " * opis funkcji: zlicza i wyświetla, ile razy każda litera a..z występuje w napisie",
+         " * parametry: tekst - analizowany napis",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void czestoscLiter(const string &tekst)",
+         "{",
+         "    int licznik[26] = {0};",
+         "    for (char c : tekst)",
+         "        if (isalpha(c))",
+         "            licznik[tolower(c) - 'a']++;",
+         "    for (int i = 0; i < 26; i++)",
+         "        if (licznik[i] > 0)",
+         "            cout << (char)('a' + i) << \": \" << licznik[i] << endl;",
+         "}"
+      ],
+      "description" : "[STR-20] frequency of each letter a..z (prints only the letters that occur)",
+      "prefix" : [
+         "str20",
+         "czestoscLiter"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-21 czyAnagram" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: czyAnagram",
+         " * opis funkcji: sprawdza, czy dwa napisy składają się z tych samych znaków",
+         " * parametry: a - pierwszy napis",
+         " *            b - drugi napis",
+         " * zwracany typ i opis: bool - true, gdy napisy są anagramami",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "bool czyAnagram(string a, string b)",
+         "{",
+         "    sort(a.begin(), a.end());",
+         "    sort(b.begin(), b.end());",
+         "    return a == b;",
+         "}"
+      ],
+      "description" : "[STR-21] anagram check (same letters, other order: \"listen\" / \"silent\")",
+      "prefix" : [
+         "str21",
+         "czyAnagram"
+      ],
+      "scope" : "cpp"
+   },
+   "STR-22 zliczWielkieIMale" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczWielkieIMale",
+         " * opis funkcji: zlicza wielkie i małe litery w napisie",
+         " * parametry: tekst - analizowany napis",
+         " *            wielkie - (wyjście) liczba wielkich liter",
+         " *            male - (wyjście) liczba małych liter",
+         " * zwracany typ i opis: brak (wyniki przez parametry referencyjne)",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void zliczWielkieIMale(const string &tekst, int &wielkie, int &male)",
+         "{",
+         "    wielkie = male = 0;",
+         "    for (char c : tekst)",
+         "    {",
+         "        if (isupper(c)) wielkie++;",
+         "        else if (islower(c)) male++;",
+         "    }",
+         "}"
+      ],
+      "description" : "[STR-22] count upper and lower case letters (results through & parameters)",
+      "prefix" : [
+         "str22",
+         "zliczWielkieIMale"
+      ],
+      "scope" : "cpp"
+   },
+   "TPL-01 wiekszy" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wiekszy",
+         " * opis funkcji: szablon funkcji zwracający większą z dwóch wartości dowolnego typu",
+         " * parametry: a - pierwsza wartość",
+         " *            b - druga wartość",
+         " * zwracany typ i opis: T - większa z wartości",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "template <typename T>",
+         "T wiekszy(T a, T b)",
+         "{",
+         "    return (a > b) ? a : b;",
+         "}"
+      ],
+      "description" : "[TPL-01] function template: larger of two values of ANY type",
+      "prefix" : [
+         "tpl01",
+         "wiekszy"
+      ],
+      "scope" : "cpp"
+   },
+   "TPL-02 wyswietlDowolna" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wyswietlDowolna",
+         " * opis funkcji: szablon funkcji wyświetlający elementy tablicy dowolnego typu",
+         " * parametry: tab - tablica",
+         " *            n - liczba elementów",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "template <typename T>",
+         "void wyswietlDowolna(const T tab[], int n)",
+         "{",
+         "    for (int i = 0; i < n; i++)",
+         "        cout << tab[i] << \" \";",
+         "    cout << endl;",
+         "}"
+      ],
+      "description" : "[TPL-02] function template: display an array of ANY type",
+      "prefix" : [
+         "tpl02",
+         "wyswietlDowolna"
+      ],
+      "scope" : "cpp"
+   },
+   "TPL-03 Para" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: Para",
+         " * opis klasy: szablon klasy przechowującej dwie wartości dowolnych typów",
+         " * pola: pierwsza - wartość typu T1",
+         " *       druga - wartość typu T2",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "template <typename T1, typename T2>",
+         "class Para",
+         "{",
+         "public:",
+         "    T1 pierwsza;",
+         "    T2 druga;",
+         "",
+         "    Para(T1 a, T2 b) : pierwsza(a), druga(b) {}",
+         "    void wyswietl() const;",
+         "};",
+         "",
+         "template <typename T1, typename T2>              // outside definition repeats the template line",
+         "void Para<T1, T2>::wyswietl() const",
+         "{",
+         "    cout << \"(\" << pierwsza << \", \" << druga << \")\" << endl;",
+         "}"
+      ],
+      "description" : "[TPL-03] class template with TWO type parameters + a method defined outside the class",
+      "prefix" : [
+         "tpl03",
+         "Para"
+      ],
+      "scope" : "cpp"
+   },
+   "TPL-04 oblicz" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: oblicz",
+         " * opis funkcji: szablon funkcji dwóch argumentów: dla <int, float> zwraca średnią,",
+         " *               dla <double, double> iloczyn, dla pozostałych typów (konkretyzacja) sumę",
+         " * parametry: a - pierwszy argument",
+         " *            b - drugi argument",
+         " * zwracany typ i opis: double - wynik obliczenia",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "template <typename T1, typename T2>",
+         "double oblicz(T1 a, T2 b)                         // general version -> konkretyzacja",
+         "{",
+         "    cout << \"konkretyzacja (suma): \";",
+         "    return a + b;",
+         "}",
+         "",
+         "template <>",
+         "double oblicz<int, float>(int a, float b)         // specjalizacja int, float",
+         "{",
+         "    cout << \"specjalizacja int,float (srednia): \";",
+         "    return (a + b) / 2.0;",
+         "}",
+         "",
+         "template <>",
+         "double oblicz<double, double>(double a, double b) // specjalizacja double, double",
+         "{",
+         "    cout << \"specjalizacja double,double (iloczyn): \";",
+         "    return a * b;",
+         "}",
+         "// calls:  oblicz<int, float>(3, 4.5f)  - explicit (jawne)",
+         "//         oblicz(2.0, 3.0)            - implicit (niejawne), types deduced -> double,double"
+      ],
+      "description" : "[TPL-04] function template + 2 full SPECIALIZATIONS (int,float and double,double); other types = instantiation",
+      "prefix" : [
+         "tpl04",
+         "oblicz"
+      ],
+      "scope" : "cpp"
+   },
+   "TPL-05 Szablon" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa klasy: Szablon",
+         " * opis klasy: szablon klasy z metodą info(); dla typów <int, float> istnieje osobna",
+         " *             specjalizacja, pozostałe typy używają wersji ogólnej (konkretyzacja)",
+         " * pola: a, b - przechowywane wartości",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "template <typename T1, typename T2>",
+         "class Szablon",
+         "{",
+         "public:",
+         "    T1 a;",
+         "    T2 b;",
+         "    void info() const { cout << \"konkretyzacja\" << endl; }",
+         "};",
+         "",
+         "template <>",
+         "class Szablon<int, float>                         // the WHOLE class rewritten for int, float",
+         "{",
+         "public:",
+         "    int a;",
+         "    float b;",
+         "    void info() const { cout << \"specjalizacja int, float\" << endl; }",
+         "};",
+         "// specializing only ONE method instead:  template <> void Szablon<double, float>::info() const { ... }"
+      ],
+      "description" : "[TPL-05] class template + full class SPECIALIZATION for one type pair",
+      "prefix" : [
+         "tpl05",
+         "Szablon"
+      ],
+      "scope" : "cpp"
+   },
+   "VEC-01 wypelnijWektor" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wypelnijWektor",
+         " * opis funkcji: wypełnia wektor n liczbami pseudolosowymi z przedziału min..max",
+         " * parametry: v - wektor do wypełnienia (przekazany przez referencję)",
+         " *            n - liczba elementów",
+         " *            min - najmniejsza losowana wartość",
+         " *            max - największa losowana wartość",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wypelnijWektor(vector<int> &v, int n, int min, int max)",
+         "{",
+         "    v.clear();",
+         "    for (int i = 0; i < n; i++)",
+         "        v.push_back(rand() % (max - min + 1) + min);",
+         "}"
+      ],
+      "description" : "[VEC-01] fill a vector with n random ints min..max (vector passed by reference!)",
+      "prefix" : [
+         "vec01",
+         "wypelnijWektor"
+      ],
+      "scope" : "cpp"
+   },
+   "VEC-02 wyswietlWektor" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: wyswietlWektor",
+         " * opis funkcji: wyświetla elementy wektora w jednym wierszu",
+         " * parametry: v - wektor liczb",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void wyswietlWektor(const vector<int> &v)",
+         "{",
+         "    for (int x : v)",
+         "        cout << x << \" \";",
+         "    cout << endl;",
+         "}"
+      ],
+      "description" : "[VEC-02] display a vector in one line",
+      "prefix" : [
+         "vec02",
+         "wyswietlWektor"
+      ],
+      "scope" : "cpp"
+   },
+   "VEC-03 statystykiWektora" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: statystykiWektora",
+         " * opis funkcji: wyświetla najmniejszą i największą wartość, sumę i średnią elementów wektora",
+         " * parametry: v - niepusty wektor liczb",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void statystykiWektora(const vector<int> &v)",
+         "{",
+         "    int min = *min_element(v.begin(), v.end());",
+         "    int max = *max_element(v.begin(), v.end());",
+         "    long long suma = accumulate(v.begin(), v.end(), 0LL);",
+         "    cout << \"min: \" << min << \", max: \" << max << \", suma: \" << suma",
+         "         << \", srednia: \" << (double)suma / v.size() << endl;",
+         "}"
+      ],
+      "description" : "[VEC-03] min, max, sum, average of a vector with <algorithm>/<numeric> (prints them)",
+      "prefix" : [
+         "vec03",
+         "statystykiWektora"
+      ],
+      "scope" : "cpp"
+   },
+   "VEC-04 usunDuplikaty" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: usunDuplikaty",
+         " * opis funkcji: usuwa powtarzające się wartości z wektora (wynik jest posortowany)",
+         " * parametry: v - wektor liczb (przekazany przez referencję)",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void usunDuplikaty(vector<int> &v)",
+         "{",
+         "    sort(v.begin(), v.end());",
+         "    v.erase(unique(v.begin(), v.end()), v.end());",
+         "}"
+      ],
+      "description" : "[VEC-04] remove duplicates (result is sorted)",
+      "prefix" : [
+         "vec04",
+         "usunDuplikaty"
+      ],
+      "scope" : "cpp"
+   },
+   "VEC-05 usunParzyste" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: usunParzyste",
+         " * opis funkcji: usuwa z wektora wszystkie liczby parzyste",
+         " * parametry: v - wektor liczb (przekazany przez referencję)",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void usunParzyste(vector<int> &v)",
+         "{",
+         "    v.erase(remove_if(v.begin(), v.end(), [](int x) { return x % 2 == 0; }), v.end());",
+         "}"
+      ],
+      "description" : "[VEC-05] remove all elements meeting a condition (here: even) - erase-remove idiom",
+      "prefix" : [
+         "vec05",
+         "usunParzyste"
+      ],
+      "scope" : "cpp"
+   },
+   "VEC-06 Zawodnik" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa struktury: Zawodnik",
+         " * opis struktury: zawodnik z liczbą punktów",
+         " * pola: nazwisko, punkty",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "struct Zawodnik",
+         "{",
+         "    string nazwisko;",
+         "    int punkty;",
+         "};",
+         "",
+         "/********************************************************",
+         " * nazwa funkcji: sortujZawodnikow",
+         " * opis funkcji: sortuje zawodników malejąco według liczby punktów",
+         " * parametry: lista - wektor zawodników (przekazany przez referencję)",
+         " * zwracany typ i opis: brak",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "void sortujZawodnikow(vector<Zawodnik> &lista)",
+         "{",
+         "    sort(lista.begin(), lista.end(), [](const Zawodnik &a, const Zawodnik &b) {",
+         "        return a.punkty > b.punkty;               // > descending, < ascending",
+         "    });",
+         "}"
+      ],
+      "description" : "[VEC-06] sort a vector of structs by a field (descending) with a lambda",
+      "prefix" : [
+         "vec06",
+         "Zawodnik",
+         "sortujZawodnikow"
+      ],
+      "scope" : "cpp"
+   },
+   "VEC-07 zliczKazdeSlowo" : {
+      "body" : [
+         "/********************************************************",
+         " * nazwa funkcji: zliczKazdeSlowo",
+         " * opis funkcji: zlicza wystąpienia każdego słowa w tekście i wyświetla wyniki alfabetycznie",
+         " * parametry: tekst - analizowany tekst",
+         " * zwracany typ i opis: map<string, int> - słowo -> liczba wystąpień",
+         " * autor: <numer zdającego>",
+         " ********************************************************/",
+         "map<string, int> zliczKazdeSlowo(const string &tekst)",
+         "{",
+         "    map<string, int> licznik;",
+         "    istringstream strumien(tekst);",
+         "    string slowo;",
+         "    while (strumien >> slowo)",
+         "        licznik[slowo]++;                         // a new key starts at 0",
+         "    for (const auto &para : licznik)",
+         "        cout << para.first << \": \" << para.second << endl;",
+         "    return licznik;",
+         "}"
+      ],
+      "description" : "[VEC-07] count how many times each word occurs (map<string,int>), prints in alphabetical order",
+      "prefix" : [
+         "vec07",
+         "zliczKazdeSlowo"
+      ],
+      "scope" : "cpp"
+   }
+}

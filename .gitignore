@@ -1,1 +1,6 @@
 *.exe
+# files created when the examples run
+demo_*.txt
+liczby.txt
+plik.txt
+wyjscie.txt
