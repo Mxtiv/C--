@@ -4,3 +4,10 @@ demo_*.txt
 liczby.txt
 plik.txt
 wyjscie.txt
+
+# Visual Studio build output
+x64/
+Debug/
+Release/
+.vs/
+*.user
