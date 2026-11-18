@@ -2,6 +2,19 @@
 
 Code you can **take straight into a program** you're writing, sorted so you can find it fast.
 Everything compiles with `g++ -std=c++17` and was test-run.
+The console part of my INF.04 toolbox (siblings: `inf04-react` for web, `inf04-desktop` for C# WinForms).
+
+## What do you need? → go here
+
+| I need… | Open |
+|---|---|
+| **a task like one from a past exam**, fully solved | [1_READY_PROGRAMS](1_READY_PROGRAMS/README.md): 16 programs; see the [table below](#ready-programs) |
+| **one function / pattern** (search, sort, input check, class, file…) | [2_BUILDING_BLOCKS](2_BUILDING_BLOCKS/README.md): 130 blocks; the [task phrase → block](#task-phrase--block) table, or Ctrl+F in the [catalog](#building-blocks---full-catalog) |
+| an **empty program to start from** (includes, `srand`, comment boxes, hand-in checklist) | [2_BUILDING_BLOCKS/00_START_TEMPLATE.cpp](2_BUILDING_BLOCKS/00_START_TEMPLATE.cpp) |
+| the **documentation comment** (nazwa funkcji / opis / parametry / zwracany typ / autor) | every block already has one; empty boxes are in the start template |
+| to **understand** how something works | [3_NOTES](3_NOTES/README.md): topic chapters |
+
+**Folders:**
 
 | Folder | What's inside | Use it when |
 |---|---|---|
@@ -39,6 +52,46 @@ Everything compiles with `g++ -std=c++17` and was test-run.
 | 15 | [**15_plik_liczby_statystyki.cpp**](1_READY_PROGRAMS/15_plik_liczby_statystyki.cpp)<br>files - write n random numbers to a file, read them back, display, min / max / sum / average, append the result to the file | [FILE-01](2_BUILDING_BLOCKS/09_files.cpp#L15) [FILE-03](2_BUILDING_BLOCKS/09_files.cpp#L52) [FILE-02](2_BUILDING_BLOCKS/09_files.cpp#L35) [VEC-03](2_BUILDING_BLOCKS/11_vector_stl.cpp#L52) [IO-01](2_BUILDING_BLOCKS/01_input_output.cpp#L14) |
 | 16 | [**16_generator_hasel.cpp**](1_READY_PROGRAMS/16_generator_hasel.cpp)<br>password generator - length + options (uppercase, digits, special characters), generates several passwords | [RND-07](2_BUILDING_BLOCKS/02_random.cpp#L118) [IO-01](2_BUILDING_BLOCKS/01_input_output.cpp#L14) [IO-04](2_BUILDING_BLOCKS/01_input_output.cpp#L76) |
 
+
+## Task phrase → block
+
+What the sheet says (Polish) → the block to paste.
+
+| The sheet says… | Block |
+|---|---|
+| "wczytaj liczbę", "sprawdź poprawność danych" | [IO-01](2_BUILDING_BLOCKS/01_input_output.cpp#L14) [IO-02](2_BUILDING_BLOCKS/01_input_output.cpp#L39) [STR-16](2_BUILDING_BLOCKS/06_strings.cpp#L288) |
+| "menu", "powtarzaj dopóki" | [IO-05](2_BUILDING_BLOCKS/01_input_output.cpp#L97) [IO-04](2_BUILDING_BLOCKS/01_input_output.cpp#L76) |
+| "wypełnij tablicę liczbami pseudolosowymi" | [RND-02](2_BUILDING_BLOCKS/02_random.cpp#L29) [VEC-01](2_BUILDING_BLOCKS/11_vector_stl.cpp#L19) |
+| "bez powtórzeń", "lotto" | [RND-03](2_BUILDING_BLOCKS/02_random.cpp#L46) |
+| "wyświetl w postaci indeks: wartość" | [ARR-01](2_BUILDING_BLOCKS/03_arrays.cpp#L16) |
+| "suma", "średnia", "iloczyn" | [ARR-03](2_BUILDING_BLOCKS/03_arrays.cpp#L47) [ARR-04](2_BUILDING_BLOCKS/03_arrays.cpp#L64) [ARR-10](2_BUILDING_BLOCKS/03_arrays.cpp#L175) |
+| "wartość najmniejsza / największa", "wartości ekstremalne" | [ARR-05](2_BUILDING_BLOCKS/03_arrays.cpp#L82) [ARR-06](2_BUILDING_BLOCKS/03_arrays.cpp#L100) [ARR-07](2_BUILDING_BLOCKS/03_arrays.cpp#L118) |
+| "wyszukaj … zwraca indeks lub -1" | [ARR-13](2_BUILDING_BLOCKS/03_arrays.cpp#L235) [ARR-14](2_BUILDING_BLOCKS/03_arrays.cpp#L253) |
+| "wyszukiwanie z wartownikiem" | [ARR-16](2_BUILDING_BLOCKS/03_arrays.cpp#L293) |
+| "wyszukiwanie binarne / połówkowe" | [ARR-17](2_BUILDING_BLOCKS/03_arrays.cpp#L313) |
+| "podzielne przez k", "ile elementów spełnia" | [ARR-11](2_BUILDING_BLOCKS/03_arrays.cpp#L192) [ARR-12](2_BUILDING_BLOCKS/03_arrays.cpp#L217) |
+| "ile razy wystąpiła", "histogram", "kości" | [ARR-15](2_BUILDING_BLOCKS/03_arrays.cpp#L274) [ARR-19](2_BUILDING_BLOCKS/03_arrays.cpp#L351) |
+| "sortowanie bąbelkowe" | [SORT-01](2_BUILDING_BLOCKS/04_sorting.cpp#L14) [SORT-02](2_BUILDING_BLOCKS/04_sorting.cpp#L41) |
+| "sortowanie przez wybieranie" | [SORT-03](2_BUILDING_BLOCKS/04_sorting.cpp#L67) [SORT-04](2_BUILDING_BLOCKS/04_sorting.cpp#L89) |
+| "sortowanie przez wstawianie" | [SORT-05](2_BUILDING_BLOCKS/04_sorting.cpp#L111) |
+| "sortowanie szybkie" | [SORT-06](2_BUILDING_BLOCKS/04_sorting.cpp#L136) |
+| "liczba pierwsza", "sito Eratostenesa" | [NUM-01](2_BUILDING_BLOCKS/05_numbers.cpp#L17) [NUM-02](2_BUILDING_BLOCKS/05_numbers.cpp#L34) |
+| "NWD algorytmem Euklidesa", "NWW" | [NUM-05](2_BUILDING_BLOCKS/05_numbers.cpp#L100) [NUM-04](2_BUILDING_BLOCKS/05_numbers.cpp#L79) [NUM-07](2_BUILDING_BLOCKS/05_numbers.cpp#L139) |
+| "silnia", "ciąg Fibonacciego" | [NUM-08](2_BUILDING_BLOCKS/05_numbers.cpp#L153) [NUM-10](2_BUILDING_BLOCKS/05_numbers.cpp#L183) |
+| "liczba doskonała", "dzielniki" | [NUM-18](2_BUILDING_BLOCKS/05_numbers.cpp#L334) [NUM-19](2_BUILDING_BLOCKS/05_numbers.cpp#L352) |
+| "zamiana na system dwójkowy" | [NUM-24](2_BUILDING_BLOCKS/05_numbers.cpp#L453) |
+| "zlicz samogłoski / spółgłoski / cyfry" | [STR-03](2_BUILDING_BLOCKS/06_strings.cpp#L45) [STR-04](2_BUILDING_BLOCKS/06_strings.cpp#L63) [STR-05](2_BUILDING_BLOCKS/06_strings.cpp#L81) |
+| "palindrom", "odwróć napis" | [STR-11](2_BUILDING_BLOCKS/06_strings.cpp#L187) [STR-10](2_BUILDING_BLOCKS/06_strings.cpp#L171) |
+| "szyfr Cezara", "klucz" | [STR-14](2_BUILDING_BLOCKS/06_strings.cpp#L251) [STR-15](2_BUILDING_BLOCKS/06_strings.cpp#L274) |
+| "generator haseł" | [RND-07](2_BUILDING_BLOCKS/02_random.cpp#L118) |
+| "PESEL", "cyfra kontrolna", "płeć" | [PESEL-03](2_BUILDING_BLOCKS/07_pesel.cpp#L50) [PESEL-04](2_BUILDING_BLOCKS/07_pesel.cpp#L72) [PESEL-05](2_BUILDING_BLOCKS/07_pesel.cpp#L88) |
+| "klasa z polami prywatnymi, konstruktor, metody" | [CLS-01](2_BUILDING_BLOCKS/08_classes.cpp#L20) |
+| "klasa z tablicą", "tablica dynamiczna" | [CLS-03](2_BUILDING_BLOCKS/08_classes.cpp#L116) [CLS-04](2_BUILDING_BLOCKS/08_classes.cpp#L185) |
+| "licznik obiektów", "pole statyczne" | [CLS-02](2_BUILDING_BLOCKS/08_classes.cpp#L74) |
+| "dziedziczenie", "polimorfizm", "klasa abstrakcyjna" | [CLS-05](2_BUILDING_BLOCKS/08_classes.cpp#L238) [CLS-06](2_BUILDING_BLOCKS/08_classes.cpp#L282) |
+| "zapisz do pliku", "odczytaj z pliku" | [FILE-01](2_BUILDING_BLOCKS/09_files.cpp#L15) [FILE-03](2_BUILDING_BLOCKS/09_files.cpp#L52) [FILE-04](2_BUILDING_BLOCKS/09_files.cpp#L75) [FILE-05](2_BUILDING_BLOCKS/09_files.cpp#L93) |
+| "wyjątek", "obsłuż błąd" | [EXC-03](2_BUILDING_BLOCKS/10_exceptions.cpp#L42) [EXC-05](2_BUILDING_BLOCKS/10_exceptions.cpp#L79) |
+| "szablon funkcji / klasy" | [TPL-01](2_BUILDING_BLOCKS/12_templates.cpp#L11) [TPL-03](2_BUILDING_BLOCKS/12_templates.cpp#L43) |
 
 ## Building blocks - full catalog
 
@@ -238,5 +291,5 @@ How to paste: copy from the comment box to the end of the code under a `//@` lin
 ## More
 
 * [3_NOTES](3_NOTES/README.md) - learning material by topic · [00_Start_Here](3_NOTES/00_Start_Here/README.md) - compiling, running, compiler errors decoded
-* [ORIGINAL_FILES_MAP.md](ORIGINAL_FILES_MAP.md) - where every file from the original repo (`C---main.zip`) ended up
+* [3_NOTES/ORIGINAL_FILES_MAP.md](3_NOTES/ORIGINAL_FILES_MAP.md) - where every file from the original repo (`C---main.zip`) ended up
 * Build: `g++ -std=c++17 file.cpp -o program.exe` · VS Code: **Ctrl+Shift+B** builds the open file
