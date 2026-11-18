@@ -1,65 +1,45 @@
 // ======================================================================
-// const member MUST be set in the initializer list; constructors defined outside the class
+// A const field CANNOT be assigned in the constructor body - it MUST be set
+// in the initializer list. This is the one place where the list is required
+// (not needed at the exam - there you simply don't make fields const).
+// Also: constructor and method defined OUTSIDE the class (Klasa::metoda).
 // Original file: unsorted/various/listaInicjalizacyjna.cpp
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
-// Definicja klasy Pracownik:
-class Pracownik {
-const int id = 0; // inicjalizacja stałej const wartością domyślną
-string imie, nazwisko;
+
+class Pracownik
+{
+private:
+    const int id;      // stała - ustawiona raz, potem nie da się zmienić
+    string imie;
+
 public:
-// Prototypy konstruktorów:
-Pracownik();
-Pracownik(int, string, string);
-// Prototyp funkcji członkowskiej:
-void wyswietlDane();
+    Pracownik(int noweId, string noweImie);   // tylko prototyp
+    void wyswietlDane();
 };
-// Definicja konstruktora domyślnego z listą inicjalizatorów zmiennych członkowskich:
-Pracownik::Pracownik():
-id {-1},
-imie {"Imię domyślne"},
-nazwisko {"Nazwisko domyślne"} {
-cout << "Komunikat kontrolny: wywołano konstruktor domyślny ..." << endl;
+
+// definicja konstruktora poza klasą
+Pracownik::Pracownik(int noweId, string noweImie) : id(noweId)   // const -> lista inicjalizacyjna
+{
+    // id = noweId;    // BŁĄD - do const nie można przypisać
+    imie = noweImie;   // zwykłe pole - normalnie w ciele
 }
-// Definicja konstruktora parametrycznego z listą inicjalizatorów zmiennych członkowskich:
-Pracownik::Pracownik(int pId, string pImie, string pNazwisko):
-id {pId},
-imie {pImie},
-nazwisko {pNazwisko} {
-cout << "Komunikat kontrolny: wywołano konstruktor parametryczny ..."
-<< endl;
+
+void Pracownik::wyswietlDane()
+{
+    cout << "Id: " << id << ", imie: " << imie << endl;
 }
-// Definicja funkcji członkowskiej:
-void Pracownik::wyswietlDane() {
-cout << "Numer identyfikacyjny: " << id << endl;
-cout << "Imię: " << imie << endl;
-cout << "Nazwisko: " << nazwisko << endl;
-}
-int main() {
-// Utworzenie obiektu pracownik1 jako instancji klasy Pracownik:
-Pracownik pracownik1;   
-/* UWAGA
-* Konstruktor domyślny zdefiniowany przez programistę został wywołany w sposób niejawny.
-* Konstruktor ten można oczywiście wywołać w sposób jawny:
-* Pracownik pracownik1 = Pracownik();
-* Obiekt pracownik1 został utworzony i zainicjowany wartościami domyślnymi.
-*/
-// Wyświetlenie wartości przechowywanych w zmiennych członkowskich obiektu pracownik1:
-pracownik1.wyswietlDane();
-cout << endl;
-// Utworzenie obiektu pracownik2 jako instancji klasy Pracownik:
-Pracownik pracownik2(1, "Jan", "Kowalski");
-/* UWAGA
-* Konstruktor parametryczny zdefiniowany przez programistę został wywołany w sposób niejawny.
-* Obiekt pracownik2 został utworzony i zainicjowany wartościami argumentów podanych w wywołaniu
-* tego konstruktora.
-* Konstruktor parametryczny można oczywiście wywołać w sposób jawny:
-* Pracownik pracownik2 = Pracownik(1, "Jan", "Kowalski");
-*/
-// Wyświetlenie wartości przechowywanych w zmiennych członkowskich obiektu pracownik2:
-pracownik2.wyswietlDane();
-Pracownik pracownik3 {2,"bob","the bill"}; //tak też można inicjalizować
-return 0;
+
+int main()
+{
+    Pracownik p1(1, "Jan");
+    p1.wyswietlDane();
+
+    Pracownik p2(2, "Anna");
+    p2.wyswietlDane();
+
+    return 0;
 }

@@ -1,37 +1,41 @@
 // ======================================================================
-// overloading: print(int), print(double), print(string), print(int,int)
+// overloading: wypisz(int), wypisz(double), wypisz(string), wypisz(int,int)
 // Original file: Functions/overloadFunctions.cpp
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-// Overloaded function to print an integer
-void print(int i) {
-    cout << "Printing integer: " << i << endl;
+// Overloading = the SAME name, a DIFFERENT parameter list (number or types).
+// The return type alone is not enough to tell them apart.
+
+void wypisz(int liczba)
+{
+    cout << "Printing integer: " << liczba << endl;
 }
 
-// Overloaded function to print a double
-void print(double d) {
-    cout << "Printing double: " << d << endl;
+void wypisz(double liczba)
+{
+    cout << "Printing double: " << liczba << endl;
 }
 
-// Overloaded function to print a string
-void print(const string& s) {
-    cout << "Printing string: " << s << endl;
+void wypisz(string tekst)
+{
+    cout << "Printing string: " << tekst << endl;
 }
 
-// Overloaded function to print two integers
-void print(int i, int j) {
-    cout << "Printing two integers: " << i << " and " << j << endl;
+void wypisz(int a, int b)
+{
+    cout << "Printing two integers: " << a << " and " << b << endl;
 }
 
-int main() {
-    // Calling overloaded functions
-    print(42);           // Calls print(int)
-    print(3.14);         // Calls print(double)
-    print("Hello!");     // Calls print(string)
-    print(10, 20);       // Calls print(int, int)
+int main()
+{
+    wypisz(42);                  // calls wypisz(int)
+    wypisz(3.14);                // calls wypisz(double)
+    wypisz(string("Hello!"));    // calls wypisz(string)
+    wypisz(10, 20);              // calls wypisz(int, int)
 
     return 0;
 }

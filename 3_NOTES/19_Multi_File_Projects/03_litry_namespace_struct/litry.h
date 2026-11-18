@@ -9,22 +9,22 @@
 #ifndef LITRY_H
 #define LITRY_H
 
-namespace inlitery
+// namespace = "nazwisko" dla nazw; uzycie: pojemnosci::WANNA
+namespace pojemnosci
 {
-    const int litr = 1;      // const at namespace scope is fine in a header
-    const int galons = 5;
-    const int bath = 200;
-    const int tanks = 1000;
+    const int GALON = 5;
+    const int WANNA = 200;
+    const int CYSTERNA = 1000;
 }
 
-struct litry
+struct Litry
 {
-    int litr{};
-    int galons{};
-    int bath{};
-    int tanks{};
+    int cysterny;
+    int wanny;
+    int galony;
+    int litry;
 };
 
-void litrywpojemnikach(int litr, litry &liter);
+void zamienLitry(int ileLitrow, Litry &wynik);
 
 #endif

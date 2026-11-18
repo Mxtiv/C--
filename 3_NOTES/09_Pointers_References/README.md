@@ -9,30 +9,31 @@ int x = 5;
 int *p = &x;     // p holds the ADDRESS of x       *p = 7;   // changes x (dereference)
 int &r = x;      // r is another NAME for x        r = 9;    // changes x
 int *q = nullptr;                    // points nowhere - check before using
-int *one = new int(5);   delete one;          // single object
-int *arr = new int[n];   delete[] arr;        // array -> delete[]
-p++  *(p + i) == p[i]                         // pointer arithmetic on arrays
-const int *a;    // can't change the VALUE        int *const b = &x;  // can't change the ADDRESS
-obj->field  ==  (*obj).field                  // member access through a pointer
-unique_ptr<T> u = make_unique<T>(...);        // deletes itself (#include <memory>)
+int *one = new int;      delete one;          // single value
+int *tab = new int[n];   delete[] tab;        // array -> delete[]
+tab = nullptr;                                // after delete, so it doesn't point to freed memory
+p++   *(p + i) == p[i]                        // pointer arithmetic on arrays
+void f(int *p)  -> f(&x);      void f(int &r)  -> f(x);
+obiekt->pole  ==  (*obiekt).pole              // member access through a pointer
+unique_ptr<int> u = make_unique<int>(5);      // only to recognise: deletes itself (#include <memory>)
 ```
 
 ## Files
 
 | File | What it shows | |
 |---|---|---|
-| [01_overview_pointers.cpp](01_overview_pointers.cpp) | basics, dereference, pointer arithmetic, pointer to array, pointer to pointer, nullptr, function pointer, new/delete, const pointer vs pointer to const, array of pointers | ⭐ 🔧 fixed |
-| [02_address_operator_sizeof.cpp](02_address_operator_sizeof.cpp) | &amp; address-of and sizeof for int/double/long/float (Polish comments) |  |
-| [03_new_delete.cpp](03_new_delete.cpp) | new int, new double, new int[5], delete / delete[], set to nullptr after delete | ⭐ |
+| [01_overview_pointers.cpp](01_overview_pointers.cpp) | basics, dereference, pointer arithmetic, pointer to array, pointer to pointer, nullptr, pointer parameter, new/delete | ⭐ |
+| [02_address_operator_sizeof.cpp](02_address_operator_sizeof.cpp) | &amp; address-of and sizeof for int / double / char / bool (Polish comments) |  |
+| [03_new_delete.cpp](03_new_delete.cpp) | new int, new double, new int[n], delete / delete[], set to nullptr after delete | ⭐ |
 | [04_new_delete_grades.cpp](04_new_delete_grades.cpp) | 4 dynamically allocated doubles, read grades, average |  |
-| [05_references_to_objects.cpp](05_references_to_objects.cpp) | prototypes before main, return Pracownik&amp;, const Pracownik&amp; parameter |  |
-| [06_references_and_smart_pointers.cpp](06_references_and_smart_pointers.cpp) | references (alias), reference vs pointer side by side, swap 3 ways, const reference, dangling pointer, smart pointers (unique_ptr, shared_ptr) | 🆕 added |
+| [05_references_to_objects.cpp](05_references_to_objects.cpp) | prototypes before main, Pracownik&amp; parameter fills the caller's object |  |
+| [06_references_and_smart_pointers.cpp](06_references_and_smart_pointers.cpp) | references (alias), reference vs pointer, swap 3 ways, dangling pointer, tiny unique_ptr example | 🆕 added |
 
 ### exercises/ - tests (sprawdziany), tasks and classmates' versions
 
 | File | What it shows | |
 |---|---|---|
-| [object_on_heap_pointer_functions.cpp](exercises/object_on_heap_pointer_functions.cpp) | object created with new, passed by pointer to functions | 🔧 fixed |
+| [object_on_heap_pointer_functions.cpp](exercises/object_on_heap_pointer_functions.cpp) | object created with new, passed by pointer to functions (-&gt;) | 🔧 fixed |
 
 ---
 ⭐ best file to learn the topic from · 🆕 added to fill a gap · 🔧 bug fixed (the file header says what was wrong)

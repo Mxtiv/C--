@@ -1,6 +1,7 @@
 // Klasa Kosc - deklaracja (implementacja w kosc.cpp). Osobny plik .h = można jej użyć w testach.
 #pragma once
 #include <string>
+using namespace std;
 
 /******************************************************
 nazwa klasy: Kosc
@@ -16,8 +17,7 @@ class Kosc
 {
 public:
     static int liczbaInstancji;
-    std::string nazwyPlikow[7] = {"kosc0.png", "kosc1.png", "kosc2.png", "kosc3.png",
-                                  "kosc4.png", "kosc5.png", "kosc6.png"};
+    string nazwyPlikow[7];
     int liczbaOczek;
     int idPliku;
     bool dostepna;
@@ -26,5 +26,5 @@ public:
     Kosc();
     void rzuc();
     void zablokuj();
-    std::string wartoscSlownie();
+    string wartoscSlownie();
 };

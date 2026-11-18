@@ -4,58 +4,71 @@
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
-class Pracownik                                                                               //klasa bazowa
+
+class Pracownik
 {
 private:
     string imie;
+
 protected:
     string id;
+
 public:
     string nazwisko;
 
-    void setImie(string noweImie)                                                               
+    Pracownik()
+    {
+        imie = "";
+        id = "";
+        nazwisko = "";
+    }
+
+    void setImie(string noweImie)
     {
         imie = noweImie;
     }
+
     string getImie()
     {
         return imie;
     }
-    string zwrocDane()
-    {
-        return imie + " " + nazwisko + id;
-    }
 };
 
-class Nauczyciel : protected Pracownik                                                      //klasa dziedziczaca z dziedziczeniem protected
+// dziedziczenie PROTECTED: public z bazy (nazwisko, setImie, getImie) staje sie protected
+class Nauczyciel : protected Pracownik
 {
 public:
     string przedmiot;
 
-    void setSetImie(string noweImie)
+    void zmienImie(string noweImie)
     {
         setImie(noweImie);
     }
+
     void setNazwisko(string noweNazwisko)
     {
         nazwisko = noweNazwisko;
     }
+
     string getNazwisko()
     {
         return nazwisko;
     }
+
     string zwrocDane()
     {
-        return getImie() + " " + getNazwisko() + ", przedmiot: " + przedmiot;
+        return getImie() + " " + nazwisko + ", przedmiot: " + przedmiot;
     }
 };
+
 int main()
 {
     Nauczyciel nauczyciel;
-    nauczyciel.setSetImie("Jan");
+    nauczyciel.zmienImie("Jan");
     nauczyciel.setNazwisko("Kowalski");
-    nauczyciel.przedmiot="elektronika";
+    nauczyciel.przedmiot = "elektronika";
     cout << "Dane nauczyciela: " << nauczyciel.zwrocDane() << endl;
     return 0;
 }

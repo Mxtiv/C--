@@ -22,7 +22,7 @@
 header of a chosen function: nazwa funkcji / opis funkcji / parametry / zwracany typ i opis / autor. Replace `00000000000` with **your exam number**.
 
 ## Notes
-`Data.txt` must be in the working folder. In Visual Studio that is the project folder, next to the `.vcxproj`; with g++ it is the folder you run from. The reader strips the UTF-8 BOM and the `\r` of Windows line ends.
+`Data.txt` must be in the working folder. In Visual Studio that is the project folder, next to the `.vcxproj`; with g++ it is the folder you run from. Records go into a plain array `Album albumy[100]`; the read function returns how many it read. Downloads are an `int` (32 bit, enough for 1506404300). The reader strips the UTF-8 BOM and the `\r` of Windows line ends.
 
 ## Related building blocks
 `FILE-04` · `CLS-08` – see the [catalog](../../README.md#building-blocks---full-catalog)

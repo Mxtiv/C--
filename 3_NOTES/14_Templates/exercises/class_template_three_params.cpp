@@ -10,41 +10,41 @@ template <typename T1, typename T2, typename T3>
 class SzablonKlasy
 {
 public:
-    T1 p1;
-    T2 p2;
-    T3 p3;
+    T1 pole1;
+    T2 pole2;
+    T3 pole3;
 
-    void display()
+    void wyswietl()
     {
         cout << "konkretyzacja" << endl;
     }
 };
 
-// Specjalizacja dla (double, float, int)
+// specjalizacja dla (double, float, int)
 template <>
 class SzablonKlasy<double, float, int>
 {
 public:
-    double p1;
-    float p2;
-    int p3;
+    double pole1;
+    float pole2;
+    int pole3;
 
-    void display()
+    void wyswietl()
     {
         cout << "spec double float int" << endl;
     }
 };
 
-// Specjalizacja dla (int, float, double)
+// specjalizacja dla (int, float, double)
 template <>
 class SzablonKlasy<int, float, double>
 {
 public:
-    int p1;
-    float p2;
-    double p3;
+    int pole1;
+    float pole2;
+    double pole3;
 
-    void display()
+    void wyswietl()
     {
         cout << "spec int float double" << endl;
     }
@@ -52,17 +52,17 @@ public:
 
 int main()
 {
-    SzablonKlasy<int, float, double> bob1;
-    bob1.display(); // spec int float double
+    SzablonKlasy<int, float, double> obiekt1;
+    obiekt1.wyswietl();    // spec int float double
 
-    SzablonKlasy<double, float, int> bob2;
-    bob2.display(); // spec double float int
+    SzablonKlasy<double, float, int> obiekt2;
+    obiekt2.wyswietl();    // spec double float int
 
-    SzablonKlasy<int, int, int> bob3;
-    bob3.display(); // konkretyzacja
+    SzablonKlasy<int, int, int> obiekt3;
+    obiekt3.wyswietl();    // konkretyzacja
 
-    SzablonKlasy<char, double, float> bob4;
-    bob4.display(); // konkretyzacja
+    SzablonKlasy<char, double, float> obiekt4;
+    obiekt4.wyswietl();    // konkretyzacja
 
     return 0;
 }

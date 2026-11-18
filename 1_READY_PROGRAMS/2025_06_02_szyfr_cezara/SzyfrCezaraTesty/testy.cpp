@@ -13,27 +13,27 @@ namespace SzyfrCezaraTesty
     public:
         TEST_METHOD(Szyfruj_KluczDodatniMniejszyOdAlfabetu_PrzesuwaLitery)
         {
-            Assert::AreEqual(std::string("def"), szyfruj("abc", 3));
+            Assert::AreEqual(string("def"), szyfruj("abc", 3));
         }
 
         TEST_METHOD(Szyfruj_LiteryPozaAlfabetem_ZawijaNaPoczatek)
         {
-            Assert::AreEqual(std::string("abc"), szyfruj("xyz", 3));
+            Assert::AreEqual(string("abc"), szyfruj("xyz", 3));
         }
 
         TEST_METHOD(Szyfruj_KluczUjemny_Odszyfrowuje)
         {
-            Assert::AreEqual(std::string("abc"), szyfruj("def", -3));
+            Assert::AreEqual(string("abc"), szyfruj("def", -3));
         }
 
         TEST_METHOD(Szyfruj_KluczWiekszyNizDlugoscAlfabetu_DzialaJakModulo26)
         {
-            Assert::AreEqual(std::string("def"), szyfruj("abc", 29));
+            Assert::AreEqual(string("def"), szyfruj("abc", 29));
         }
 
         TEST_METHOD(Szyfruj_SpacjaWTekscie_ZostajeBezZmian)
         {
-            Assert::AreEqual(std::string("cd ef"), szyfruj("ab cd", 2));
+            Assert::AreEqual(string("cd ef"), szyfruj("ab cd", 2));
         }
     };
 }

@@ -93,15 +93,15 @@ $w = Sprawdz '2022_06_01_wyszukiwanie_z_wartownikiem' "50" @('Zawartosc tablicy:
 Wynik ($w -match 'nie ma w tablicy|pod indeksem \d+') 'sentinel: found or not-found message'
 Wynik ($w -match 'Zawartosc tablicy: (\d+, ){49}\d+\r?\n') 'sentinel: 50 numbers separated by commas'
 Sprawdz '2022_06_02_klasa_osoba_pole_statyczne' "7${n}Anna" @('osob to 0', 'Brak danych', 'Czesc Jan, mam na imie Anna', 'osob to 3') | Out-Null
-Sprawdz '2023_01_01_nwd_euklides' "x${n}-4${n}48${n}18" @('NWD(48, 18) = 6') | Out-Null
+Sprawdz '2023_01_01_nwd_euklides' "-4${n}48${n}18" @('NWD(48, 18) = 6') | Out-Null
 Sprawdz '2023_01_02_klasa_notatka' "" @('2;1;Zakupy;', '2;2;Egzamin') | Out-Null
 Sprawdz '2023_06_01_sito_eratostenesa' "" @('2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97') @(' 4 ', ' 9 ', ' 91 ') | Out-Null
 Sprawdz '2023_06_02_sortowanie_babelkowe' "" @('Test sortowania: OK') | Out-Null
 Sprawdz '2023_06_03_klasa_film' "" @('wypozyczen = 0', 'Zielona mila', 'przed inkrementacja: 0', 'po inkrementacji: 1') | Out-Null
 Sprawdz '2024_01_01_pesel' "55030101193" @('Mezczyzna', 'jest zgodna') | Out-Null
 Sprawdz '2024_01_01_pesel' "55030101194" @('niezgodna') | Out-Null
-Sprawdz '2024_01_02_klasa_narzedzia_string' "Abba;;;to zespół  aąeę óó" @('samoglosek: 11', 'Aba;to zespół aąeę ó') | Out-Null
-Sprawdz '2024_01_02_klasa_narzedzia_string' "Przykład  tekstu" @('Przykład tekstu') | Out-Null
+Sprawdz '2024_01_02_klasa_narzedzia_string' "Abba;;;to zespol  aaee oo" @('samoglosek: 11', 'Aba;to zespol ae o') | Out-Null
+Sprawdz '2024_01_02_klasa_narzedzia_string' "Przyklad  tekstu" @('Przyklad tekstu') | Out-Null
 $w = Sprawdz '2024_06_01_gra_w_kosci' "2${n}11${n}3${n}t${n}n" @('Kostka 3:', 'punktow:') @('Kostka 4:')
 Wynik (([regex]::Matches($w, 'Ile kostek')).Count -eq 3) 'dice: asks again for 2 and 11, accepts 3'
 Wynik (([regex]::Matches($w, 'Kostka 1:')).Count -eq 2) 'dice: "t" rolls again'
@@ -145,8 +145,8 @@ if ($vs) {
         $dll = Get-ChildItem (Join-Path $sln.DirectoryName 'x64\Debug') -Filter '*Testy.dll' | Select-Object -First 1
         if ($dll) {
             $t = (& $vstest $dll.FullName 2>&1) | Out-String
-            Wynik ($t -match 'Test Run Successful') "unit tests $($dll.Name)`n$t"
-            if ($t -match 'Passed: (\d+)') { Write-Host "  $($dll.Name): $($Matches[1]) tests passed" }
+            Wynik ($t -match 'Test Run Successful|zakończony powodzeniem') "unit tests $($dll.Name)`n$t"
+            if ($t -match '(?:Passed|pomyślnie): +(\d+)') { Write-Host "  $($dll.Name): $($Matches[1]) tests passed" }
         } else { Wynik $false "no test dll for $($sln.Name)" }
         Remove-Item -Recurse -Force (Join-Path $sln.DirectoryName 'x64') -ErrorAction SilentlyContinue
         Get-ChildItem $sln.DirectoryName -Recurse -Directory -Filter x64 | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue

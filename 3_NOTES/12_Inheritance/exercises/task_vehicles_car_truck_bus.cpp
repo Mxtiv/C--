@@ -1,22 +1,23 @@
 // ======================================================================
 // Samochod -> Ciezarowka / Autobus: default + param ctors calling the base ctor
 // Original file: Classes/Klasy z dziedziczeniem/X) Zadanie klasy z wartosciami samochodu/main.cpp
-// FIXED - the bug was: main builds an Autobus but never calls display(); seat arguments are passed in swapped order
+// FIXED - the bug was: main builds an Autobus but never calls wyswietl(); seat arguments are passed in swapped order
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Samochod
 {
+private:
     string marka;
 
 protected:
     string model;
-
-public:
     int rokProdukcji;
 
+public:
     Samochod()
     {
         marka = "fiat";
@@ -24,90 +25,90 @@ public:
         rokProdukcji = 2003;
     }
 
-    Samochod(string markaInput, string modelInput, int inputRokProdukcji)
+    Samochod(string nowaMarka, string nowyModel, int nowyRok)
     {
-        marka = markaInput;
-        model = modelInput;
-        rokProdukcji = inputRokProdukcji;
-    }
-
-    void setMarka(string input)
-    {
-        marka = input;
+        marka = nowaMarka;
+        model = nowyModel;
+        rokProdukcji = nowyRok;
     }
 
     string getMarka()
     {
         return marka;
     }
-
-    void setModel(string input)
-    {
-        model = input;
-    }
-
-    string getModel()
-    {
-        return model;
-    }
 };
+
 class Ciezarowka : public Samochod
 {
-public:
+private:
     string przeznaczenie;
-    Ciezarowka():Samochod(){
-        przeznaczenie = "Chłodnia";
-    }
-    Ciezarowka(string markaInput, string modelInput, int inputRokProdukcji, string inputPrzeznaczenie) : Samochod(markaInput, modelInput, inputRokProdukcji)
+
+public:
+    Ciezarowka()                // bez ": Samochod(...)" -> wywola sie Samochod()
     {
-        przeznaczenie = inputPrzeznaczenie;
+        przeznaczenie = "chlodnia";
     }
-    void display(){
-        cout<<getMarka()<<endl;
-        cout<<model<<endl;
-        cout<<rokProdukcji<<endl;
-        cout<<przeznaczenie<<endl;
-    };
+
+    Ciezarowka(string nowaMarka, string nowyModel, int nowyRok, string nowePrzeznaczenie) : Samochod(nowaMarka, nowyModel, nowyRok)
+    {
+        przeznaczenie = nowePrzeznaczenie;
+    }
+
+    void wyswietl()
+    {
+        cout << getMarka() << " " << model << " " << rokProdukcji << ", " << przeznaczenie << endl;
+    }
 };
 
 class Autobus : public Samochod
-{  
+{
+private:
+    int miejscaSiedzace;
+    int miejscaStojace;
+
 public:
-    int liczbaMiejscStojacych, liczbaMiejscSiedzacych;
-    Autobus():Samochod(){
-        liczbaMiejscSiedzacych = 24;
-        liczbaMiejscStojacych = 48;
-    }
-    Autobus(string markaInput, string modelInput, int inputRokProdukcji, int inputLiczbaMiejscStojacych, int inputLiczbaMiejscSiedzacych) : Samochod(markaInput, modelInput, inputRokProdukcji)
+    Autobus()
     {
-        liczbaMiejscSiedzacych = inputLiczbaMiejscSiedzacych;
-        liczbaMiejscStojacych = inputLiczbaMiejscStojacych;
+        miejscaSiedzace = 24;
+        miejscaStojace = 48;
     }
 
-    void display(){
-        cout<<getMarka()<<endl;
-        cout<<model<<endl;
-        cout<<rokProdukcji<<endl;
-        cout<<liczbaMiejscSiedzacych<<endl;
-        cout<<liczbaMiejscStojacych<<endl;
-    };
+    Autobus(string nowaMarka, string nowyModel, int nowyRok, int siedzace, int stojace) : Samochod(nowaMarka, nowyModel, nowyRok)
+    {
+        miejscaSiedzace = siedzace;
+        miejscaStojace = stojace;
+    }
+
+    void wyswietl()
+    {
+        cout << getMarka() << " " << model << " " << rokProdukcji << endl;
+        cout << "miejsca siedzace: " << miejscaSiedzace << ", stojace: " << miejscaStojace << endl;
+    }
 };
-int main(){
-    int rok,liczbaMiejscDoSiedzenia, liczbaMiejscDoStania;
-    string marka, model;
-    cout<<"Podaj rok produkcji"<<endl;
-    cin>>rok;
-    cout<<"Podaj liczbe miejsc do siedzenia"<<endl;
-    cin>>liczbaMiejscDoSiedzenia;
-    cout<<"Podaj liczbe miejsc do stania"<<endl;
-    cin>>liczbaMiejscDoStania;
-    cout<<"Podaj marke"<<endl;
-    cin>>marka;
-    cout<<"Podaj model"<<endl;
-    cin>>model;
-    Autobus autobus1(marka, model, rok, liczbaMiejscDoStania, liczbaMiejscDoSiedzenia);  // ctor order: stojace, siedzace
-    autobus1.display();
-    Ciezarowka ciezarowka1;   // default ctor -> Samochod() + "Chlodnia"
-    ciezarowka1.display();
+
+int main()
+{
+    int rok;
+    int siedzace;
+    int stojace;
+    string marka;
+    string model;
+
+    cout << "Podaj marke: ";
+    cin >> marka;
+    cout << "Podaj model: ";
+    cin >> model;
+    cout << "Podaj rok produkcji: ";
+    cin >> rok;
+    cout << "Podaj liczbe miejsc siedzacych: ";
+    cin >> siedzace;
+    cout << "Podaj liczbe miejsc stojacych: ";
+    cin >> stojace;
+
+    Autobus autobus(marka, model, rok, siedzace, stojace);
+    autobus.wyswietl();
+
+    Ciezarowka ciezarowka;      // konstruktor domyslny -> Samochod() + "chlodnia"
+    ciezarowka.wyswietl();
     return 0;
 }

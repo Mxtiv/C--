@@ -1,42 +1,68 @@
 // ======================================================================
 // ADDED (gap-fill): SOURCE (.cpp): the DEFINITIONS for everything declared in Prostokat.h
+// Every method is written as  typ Klasa::metoda(...)
 // ======================================================================
 
-#include "Prostokat.h"     // own header first, in "quotes"
-#include <string>
-#include <sstream>
+#include <iostream>
+#include "Prostokat.h"      // wlasny naglowek w "cudzyslowie"
+using namespace std;
 
-int Prostokat::count = 0;  // static member definition (exactly once, in a .cpp)
+int Prostokat::liczbaProstokatow = 0;   // definicja pola static - DOKLADNIE raz, w pliku .cpp
 
-Prostokat::Prostokat(double a, double b) : a(a), b(b)   // default args are NOT repeated here
+Prostokat::Prostokat()
 {
-    count++;
+    a = 1;
+    b = 1;
+    liczbaProstokatow++;
 }
 
-double Prostokat::pole() const
+Prostokat::Prostokat(double bokA, double bokB)
+{
+    a = bokA;
+    b = bokB;
+    liczbaProstokatow++;
+}
+
+double Prostokat::pole()
 {
     return a * b;
 }
 
-double Prostokat::obwod() const
+double Prostokat::obwod()
 {
     return 2 * (a + b);
 }
 
-std::string Prostokat::opis() const
+bool Prostokat::czyKwadrat()
 {
-    std::ostringstream out;                 // builds a string like cout does (to_string would give 3.000000)
-    out << "Prostokat " << a << " x " << b;
-    return out.str();
+    if (a == b)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
-int Prostokat::ile()
+void Prostokat::wypisz()
 {
-    return count;
+    cout << "Prostokat " << a << " x " << b << endl;
 }
 
-bool czyKwadrat(const Prostokat &p, double a, double b)
+int Prostokat::ile()                    // przy definicji NIE piszemy juz slowa static
 {
-    (void)p;
-    return a == b;
+    return liczbaProstokatow;
+}
+
+bool czyWiekszy(Prostokat p1, Prostokat p2)
+{
+    if (p1.pole() > p2.pole())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }

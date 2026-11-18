@@ -1,72 +1,73 @@
 // ======================================================================
 // census: struct array via new, search by name/age, do-while menu, switch with random goodbye
 // Original file: unsorted/spisLudnosci/main.cpp
+// Build: g++ main.cpp sprawdzian2.cpp -o spis.exe
 // ======================================================================
 
 #include <iostream>
-#include <limits>
 #include <cstdlib>
 #include <ctime>
 #include "sprawdzian2.h"
 using namespace std;
 
-int main() {
+int main()
+{
+    srand(time(0));
 
     int rozmiar;
-    char wybor;
-    int szukanaWartosc;
+    do
+    {
+        cout << "Ilu obywateli wprowadzic (1-100): ";
+        cin >> rozmiar;
+    } while (rozmiar < 1 || rozmiar > 100);
 
-    cout << "Podaj ilosc obywateli do wprowadzenia: ";                     //Tworzy tabele zgodnie z rozmiarem podanym przez uzytkownika
-    cin >> rozmiar;
-    obywatel* tablica = utworzTablice(rozmiar);
+    Obywatel *tablica = utworzTablice(rozmiar);
     pobierzDane(tablica, rozmiar);
 
-    do {
-        
-        cout << "Czy chcesz wyszukac po imieniu (wpisz 'a') czy po wieku (wpisz 'b'): ";
-        cin >> wybor;                                                      //Pyta sie w jaki sposob uzytkownik chce przeszukac tablice itp.
+    char wybor;
+    do
+    {
+        cout << "Szukac po imieniu (a) czy po wieku (b)? ";
+        cin >> wybor;
 
         if (wybor == 'a')
         {
-            string szukanaWartosc;
-            cout << "Podaj imie do wyszukania: ";
-            cin >> szukanaWartosc;
-            wyszukajPoString(tablica, rozmiar, szukanaWartosc);
-        } 
-        else if (wybor == 'b') 
+            string imie;
+            cout << "Podaj imie: ";
+            cin >> imie;
+            szukajPoImieniu(tablica, rozmiar, imie);
+        }
+        else if (wybor == 'b')
         {
-            cout << "Podaj wartosc do wyszukania: ";
-            cin >> szukanaWartosc;
-            wyszukajPoInt(tablica, rozmiar, szukanaWartosc);
-        } 
-        else 
+            int wiek;
+            cout << "Podaj wiek: ";
+            cin >> wiek;
+            szukajPoWieku(tablica, rozmiar, wiek);
+        }
+        else
         {
-            cout << "Nie znaleziono podanej wartosci." << endl;
+            cout << "Nieznana opcja." << endl;
         }
 
-        cout << "\nCzy chcesz wyszukać ponownie? (Tak - 't', Nie - 'n'): ";
+        cout << "Szukac ponownie? (t/n): ";
         cin >> wybor;
-    } while(wybor == 't' || wybor == 'T');
+    } while (wybor == 't' || wybor == 'T');
 
-    srand(time(NULL));                                     // Po zakończeniu pętli, wypisujemy losowe pożegnanie w jednym z języków
-    int liczba = rand() % 5 + 1;
-    switch (liczba) 
+    // losowe pozegnanie
+    int numer = rand() % 3 + 1;
+    switch (numer)
     {
-        case 1:
-            cout << "Arrivederci!" << endl;                   // włoski
-            break;
-        case 2:
-            cout << "Adiós!" << endl;                         // hiszpański
-            break;
-        case 3:
-            cout << "Bi sahhattik!" << endl;                 // arabski
-            break;
-        case 4:
-            cout << "Goodbye!" << endl;                       // angielski
-            break;
-        case 5:
-            cout << "Auf Wiedersehen!" << endl;               // niemiecki
-            break; 
+    case 1:
+        cout << "Do widzenia!" << endl;
+        break;
+    case 2:
+        cout << "Goodbye!" << endl;
+        break;
+    case 3:
+        cout << "Auf Wiedersehen!" << endl;
+        break;
     }
-    usunDane(tablica, rozmiar); 
-    return 0; }
+
+    usunTablice(tablica);
+    return 0;
+}

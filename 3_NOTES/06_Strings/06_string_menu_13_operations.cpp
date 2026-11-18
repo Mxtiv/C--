@@ -1,230 +1,232 @@
 // ======================================================================
-// 13-option menu: std::replace, insert before every char, count pattern (pair + vector), tuple, structured bindings auto [a,b], toggle case with char&
+// 13-option menu on one phrase: swap first/last word, replace characters, insert before
+// a character, count a pattern (with its indexes), count letters/digits/others,
+// toggle case, count upper/lower case - everything walks the string character by character
 // Original file: unsorted/sprawdzian/stringpoprawa.cpp
 // ======================================================================
 
 #include <iostream>
 #include <string>
-#include <vector>
-#include <algorithm>
-#include <cctype>
-#include <tuple>
-
+#include <cctype>      // isalpha, isdigit, isupper, islower, toupper, tolower
 using namespace std;
 
-// Function to replace the first word with the last while maintaining spaces
-string replaceFirstWithLast(const string& phrase) {
-    size_t firstSpace = phrase.find(' ');
-    if (firstSpace == string::npos) {
-        return phrase;
-    }
-
-    string firstWord = phrase.substr(0, firstSpace);
-    string SecondWord = phrase.substr(firstSpace, - firstWord.length());
-    string modifiedPhrase = SecondWord +" "+ firstWord;
-
-    return modifiedPhrase;
-}
-
-// Function to add '%' into every space
-string addPercentage(const string& phrase) {
-    string modified = phrase;
-    replace(modified.begin(), modified.end(), ' ', '%');
-    return modified;
-}
-
-// Function to replace 'a' with '@'
-string replaceAWithAt(const string& phrase) {
-    string modified = phrase;
-    replace(modified.begin(), modified.end(), 'a', '@');
-    return modified;
-}
-
-// Function to add '!' in front of every 'c'
-string addExclamationBeforeC(const string& phrase) {
-    string modified = phrase;
-    size_t pos = modified.find('c');
-    while (pos != string::npos) {
-        modified.insert(pos, "!");
-        pos = modified.find('c', pos + 2);
-    }
-    return modified;
-}
-
-// Function to put the phrase into quotation marks
-string putInQuotationMarks(const string& phrase) {
-    return "\"" + phrase + "\"";
-}
-
-// Function to add a '.' at the end
-string addDot(const string& phrase) {
-    return phrase + ".";
-}
-
-// Function to count the number of occurrences of a specific character or substring
-pair<int, vector<size_t>> countOccurrences(const string& phrase, const string& pattern) {
-    int count = 0;
-    vector<size_t> indexes;
-    size_t pos = 0;
-
-    while ((pos = phrase.find(pattern, pos)) != string::npos) {
-        count++;
-        indexes.push_back(pos);
-        pos += pattern.length();
-    }
-    return make_pair(count, indexes);
-}
-
-// Function to count letters, numbers, and other characters
-tuple<int, int, int> countCharacterTypes(const string& phrase) {
-    int letters = 0, numbers = 0, others = 0;
-    for (char c : phrase) {
-        if (isalpha(c)) {
-            letters++;
-        } else if (isdigit(c)) {
-            numbers++;
-        } else {
-            others++;
+// Swaps the first word with the last one: "ala ma kota" -> "kota ma ala"
+string zamienPierwszeZOstatnim(string tekst)
+{
+    int pierwszaSpacja = -1;
+    int ostatniaSpacja = -1;
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] == ' ')
+        {
+            if (pierwszaSpacja == -1)
+            {
+                pierwszaSpacja = i;
+            }
+            ostatniaSpacja = i;
         }
     }
-    return make_tuple(letters, numbers, others);
+    if (pierwszaSpacja == -1)       // only one word - nothing to swap
+    {
+        return tekst;
+    }
+    string pierwsze = tekst.substr(0, pierwszaSpacja);
+    string srodek = tekst.substr(pierwszaSpacja, ostatniaSpacja - pierwszaSpacja + 1);
+    string ostatnie = tekst.substr(ostatniaSpacja + 1);
+    return ostatnie + srodek + pierwsze;
 }
 
-// Function to toggle the case of letters in the phrase
-string toggleCase(const string& phrase) {
-    string modified = phrase;
-    for (char& c : modified) {
-        if (isupper(c)) {
-            c = tolower(c);
-        } else if (islower(c)) {
-            c = toupper(c);
+// Replaces every character stary with nowy (e.g. ' ' -> '%', 'a' -> '@')
+string zamienZnak(string tekst, char stary, char nowy)
+{
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] == stary)
+        {
+            tekst[i] = nowy;
         }
     }
-    return modified;
+    return tekst;
 }
 
-// Function to count uppercase and lowercase letters
-pair<int, int> countUpperLowerCase(const string& phrase) {
-    int upperCase = 0, lowerCase = 0;
-    for (char c : phrase) {
-        if (isupper(c)) {
-            upperCase++;
-        } else if (islower(c)) {
-            lowerCase++;
+// Adds '!' in front of every 'c' (builds a new string)
+string wykrzyknikPrzedC(string tekst)
+{
+    string wynik = "";
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] == 'c')
+        {
+            wynik = wynik + '!';
+        }
+        wynik = wynik + tekst[i];
+    }
+    return wynik;
+}
+
+// Prints at which indexes wzorzec starts and how many times it occurs
+void policzWystapienia(string tekst, string wzorzec)
+{
+    int ile = 0;
+    int dlugoscWzorca = wzorzec.length();
+    cout << "Indexes of occurrences: ";
+    for (int i = 0; i + dlugoscWzorca <= tekst.length(); i++)
+    {
+        if (tekst.substr(i, dlugoscWzorca) == wzorzec)
+        {
+            cout << i << " ";
+            ile++;
         }
     }
-    return make_pair(upperCase, lowerCase);
+    cout << endl << "Number of occurrences of '" << wzorzec << "': " << ile << endl;
 }
 
-// Function to display the current phrase
-void displayCurrentPhrase(const string& phrase) {
-    cout << "Current phrase: " << phrase << endl;
+void policzRodzajeZnakow(string tekst)
+{
+    int litery = 0;
+    int cyfry = 0;
+    int inne = 0;
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (isalpha(tekst[i]))
+        {
+            litery++;
+        }
+        else if (isdigit(tekst[i]))
+        {
+            cyfry++;
+        }
+        else
+        {
+            inne++;
+        }
+    }
+    cout << "Letters: " << litery << ", digits: " << cyfry << ", other: " << inne << endl;
 }
 
-int main() {
-    string phrase;
+// Big letters become small and small become big
+string zamienWielkoscLiter(string tekst)
+{
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (isupper(tekst[i]))
+        {
+            tekst[i] = tolower(tekst[i]);
+        }
+        else if (islower(tekst[i]))
+        {
+            tekst[i] = toupper(tekst[i]);
+        }
+    }
+    return tekst;
+}
+
+void policzWielkieIMale(string tekst)
+{
+    int wielkie = 0;
+    int male = 0;
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (isupper(tekst[i]))
+        {
+            wielkie++;
+        }
+        else if (islower(tekst[i]))
+        {
+            male++;
+        }
+    }
+    cout << "Uppercase letters: " << wielkie << ", lowercase letters: " << male << endl;
+}
+
+int main()
+{
+    string oryginal;
     cout << "Enter a phrase: ";
-    getline(cin, phrase);
-    string modifiedPhrase = phrase;
-    string originalPhrase = phrase;
+    getline(cin, oryginal);
+    string tekst = oryginal;
 
-    while (true) {
+    int wybor;
+    do
+    {
         cout << "\nMenu:\n";
-        cout << "1. Replace first word with last\n";
-        cout << "2. Add '%' into every space\n";
+        cout << "1. Swap first word with last\n";
+        cout << "2. Replace every space with '%'\n";
         cout << "3. Replace 'a' with '@'\n";
         cout << "4. Add '!' in front of every 'c'\n";
         cout << "5. Put the phrase into quotation marks\n";
         cout << "6. Add a '.' at the end\n";
-        cout << "7. Count occurrences of a specific pattern\n";
-        cout << "8. Count letters, numbers, and other characters\n";
+        cout << "7. Count occurrences of a pattern\n";
+        cout << "8. Count letters, digits and other characters\n";
         cout << "9. Toggle case of letters\n";
         cout << "10. Count uppercase and lowercase letters\n";
         cout << "11. Display current phrase\n";
         cout << "12. Reset to original phrase\n";
         cout << "13. Exit\n";
         cout << "Choose an option: ";
-        int choice;
-        cin >> choice;
+        cin >> wybor;
         cin.ignore();
 
-        if (choice == 13) {
+        string wzorzec;
+        switch (wybor)
+        {
+        case 1:
+            tekst = zamienPierwszeZOstatnim(tekst);
+            cout << tekst << endl;
+            break;
+        case 2:
+            tekst = zamienZnak(tekst, ' ', '%');
+            cout << tekst << endl;
+            break;
+        case 3:
+            tekst = zamienZnak(tekst, 'a', '@');
+            cout << tekst << endl;
+            break;
+        case 4:
+            tekst = wykrzyknikPrzedC(tekst);
+            cout << tekst << endl;
+            break;
+        case 5:
+            tekst = "\"" + tekst + "\"";
+            cout << tekst << endl;
+            break;
+        case 6:
+            tekst = tekst + ".";
+            cout << tekst << endl;
+            break;
+        case 7:
+            cout << "Enter a pattern: ";
+            getline(cin, wzorzec);
+            policzWystapienia(tekst, wzorzec);
+            break;
+        case 8:
+            policzRodzajeZnakow(tekst);
+            break;
+        case 9:
+            tekst = zamienWielkoscLiter(tekst);
+            cout << tekst << endl;
+            break;
+        case 10:
+            policzWielkieIMale(tekst);
+            break;
+        case 11:
+            cout << "Current phrase: " << tekst << endl;
+            break;
+        case 12:
+            tekst = oryginal;
+            cout << "Phrase has been reset to the original: " << tekst << endl;
+            break;
+        case 13:
+            break;
+        default:
+            cout << "Invalid option. Please choose again.\n";
             break;
         }
-
-        switch (choice) {
-            case 1:
-                modifiedPhrase = replaceFirstWithLast(modifiedPhrase);
-                cout << "After replacing first word with last: " << modifiedPhrase << endl;
-                break;
-            case 2:
-                modifiedPhrase = addPercentage(modifiedPhrase);
-                cout << "After adding % into every space: " << modifiedPhrase << endl;
-                break;
-            case 3:
-                modifiedPhrase = replaceAWithAt(modifiedPhrase);
-                cout << "After replacing 'a' with '@': " << modifiedPhrase << endl;
-                break;
-            case 4:
-                modifiedPhrase = addExclamationBeforeC(modifiedPhrase);
-                cout << "After adding '!' in front of every 'c': " << modifiedPhrase << endl;
-                break;
-            case 5:
-                modifiedPhrase = putInQuotationMarks(modifiedPhrase);
-                cout << "After putting the phrase into quotation marks: " << modifiedPhrase << endl;
-                break;
-            case 6:
-                modifiedPhrase = addDot(modifiedPhrase);
-                cout << "After adding a '.' at the end: " << modifiedPhrase << endl;
-                break;
-            case 7: {
-                string pattern;
-                cout << "Enter a pattern to count occurrences: ";
-                cin >> pattern;
-                auto [occurrences, indexes] = countOccurrences(modifiedPhrase, pattern);
-                cout << "Number of occurrences of '" << pattern << "': " << occurrences << endl;
-                cout << "Indexes of occurrences: ";
-                for (size_t i = 0; i < indexes.size(); ++i) {
-                    cout << indexes[i];
-                    if (i != indexes.size() - 1) {
-                        cout << ", ";
-                    }
-                }
-                cout << endl;
-                break;
-            }
-            case 8: {
-                auto [letters, numbers, others] = countCharacterTypes(modifiedPhrase);
-                cout << "Number of letters: " << letters << endl;
-                cout << "Number of numbers: " << numbers << endl;
-                cout << "Number of other characters: " << others << endl;
-                break;
-            }
-            case 9:
-                modifiedPhrase = toggleCase(modifiedPhrase);
-                cout << "After toggling the case: " << modifiedPhrase << endl;
-                break;
-            case 10: {
-                auto [upperCase, lowerCase] = countUpperLowerCase(modifiedPhrase);
-                cout << "Number of uppercase letters: " << upperCase << endl;
-                cout << "Number of lowercase letters: " << lowerCase << endl;
-                break;
-            }
-            case 11:
-                displayCurrentPhrase(modifiedPhrase);
-                break;
-            case 12:
-                modifiedPhrase = originalPhrase;
-                cout << "Phrase has been reset to the original: " << modifiedPhrase << endl;
-                break;
-            default:
-                cout << "Invalid option. Please choose again.\n";
-        }
-    }
+    } while (wybor != 13);
 
     return 0;
 }
-//Pobierz napis dwuczłonowy.
+// Pobierz napis dwuczłonowy.
 // Zamień pierwszy człon z drugim.
 // Policz małe litery.
 // Sprawdź czy w podanym napisie występuje kombinacja "ab".

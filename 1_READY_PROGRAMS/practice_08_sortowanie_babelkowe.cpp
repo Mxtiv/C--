@@ -10,11 +10,8 @@
 // sortuje metodą bąbelkową rosnąco i wyświetla wynik, a następnie sortuje malejąco.
 
 #include <iostream>
-#include <string>
 #include <cstdlib>
 #include <ctime>
-#include <limits>
-#include <utility>
 using namespace std;
 
 /********************************************************
@@ -30,7 +27,9 @@ using namespace std;
 void wypelnijLosowo(int tab[], int n, int min, int max)
 {
     for (int i = 0; i < n; i++)
+    {
         tab[i] = rand() % (max - min + 1) + min;
+    }
 }
 
 /********************************************************
@@ -41,10 +40,17 @@ void wypelnijLosowo(int tab[], int n, int min, int max)
  * zwracany typ i opis: brak
  * autor: <numer zdającego>
  ********************************************************/
-void wyswietlTablice(const int tab[], int n)
+void wyswietlTablice(int tab[], int n)
 {
     for (int i = 0; i < n; i++)
-        cout << tab[i] << (i < n - 1 ? ", " : "\n");
+    {
+        cout << tab[i];
+        if (i < n - 1)
+        {
+            cout << ", ";
+        }
+    }
+    cout << endl;
 }
 
 /********************************************************
@@ -65,44 +71,41 @@ void sortujBabelkowo(int tab[], int n, bool rosnaco)
         bool zamiana = false;
         for (int j = 0; j < n - 1 - i; j++)       // j + 1 < n: never past the end
         {
-            bool zlaKolejnosc = rosnaco ? (tab[j] > tab[j + 1]) : (tab[j] < tab[j + 1]);
+            bool zlaKolejnosc;
+            if (rosnaco)
+            {
+                zlaKolejnosc = tab[j] > tab[j + 1];
+            }
+            else
+            {
+                zlaKolejnosc = tab[j] < tab[j + 1];
+            }
+
             if (zlaKolejnosc)
             {
-                swap(tab[j], tab[j + 1]);
+                int pomocnicza = tab[j];
+                tab[j] = tab[j + 1];
+                tab[j + 1] = pomocnicza;
                 zamiana = true;
             }
         }
-        if (!zamiana) break;
-    }
-}
-
-/********************************************************
- * nazwa funkcji: wczytajLiczbe
- * opis funkcji: wczytuje liczbę całkowitą z zakresu min..max, ponawiając pytanie przy błędzie
- * parametry: komunikat - tekst wyświetlany użytkownikowi
- *            min - najmniejsza dopuszczalna wartość
- *            max - największa dopuszczalna wartość
- * zwracany typ i opis: int - poprawna liczba
- * autor: <numer zdającego>
- ********************************************************/
-int wczytajLiczbe(const string &komunikat, int min, int max)
-{
-    int liczba;
-    while (true)
-    {
-        cout << komunikat;
-        if (cin >> liczba && liczba >= min && liczba <= max)
-            return liczba;
-        cout << "Podaj liczbe od " << min << " do " << max << "." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        if (!zamiana)
+        {
+            break;
+        }
     }
 }
 
 int main()
 {
     srand(time(0));
-    int n = wczytajLiczbe("Ile liczb wylosowac? (5-50): ", 5, 50);
+    int n;
+    do
+    {
+        cout << "Ile liczb wylosowac? (5-50): ";
+        cin >> n;
+    } while (n < 5 || n > 50);
+
     int *tab = new int[n];
 
     wypelnijLosowo(tab, n, 0, 99);

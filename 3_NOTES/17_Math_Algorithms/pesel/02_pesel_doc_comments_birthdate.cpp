@@ -1,58 +1,63 @@
 // ======================================================================
-// INF04-style doc comment, sex, checksum, birth date
+// "long" version: checksum written out digit by digit (no weights array),
+// if M == 0 then R = 0 else R = 10 - M, input check (11 characters, all digits)
 // Original file: Arrays/pesel.cpp
 // FIXED - the bug was: weight for digit 2 is 2 - must be 3 (1,3,7,9,1,3,7,9,1,3)
 // ======================================================================
 
 #include <iostream>
+#include <string>
+#include <cctype>
 using namespace std;
 
-/*
-nazwa funkcji: plec
-opis funkcji: sprawdzana jest dziesiąta cyfra PESElu, dla wartości parzystych oznacza płeć żeńską, dla nieparzystych męską
-parametry: napis-PESEL
-zwracany typ i opis: char 'K' - kobieta lub 'M'-mężczyzna
-autor: <numer zdającego >numery to były w ałszwic
-
-*/
-char plec(string PESEL)
+/********************************************************
+ * nazwa funkcji: czyPoprawnyFormat
+ * opis funkcji: sprawdza, czy napis ma 11 znakow i same cyfry
+ * parametry: pesel - napis do sprawdzenia
+ * zwracany typ i opis: bool - true gdy 11 cyfr
+ * autor: <numer zdającego>
+ ********************************************************/
+bool czyPoprawnyFormat(string pesel)
 {
-    if ((PESEL[9]-'0') % 2 == 0)
-    {
-        return 'K';
-    }
-    else
-    {
-        return 'M';
-    }
-}
-
-bool sumaKontrolna(string PESEL)
-{
-    unsigned int S = 0, M, R;
-    S = (PESEL[0]-'0') + (PESEL[1]-'0') * 3 + (PESEL[2]-'0') * 7 + (PESEL[3]-'0') * 9 + (PESEL[4]-'0') + (PESEL[5]-'0') * 3 + (PESEL[6]-'0') * 7 + (PESEL[7]-'0') * 9 + (PESEL[8]-'0') + (PESEL[9]-'0') * 3;
-    cout << "S " << S << " modulo |" << S % 10 << endl;
-    M = S % 10;
-    if (M == 0)
-    {
-        R = 0;
-    }
-    else
-    {
-        R = 10 - M;
-    }
-    if (R == (PESEL[10]-'0'))
-    {
-        return true;
-    }
-    else
+    if (pesel.length() != 11)
     {
         return false;
     }
+    for (int i = 0; i < 11; i++)
+    {
+        if (!isdigit(pesel[i]))
+        {
+            return false;
+        }
+    }
+    return true;
 }
-bool wiekznajdz(string pesel)
+
+/********************************************************
+ * nazwa funkcji: sumaKontrolna
+ * opis funkcji: liczy sume kontrolna (wagi 1 3 7 9 1 3 7 9 1 3) i porownuje z cyfra nr 10
+ * parametry: pesel - numer PESEL (11 cyfr)
+ * zwracany typ i opis: bool - true gdy PESEL zgodny z suma kontrolna
+ * autor: <numer zdającego>
+ ********************************************************/
+bool sumaKontrolna(string pesel)
 {
-    if (pesel[2] == '1' || pesel[2] == '0')
+    int s = (pesel[0] - '0') * 1 + (pesel[1] - '0') * 3 + (pesel[2] - '0') * 7 + (pesel[3] - '0') * 9
+          + (pesel[4] - '0') * 1 + (pesel[5] - '0') * 3 + (pesel[6] - '0') * 7 + (pesel[7] - '0') * 9
+          + (pesel[8] - '0') * 1 + (pesel[9] - '0') * 3;
+
+    int m = s % 10;
+    int r;
+    if (m == 0)
+    {
+        r = 0;
+    }
+    else
+    {
+        r = 10 - m;
+    }
+
+    if (r == pesel[10] - '0')
     {
         return true;
     }
@@ -64,50 +69,44 @@ bool wiekznajdz(string pesel)
 
 int main()
 {
-    string PESEL = "55230101193";
+    string pesel;
+    do
+    {
+        cout << "Podaj PESEL (11 cyfr): ";
+        cin >> pesel;
+    } while (!czyPoprawnyFormat(pesel));
 
-   
-        cout << "Podaj swoj PESEL\n";
-
-        cin >> PESEL;
-
-   
-    if (plec(PESEL) == 'K')
+    if ((pesel[9] - '0') % 2 == 0)
     {
         cout << "Jestes kobieta" << endl;
     }
-    else if (plec(PESEL) == 'M')
+    else
     {
         cout << "Jestes mezczyzna" << endl;
     }
-    if (sumaKontrolna(PESEL))
+
+    if (sumaKontrolna(pesel))
     {
-        cout << "PESEL zgodnny z suma kontrolna" << endl;
+        cout << "PESEL zgodny z suma kontrolna" << endl;
     }
     else
     {
         cout << "PESEL niezgodny z suma kontrolna" << endl;
     }
-    if (wiekznajdz(PESEL))
+
+    // data urodzenia - tylko lata 1900 i 2000 (miesiac 21-32 = rok 20xx)
+    int miesiac = (pesel[2] - '0') * 10 + (pesel[3] - '0');
+    if (miesiac > 20)
     {
-        cout << "urodzony w roku 19" << PESEL[0] << PESEL[1] << endl;
-        cout << "miesiąc " << PESEL[2] << PESEL[3] << endl;
-        cout << "dnia " << PESEL[4] << PESEL[5] << endl;
+        cout << "Rok urodzenia: 20" << pesel[0] << pesel[1] << endl;
+        miesiac = miesiac - 20;
     }
     else
     {
-        cout << "urodzony w roku 20" << PESEL[0] << PESEL[1] << endl;
-        cout << "miesiąc ";
-        if (PESEL[2] == '2')
-        {
-            cout << "0";
-        }
-        if (PESEL[2] == '3')
-        {
-            cout << "1";
-        }
-        cout << PESEL[3] << endl;
-        cout << "dnia " << PESEL[4] << PESEL[5] << endl;
+        cout << "Rok urodzenia: 19" << pesel[0] << pesel[1] << endl;
     }
+    cout << "Miesiac: " << miesiac << endl;
+    cout << "Dzien: " << pesel[4] << pesel[5] << endl;
+
     return 0;
 }

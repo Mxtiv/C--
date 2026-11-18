@@ -5,6 +5,7 @@
 // Program główny: notatka ważna (dane w kodzie) + notatka z tytułem z klawiatury.
 // Spec + key checklist: README.md in this folder.
 // ======================================================================
+#define _CRT_SECURE_NO_WARNINGS     // Visual Studio: bez tego localtime() daje błąd C4996
 #include <iostream>
 #include <string>
 #include <ctime>
@@ -18,20 +19,20 @@ public:
     bool wazna;
     time_t dataDodania;          // typ przechowujący datę (i czas)
 
-    Notatka(string tytul, string tresc, bool wazna)
+    Notatka(string nowyTytul, string nowaTresc, bool czyWazna)
     {
-        this->tytul = tytul;
-        this->tresc = tresc;
-        this->wazna = wazna;
-        dataDodania = time(nullptr);         // aktualna data
+        tytul = nowyTytul;
+        tresc = nowaTresc;
+        wazna = czyWazna;
+        dataDodania = time(0);               // aktualna data
     }
 
-    Notatka(string tytul)
+    Notatka(string nowyTytul)
     {
-        this->tytul = tytul;
+        tytul = nowyTytul;
         tresc = "";
         wazna = false;
-        dataDodania = time(nullptr);
+        dataDodania = time(0);
     }
 
     /*
@@ -55,8 +56,8 @@ public:
         }
         cout << tresc << endl;
 
-        char data[11];
-        strftime(data, sizeof(data), "%d.%m.%Y", localtime(&dataDodania));
+        char data[11];                       // "dd.mm.rrrr" = 10 znaków + znak końca napisu
+        strftime(data, 11, "%d.%m.%Y", localtime(&dataDodania));
         cout << data << endl;
         cout << "________________" << endl;
     }

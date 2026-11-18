@@ -6,22 +6,22 @@
 
 #include "operacje.h"
 
-double poleKw(double bok)
+double poleKwadratu(double bok)
 {
     return bok * bok;
 }
 
-double obwodKw(double bok)
+double obwodKwadratu(double bok)
 {
     return 4 * bok;
 }
 
-double PolePr(double a, double b)
+double poleProstokata(double a, double b)
 {
     return a * b;
 }
 
-double ObwodPr(double a, double b)
+double obwodProstokata(double a, double b)
 {
     return 2 * a + 2 * b;
 }

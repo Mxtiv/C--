@@ -1,6 +1,6 @@
 # INF.04-01-24.01-SG – PESEL – płeć i suma kontrolna
 
-[⬅ all tasks](../README.md) · Sheet: [2024_01_01_SG](../../4_ARKUSZE/inf_04_2024_01_01_SG.pdf), [2024_01_01_SD](../../4_ARKUSZE/inf_04_2024_01_01_SD.pdf) · Key: [2024_01_01_SG_zo](../../4_ARKUSZE/klucze/INF_04_2024_01_01_SG_zo.pdf)
+[⬅ all tasks](../README.md) · Sheet: [2024_01_01_SG](../../4_ARKUSZE/inf_04_2024_01_01_SG.pdf) · Key: [2024_01_01_SG_zo](../../4_ARKUSZE/klucze/INF_04_2024_01_01_SG_zo.pdf)
 
 **Files:** main.cpp · **Run:** `g++ -std=c++17 main.cpp -o program.exe` (in this folder), or create a C++ console project in Visual Studio and paste `main.cpp`.
 **Folders that year:** `konsola`, `desktopowa`, `dokumentacja`. Zip the whole console project, and put the source + exe outside the zip.

@@ -6,40 +6,30 @@
 #include <iostream>
 using namespace std;
 
-int main() {
-    // Declaration of pointers for each grade
-    double *w_polish = nullptr, *w_math = nullptr, *w_english = nullptr, *w_computerScience = nullptr;
+int main()
+{
+    // One pointer per grade, each gets its own memory with new
+    double *polski = new double;
+    double *matematyka = new double;
+    double *angielski = new double;
+    double *informatyka = new double;
 
-    // Dynamically allocating memory for each grade
-    w_polish = new double;
-    w_math = new double;
-    w_english = new double;
-    w_computerScience = new double;
-
-    // Asking for user input for each grade
     cout << "Enter grade for Polish: ";
-    cin >> *w_polish;
-
+    cin >> *polski;                 // cin writes straight into the memory the pointer points to
     cout << "Enter grade for Math: ";
-    cin >> *w_math;
-
+    cin >> *matematyka;
     cout << "Enter grade for English: ";
-    cin >> *w_english;
-
+    cin >> *angielski;
     cout << "Enter grade for Computer Science: ";
-    cin >> *w_computerScience;
+    cin >> *informatyka;
 
-    // Calculating the average of the grades
-    double average = (*w_polish + *w_math + *w_english + *w_computerScience) / 4;
+    double srednia = (*polski + *matematyka + *angielski + *informatyka) / 4;
+    cout << "The average grade is: " << srednia << endl;
 
-    // Outputting the result
-    cout << "The average grade is: " << average << endl;
-
-    // Freeing dynamically allocated memory
-    delete w_polish;
-    delete w_math;
-    delete w_english;
-    delete w_computerScience;
+    delete polski;
+    delete matematyka;
+    delete angielski;
+    delete informatyka;
 
     return 0;
 }

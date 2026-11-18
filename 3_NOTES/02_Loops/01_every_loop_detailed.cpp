@@ -1,5 +1,6 @@
 // ======================================================================
-// for, multi-variable for, range-for, while, do-while, break, continue, nested loops, infinite loop + break, for-each by reference
+// for, while, do-while, break, continue, nested loops, infinite loop + break,
+// changing every element of an array in a loop
 // Original file: Loops/EveryLoopDetailed.cpp
 // ======================================================================
 
@@ -8,165 +9,103 @@ using namespace std;
 
 int main()
 {
-    // 1. For loop (Standard)
-    cout << "For loop (Standard):\n";
-    // Standard for loop with initialization, condition, and increment
-    for (int i = 0; i < 5; ++i)
+    // 1. For loop - use it when you know how many steps there are
+    cout << "For loop:\n";
+    for (int i = 0; i < 5; i++)
     {
-        cout << "Iteration " << i + 1 << endl; // Display the iteration number
+        cout << "Iteration " << i + 1 << endl;
     }
 
-    // 2. For loop (With multiple variables)
-    cout << "\nFor loop (Multiple variables):\n";
-    // Loop with two variables i and j, where i increments and j decrements
-    for (int i = 0, j = 5; i < 5; ++i, --j)
-    {
-        cout << "i: " << i << ", j: " << j << endl; // Display both variables
-    }
-
-    // 3. For loop (Range-based)
-    cout << "\nFor loop (Range-based):\n";
-    // Range-based for loop, iterates over each element of an array or container
-    for (int val : {1, 2, 3, 4, 5})
-    {
-        cout << "Value: " << val << endl; // Display each value in the range
-    }
-
-    // 4. While loop (Standard)
-    cout << "\nWhile loop (Standard):\n";
-    // Standard while loop, runs until the condition is false
+    // 2. While loop - checks the condition BEFORE each step
+    cout << "\nWhile loop:\n";
     int i = 0;
     while (i < 5)
     {
-        cout << "Iteration " << i + 1 << endl; // Display the iteration number
-        ++i;                                   // Increment the variable to eventually break the loop
+        cout << "Iteration " << i + 1 << endl;
+        i++;                    // without this the loop would never end
     }
 
-    // 5. While loop (Condition never met)
-    cout << "\nWhile loop (Condition never met):\n";
-    // This while loop will never run because the condition is false initially
-    int count = 0;
-    while (count > 5)
-    { // Condition is false, so loop won't run
+    // 3. While loop that never runs - the condition is false from the start
+    cout << "\nWhile loop (condition never met):\n";
+    int licznik = 0;
+    while (licznik > 5)
+    {
         cout << "This will not be printed.\n";
-        count++;
+        licznik++;
     }
 
-    // 6. Do-while loop (Standard)
-    cout << "\nDo-while loop (Standard):\n";
-    // Do-while loop guarantees at least one iteration because condition is checked after execution
+    // 4. Do-while loop - checks the condition AFTER each step, so it runs at least once
+    cout << "\nDo-while loop:\n";
     int j = 0;
     do
     {
-        cout << "Iteration " << j + 1 << endl; // Display the iteration number
-        ++j;                                   // Increment to eventually meet the stopping condition
-    } while (j < 5); // Loop stops when j is no longer less than 5
+        cout << "Iteration " << j + 1 << endl;
+        j++;
+    } while (j < 5);
 
-    // 7. Do-while loop (With breaking condition)
-    cout << "\nDo-while loop (Breaking condition):\n";
-    // This loop will break early when k equals 3
-    int k = 0;
-    do
+    // 5. Nested for loop - the inner loop runs fully for every step of the outer loop
+    cout << "\nNested for loop:\n";
+    for (int w = 0; w < 3; w++)
+    {
+        for (int k = 0; k < 3; k++)
+        {
+            cout << "w: " << w << ", k: " << k << endl;
+        }
+    }
+
+    // 6. break - leaves the loop at once
+    cout << "\nFor loop with break:\n";
+    for (int k = 0; k < 5; k++)
     {
         if (k == 3)
         {
-            cout << "Breaking loop at iteration " << k + 1 << endl; // Print when loop breaks
-            break;                                                  // Exit the loop if k is 3
+            cout << "Breaking loop at iteration " << k + 1 << endl;
+            break;
         }
-        cout << "Iteration " << k + 1 << endl; // Display the iteration number
-        ++k;                                   // Increment the variable k
-    } while (k < 5);
-
-    // 8. For loop (Nested loop)
-    cout << "\nFor loop (Nested):\n";
-    // Nested for loop: Outer loop runs 3 times, inner loop runs 3 times for each outer iteration
-    for (int i = 0; i < 3; ++i)
-    {
-        for (int j = 0; j < 3; ++j)
-        {
-            cout << "i: " << i << ", j: " << j << endl; // Display values of both i and j
-        }
+        cout << "Iteration " << k + 1 << endl;
     }
 
-    // 9. While loop (Infinite loop with break)
-    cout << "\nWhile loop (Infinite loop with break):\n";
-    // Infinite while loop that breaks when l is 3
+    // 7. Infinite loop + break - stops only when break runs
+    cout << "\nInfinite while loop with break:\n";
     int l = 0;
     while (true)
-    { // Infinite loop condition
+    {
         if (l == 3)
         {
             cout << "Breaking infinite loop at iteration " << l + 1 << endl;
-            break; // Break the infinite loop when l is 3
+            break;
         }
-        cout << "Iteration " << l + 1 << endl; // Display the iteration number
-        ++l;                                   // Increment l to eventually meet the breaking condition
+        cout << "Iteration " << l + 1 << endl;
+        l++;
     }
 
-    // 10. For loop (Continue statement)
-    cout << "\nFor loop (Continue statement):\n";
-    // This loop skips iteration when i equals 2, using the continue statement
-    for (int i = 0; i < 5; ++i)
+    // 8. continue - skips the rest of THIS step and goes to the next one
+    cout << "\nFor loop with continue:\n";
+    for (int k = 0; k < 5; k++)
     {
-        if (i == 2)
+        if (k == 2)
         {
-            continue; // Skip the rest of the loop when i equals 2
+            continue;           // iteration 3 is not printed
         }
-        cout << "Iteration " << i + 1 << endl; // Display the iteration number
+        cout << "Iteration " << k + 1 << endl;
     }
+    // In a while / do-while loop remember to increase the counter BEFORE continue,
+    // otherwise the loop gets stuck on the same value forever.
 
-    // 11. While loop (Continue statement)
-    cout << "\nWhile loop (Continue statement):\n";
-    // This while loop skips iteration when m equals 3, using the continue statement
-    int m = 0;
-    while (m < 5)
+    // 9. Going through an array and changing every element
+    cout << "\nArray in a for loop:\n";
+    const int N = 5;
+    int tab[N] = {10, 20, 30, 40, 50};
+    for (int k = 0; k < N; k++)
     {
-        if (m == 3)
-        {
-            ++m;
-            continue; // Skip the rest of the loop when m equals 3
-        }
-        cout << "Iteration " << m + 1 << endl; // Display the iteration number
-        ++m;                                   // Increment m
+        tab[k] = tab[k] + 5;    // increase each element by 5
     }
-
-    // 12. Do-while loop (Continue statement)
-    cout << "\nDo-while loop (Continue statement):\n";
-    // This do-while loop skips iteration when n equals 1, using the continue statement
-    int n = 0;
-    do
+    for (int k = 0; k < N; k++)
     {
-        if (n == 1)
-        {
-            ++n;
-            continue; // Skip iteration when n equals 1
-        }
-        cout << "Iteration " << n + 1 << endl; // Display the iteration number
-        ++n;                                   // Increment n
-    } while (n < 5);
-
-    // 13. For-each loop (Range-based for loop)
-    cout << "\nFor-each loop (Range-based):\n";
-    // Range-based for loop iterating over an array
-    int arr[] = {10, 20, 30, 40, 50};
-    // Loop through each element in the array and display it
-    for (int val : arr)
-    {
-        cout << "Value: " << val << endl; // Display each value in the array
+        cout << "Updated value: " << tab[k] << endl;
     }
+    // In other code you may see "range-for":  for (int x : tab)  - it walks the whole
+    // array without an index. The index loop above does the same and works everywhere.
 
-    // 14. For-each loop (Using reference to modify elements)
-    cout << "\nFor-each loop (Using reference):\n";
-    // Modify the values in the array using reference in the loop
-    for (int &val : arr)
-    {
-        val += 5; // Increase each element by 5
-    }
-    // Print updated array values
-    for (int val : arr)
-    {
-        cout << "Updated value: " << val << endl; // Display the updated array values
-    }
-
-    return 0; // End of the program
+    return 0;
 }

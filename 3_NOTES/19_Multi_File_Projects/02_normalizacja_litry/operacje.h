@@ -3,12 +3,18 @@
 // Original file: unsorted/normalizacja/operacje.h
 // ======================================================================
 
-struct normalizator {
-    int cysterna;
-    int wanna;
-    int galon;
-    int litr;
+#ifndef OPERACJE_H
+#define OPERACJE_H
+
+struct Normalizator
+{
+    int cysterny;
+    int wanny;
+    int galony;
+    int litry;
 };
 
-void wypiszInformacje(normalizator liter);
-void liczienieLitrow(int totalLiter, normalizator &liter);
+void policzLitry(int wszystkieLitry, Normalizator &wynik);    // & - funkcja wypelnia strukture wywolujacego
+void wypiszInformacje(Normalizator wynik);
+
+#endif

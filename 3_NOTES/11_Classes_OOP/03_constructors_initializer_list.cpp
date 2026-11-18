@@ -1,64 +1,60 @@
 // ======================================================================
-// default / parameter / copy constructor written with initializer lists; brace-init objects
+// Constructors: default, with parameters, copy.
+// The same constructor written two ways:
+//   1) assignment in the body       <- write it like this at the exam
+//   2) initializer list : pole(x)   <- you only need to RECOGNISE it
 // Original file: Classes/konstruktory/listaInicjalizacyjna.cpp
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Drzewo
 {
-    public:
+private:
     bool czyIglaste;
-    bool czyTwarde;
-    int obwódPnia;
+    int obwodPnia;
     string nazwa;
-    public:
+
+public:
+    // konstruktor domyślny
+    Drzewo()
+    {
+        czyIglaste = false;
+        obwodPnia = 0;
+        nazwa = "brak";
+    }
+
+    // 1) konstruktor z parametrami - przypisanie w ciele (exam style)
+    Drzewo(bool iglaste, int obwod, string nowaNazwa)
+    {
+        czyIglaste = iglaste;
+        obwodPnia = obwod;
+        nazwa = nowaNazwa;
+    }
+
+    // 2) TO SAMO z listą inicjalizacyjną (pola ustawione przed wejściem do { }):
+    // Drzewo(bool iglaste, int obwod, string nowaNazwa) : czyIglaste(iglaste), obwodPnia(obwod), nazwa(nowaNazwa)
+    // {
+    // }
+
     void wypisz()
     {
-        cout << endl << "Czy drzewo jest iglaste? " << czyIglaste;
-        cout << endl << "Czy drzewo jest twarde? " << czyTwarde;
-        cout << endl << "Obwód pnia drzewa: " << obwódPnia;
-        cout << endl << "Nazwa drzewa: " << nazwa;
+        cout << "Nazwa: " << nazwa << ", iglaste: " << czyIglaste << ", obwod pnia: " << obwodPnia << endl;
     }
-    Drzewo():
-        czyIglaste {0},
-        czyTwarde {0},
-        obwódPnia {0},
-        nazwa {" "}
-    {}
-    Drzewo(bool Igly, bool Twarde, int obwod, string naz):
-        czyIglaste {Igly},
-        czyTwarde {Twarde},
-        obwódPnia {obwod},
-        nazwa {naz}
-    {}
-    Drzewo(const Drzewo& asdf):
-        czyIglaste {asdf.czyIglaste},
-        czyTwarde {asdf.czyTwarde},
-        obwódPnia {asdf.obwódPnia},
-        nazwa {asdf.nazwa}
-    {}
 };
 
 int main()
 {
-    Drzewo asdf1  {true, false, 15, "lipa"};//mimo że własności są prywatne możemy tak INICJALIZOWAC nie możemy tak zmieniać.
-    int liczba {};
-    // liczba {}; //tak nie
-    asdf1.wypisz();
-    Drzewo asdf2(1,0,55,"jaca");
-    asdf2.wypisz();
-    Drzewo asdf3(asdf2);
-    asdf3.wypisz();
+    Drzewo d1;                         // konstruktor domyślny
+    d1.wypisz();
+
+    Drzewo d2(true, 55, "sosna");      // konstruktor z parametrami
+    d2.wypisz();
+
+    Drzewo d3(d2);                     // kopiujący - kompilator tworzy go sam (kopiuje pola)
+    d3.wypisz();
+
     return 0;
 }
-
-// //int x, y;
-
-//     // Konstruktor z listą inicjalizacyjną
-//     Point(int x_val, int y_val) : x(x_val), y(y_val) {}
-
-//     void print() const {
-//         std::cout << "Point(" << x << ", " << y << ")\n";
-//     }

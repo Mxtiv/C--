@@ -1,6 +1,6 @@
-# INF.04-02-24.01-SG (+ 24.01-02-AG, 24.06-01-SD) – Klasa narzędzi dla napisów (samogłoski, powtórzenia)
+# INF.04-02-24.01-SG (+ 24.01-02-AG, 24.01-01-SD, 24.06-01-SD) – Klasa narzędzi dla napisów (samogłoski, powtórzenia)
 
-[⬅ all tasks](../README.md) · Sheet: [2024_01_02_SG](../../4_ARKUSZE/inf_04_2024_01_02_SG.pdf), [2024_01_02_AG](../../4_ARKUSZE/inf_04_2024_01_02_AG.pdf), [2024_06_01_SD](../../4_ARKUSZE/inf_04_2024_06_01_SD.pdf) · Key: [2024_01_02_SG_zo](../../4_ARKUSZE/klucze/INF_04_2024_01_02_SG_zo.pdf), [2024_06_01_SD_zo](../../4_ARKUSZE/klucze/INF_04_2024_06_01_SD_zo.pdf)
+[⬅ all tasks](../README.md) · Sheet: [2024_01_02_SG](../../4_ARKUSZE/inf_04_2024_01_02_SG.pdf), [2024_01_02_AG](../../4_ARKUSZE/inf_04_2024_01_02_AG.pdf), [2024_01_01_SD](../../4_ARKUSZE/inf_04_2024_01_01_SD.pdf), [2024_06_01_SD](../../4_ARKUSZE/inf_04_2024_06_01_SD.pdf) · Key: [2024_01_02_SG_zo](../../4_ARKUSZE/klucze/INF_04_2024_01_02_SG_zo.pdf), [2024_01_01_SD_zo](../../4_ARKUSZE/klucze/INF_04_2024_01_01_SD_zo.pdf), [2024_06_01_SD_zo](../../4_ARKUSZE/klucze/INF_04_2024_06_01_SD_zo.pdf)
 
 **Files:** main.cpp · **Run:** `g++ -std=c++17 main.cpp -o program.exe` (in this folder), or create a C++ console project in Visual Studio and paste `main.cpp`.
 **Folders that year:** `konsola`, `mobilna`, `dokumentacja`. Zip the whole console project, and put the source + exe outside the zip.
@@ -22,7 +22,7 @@
 class header: klasa / opis / metody (what each returns) / autor. Replace `00000000000` with **your exam number**.
 
 ## Notes
-Polish letters (ą, ę, ó) are typed by the user, so this program uses **wide strings** (`wstring`, `wcin`/`wcout` in UTF-16 mode). The file is saved as **UTF-8 with BOM**, so Visual Studio reads `L"ą"` correctly. `const wchar_t*` parameters make the null case real.
+Plain `string` + `getline(cin, ...)` + two loops; nothing else needed. A C++ `string` can never be null, so `tekst.empty()` covers both "empty or null" (say so in a comment, the grader looks for the check). `setlocale(LC_ALL, "")` is the usual line for Polish letters in the Visual Studio console; whether typed ą/ę/ó are counted depends on the console encoding, but the grader checks that the vowel list in the code contains them.
 
 ## Related building blocks
 `STR-03` · `STR-12` – see the [catalog](../../README.md#building-blocks---full-catalog)

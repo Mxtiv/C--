@@ -1,34 +1,38 @@
 // ======================================================================
-// overloads powieksz(int), (int,int), (float)
+// overloads powieksz(int), (int,int), (double)
 // Original file: unsorted/various/functionOverload.cpp
 // ======================================================================
 
 #include <iostream>
-#include <string>
 using namespace std;
-int powieksz(int liczba1)//przeładowanie  (overloading) nazwy funkcji powinno 
-//pozwalać rozróżniać te same nazwy funkcji po rodzaju lub liczbie parametrów.
+
+// Przeładowanie (overloading) nazwy funkcji - te same nazwy funkcji
+// rozróżniamy po rodzaju lub liczbie parametrów.
+int powieksz(int liczba1)
 {
     return liczba1 + 1;
-};
+}
+
 int powieksz(int liczba1, int liczba2)
 {
-    return liczba1+liczba2;
-};
-int powieksz(float liczba1)
+    return liczba1 + liczba2;
+}
+
+double powieksz(double liczba1)
 {
-    int oIlePowiekszyć;
-    cout<<"o ile powiekszyć"<<endl;
-    cin>>oIlePowiekszyć;
-    return liczba1+oIlePowiekszyć;
-};
+    int oIle;
+    cout << "o ile powiekszyc: ";
+    cin >> oIle;
+    return liczba1 + oIle;
+}
+
 int main()
 {
     int liczba1 = 4;
-    float liczba2=5;
-   
-    cout<< endl<< powieksz(liczba1)<<endl;//5
-    cout<< endl<< powieksz(liczba1,3)<<endl;//7
-    cout<< endl<< powieksz(liczba2)<<endl;
+    double liczba2 = 5.5;
+
+    cout << powieksz(liczba1) << endl;      // 5
+    cout << powieksz(liczba1, 3) << endl;   // 7
+    cout << powieksz(liczba2) << endl;      // 5.5 + what you type
     return 0;
 }

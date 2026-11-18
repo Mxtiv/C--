@@ -5,19 +5,27 @@
 // ======================================================================
 
 #include <iostream>
-#include "Prostokat.h"     // include the HEADER, never the .cpp
+#include "Prostokat.h"     // dolaczamy NAGLOWEK, nigdy plik .cpp
 using namespace std;
 
 int main()
 {
     Prostokat p1(3, 4);
     Prostokat p2(5, 5);
-    Prostokat p3;          // defaults 1 x 1
+    Prostokat p3;          // konstruktor domyslny: 1 x 1
 
-    cout << p1.opis() << ": pole " << p1.pole() << ", obwod " << p1.obwod() << endl;
-    cout << p2.opis() << ": pole " << p2.pole() << endl;
-    cout << "kwadrat? " << boolalpha << czyKwadrat(p2, 5, 5) << endl;
+    p1.wypisz();
+    cout << "pole " << p1.pole() << ", obwod " << p1.obwod() << endl;
+    p2.wypisz();
+    if (p2.czyKwadrat())
+    {
+        cout << "to jest kwadrat" << endl;
+    }
+    if (czyWiekszy(p2, p1))
+    {
+        cout << "p2 ma wieksze pole niz p1" << endl;
+    }
+    p3.wypisz();
     cout << "liczba prostokatow: " << Prostokat::ile() << endl;   // 3
-    (void)p3;
     return 0;
 }

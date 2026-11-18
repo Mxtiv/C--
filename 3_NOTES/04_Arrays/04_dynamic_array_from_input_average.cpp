@@ -1,32 +1,36 @@
 // ======================================================================
-// new double[size] with size from user, average, delete[]
+// new double[rozmiar] with the size from the user, average, delete[]
 // Original file: Arrays/dynamic.cpp
 // ======================================================================
 
 #include <iostream>
+using namespace std;
 
-int main() {
-    int size;
-    std::cout << "Enter the number of elements: ";
-    std::cin >> size;
-    
-    // Dynamically allocate an array
-    double* numbers = new double[size];
-    
-    std::cout << "Enter " << size << " numbers: " << std::endl;
-    double sum = 0;
-    
-    for (int i = 0; i < size; i++) {
-        std::cin >> numbers[i];
-        sum += numbers[i];
+int main()
+{
+    int rozmiar;
+    do
+    {
+        cout << "Enter the number of elements: ";
+        cin >> rozmiar;
+    } while (rozmiar < 1);
+
+    // Dynamically allocate an array - its size is known only now
+    double *liczby = new double[rozmiar];
+
+    cout << "Enter " << rozmiar << " numbers: " << endl;
+    double suma = 0;
+    for (int i = 0; i < rozmiar; i++)
+    {
+        cin >> liczby[i];
+        suma = suma + liczby[i];
     }
-    
-    // Calculate average
-    double average = sum / size;
-    std::cout << "Average: " << average << std::endl;
-    
+
+    double srednia = suma / rozmiar;
+    cout << "Average: " << srednia << endl;
+
     // Free allocated memory
-    delete[] numbers;
-    
+    delete[] liczby;
+
     return 0;
 }

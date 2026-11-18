@@ -1,5 +1,5 @@
 // ======================================================================
-// the same function written 4 ways: by value, by reference (output params), by const reference, by pointer
+// the same sphere calculation written 3 ways: by value, by reference (output params), by pointer
 // Original file: unsorted/various/pi.cpp
 // ======================================================================
 
@@ -7,55 +7,53 @@
 #include <cmath>
 using namespace std;
 
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
+const double PI = 3.14159265358979;
 
-double volumeAndLateralSurfaceAreaByValue(double radius) {
-    double volume = (4.0 / 3.0) * M_PI * pow(radius, 3);
-    double lateralSurfaceArea = 4 * M_PI * pow(radius, 2);
-    cout << "Volume: " << volume << endl;
-    cout << "Lateral Surface Area: " << lateralSurfaceArea << endl;
-    return volume;
+// 1) BY VALUE - the function gets a COPY of promien; it can return only ONE value
+double objetoscPrzezWartosc(double promien)
+{
+    double objetosc = (4.0 / 3.0) * PI * pow(promien, 3);
+    return objetosc;
 }
 
-void volumeAndLateralSurfaceAreaByReference(double radius, double &volume, double &lateralSurfaceArea) {
-    volume = (4.0 / 3.0) * M_PI * pow(radius, 3);
-    lateralSurfaceArea = 4 * M_PI * pow(radius, 2);
-    cout << "Volume: " << volume << endl;
-    cout << "Lateral Surface Area: " << lateralSurfaceArea << endl;
+// 2) BY REFERENCE (&) - objetosc and pole ARE the caller's variables,
+//    so the function can "return" two results through them
+void kulaPrzezReferencje(double promien, double &objetosc, double &pole)
+{
+    objetosc = (4.0 / 3.0) * PI * pow(promien, 3);
+    pole = 4 * PI * pow(promien, 2);
 }
 
-void volumeAndLateralSurfaceAreaByConstReference(const double &radius, double &volume, double &lateralSurfaceArea) {
-    volume = (4.0 / 3.0) * M_PI * pow(radius, 3);
-    lateralSurfaceArea = 4 * M_PI * pow(radius, 2);
-    cout << "Volume: " << volume << endl;
-    cout << "Lateral Surface Area: " << lateralSurfaceArea << endl;
+// 3) BY POINTER (*) - the function gets ADDRESSES; call it with &x, use *x inside
+void kulaPrzezWskazniki(double promien, double *objetosc, double *pole)
+{
+    *objetosc = (4.0 / 3.0) * PI * pow(promien, 3);
+    *pole = 4 * PI * pow(promien, 2);
 }
 
-void volumeAndLateralSurfaceAreaByPointers(const double *radius, double *volume, double *lateralSurfaceArea) {
-    *volume = (4.0 / 3.0) * M_PI * pow(*radius, 3);
-    *lateralSurfaceArea = 4 * M_PI * pow(*radius, 2);
-    cout << "Volume: " << *volume << endl;
-    cout << "Lateral Surface Area: " << *lateralSurfaceArea << endl;
-}
+// (In books you may also see "const double &promien" - a reference that cannot be changed.
+//  For int / double / string just pass by value, like in 1).)
 
-int main() {
-    double radius;
+int main()
+{
+    double promien;
+    do
+    {
+        cout << "Enter the radius of the sphere: ";
+        cin >> promien;
+    } while (promien <= 0);
 
-    cout << "Enter the radius of the sphere: ";
-    cin >> radius;
+    cout << "By value     - volume: " << objetoscPrzezWartosc(promien) << endl;
 
-    volumeAndLateralSurfaceAreaByValue(radius);
+    double objetosc2;
+    double pole2;
+    kulaPrzezReferencje(promien, objetosc2, pole2);
+    cout << "By reference - volume: " << objetosc2 << ", surface: " << pole2 << endl;
 
-    double volumeII, lateralSurfaceAreaII;
-    volumeAndLateralSurfaceAreaByReference(radius, volumeII, lateralSurfaceAreaII);
-
-    double volumeIII, lateralSurfaceAreaIII;
-    volumeAndLateralSurfaceAreaByConstReference(radius, volumeIII, lateralSurfaceAreaIII);
-
-    double volumeIV, lateralSurfaceAreaIV;
-    volumeAndLateralSurfaceAreaByPointers(&radius, &volumeIV, &lateralSurfaceAreaIV);
+    double objetosc3;
+    double pole3;
+    kulaPrzezWskazniki(promien, &objetosc3, &pole3);
+    cout << "By pointer   - volume: " << objetosc3 << ", surface: " << pole3 << endl;
 
     return 0;
 }

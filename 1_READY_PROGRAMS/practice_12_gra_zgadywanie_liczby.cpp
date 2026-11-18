@@ -10,35 +10,9 @@
 // wyświetla liczbę prób i pyta, czy zagrać ponownie.
 
 #include <iostream>
-#include <string>
 #include <cstdlib>
 #include <ctime>
-#include <limits>
 using namespace std;
-
-/********************************************************
- * nazwa funkcji: wczytajLiczbe
- * opis funkcji: wczytuje liczbę całkowitą z zakresu min..max, ponawiając pytanie przy błędzie
- * parametry: komunikat - tekst wyświetlany użytkownikowi
- *            min - najmniejsza dopuszczalna wartość
- *            max - największa dopuszczalna wartość
- * zwracany typ i opis: int - poprawna liczba
- * autor: <numer zdającego>
- ********************************************************/
-int wczytajLiczbe(const string &komunikat, int min, int max)
-{
-    int liczba;
-    while (true)
-    {
-        cout << komunikat;
-        if (cin >> liczba && liczba >= min && liczba <= max)
-            return liczba;
-        if (cin.eof()) exit(0);
-        cout << "Podaj liczbe od " << min << " do " << max << "." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-}
 
 /********************************************************
  * nazwa funkcji: rozegrajRunde
@@ -54,43 +28,40 @@ int rozegrajRunde()
     int strzal;
     do
     {
-        strzal = wczytajLiczbe("Twoj strzal (1-100): ", 1, 100);
+        do
+        {
+            cout << "Twoj strzal (1-100): ";
+            cin >> strzal;
+        } while (strzal < 1 || strzal > 100);
+
         proby++;
         if (strzal < sekret)
+        {
             cout << "Za malo!" << endl;
+        }
         else if (strzal > sekret)
+        {
             cout << "Za duzo!" << endl;
+        }
     } while (strzal != sekret);
     return proby;
-}
-
-/********************************************************
- * nazwa funkcji: zapytajTakNie
- * opis funkcji: zadaje pytanie i czeka na odpowiedź t lub n
- * parametry: pytanie - tekst pytania
- * zwracany typ i opis: bool - true dla 't', false dla 'n'
- * autor: <numer zdającego>
- ********************************************************/
-bool zapytajTakNie(const string &pytanie)
-{
-    char odp;
-    while (true)
-    {
-        cout << pytanie;
-        if (!(cin >> odp)) return false;
-        if (odp == 't' || odp == 'T') return true;
-        if (odp == 'n' || odp == 'N') return false;
-    }
 }
 
 int main()
 {
     srand(time(0));
     cout << "Zgadnij liczbe od 1 do 100!" << endl;
+    char odpowiedz;
     do
     {
         int proby = rozegrajRunde();
         cout << "Brawo! Zgadles w " << proby << " probach." << endl;
-    } while (zapytajTakNie("Grasz jeszcze raz? (t/n): "));
+
+        do
+        {
+            cout << "Grasz jeszcze raz? (t/n): ";
+            cin >> odpowiedz;
+        } while (odpowiedz != 't' && odpowiedz != 'n');
+    } while (odpowiedz == 't');
     return 0;
 }

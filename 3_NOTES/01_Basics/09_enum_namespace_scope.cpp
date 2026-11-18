@@ -1,5 +1,5 @@
 // ======================================================================
-// ADDED (gap-fill): enum, enum class, namespace, using, typedef/using alias, static local
+// ADDED (gap-fill): enum, enum class, namespace, static local variable
 // Not from your original repo - written to fill a missing topic.
 // (Big real example with enums: 12_Inheritance/07_multiple_inheritance_computer.cpp)
 // ======================================================================
@@ -9,68 +9,66 @@
 using namespace std;
 
 // ---------------- plain enum: names become int constants 0,1,2... ----------------
-enum Color { RED, GREEN, BLUE };                 // RED=0, GREEN=1, BLUE=2
-enum Grade { ONE = 1, TWO, THREE, FOUR, FIVE, SIX };   // TWO=2 ... SIX=6
+enum Kolor { CZERWONY, ZIELONY, NIEBIESKI };              // 0, 1, 2
+enum Ocena { JEDEN = 1, DWA, TRZY, CZTERY, PIEC, SZESC };  // DWA=2 ... SZESC=6
 
-// ---------------- enum class: scoped + type safe (modern, preferred) ----------------
-enum class Status { Active, Blocked, Deleted };
+// ---------------- enum class: names must be written as Status::... ----------------
+enum class Status { Aktywny, Zablokowany, Usuniety };
 
-string statusToText(Status s)
+string statusNaTekst(Status s)
 {
     switch (s)
     {
-    case Status::Active:  return "active";
-    case Status::Blocked: return "blocked";
-    case Status::Deleted: return "deleted";
+    case Status::Aktywny:
+        return "active";
+    case Status::Zablokowany:
+        return "blocked";
+    case Status::Usuniety:
+        return "deleted";
     }
     return "?";
 }
 
 // ---------------- namespace: groups names, avoids conflicts ----------------
-namespace geometry
+namespace geometria
 {
     const double PI = 3.14159;
-    double circleArea(double r) { return PI * r * r; }
-}
-namespace physics
-{
-    const double G = 9.81;
-}
 
-// ---------------- type alias ----------------
-typedef unsigned long long ull;   // old style
-using Text = string;              // new style
+    double poleKola(double r)
+    {
+        return PI * r * r;
+    }
+}
 
 // ---------------- static local variable keeps its value between calls ----------------
-int callCounter()
+int licznikWywolan()
 {
-    static int calls = 0;   // initialized only once
-    return ++calls;
+    static int wywolania = 0;   // set to 0 only once
+    wywolania++;
+    return wywolania;
 }
 
 int main()
 {
-    Color c = GREEN;
-    cout << "GREEN = " << c << endl;                  // prints 1
-    if (c == GREEN) cout << "it is green" << endl;
+    Kolor k = ZIELONY;
+    cout << "ZIELONY = " << k << endl;                // prints 1
+    if (k == ZIELONY)
+    {
+        cout << "it is green" << endl;
+    }
 
-    Grade g = FIVE;
-    cout << "grade " << g << endl;                    // 5
+    Ocena o = PIEC;
+    cout << "grade " << o << endl;                    // 5
 
-    Status s = Status::Blocked;
-    cout << "status: " << statusToText(s) << ", as int: " << static_cast<int>(s) << endl;
-    // int x = s;   // ERROR for enum class - needs static_cast (that's the "type safety")
+    Status s = Status::Zablokowany;
+    cout << "status: " << statusNaTekst(s) << ", as int: " << (int)s << endl;
+    // int x = s;   // ERROR for enum class - it needs a cast: (int)s
 
-    cout << "area: " << geometry::circleArea(2) << ", g = " << physics::G << endl;
-    using geometry::PI;                               // bring one name in
-    cout << "PI: " << PI << endl;
+    cout << "area: " << geometria::poleKola(2) << ", PI: " << geometria::PI << endl;
 
-    ull big = 18000000000000000000ULL;
-    Text t = "alias works";
-    cout << big << " " << t << endl;
-
-    callCounter(); callCounter();
-    cout << "callCounter called " << callCounter() << " times" << endl;   // 3
+    licznikWywolan();
+    licznikWywolan();
+    cout << "licznikWywolan called " << licznikWywolan() << " times" << endl;   // 3
 
     return 0;
 }

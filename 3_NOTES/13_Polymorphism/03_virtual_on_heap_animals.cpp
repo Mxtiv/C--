@@ -1,75 +1,94 @@
 // ======================================================================
-// Zwierze* = new Lew/Pies/Kot, virtual method, delete
+// Zwierze* pointing at Lew/Pies/Kot created with new, virtual method, delete
 // Original file: Classes/Polimorfizm/Polimorfizm na stercie, sterta/main.cpp
-// FIXED - the bug was: base class has no virtual destructor (see 05_)
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Zwierze
 {
 public:
-string dajGlos;
-virtual ~Zwierze() {}   // virtual destructor: delete through a base pointer runs the right destructor
-virtual void wydajdzwiek()
-{}
-
-};
-class Lew:public Zwierze
-{
-    public:
-    string zarycz;
-    Lew() {};
-    Lew(string zarycz)
+    // virtual = wersja metody wybierana w czasie dzialania programu,
+    // wedlug typu OBIEKTU, a nie typu wskaznika
+    virtual void wydajDzwiek()
     {
-      this->zarycz=zarycz;
-    }
-    void wydajdzwiek()
-    {
-        cout<<zarycz<<endl;
-    }
-};
-class Pies:public Zwierze
-{
-    public:
-    string zaszczekaj;
-    Pies() {};
-    Pies(string zaszczekaj)
-    {
-      this->zaszczekaj=zaszczekaj;
-    }
-    void wydajdzwiek()
-    {
-        cout<<zaszczekaj<<endl;
-    }
-};
-class Kot:public Zwierze
-{
-    public:
-    string zamiaucz;
-    Kot() {};
-    Kot(string zamiaucz)
-    {
-      this->zamiaucz=zamiaucz;
+        cout << "(jakis dzwiek)" << endl;
     }
 
-    void wydajdzwiek()
+    // virtual destruktor - tylko dlatego, ze obiekty tworzymy przez new
+    // i usuwamy przez delete wskaznika do klasy bazowej (wiecej w 05_)
+    virtual ~Zwierze()
     {
-        cout<<zamiaucz<<endl;
     }
 };
+
+class Lew : public Zwierze
+{
+private:
+    string ryk;
+
+public:
+    Lew(string nowyRyk)
+    {
+        ryk = nowyRyk;
+    }
+
+    void wydajDzwiek()
+    {
+        cout << ryk << endl;
+    }
+};
+
+class Pies : public Zwierze
+{
+private:
+    string szczekniecie;
+
+public:
+    Pies(string noweSzczekniecie)
+    {
+        szczekniecie = noweSzczekniecie;
+    }
+
+    void wydajDzwiek()
+    {
+        cout << szczekniecie << endl;
+    }
+};
+
+class Kot : public Zwierze
+{
+private:
+    string miauczenie;
+
+public:
+    Kot(string noweMiauczenie)
+    {
+        miauczenie = noweMiauczenie;
+    }
+
+    void wydajDzwiek()
+    {
+        cout << miauczenie << endl;
+    }
+};
+
 int main()
 {
-    Zwierze *zwierzeta;
-    zwierzeta=new Lew("RYK");
-    zwierzeta->wydajdzwiek();
-    delete zwierzeta;
-      zwierzeta=new Pies("HAU");
-    zwierzeta->wydajdzwiek();
-    delete zwierzeta;
-      zwierzeta=new Kot("MIAU");
-    zwierzeta->wydajdzwiek();
-    delete zwierzeta;
-    return 1;
+    Zwierze *zwierze;               // wskaznik do klasy bazowej
+
+    zwierze = new Lew("RYK");       // obiekt na stercie (heap)
+    zwierze->wydajDzwiek();         // Lew::wydajDzwiek - dzieki virtual
+    delete zwierze;
+
+    zwierze = new Pies("HAU");
+    zwierze->wydajDzwiek();
+    delete zwierze;
+
+    zwierze = new Kot("MIAU");
+    zwierze->wydajDzwiek();
+    delete zwierze;
+    return 0;
 }

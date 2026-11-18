@@ -2,14 +2,12 @@
 // BUILDING BLOCKS: strings (napisy, std::string) - case, counting, words, splitting,
 // palindrome, reverse, replace, Caesar cipher, validation, initials, letter frequency
 // HOW TO USE: copy the comment box + code under a //@ line, up to the next //@ line.
+// Every block walks the string character by character: tekst[i], i = 0 .. tekst.length() - 1
 // ======================================================================
 
 #include <iostream>
 #include <string>
-#include <vector>
-#include <sstream>
 #include <cctype>
-#include <algorithm>
 using namespace std;
 
 //@ STR-01 | text to UPPER case | <string> <cctype>
@@ -22,8 +20,10 @@ using namespace std;
  ********************************************************/
 string naWielkie(string tekst)
 {
-    for (char &c : tekst)            // & -> modifies the characters of the copy
-        c = toupper(c);
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        tekst[i] = toupper(tekst[i]);
+    }
     return tekst;
 }
 
@@ -37,8 +37,10 @@ string naWielkie(string tekst)
  ********************************************************/
 string naMale(string tekst)
 {
-    for (char &c : tekst)
-        c = tolower(c);
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        tekst[i] = tolower(tekst[i]);
+    }
     return tekst;
 }
 
@@ -50,13 +52,17 @@ string naMale(string tekst)
  * zwracany typ i opis: int - liczba samogłosek
  * autor: <numer zdającego>
  ********************************************************/
-int zliczSamogloski(const string &tekst)
+int zliczSamogloski(string tekst)
 {
-    const string samogloski = "aeiouy";
     int ile = 0;
-    for (char c : tekst)
-        if (samogloski.find(tolower(c)) != string::npos)
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        char znak = tolower(tekst[i]);
+        if (znak == 'a' || znak == 'e' || znak == 'i' || znak == 'o' || znak == 'u' || znak == 'y')
+        {
             ile++;
+        }
+    }
     return ile;
 }
 
@@ -68,13 +74,20 @@ int zliczSamogloski(const string &tekst)
  * zwracany typ i opis: int - liczba spółgłosek
  * autor: <numer zdającego>
  ********************************************************/
-int zliczSpolgloski(const string &tekst)
+int zliczSpolgloski(string tekst)
 {
-    const string samogloski = "aeiouy";
     int ile = 0;
-    for (char c : tekst)
-        if (isalpha(c) && samogloski.find(tolower(c)) == string::npos)
-            ile++;
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        char znak = tolower(tekst[i]);
+        if (znak >= 'a' && znak <= 'z')
+        {
+            if (znak != 'a' && znak != 'e' && znak != 'i' && znak != 'o' && znak != 'u' && znak != 'y')
+            {
+                ile++;
+            }
+        }
+    }
     return ile;
 }
 
@@ -86,12 +99,16 @@ int zliczSpolgloski(const string &tekst)
  * zwracany typ i opis: int - liczba cyfr
  * autor: <numer zdającego>
  ********************************************************/
-int zliczCyfry(const string &tekst)
+int zliczCyfry(string tekst)
 {
     int ile = 0;
-    for (char c : tekst)
-        if (isdigit(c))
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (isdigit(tekst[i]))
+        {
             ile++;
+        }
+    }
     return ile;
 }
 
@@ -104,68 +121,108 @@ int zliczCyfry(const string &tekst)
  * zwracany typ i opis: int - liczba wystąpień znaku
  * autor: <numer zdającego>
  ********************************************************/
-int zliczZnak(const string &tekst, char znak)
+int zliczZnak(string tekst, char znak)
 {
     int ile = 0;
-    for (char c : tekst)
-        if (c == znak)
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] == znak)
+        {
             ile++;
+        }
+    }
     return ile;
 }
 
-//@ STR-07 | count words (separated by spaces) | <string> <sstream>
+//@ STR-07 | count words separated by spaces (counts where a word starts) | <string>
 /********************************************************
  * nazwa funkcji: zliczSlowa
- * opis funkcji: zlicza słowa w napisie (słowa oddzielone białymi znakami)
+ * opis funkcji: zlicza słowa w napisie (słowa oddzielone spacjami); słowo zaczyna się
+ *               tam, gdzie znak nie jest spacją, a poprzedni znak jest spacją lub go nie ma
  * parametry: tekst - analizowany napis
  * zwracany typ i opis: int - liczba słów
  * autor: <numer zdającego>
  ********************************************************/
-int zliczSlowa(const string &tekst)
+int zliczSlowa(string tekst)
 {
-    istringstream strumien(tekst);
-    string slowo;
     int ile = 0;
-    while (strumien >> slowo)
-        ile++;
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] != ' ' && (i == 0 || tekst[i - 1] == ' '))
+        {
+            ile++;
+        }
+    }
     return ile;
 }
 
-//@ STR-08 | split a text into words -> vector<string> | <string> <vector> <sstream>
+//@ STR-08 | split a text into words -> string slowa[] array, returns how many | <string>
 /********************************************************
  * nazwa funkcji: podzielNaSlowa
- * opis funkcji: dzieli napis na słowa oddzielone białymi znakami
+ * opis funkcji: dzieli napis na słowa oddzielone spacjami i zapisuje je do tablicy
  * parametry: tekst - napis do podziału
- * zwracany typ i opis: vector<string> - kolejne słowa
+ *            slowa - tablica na słowa (musi być dość duża, np. string slowa[100])
+ * zwracany typ i opis: int - liczba słów zapisanych w tablicy
  * autor: <numer zdającego>
  ********************************************************/
-vector<string> podzielNaSlowa(const string &tekst)
+int podzielNaSlowa(string tekst, string slowa[])
 {
-    vector<string> slowa;
-    istringstream strumien(tekst);
-    string slowo;
-    while (strumien >> slowo)
-        slowa.push_back(slowo);
-    return slowa;
+    int ile = 0;
+    string slowo = "";
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] == ' ')
+        {
+            if (slowo != "")
+            {
+                slowa[ile] = slowo;
+                ile++;
+                slowo = "";
+            }
+        }
+        else
+        {
+            slowo += tekst[i];
+        }
+    }
+    if (slowo != "")                 // the last word has no space after it
+    {
+        slowa[ile] = slowo;
+        ile++;
+    }
+    return ile;
 }
 
-//@ STR-09 | split by a separator, e.g. "Jan;17;4.5" by ';' -> vector<string> | <string> <vector> <sstream>
+//@ STR-09 | split by a separator, e.g. "Jan;17;4.5" by ';' -> string czesci[] array, returns how many | <string>
 /********************************************************
  * nazwa funkcji: podzielWgSeparatora
- * opis funkcji: dzieli napis na części oddzielone podanym znakiem
+ * opis funkcji: dzieli napis na części oddzielone podanym znakiem i zapisuje je do tablicy
  * parametry: tekst - napis do podziału
  *            separator - znak oddzielający części
- * zwracany typ i opis: vector<string> - kolejne części napisu
+ *            czesci - tablica na części (musi być dość duża, np. string czesci[20])
+ * zwracany typ i opis: int - liczba części zapisanych w tablicy
  * autor: <numer zdającego>
  ********************************************************/
-vector<string> podzielWgSeparatora(const string &tekst, char separator)
+int podzielWgSeparatora(string tekst, char separator, string czesci[])
 {
-    vector<string> czesci;
-    stringstream strumien(tekst);
-    string czesc;
-    while (getline(strumien, czesc, separator))
-        czesci.push_back(czesc);
-    return czesci;
+    int ile = 0;
+    string czesc = "";
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] == separator)
+        {
+            czesci[ile] = czesc;
+            ile++;
+            czesc = "";
+        }
+        else
+        {
+            czesc += tekst[i];
+        }
+    }
+    czesci[ile] = czesc;             // the last part
+    ile++;
+    return ile;
 }
 
 //@ STR-10 | reverse a text | <string>
@@ -176,11 +233,13 @@ vector<string> podzielWgSeparatora(const string &tekst, char separator)
  * zwracany typ i opis: string - odwrócony napis
  * autor: <numer zdającego>
  ********************************************************/
-string odwrocNapis(const string &tekst)
+string odwrocNapis(string tekst)
 {
-    string wynik;
+    string wynik = "";
     for (int i = tekst.length() - 1; i >= 0; i--)
+    {
         wynik += tekst[i];
+    }
     return wynik;
 }
 
@@ -193,18 +252,23 @@ string odwrocNapis(const string &tekst)
  * zwracany typ i opis: bool - true, gdy napis jest palindromem
  * autor: <numer zdającego>
  ********************************************************/
-bool czyPalindrom(const string &tekst)
+bool czyPalindrom(string tekst)
 {
-    string czysty;
-    for (char c : tekst)
-        if (c != ' ')
-            czysty += tolower(c);
-    int i = 0, j = (int)czysty.length() - 1;
-    while (i < j)
+    string czysty = "";
+    for (int i = 0; i < tekst.length(); i++)
     {
-        if (czysty[i] != czysty[j]) return false;
-        i++;
-        j--;
+        if (tekst[i] != ' ')
+        {
+            czysty += tolower(tekst[i]);
+        }
+    }
+    int dlugosc = czysty.length();
+    for (int i = 0; i < dlugosc / 2; i++)
+    {
+        if (czysty[i] != czysty[dlugosc - 1 - i])
+        {
+            return false;
+        }
     }
     return true;
 }
@@ -217,35 +281,47 @@ bool czyPalindrom(const string &tekst)
  * zwracany typ i opis: string - napis bez spacji
  * autor: <numer zdającego>
  ********************************************************/
-string usunSpacje(const string &tekst)
+string usunSpacje(string tekst)
 {
-    string wynik;
-    for (char c : tekst)
-        if (c != ' ')
-            wynik += c;
+    string wynik = "";
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] != ' ')
+        {
+            wynik += tekst[i];
+        }
+    }
     return wynik;
 }
 
-//@ STR-13 | replace ALL occurrences of a fragment with another | <string>
+//@ STR-13 | replace ALL occurrences of a fragment with another (walks the text, compares with substr) | <string>
 /********************************************************
  * nazwa funkcji: zamienWszystkie
  * opis funkcji: zamienia wszystkie wystąpienia fragmentu na inny fragment
  * parametry: tekst - napis wejściowy
- *            co - szukany fragment
+ *            co - szukany fragment (niepusty)
  *            naCo - fragment wstawiany w miejsce znalezionego
  * zwracany typ i opis: string - napis po zamianie
  * autor: <numer zdającego>
  ********************************************************/
-string zamienWszystkie(string tekst, const string &co, const string &naCo)
+string zamienWszystkie(string tekst, string co, string naCo)
 {
-    if (co.empty()) return tekst;
-    size_t pozycja = tekst.find(co);
-    while (pozycja != string::npos)
+    string wynik = "";
+    int i = 0;
+    while (i < tekst.length())
     {
-        tekst.replace(pozycja, co.length(), naCo);
-        pozycja = tekst.find(co, pozycja + naCo.length());
+        if (tekst.substr(i, co.length()) == co)
+        {
+            wynik += naCo;
+            i = i + co.length();     // jump over the found fragment
+        }
+        else
+        {
+            wynik += tekst[i];
+            i++;
+        }
     }
-    return tekst;
+    return wynik;
 }
 
 //@ STR-14 | Caesar cipher with any key (keeps case, other chars unchanged); decrypt = key 26 - k | <string>
@@ -260,13 +336,21 @@ string zamienWszystkie(string tekst, const string &co, const string &naCo)
  ********************************************************/
 string szyfrujCezarem(string tekst, int klucz)
 {
-    klucz = ((klucz % 26) + 26) % 26;          // any key -> 0..25
-    for (char &c : tekst)
+    klucz = klucz % 26;              // any key -> -25..25
+    if (klucz < 0)
     {
-        if (c >= 'a' && c <= 'z')
-            c = 'a' + (c - 'a' + klucz) % 26;
-        else if (c >= 'A' && c <= 'Z')
-            c = 'A' + (c - 'A' + klucz) % 26;
+        klucz = klucz + 26;          // -> 0..25
+    }
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] >= 'a' && tekst[i] <= 'z')
+        {
+            tekst[i] = 'a' + (tekst[i] - 'a' + klucz) % 26;
+        }
+        else if (tekst[i] >= 'A' && tekst[i] <= 'Z')
+        {
+            tekst[i] = 'A' + (tekst[i] - 'A' + klucz) % 26;
+        }
     }
     return tekst;
 }
@@ -280,7 +364,7 @@ string szyfrujCezarem(string tekst, int klucz)
  * zwracany typ i opis: string - odszyfrowany napis
  * autor: <numer zdającego>
  ********************************************************/
-string deszyfrujCezarem(const string &tekst, int klucz)
+string deszyfrujCezarem(string tekst, int klucz)
 {
     return szyfrujCezarem(tekst, -klucz);
 }
@@ -293,14 +377,24 @@ string deszyfrujCezarem(const string &tekst, int klucz)
  * zwracany typ i opis: bool - true, gdy napis jest liczbą całkowitą
  * autor: <numer zdającego>
  ********************************************************/
-bool czyLiczbaCalkowita(const string &tekst)
+bool czyLiczbaCalkowita(string tekst)
 {
-    if (tekst.empty()) return false;
-    size_t start = (tekst[0] == '-') ? 1 : 0;
-    if (start == tekst.length()) return false;
-    for (size_t i = start; i < tekst.length(); i++)
+    int start = 0;
+    if (tekst.length() > 0 && tekst[0] == '-')
+    {
+        start = 1;                   // skip the minus
+    }
+    if (start == tekst.length())
+    {
+        return false;                // "" or just "-"
+    }
+    for (int i = start; i < tekst.length(); i++)
+    {
         if (!isdigit(tekst[i]))
+        {
             return false;
+        }
+    }
     return true;
 }
 
@@ -314,21 +408,21 @@ bool czyLiczbaCalkowita(const string &tekst)
  ********************************************************/
 string kazdeSlowoWielka(string tekst)
 {
-    bool poczatekSlowa = true;
-    for (char &c : tekst)
+    for (int i = 0; i < tekst.length(); i++)
     {
-        if (c == ' ')
-            poczatekSlowa = true;
+        if (i == 0 || tekst[i - 1] == ' ')
+        {
+            tekst[i] = toupper(tekst[i]);
+        }
         else
         {
-            c = poczatekSlowa ? toupper(c) : tolower(c);
-            poczatekSlowa = false;
+            tekst[i] = tolower(tekst[i]);
         }
     }
     return tekst;
 }
 
-//@ STR-18 | initials: "Jan Maria Rokita" -> "JMR" | <string> <sstream> <cctype>
+//@ STR-18 | initials: "Jan Maria Rokita" -> "JMR" | <string> <cctype>
 /********************************************************
  * nazwa funkcji: inicjaly
  * opis funkcji: tworzy inicjały z pierwszych liter kolejnych słów
@@ -336,12 +430,16 @@ string kazdeSlowoWielka(string tekst)
  * zwracany typ i opis: string - inicjały wielkimi literami
  * autor: <numer zdającego>
  ********************************************************/
-string inicjaly(const string &tekst)
+string inicjaly(string tekst)
 {
-    istringstream strumien(tekst);
-    string slowo, wynik;
-    while (strumien >> slowo)
-        wynik += toupper(slowo[0]);
+    string wynik = "";
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] != ' ' && (i == 0 || tekst[i - 1] == ' '))     // first letter of a word
+        {
+            wynik += toupper(tekst[i]);
+        }
+    }
     return wynik;
 }
 
@@ -353,11 +451,24 @@ string inicjaly(const string &tekst)
  * zwracany typ i opis: string - napis z zamienionymi członami (bez zmian, gdy brak spacji)
  * autor: <numer zdającego>
  ********************************************************/
-string zamienSlowa(const string &tekst)
+string zamienSlowa(string tekst)
 {
-    size_t spacja = tekst.find(' ');
-    if (spacja == string::npos) return tekst;
-    return tekst.substr(spacja + 1) + " " + tekst.substr(0, spacja);
+    int spacja = -1;
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        if (tekst[i] == ' ')
+        {
+            spacja = i;
+            break;
+        }
+    }
+    if (spacja == -1)
+    {
+        return tekst;
+    }
+    string pierwsze = tekst.substr(0, spacja);
+    string drugie = tekst.substr(spacja + 1);
+    return drugie + " " + pierwsze;
 }
 
 //@ STR-20 | frequency of each letter a..z (prints only the letters that occur) | <iostream> <string> <cctype>
@@ -368,21 +479,31 @@ string zamienSlowa(const string &tekst)
  * zwracany typ i opis: brak
  * autor: <numer zdającego>
  ********************************************************/
-void czestoscLiter(const string &tekst)
+void czestoscLiter(string tekst)
 {
-    int licznik[26] = {0};
-    for (char c : tekst)
-        if (isalpha(c))
-            licznik[tolower(c) - 'a']++;
+    int licznik[26] = {0};           // licznik[0] -> 'a', licznik[1] -> 'b', ...
+    for (int i = 0; i < tekst.length(); i++)
+    {
+        char znak = tolower(tekst[i]);
+        if (znak >= 'a' && znak <= 'z')
+        {
+            licznik[znak - 'a']++;
+        }
+    }
     for (int i = 0; i < 26; i++)
+    {
         if (licznik[i] > 0)
+        {
             cout << (char)('a' + i) << ": " << licznik[i] << endl;
+        }
+    }
 }
 
-//@ STR-21 | anagram check (same letters, other order: "listen" / "silent") | <string> <algorithm>
+//@ STR-21 | anagram check (same letters, other order: "listen" / "silent") - letter-count arrays | <string> <cctype>
 /********************************************************
  * nazwa funkcji: czyAnagram
- * opis funkcji: sprawdza, czy dwa napisy składają się z tych samych znaków
+ * opis funkcji: sprawdza, czy dwa napisy składają się z tych samych liter w tej samej
+ *               liczbie (pomija wielkość liter i znaki niebędące literami a..z)
  * parametry: a - pierwszy napis
  *            b - drugi napis
  * zwracany typ i opis: bool - true, gdy napisy są anagramami
@@ -390,9 +511,32 @@ void czestoscLiter(const string &tekst)
  ********************************************************/
 bool czyAnagram(string a, string b)
 {
-    sort(a.begin(), a.end());
-    sort(b.begin(), b.end());
-    return a == b;
+    int licznikA[26] = {0};
+    int licznikB[26] = {0};
+    for (int i = 0; i < a.length(); i++)
+    {
+        char znak = tolower(a[i]);
+        if (znak >= 'a' && znak <= 'z')
+        {
+            licznikA[znak - 'a']++;
+        }
+    }
+    for (int i = 0; i < b.length(); i++)
+    {
+        char znak = tolower(b[i]);
+        if (znak >= 'a' && znak <= 'z')
+        {
+            licznikB[znak - 'a']++;
+        }
+    }
+    for (int i = 0; i < 26; i++)
+    {
+        if (licznikA[i] != licznikB[i])
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 //@ STR-22 | count upper and lower case letters (results through & parameters) | <string> <cctype>
@@ -405,13 +549,20 @@ bool czyAnagram(string a, string b)
  * zwracany typ i opis: brak (wyniki przez parametry referencyjne)
  * autor: <numer zdającego>
  ********************************************************/
-void zliczWielkieIMale(const string &tekst, int &wielkie, int &male)
+void zliczWielkieIMale(string tekst, int &wielkie, int &male)
 {
-    wielkie = male = 0;
-    for (char c : tekst)
+    wielkie = 0;
+    male = 0;
+    for (int i = 0; i < tekst.length(); i++)
     {
-        if (isupper(c)) wielkie++;
-        else if (islower(c)) male++;
+        if (isupper(tekst[i]))
+        {
+            wielkie++;
+        }
+        else if (islower(tekst[i]))
+        {
+            male++;
+        }
     }
 }
 
@@ -422,19 +573,36 @@ int main()
     cout << naWielkie(t) << " | " << naMale(t) << endl;
     cout << "samogloski " << zliczSamogloski(t) << ", spolgloski " << zliczSpolgloski(t)
          << ", cyfry " << zliczCyfry(t) << ", 'a' " << zliczZnak(t, 'a') << ", slowa " << zliczSlowa(t) << endl;
-    for (const string &s : podzielNaSlowa(t)) cout << "[" << s << "]";
+
+    string slowa[100];
+    int ileSlow = podzielNaSlowa("  ala  ma kota ", slowa);
+    for (int i = 0; i < ileSlow; i++)
+    {
+        cout << "[" << slowa[i] << "]";
+    }
     cout << endl;
-    for (const string &s : podzielWgSeparatora("Jan;17;4.5", ';')) cout << "[" << s << "]";
-    cout << endl << odwrocNapis("C++ rocks") << " | palindrom? " << boolalpha << czyPalindrom("Kobyla ma maly bok")
+
+    string czesci[20];
+    int ileCzesci = podzielWgSeparatora("Jan;17;4.5", ';', czesci);
+    for (int i = 0; i < ileCzesci; i++)
+    {
+        cout << "[" << czesci[i] << "]";
+    }
+    cout << endl;
+
+    cout << odwrocNapis("C++ rocks") << " | palindrom? " << czyPalindrom("Kobyla ma maly bok")
          << " | " << usunSpacje(t) << endl;
     cout << zamienWszystkie("ala ma kota, ala ma psa", "ala", "ola") << endl;
     string szyfr = szyfrujCezarem("Ala ma Kota xyz", 3);
     cout << szyfr << " -> " << deszyfrujCezarem(szyfr, 3) << endl;
-    cout << "czyLiczba(\"-45\") " << czyLiczbaCalkowita("-45") << ", (\"4a\") " << czyLiczbaCalkowita("4a") << endl;
+    cout << "czyLiczba(\"-45\") " << czyLiczbaCalkowita("-45") << ", (\"4a\") " << czyLiczbaCalkowita("4a")
+         << ", (\"-\") " << czyLiczbaCalkowita("-") << endl;
     cout << kazdeSlowoWielka("jAN kowALSKI") << " | " << inicjaly("jan maria rokita") << " | " << zamienSlowa("Jan Kowalski") << endl;
     czestoscLiter("Abba");
-    int w, m;
+    int w;
+    int m;
     zliczWielkieIMale("Ala Ma KOTA", w, m);
-    cout << "anagram? " << czyAnagram("listen", "silent") << ", wielkie " << w << ", male " << m << endl;
+    cout << "anagram? " << czyAnagram("listen", "silent") << " " << czyAnagram("kot", "koc")
+         << ", wielkie " << w << ", male " << m << endl;
     return 0;
 }

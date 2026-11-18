@@ -6,16 +6,20 @@
 #include <iostream>
 using namespace std;
 
-int sequence(int n) {
-    if (n == 1) {
+int ciag(int n)
+{
+    if (n == 1)
+    {
         return 2;
-    } else {
-        return sequence(n - 1) - 100;
     }
+    return ciag(n - 1) - 100;
 }
 
-int main() {
-    int n = 2;
-    cout << sequence(n) << endl;
+int main()
+{
+    for (int n = 1; n <= 5; n++)
+    {
+        cout << "a" << n << " = " << ciag(n) << endl;
+    }
     return 0;
 }

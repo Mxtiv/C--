@@ -5,6 +5,10 @@ int Kosc::liczbaInstancji = 0;
 
 Kosc::Kosc(int wartosc)
 {
+    for (int i = 0; i <= 6; i++)
+    {
+        nazwyPlikow[i] = "kosc" + to_string(i) + ".png";     // kosc0.png ... kosc6.png
+    }
     if (wartosc < 1 || wartosc > 6)
     {
         wartosc = 0;
@@ -17,6 +21,10 @@ Kosc::Kosc(int wartosc)
 
 Kosc::Kosc()
 {
+    for (int i = 0; i <= 6; i++)
+    {
+        nazwyPlikow[i] = "kosc" + to_string(i) + ".png";
+    }
     int wylosowana = rand() % 6 + 1;
     liczbaOczek = wylosowana;
     idPliku = wylosowana;
@@ -46,8 +54,8 @@ void Kosc::zablokuj()
     dostepna = false;
 }
 
-std::string Kosc::wartoscSlownie()
+string Kosc::wartoscSlownie()
 {
-    std::string slowa[7] = {"zero", "jeden", "dwa", "trzy", "cztery", "piec", "szesc"};
+    string slowa[7] = {"zero", "jeden", "dwa", "trzy", "cztery", "piec", "szesc"};
     return slowa[liczbaOczek];
 }

@@ -4,72 +4,78 @@
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
-// Definicja klasy bazowej Pracownik:
-class Pracownik {
-public:
-// Definicje prywatnych zmiennych członkowskich:
-string imie {};
-string nazwisko {};
 
-// Definicja publicznej funkcji członkowskiej:
-string zwrocDane() {
-return imie + " " + nazwisko;
-}
-};
-// Definicja klasy pochodnej Nauczyciel:
-class Nauczyciel: protected Pracownik { // dziedziczenie protected
-private:
-// Definicja zmiennej członkowskiej:
-string przedmiot {""};
+// klasa bazowa Pracownik
+class Pracownik
+{
 public:
-// Definicja settera:
-void setPrzedmiot(string pPrzedmiot) {
-przedmiot = pPrzedmiot;
-}
-// Definicja gettera:
-string getPrzedmiot() {
-return przedmiot;
-}
-// Definicja funkcji członkowskiej:
-string zwrocDane() {
-return getImie() + " " + getNazwisko() + ", przedmiot: " + przedmiot;
-}
-void setImie(string pImie) {
-imie = pImie;
-}           //muszom byc bo te odziedziczone sa protected
-void setNazwisko(string pNazwisko) {
-nazwisko = pNazwisko;
-}
-// Definicje publicznych getterów:
-string getImie() {
-return imie;
-}
-string getNazwisko() {
-return nazwisko;
-}
-/* UWAGA
-* Dostęp do prywatnych zmiennych członkowskich imie i nazwisko należących do klasy bazowej
-* uzyskano za pomocą publicznych metod dostępowych — setterów i getterów,
-* które również zostały zdefiniowane w tej klasie.
-*/
+    string imie;
+    string nazwisko;
+
+    string zwrocDane()
+    {
+        return imie + " " + nazwisko;
+    }
 };
-int main() {
-// Utworzenie obiektu nauczyciel jako instancji klasy pochodnej Nauczyciel:
-Nauczyciel nauczyciel;
-// Nadanie wartości zmiennym członkowskim obiektu nauczyciel:
-// nauczyciel.imie=Jan tak nie mogę bo imie protected zostało protected.
-nauczyciel.setImie("Jan");
-nauczyciel.setNazwisko("Kowalski");
-nauczyciel.setPrzedmiot("elektronika");
-/* UWAGA
-* Prywatne zmienne członkowskie imie i nazwisko należące do klasy bazowej Pracownik nie są dziedziczone
-* do klasy pochodnej Nauczyciel. Dostęp do tych zmiennych członkowskich z poziomu klasy Nauczyciel
-* uzyskano przez wykorzystanie publicznych metod dostępowych (setterów) zdefiniowanych w klasie Pracownik,
-* które podlegają dziedziczeniu. Dostęp do prywatnej zmiennej członkowskiej przedmiot zdefiniowanej
-* w klasie Nauczyciel uzyskano w analogiczny sposób.
-*/
-// Wywołanie metody zwrocDane() zdefiniowanej w klasie pochodnej:
-cout << "Dane nauczyciela: " << nauczyciel.zwrocDane() << endl;
-return 0;
+
+// klasa pochodna - dziedziczenie PROTECTED:
+// public z bazy staje sie protected -> w klasie Nauczyciel jest dostep,
+// ale w main juz NIE (nauczyciel.imie = "Jan"; -> blad)
+class Nauczyciel : protected Pracownik
+{
+private:
+    string przedmiot;
+
+public:
+    // settery i gettery MUSZA byc, bo odziedziczone pola sa protected
+    void setImie(string noweImie)
+    {
+        imie = noweImie;
+    }
+
+    void setNazwisko(string noweNazwisko)
+    {
+        nazwisko = noweNazwisko;
+    }
+
+    void setPrzedmiot(string nowyPrzedmiot)
+    {
+        przedmiot = nowyPrzedmiot;
+    }
+
+    string getImie()
+    {
+        return imie;
+    }
+
+    string getNazwisko()
+    {
+        return nazwisko;
+    }
+
+    string getPrzedmiot()
+    {
+        return przedmiot;
+    }
+
+    string zwrocDane()
+    {
+        return imie + " " + nazwisko + ", przedmiot: " + przedmiot;
+    }
+};
+
+int main()
+{
+    Nauczyciel nauczyciel;
+
+    // nauczyciel.imie = "Jan";   // BLAD - imie jest teraz protected
+    nauczyciel.setImie("Jan");
+    nauczyciel.setNazwisko("Kowalski");
+    nauczyciel.setPrzedmiot("elektronika");
+
+    cout << "Dane nauczyciela: " << nauczyciel.zwrocDane() << endl;
+    cout << "Samo imie (getter): " << nauczyciel.getImie() << endl;
+    return 0;
 }

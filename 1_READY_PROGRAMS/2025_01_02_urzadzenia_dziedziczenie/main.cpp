@@ -27,9 +27,14 @@ public:
 class Pralka : public Urzadzenie
 {
 private:                          // instancje i klasy potomne nie mają dostępu
-    int numerProgramu = 0;
+    int numerProgramu;
 
 public:
+    Pralka()
+    {
+        numerProgramu = 0;
+    }
+
     int ustawProgram(int numer)
     {
         if (numer >= 1 && numer <= 12)
@@ -47,9 +52,14 @@ public:
 class Odkurzacz : public Urzadzenie
 {
 private:
-    bool wlaczony = false;
+    bool wlaczony;
 
 public:
+    Odkurzacz()
+    {
+        wlaczony = false;
+    }
+
     void on()
     {
         if (!wlaczony)

@@ -1,9 +1,12 @@
+Najwazniejsze wyjatki biblioteki (<stdexcept>), lapane przez catch (exception &e):
+
 std::exception
-├── std::logic_error
-│   ├── std::invalid_argument
-│   ├── std::domain_error
+├── std::logic_error           - blad w logice programu
+│   ├── std::invalid_argument  - np. stoi("abc")
+│   ├── std::out_of_range      - np. tekst.at(100), stoi("99999999999")
 │   └── ...
-└── std::runtime_error
-    ├── std::range_error
+└── std::runtime_error         - blad wykryty dopiero w czasie dzialania
     ├── std::overflow_error
     └── ...
+
+catch (logic_error &e) zlapie tez invalid_argument i out_of_range (klasy pochodne).

@@ -1,5 +1,6 @@
 // ======================================================================
-// replace a substring using strstr + strncat; repeat with do-while
+// replace a substring using strstr + strncat (build the result in a new array);
+// repeat with do-while
 // Original file: unsorted/Cstrings/cstringAppend.cpp
 // ======================================================================
 
@@ -7,77 +8,55 @@
 #include <cstring>
 using namespace std;
 
-// Function to input strings from the user
-void inputStrings(char initialString[], char replaceString[], char appendString[])
+const int DLUGOSC = 100;
+
+void wczytajNapisy(char tekst[], char stary[], char nowy[])
 {
     cout << "Enter the initial string: ";
-    cin.getline(initialString, 100);
-
+    cin.getline(tekst, DLUGOSC);
     cout << "Enter the string to replace: ";
-    cin.getline(replaceString, 100);
-
-    cout << "Enter the string to append: ";
-    cin.getline(appendString, 100);
+    cin.getline(stary, DLUGOSC);
+    cout << "Enter the new string: ";
+    cin.getline(nowy, DLUGOSC);
 }
 
-// Function to replace a string in another string
-void replaceSubstring(char initialString[], const char replaceString[], const char appendString[])
+void zamienFragment(char tekst[], char stary[], char nowy[])
 {
-    // Find the position of the string to replace in the initial string
-    char *replacePos = strstr(initialString, replaceString);
-
-    // If the string to replace is found, replace it with the append string
-    if (replacePos != nullptr)
-    {
-        // Calculate the length of the replacement string
-        size_t replaceStringLength = strlen(replaceString);
-        size_t appendStringLength = strlen(appendString);
-
-        // Calculate the length of the resulting string
-        size_t initialStringLength = strlen(initialString);
-        size_t resultLength = initialStringLength + appendStringLength - replaceStringLength;
-
-        // Create a buffer for the modified string
-        char modifiedString[200]; // Ensure enough space for the modified string
-        modifiedString[0] = '\0'; // Null-terminate the string
-
-        // Copy the initial part of the string before the replacement
-        strncat(modifiedString, initialString, replacePos - initialString);
-
-        // Append the replacement string
-        strncat(modifiedString, appendString, appendStringLength);
-
-        // Append the remaining part of the initial string after the replaced string
-        strncat(modifiedString, replacePos + replaceStringLength, initialStringLength - (replacePos - initialString) - replaceStringLength + 1);
-
-        cout << "Modified string: " << modifiedString << endl;
-    }
-    else
+    char *gdzie = strstr(tekst, stary);     // where the old fragment starts (or NULL)
+    if (gdzie == NULL)
     {
         cout << "String to replace not found in the initial string." << endl;
+        return;
     }
+
+    char wynik[3 * DLUGOSC];
+    wynik[0] = '\0';                        // start with an empty C-string
+
+    int ileZnakowPrzed = gdzie - tekst;
+    strncat(wynik, tekst, ileZnakowPrzed);  // 1) part BEFORE the old fragment (strncat = at most n chars)
+    strcat(wynik, nowy);                    // 2) the new fragment
+    strcat(wynik, gdzie + strlen(stary));   // 3) part AFTER the old fragment
+
+    cout << "Modified string: " << wynik << endl;
 }
 
 int main()
 {
-    char initialString[100];
-    char replaceString[100];
-    char appendString[100];
-    char choice;
+    char tekst[DLUGOSC];
+    char stary[DLUGOSC];
+    char nowy[DLUGOSC];
+    char wybor;
 
     do
     {
-        // Input strings from the user
-        inputStrings(initialString, replaceString, appendString);
-
-        // Replace the string in the initial string and output the result
-        replaceSubstring(initialString, replaceString, appendString);
+        wczytajNapisy(tekst, stary, nowy);
+        zamienFragment(tekst, stary, nowy);
 
         cout << "Do you want to run the code again? (Y/N): ";
-        cin >> choice;
-        cin.ignore(); // Ignore newline character left in the input buffer
+        cin >> wybor;
+        cin.ignore();       // remove the Enter before the next cin.getline
+    } while (wybor == 'Y' || wybor == 'y');
 
-    } while (choice == 'Y' || choice == 'y');
-    cout << "Goodbye!";
+    cout << "Goodbye!" << endl;
     return 0;
 }

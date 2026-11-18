@@ -7,57 +7,59 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <cstdlib>
 using namespace std;
+
 void wypelnijLosowo(int tablica[], int rozmiarTablicy)
 {
-  for (int i = 0; i < rozmiarTablicy; i++) // wypełnianie tablicy losowymi cyframi.
-  {
-    tablica[i] = rand() % 10;    // wstawiamy do i-tego elementu losową cyfrę
-  }
+    for (int i = 0; i < rozmiarTablicy; i++)   // wypełnianie tablicy losowymi cyframi
+    {
+        tablica[i] = rand() % 10;              // wstawiamy do i-tego elementu losową cyfrę
+    }
 }
+
 void wypiszTablice(int tablica[], int rozmiarTablicy)
 {
-  for (int i = 0; i < rozmiarTablicy; i++) // wypisujemy zawartość wszystkich elementów tablicy z przecinkami.
-  {
-    cout << tablica[i] << ", ";
-  }
+    for (int i = 0; i < rozmiarTablicy; i++)   // wypisujemy wszystkie elementy z przecinkami
+    {
+        cout << tablica[i] << ", ";
+    }
+    cout << endl;
 }
+
 int elementMinimalny(int tablica[], int rozmiarTablicy)
 {
-  int min = tablica[0];
-  for (int i = 0; i < rozmiarTablicy; i++) // wyszukujemy ekstremalne wartości z tablicy.
-  {
+    int min = tablica[0];
+    for (int i = 1; i < rozmiarTablicy; i++)   // szukamy najmniejszej wartości
+    {
+        if (tablica[i] < min)
+        {
+            min = tablica[i];
+        }
+    }
+    return min;
+}
 
-    if (tablica[i] < min)
-    {
-      min = tablica[i];
-    }
-  }
-  return min;
-}
-int elementMaxymalny(int tablica[], int rozmiarTablicy)
+int elementMaksymalny(int tablica[], int rozmiarTablicy)
 {
-  {
-  int max = tablica[0];
-  for (int i = 0; i < rozmiarTablicy; i++) // wyszukujemy ekstremalne wartości z tablicy.
-  {
-    if (tablica[i] > max)
+    int max = tablica[0];
+    for (int i = 1; i < rozmiarTablicy; i++)   // szukamy największej wartości
     {
-      max = tablica[i];
+        if (tablica[i] > max)
+        {
+            max = tablica[i];
+        }
     }
-  }
-  return max;
+    return max;
 }
-}
+
 int main()
 {
-  srand(time(NULL)); // ONCE, at the start of main
-  int liczby[10];
-  wypelnijLosowo(liczby, 10);
-  wypiszTablice(liczby, 10);
-  cout << endl;
-  cout<<elementMaxymalny(liczby,10)<<endl;
-  cout<<elementMinimalny(liczby,10);
-  return 0;
+    srand(time(0)); // ONCE, at the start of main
+    const int ROZMIAR = 10;
+    int liczby[ROZMIAR];
+    wypelnijLosowo(liczby, ROZMIAR);
+    wypiszTablice(liczby, ROZMIAR);
+    cout << "max: " << elementMaksymalny(liczby, ROZMIAR) << endl;
+    cout << "min: " << elementMinimalny(liczby, ROZMIAR) << endl;
+    return 0;
 }

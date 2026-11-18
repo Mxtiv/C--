@@ -1,39 +1,56 @@
 // ======================================================================
-// char[] init, cin >>, cin.ignore(n,'\n'), numeric_limits, cin.get(buf,n) with spaces, strcpy strlen strcmp strcat strstr (Polish comments)
+// char[] init, cin >>, cin.ignore(n,'\n'), cin.get(buf,n) with spaces,
+// strcpy strlen strcmp strcat strstr (Polish comments)
 // Original file: unsorted/Cstrings/nikodemst/1) Cstring wszystko/main.cpp
 // ======================================================================
 
 #include <iostream>
 #include <cstring>
-#include<limits>
 using namespace std;
-int main() 
+
+int main()
 {
-char wersja1[15] {"C++98"};                                                     // Deklaracja zmiennej (C-napisu) wersja1 połączona z jej inicjalizacją
-cout << wersja1 << endl;                                                        // Prezentacja wartości zmiennej wersja1 na ekraniei (wypisze sie napis a nie adres napisu)
-cout << "Podaj inną wersję, np. C++17: ";
-cin >> wersja1;                                                                 // Wprowadzenie wartości zmiennej wersja1 z klawiatury
-cout << wersja1 << endl;                                                        // Prezentacja wartości zmiennej wersja1 na ekranie
-cout << endl;
-char wersja2[15];                                                               // Deklaracja C-napisu wersja2:
-cout << "Podaj wersję C#, np. 8.0: ";                                           
-cin.ignore( 50,'\n');                                                           // cin.ignore(liczba znaków do zignorowania, na jakim znaku kończyć ignorowanie)
-cin >> wersja2;                                                                 // Wprowadzenie wartości zmiennej wersja2 z klawiatury
-cout << wersja2 << endl;                                                        // Wyświetlenie wartości zmiennej wersja2 na ekranie
-char wersja3[15];                                                               // Deklaracja C-napisu wersja3
-cout << "\n";                                                                   
-cout << "Podaj alternatywną nazwę Visual C++ 2015 (Visual C++ 14.0): ";         // Opróżnienie strumienia wejściowego   
-cin.ignore( numeric_limits<std::streamsize>::max(), '\n');                      // pomija maxymalną dopuszczalną długość cstringa. 
-cin.get(wersja3,15);                                                            // Wprowadzenie wartości zmiennej wersja3 z klawiatury (pozwala pobrać napis ze spacjom)
-cout << wersja3 << endl;                                                        // Wyświetlenie wartości zmiennej wersja3 na ekranie
-cout << "\n \n";
-strcpy(wersja1, wersja2);                                                       // Kopiuje wartosc z wersja2 do wersji 1 strcpy(wartosc do ktorej sie kopiuje, wartosc ktora sie kopiuje)
-cout << wersja1 << " " << wersja2;                                              // Wypisanie zmiennych wersja1 oraz wersja2
-strlen(wersja1);                                                                // Zwraca liczbe znakow dla wersja1
-strcmp(wersja1, wersja2);                                                       // Prownouje wersja1 do wersja2, jezeli slowa sa identyczne to wartosc 0, jezeli wersja1 < wersja2
-                                                                                // to zwraca -1, a jezeli wersja1 > wersja2 to zwraca 1
-strcat(wersja1, wersja2);                                                       // Dodaje wersja2 na koniec napisu wersja1 
-strstr(wersja1, wersja2);                                                       // Zwraca wskanizk od pierwszego wystapienia wersja2 w wersja1
-//strchar(wersja1, wersja2);                                                    // Sprawdza czy wersja2 jest zawarta w wersja1
-return 0;   
+    char wersja1[30] = "C++98";          // C-napis = tablica znaków zakończona '\0' (miejsce na '\0' też się liczy!)
+    cout << wersja1 << endl;             // wypisze się napis, a nie adres napisu
+
+    cout << "Podaj inną wersję, np. C++17: ";
+    cin >> wersja1;                      // cin >> czyta jedno słowo (do spacji)
+    cout << wersja1 << endl << endl;
+
+    char wersja2[30];
+    cout << "Podaj wersję C#, np. 8.0: ";
+    cin >> wersja2;
+    cout << wersja2 << endl;
+
+    char wersja3[30];
+    cout << "\nPodaj alternatywną nazwę Visual C++ 2015 (Visual C++ 14.0): ";
+    cin.ignore(50, '\n');                // cin.ignore(ile znaków pominąć, na jakim znaku skończyć) - usuwa Enter po cin >>
+    cin.get(wersja3, 30);                // cin.get pobiera napis RAZEM ze spacjami (max 29 znaków + '\0')
+    cout << wersja3 << endl << endl;
+
+    strcpy(wersja1, wersja2);            // kopiuje wersja2 do wersja1: strcpy(do czego, co)
+    cout << "po strcpy: " << wersja1 << " " << wersja2 << endl;
+
+    cout << "strlen(wersja1) = " << strlen(wersja1) << endl;     // liczba znaków (bez '\0')
+
+    // strcmp: 0 gdy napisy są identyczne, < 0 gdy pierwszy jest wcześniej w alfabecie, > 0 gdy później
+    if (strcmp(wersja1, wersja2) == 0)
+    {
+        cout << "wersja1 i wersja2 są takie same" << endl;
+    }
+
+    strcat(wersja1, "+");                // dopisuje napis na koniec wersja1 (musi się zmieścić!)
+    cout << "po strcat: " << wersja1 << endl;
+
+    // strstr zwraca wskaźnik na pierwsze wystąpienie albo NULL, gdy nie ma
+    if (strstr(wersja3, "C++") != NULL)
+    {
+        cout << "\"C++\" jest w napisie wersja3, pozycja: " << strstr(wersja3, "C++") - wersja3 << endl;
+    }
+    else
+    {
+        cout << "\"C++\" nie występuje w napisie wersja3" << endl;
+    }
+
+    return 0;
 }

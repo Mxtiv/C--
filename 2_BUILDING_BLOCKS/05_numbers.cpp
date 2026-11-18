@@ -7,9 +7,7 @@
 // ======================================================================
 
 #include <iostream>
-#include <vector>
 #include <string>
-#include <algorithm>
 #include <cmath>
 #include <cctype>
 using namespace std;
@@ -24,34 +22,52 @@ using namespace std;
  ********************************************************/
 bool czyPierwsza(int n)
 {
-    if (n < 2) return false;
+    if (n < 2)
+    {
+        return false;
+    }
     for (int d = 2; d * d <= n; d++)
+    {
         if (n % d == 0)
+        {
             return false;
+        }
+    }
     return true;
 }
 
-//@ NUM-02 | sieve of Eratosthenes: all primes <= n (returns them in a vector) | <vector>
+//@ NUM-02 | sieve of Eratosthenes: print all primes <= n (n <= 10000), return how many | <iostream>
 /********************************************************
  * nazwa funkcji: sitoEratostenesa
- * opis funkcji: wyznacza wszystkie liczby pierwsze nie większe od n metodą sita Eratostenesa -
+ * opis funkcji: wypisuje wszystkie liczby pierwsze nie większe od n metodą sita Eratostenesa -
  *               wykreśla wielokrotności kolejnych liczb pierwszych
- * parametry: n - górna granica przedziału
- * zwracany typ i opis: vector<int> - liczby pierwsze z przedziału 2..n
+ * parametry: n - górna granica przedziału (maks. 10000)
+ * zwracany typ i opis: int - liczba znalezionych liczb pierwszych
  * autor: <numer zdającego>
  ********************************************************/
-vector<int> sitoEratostenesa(int n)
+int sitoEratostenesa(int n)
 {
-    vector<bool> pierwsza(n + 1, true);
-    vector<int> wynik;
+    bool pierwsza[10001];                // pierwsza[i] == true -> i is not crossed out
+    for (int i = 0; i <= n; i++)
+    {
+        pierwsza[i] = true;
+    }
+
+    int ile = 0;
     for (int i = 2; i <= n; i++)
     {
-        if (!pierwsza[i]) continue;
-        wynik.push_back(i);
-        for (long long j = (long long)i * i; j <= n; j += i)
-            pierwsza[j] = false;               // cross out the multiples
+        if (pierwsza[i])
+        {
+            cout << i << " ";
+            ile++;
+            for (int j = i * i; j <= n; j = j + i)
+            {
+                pierwsza[j] = false;     // cross out the multiples
+            }
+        }
     }
-    return wynik;
+    cout << endl;
+    return ile;
 }
 
 //@ NUM-03 | print primes in a range a..b (needs NUM-01) | <iostream>
@@ -67,11 +83,13 @@ int wypiszPierwszeWPrzedziale(int a, int b)
 {
     int ile = 0;
     for (int i = a; i <= b; i++)
+    {
         if (czyPierwsza(i))
         {
             cout << i << " ";
             ile++;
         }
+    }
     cout << endl;
     return ile;
 }
@@ -109,14 +127,24 @@ int nwd(int a, int b)
  ********************************************************/
 int nwdOdejmowanie(int a, int b)
 {
-    if (a == 0) return b;          // without this the loop below never ends
-    if (b == 0) return a;
+    if (a == 0)                    // without these two ifs the loop below never ends for 0
+    {
+        return b;
+    }
+    if (b == 0)
+    {
+        return a;
+    }
     while (a != b)
     {
         if (a > b)
+        {
             a = a - b;
+        }
         else
+        {
             b = b - a;
+        }
     }
     return a;
 }
@@ -132,7 +160,10 @@ int nwdOdejmowanie(int a, int b)
  ********************************************************/
 int nwdRekurencyjnie(int a, int b)
 {
-    if (b == 0) return a;
+    if (b == 0)
+    {
+        return a;
+    }
     return nwdRekurencyjnie(b, a % b);
 }
 
@@ -162,7 +193,9 @@ long long silnia(int n)
 {
     long long wynik = 1;
     for (int i = 2; i <= n; i++)
-        wynik *= i;
+    {
+        wynik = wynik * i;
+    }
     return wynik;
 }
 
@@ -176,7 +209,10 @@ long long silnia(int n)
  ********************************************************/
 long long silniaRekurencyjnie(int n)
 {
-    if (n <= 1) return 1;
+    if (n <= 1)
+    {
+        return 1;
+    }
     return n * silniaRekurencyjnie(n - 1);
 }
 
@@ -190,7 +226,8 @@ long long silniaRekurencyjnie(int n)
  ********************************************************/
 long long fibonacci(int n)
 {
-    long long a = 0, b = 1;
+    long long a = 0;
+    long long b = 1;
     for (int i = 0; i < n; i++)
     {
         long long nastepny = a + b;
@@ -210,7 +247,10 @@ long long fibonacci(int n)
  ********************************************************/
 long long fibonacciRekurencyjnie(int n)
 {
-    if (n < 2) return n;
+    if (n < 2)
+    {
+        return n;
+    }
     return fibonacciRekurencyjnie(n - 1) + fibonacciRekurencyjnie(n - 2);
 }
 
@@ -224,7 +264,8 @@ long long fibonacciRekurencyjnie(int n)
  ********************************************************/
 void wypiszCiagFibonacciego(int n)
 {
-    long long a = 0, b = 1;
+    long long a = 0;
+    long long b = 1;
     for (int i = 0; i < n; i++)
     {
         cout << a << " ";
@@ -245,12 +286,15 @@ void wypiszCiagFibonacciego(int n)
  ********************************************************/
 int sumaCyfr(int n)
 {
-    if (n < 0) n = -n;
+    if (n < 0)
+    {
+        n = -n;
+    }
     int s = 0;
     while (n > 0)
     {
-        s += n % 10;       // last digit
-        n /= 10;           // remove the last digit
+        s = s + n % 10;    // last digit
+        n = n / 10;        // remove the last digit
     }
     return s;
 }
@@ -265,13 +309,19 @@ int sumaCyfr(int n)
  ********************************************************/
 int liczbaCyfr(int n)
 {
-    if (n == 0) return 1;
-    if (n < 0) n = -n;
+    if (n == 0)
+    {
+        return 1;
+    }
+    if (n < 0)
+    {
+        n = -n;
+    }
     int ile = 0;
     while (n > 0)
     {
         ile++;
-        n /= 10;
+        n = n / 10;
     }
     return ile;
 }
@@ -290,7 +340,7 @@ int odwrocLiczbe(int n)
     while (n > 0)
     {
         wynik = wynik * 10 + n % 10;
-        n /= 10;
+        n = n / 10;
     }
     return wynik;
 }
@@ -305,11 +355,12 @@ int odwrocLiczbe(int n)
  ********************************************************/
 bool czyPalindromLiczbowy(int n)
 {
-    int kopia = n, odwrocona = 0;
+    int kopia = n;
+    int odwrocona = 0;
     while (kopia > 0)
     {
         odwrocona = odwrocona * 10 + kopia % 10;
-        kopia /= 10;
+        kopia = kopia / 10;
     }
     return odwrocona == n;
 }
@@ -326,8 +377,12 @@ int sumaDzielnikow(int n)
 {
     int s = 0;
     for (int d = 1; d <= n / 2; d++)
+    {
         if (n % d == 0)
-            s += d;
+        {
+            s = s + d;
+        }
+    }
     return s;
 }
 
@@ -341,11 +396,18 @@ int sumaDzielnikow(int n)
  ********************************************************/
 bool czyDoskonala(int n)
 {
-    if (n < 2) return false;
+    if (n < 2)
+    {
+        return false;
+    }
     int s = 0;
     for (int d = 1; d <= n / 2; d++)
+    {
         if (n % d == 0)
-            s += d;
+        {
+            s = s + d;
+        }
+    }
     return s == n;
 }
 
@@ -361,11 +423,13 @@ int wypiszDzielniki(int n)
 {
     int ile = 0;
     for (int d = 1; d <= n; d++)
+    {
         if (n % d == 0)
         {
             cout << d << " ";
             ile++;
         }
+    }
     cout << endl;
     return ile;
 }
@@ -382,14 +446,27 @@ void rozkladNaCzynniki(int n)
 {
     cout << n << " =";
     bool pierwszy = true;
-    for (int d = 2; d * d <= n; d++)
-        while (n % d == 0)
+    int d = 2;
+    while (n > 1)
+    {
+        if (n % d == 0)
         {
-            cout << (pierwszy ? " " : " * ") << d;
-            pierwszy = false;
-            n /= d;
+            if (pierwszy)
+            {
+                cout << " " << d;
+                pierwszy = false;
+            }
+            else
+            {
+                cout << " * " << d;
+            }
+            n = n / d;
         }
-    if (n > 1) cout << (pierwszy ? " " : " * ") << n;
+        else
+        {
+            d++;
+        }
+    }
     cout << endl;
 }
 
@@ -407,9 +484,12 @@ long long potega(long long podstawa, int wykladnik)
     long long wynik = 1;
     while (wykladnik > 0)
     {
-        if (wykladnik % 2 == 1) wynik *= podstawa;
-        podstawa *= podstawa;
-        wykladnik /= 2;
+        if (wykladnik % 2 == 1)
+        {
+            wynik = wynik * podstawa;
+        }
+        podstawa = podstawa * podstawa;
+        wykladnik = wykladnik / 2;
     }
     return wynik;
 }
@@ -426,13 +506,25 @@ long long potega(long long podstawa, int wykladnik)
 bool czyArmstronga(int n)
 {
     int cyfry = 0;
-    for (int t = n; t > 0; t /= 10) cyfry++;
-    long long s = 0;
-    for (int t = n; t > 0; t /= 10)
+    int kopia = n;
+    while (kopia > 0)
     {
-        long long p = 1;
-        for (int k = 0; k < cyfry; k++) p *= t % 10;
-        s += p;
+        cyfry++;
+        kopia = kopia / 10;
+    }
+
+    int s = 0;
+    kopia = n;
+    while (kopia > 0)
+    {
+        int cyfra = kopia % 10;
+        int p = 1;
+        for (int k = 0; k < cyfry; k++)
+        {
+            p = p * cyfra;
+        }
+        s = s + p;
+        kopia = kopia / 10;
     }
     return s == n;
 }
@@ -447,14 +539,18 @@ bool czyArmstronga(int n)
  ********************************************************/
 bool czyPrzestepny(int rok)
 {
-    return (rok % 4 == 0 && rok % 100 != 0) || rok % 400 == 0;
+    if ((rok % 4 == 0 && rok % 100 != 0) || rok % 400 == 0)
+    {
+        return true;
+    }
+    return false;
 }
 
-//@ NUM-24 | decimal -> any base 2..16 (binary, octal, hex) as text | <string> <algorithm>
+//@ NUM-24 | decimal -> any base 2..16 (binary, octal, hex) as text (each new digit goes in front) | <string>
 /********************************************************
  * nazwa funkcji: naSystem
  * opis funkcji: zamienia liczbę dziesiętną na zapis w systemie o podanej podstawie (2..16)
- *               metodą kolejnych dzieleń - reszty czytane od końca
+ *               metodą kolejnych dzieleń - każdą resztę dopisujemy na początek wyniku
  * parametry: liczba - liczba nieujemna w systemie dziesiętnym
  *            podstawa - podstawa systemu docelowego (2..16)
  * zwracany typ i opis: string - zapis liczby w nowym systemie
@@ -462,15 +558,17 @@ bool czyPrzestepny(int rok)
  ********************************************************/
 string naSystem(int liczba, int podstawa)
 {
-    if (liczba == 0) return "0";
-    const string cyfry = "0123456789ABCDEF";
-    string wynik;
+    if (liczba == 0)
+    {
+        return "0";
+    }
+    string cyfry = "0123456789ABCDEF";
+    string wynik = "";
     while (liczba > 0)
     {
-        wynik += cyfry[liczba % podstawa];
-        liczba /= podstawa;
+        wynik = cyfry[liczba % podstawa] + wynik;   // new digit in front
+        liczba = liczba / podstawa;
     }
-    reverse(wynik.begin(), wynik.end());
     return wynik;
 }
 
@@ -484,12 +582,21 @@ string naSystem(int liczba, int podstawa)
  * zwracany typ i opis: int - wartość dziesiętna
  * autor: <numer zdającego>
  ********************************************************/
-int zSystemu(const string &zapis, int podstawa)
+int zSystemu(string zapis, int podstawa)
 {
     int wynik = 0;
-    for (char c : zapis)
+    int dlugosc = zapis.length();
+    for (int i = 0; i < dlugosc; i++)
     {
-        int cyfra = isdigit(c) ? c - '0' : toupper(c) - 'A' + 10;
+        int cyfra;
+        if (isdigit(zapis[i]))
+        {
+            cyfra = zapis[i] - '0';
+        }
+        else
+        {
+            cyfra = toupper(zapis[i]) - 'A' + 10;
+        }
         wynik = wynik * podstawa + cyfra;
     }
     return wynik;
@@ -513,11 +620,12 @@ double zaokraglij(double x, int miejsca)
 // ====================== DEMO (don't copy) ======================
 int main()
 {
-    cout << boolalpha;
+    cout << "(1 = tak, 0 = nie)" << endl;
     cout << "97 pierwsza? " << czyPierwsza(97) << ", 91 pierwsza? " << czyPierwsza(91) << endl;
     cout << "sito do 50: ";
-    for (int p : sitoEratostenesa(50)) cout << p << " ";
-    cout << endl << "pierwsze 90..110: ";
+    int ilePierwszych = sitoEratostenesa(50);
+    cout << "(" << ilePierwszych << " liczb)" << endl;
+    cout << "pierwsze 90..110: ";
     wypiszPierwszeWPrzedziale(90, 110);
     cout << "NWD(84,36) = " << nwd(84, 36) << " = " << nwdOdejmowanie(84, 36) << " = " << nwdRekurencyjnie(84, 36)
          << ", NWW = " << nww(84, 36) << endl;
@@ -531,6 +639,7 @@ int main()
     cout << "suma dzielnikow 28 = " << sumaDzielnikow(28) << ", 28 doskonala? " << czyDoskonala(28)
          << ", 153 Armstrong? " << czyArmstronga(153) << endl;
     rozkladNaCzynniki(360);
+    rozkladNaCzynniki(97);
     cout << "2^30 = " << potega(2, 30) << ", 2024 przestepny? " << czyPrzestepny(2024)
          << ", 1900? " << czyPrzestepny(1900) << endl;
     cout << "156 -> " << naSystem(156, 2) << " / " << naSystem(156, 16)

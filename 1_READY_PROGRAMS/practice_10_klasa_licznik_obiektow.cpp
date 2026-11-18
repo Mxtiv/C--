@@ -35,25 +35,77 @@ private:
     int rokWydania;
 
 public:
-    Ksiazka() : Ksiazka("brak", "brak", 2000) {}                    // delegating constructor
-
-    Ksiazka(string tytul, string autor, int rok) : tytul(tytul), autor(autor), rokWydania(2000)
+    /********************************************************
+     * nazwa funkcji: Ksiazka (konstruktor bezparametrowy)
+     * opis funkcji: ustawia wartości domyślne i nadaje kolejny numer
+     * parametry: brak
+     * zwracany typ i opis: brak
+     * autor: <numer zdającego>
+     ********************************************************/
+    Ksiazka()
     {
         licznik++;
         numer = licznik;
+        tytul = "brak";
+        autor = "brak";
+        rokWydania = 2000;
+    }
+
+    /********************************************************
+     * nazwa funkcji: Ksiazka (konstruktor z parametrami)
+     * opis funkcji: ustawia podane dane książki i nadaje kolejny numer
+     * parametry: nowyTytul - tytuł książki
+     *            nowyAutor - autor książki
+     *            rok - rok wydania (sprawdzany przez setRokWydania)
+     * zwracany typ i opis: brak
+     * autor: <numer zdającego>
+     ********************************************************/
+    Ksiazka(string nowyTytul, string nowyAutor, int rok)
+    {
+        licznik++;
+        numer = licznik;
+        tytul = nowyTytul;
+        autor = nowyAutor;
+        rokWydania = 2000;
         setRokWydania(rok);
     }
 
-    Ksiazka(const Ksiazka &wzor) : tytul(wzor.tytul), autor(wzor.autor), rokWydania(wzor.rokWydania)
+    /********************************************************
+     * nazwa funkcji: Ksiazka (konstruktor kopiujący)
+     * opis funkcji: kopiuje dane innej książki; kopia to nowy obiekt, więc
+     *               dostaje nowy numer
+     * parametry: wzor - kopiowana książka
+     * zwracany typ i opis: brak
+     * autor: <numer zdającego>
+     ********************************************************/
+    Ksiazka(Ksiazka &wzor)
     {
-        licznik++;                     // a copy is a new object -> new number
+        licznik++;
         numer = licznik;
+        tytul = wzor.tytul;
+        autor = wzor.autor;
+        rokWydania = wzor.rokWydania;
     }
 
-    string getTytul() const { return tytul; }
-    string getAutor() const { return autor; }
-    int getRokWydania() const { return rokWydania; }
-    void setTytul(const string &t) { tytul = t; }
+    string getTytul()
+    {
+        return tytul;
+    }
+
+    string getAutor()
+    {
+        return autor;
+    }
+
+    int getRokWydania()
+    {
+        return rokWydania;
+    }
+
+    void setTytul(string nowyTytul)
+    {
+        tytul = nowyTytul;
+    }
 
     /********************************************************
      * nazwa funkcji: setRokWydania
@@ -80,7 +132,7 @@ public:
      * zwracany typ i opis: brak
      * autor: <numer zdającego>
      ********************************************************/
-    void wyswietl() const
+    void wyswietl()
     {
         cout << numer << ". \"" << tytul << "\", " << autor << ", " << rokWydania << endl;
     }
@@ -109,10 +161,12 @@ int main()
     k4.setTytul("Lalka (wydanie 2)");
     k3.setRokWydania(3000);            // rejected by the setter
 
-    Ksiazka *wszystkie[] = {&k1, &k2, &k3, &k4};
+    Ksiazka *wszystkie[4] = {&k1, &k2, &k3, &k4};
     cout << "Lista ksiazek:" << endl;
-    for (Ksiazka *k : wszystkie)
-        k->wyswietl();
+    for (int i = 0; i < 4; i++)
+    {
+        wszystkie[i]->wyswietl();
+    }
 
     cout << "Liczba utworzonych ksiazek: " << Ksiazka::getLicznik() << endl;
     return 0;

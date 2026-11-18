@@ -10,12 +10,17 @@ using namespace std;
 
 int main()
 {
-    string napis1;
+    string napis;
     cout << "podaj imie i nazwisko: ";
-    getline(cin, napis1);
-    size_t spacja = napis1.find(" ");
-    if (spacja == string::npos) { cout << "brak spacji" << endl; return 0; }
+    getline(cin, napis);
+
+    if (napis.find(" ") == string::npos)
+    {
+        cout << "brak spacji" << endl;
+        return 0;
+    }
+    int spacja = napis.find(" ");
     cout << "spacja na pozycji: " << spacja << endl;
-    cout << "imie: " << napis1.substr(0, spacja) << ", nazwisko: " << napis1.substr(spacja + 1) << endl;
+    cout << "imie: " << napis.substr(0, spacja) << ", nazwisko: " << napis.substr(spacja + 1) << endl;
     return 0;
 }

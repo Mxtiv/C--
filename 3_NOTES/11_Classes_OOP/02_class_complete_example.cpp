@@ -1,75 +1,119 @@
 // ======================================================================
-// ALL-IN-ONE: private fields, static counter, default ctor, delegating ctor, copy ctor, destructor, const getters, setters, static getter
+// ALL-IN-ONE class: private fields, default + parameter constructor,
+// destructor, getters, setters with validation, static counter + static getter.
+// (copy constructor -> 05/06, friend -> 08/10/11, operators -> 14)
 // Original file: unsorted/calfmatthew/rectangle1.cpp
 // ======================================================================
 
 #include <iostream>
 using namespace std;
 
-class Rectangle {
+/********************************************************
+ * nazwa klasy: Prostokat
+ * opis klasy: prostokąt o podanych bokach, liczy pole
+ * pola: szerokosc, wysokosc - boki prostokąta
+ *       licznik - (static) ile obiektów istnieje
+ ********************************************************/
+class Prostokat
+{
 private:
-    float width, height;
-    static int count; // statyczna wartość do zliczania obiektów
+    double szerokosc;
+    double wysokosc;
+    static int licznik;   // JEDNA wspólna kopia dla wszystkich obiektów
 
 public:
-    // Konstruktor bezparametrowy
-    Rectangle() : width(1.0), height(1.0) {
-        count++;
+    // konstruktor domyślny (bez parametrów)
+    Prostokat()
+    {
+        szerokosc = 1;
+        wysokosc = 1;
+        licznik++;
     }
 
-    // Konstruktor parametryczny z delegowaniem do konstruktora bezparametrowego
-    Rectangle(float w, float h) : Rectangle() { // Delegacja do konstruktora bezparametrowego
-        width = w; // Ustawienie szerokości
-        height = h; // Ustawienie wysokości
+    // konstruktor z parametrami
+    Prostokat(double nowaSzerokosc, double nowaWysokosc)
+    {
+        szerokosc = nowaSzerokosc;
+        wysokosc = nowaWysokosc;
+        licznik++;
     }
 
-    // Konstruktor kopiujący
-    Rectangle(const Rectangle &rect) : width(rect.width), height(rect.height) {
-        count++;
+    // destruktor - bez parametrów, uruchamia się sam przy niszczeniu obiektu
+    ~Prostokat()
+    {
+        licznik--;
     }
 
-    // Destruktor
-    ~Rectangle() {
-        count--;
+    double getSzerokosc()
+    {
+        return szerokosc;
     }
 
-    // Gettery
-    float getWidth() const { return width; }
-    float getHeight() const { return height; }
-
-    // Settery
-    void setWidth(float w) { width = w; }
-    void setHeight(float h) { height = h; }
-
-    // Statyczny getter
-    static int getCount() { return count; }
-
-    // Metoda do wyświetlania prostokąta
-    void display() const {
-        cout << "Rectangle(width: " << width << ", height: " << height << ")" << endl;
+    double getWysokosc()
+    {
+        return wysokosc;
     }
 
-    // Metoda do obliczania pola prostokąta
-    float area() const {
-        return width * height;
+    // setter z walidacją - złej wartości nie zapisujemy
+    void setSzerokosc(double nowaSzerokosc)
+    {
+        if (nowaSzerokosc > 0)
+        {
+            szerokosc = nowaSzerokosc;
+        }
+    }
+
+    void setWysokosc(double nowaWysokosc)
+    {
+        if (nowaWysokosc > 0)
+        {
+            wysokosc = nowaWysokosc;
+        }
+    }
+
+    /********************************************************
+     * nazwa funkcji: pole
+     * opis funkcji: liczy pole prostokąta
+     * parametry: brak
+     * zwracany typ i opis: double - pole prostokąta
+     ********************************************************/
+    double pole()
+    {
+        return szerokosc * wysokosc;
+    }
+
+    void wypisz()
+    {
+        cout << "Prostokat " << szerokosc << " x " << wysokosc << endl;
+    }
+
+    // metoda statyczna - wołamy przez nazwę klasy: Prostokat::getLicznik()
+    static int getLicznik()
+    {
+        return licznik;
     }
 };
 
-// Inicjalizacja statycznej zmiennej count
-int Rectangle::count = 0;
+// pole statyczne trzeba zdefiniować POZA klasą
+int Prostokat::licznik = 0;
 
-int main() {
-    Rectangle r1; // Konstruktor bezparametrowy
-    r1.display(); // Wyświetlenie r1
+int main()
+{
+    Prostokat p1;              // konstruktor domyślny
+    p1.wypisz();
 
-    Rectangle r2(3.0f, 4.0f); // Konstruktor parametryczny
-    r2.display(); // Wyświetlenie r2
+    Prostokat p2(3, 4);        // konstruktor z parametrami
+    p2.wypisz();
+    p2.setSzerokosc(-5);       // odrzucone przez walidację
+    cout << "Pole p2: " << p2.pole() << endl;
 
-    Rectangle r3 = r2; // Konstruktor kopiujący
-    r3.display(); // Wyświetlenie r3
+    cout << "Liczba prostokatow: " << Prostokat::getLicznik() << endl;   // 2
 
-    cout << "Liczba prostokątów: " << Rectangle::getCount() << endl; // Wyświetlenie liczby prostokątów
-    cout << "Pole r2: " << r2.area() << endl; // Wyświetlenie pola r2
+    {
+        Prostokat p3(2, 2);
+        cout << "W bloku: " << Prostokat::getLicznik() << endl;          // 3
+    }                          // tu destruktor p3
+    cout << "Po bloku: " << Prostokat::getLicznik() << endl;             // 2
 
     return 0;
 }

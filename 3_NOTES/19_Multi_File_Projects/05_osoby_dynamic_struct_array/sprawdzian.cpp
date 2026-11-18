@@ -8,28 +8,26 @@
 #include "sprawdzian.h"
 using namespace std;
 
-Osoby* utworzTablice(int rozmiar)                
+Osoba *utworzTablice(int rozmiar)
 {
-    return new Osoby[rozmiar];
+    return new Osoba[rozmiar];
 }
-void wypelnianie(int rozmiar,  Osoby* tablica)
+
+void wypelnij(Osoba tablica[], int rozmiar)
 {
     for (int i = 0; i < rozmiar; i++)
     {
-        cout << "Podaj kolejne imie: ";
+        cout << "Imie osoby nr " << i + 1 << ": ";
         cin >> tablica[i].imie;
-        cout << "\n";
-        cout << "Podaj kolejne Nazwisko: ";
-        cin >> tablica[i].Nazwisko;
-        cout << "\n";
+        cout << "Nazwisko osoby nr " << i + 1 << ": ";
+        cin >> tablica[i].nazwisko;
     }
 }
-void wypisanieOsob(int rozmiar, Osoby* tablica)
+
+void wypisz(Osoba tablica[], int rozmiar)
 {
-    for (int i= 0; i < rozmiar; i++)
+    for (int i = 0; i < rozmiar; i++)
     {
-        cout << i+1 << "osoba: \n";
-        cout << tablica[i].imie;
-        cout << "\n" <<tablica[i].Nazwisko << "\n";
+        cout << i + 1 << ". " << tablica[i].imie << " " << tablica[i].nazwisko << endl;
     }
 }

@@ -7,10 +7,11 @@
 #include <iostream>
 using namespace std;
 
+const int ROZMIAR = 10;
+
 class Sortowanie
 {
 private:
-    static const int ROZMIAR = 10;
     int tablica[ROZMIAR];
 
     /********************************************************

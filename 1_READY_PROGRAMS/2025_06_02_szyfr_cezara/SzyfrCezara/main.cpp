@@ -16,12 +16,7 @@ int main()
 
     int klucz;
     cout << "Podaj klucz (liczba calkowita): ";
-    while (!(cin >> klucz))
-    {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "To nie jest liczba calkowita, podaj klucz ponownie: ";
-    }
+    cin >> klucz;
 
     cout << "Tekst zaszyfrowany: " << szyfruj(tekst, klucz) << endl;
     return 0;

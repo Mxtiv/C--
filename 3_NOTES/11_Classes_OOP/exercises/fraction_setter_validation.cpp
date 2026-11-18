@@ -1,52 +1,80 @@
 // ======================================================================
-// setter with validation + exit(-1), overloaded getters (by ref / by value)
+// Setter with validation (mianownik != 0, repeated with do-while),
+// overloaded getters (by reference / by value).
 // Original file: unsorted/various/ulamekdemo.cpp
 // ======================================================================
 
 #include <iostream>
-#include <cmath>
 using namespace std;
 
 class Ulamek
 {
-private: // prywatna wlasnosc klasy private jest domyślne i nie trzeba go pisac
+private:              // private jest domyślne w class, ale piszemy je dla czytelności
+    int licznik;
     int mianownik;
 
-public: // deklaracja publicznych metod i własności.
-    int licznik;
-    void setMianownik(int liczba) //publiczny setter
+public:
+    Ulamek()
     {
-        if (liczba==0)
+        licznik = 0;
+        mianownik = 1;
+    }
+
+    void setLicznik(int nowyLicznik)
+    {
+        licznik = nowyLicznik;
+    }
+
+    // setter z walidacją - zwraca true, gdy wartość była poprawna
+    bool setMianownik(int nowyMianownik)
+    {
+        if (nowyMianownik == 0)
         {
-           cout<<"nie ma takiego mainownika";
-           exit(-1);
+            cout << "Mianownik nie moze byc 0!" << endl;
+            return false;
         }
-        else
-        mianownik=liczba;
+        mianownik = nowyMianownik;
+        return true;
     }
-    void getMianownik(int &liczba)//getter przez parametr
+
+    int getLicznik()
     {
-        liczba = mianownik;
+        return licznik;
     }
-    int getMianownik() //getter przez wartość
+
+    int getMianownik()                // getter przez wartość
     {
         return mianownik;
+    }
+
+    void getMianownik(int &wynik)     // getter przez parametr (przeciążony)
+    {
+        wynik = mianownik;
     }
 };
 
 int main()
 {
-    int l1, m1, mianownik1;
-    cout << "podaj licznik i mianownik pierwszego ulamka\n";
-    cin >> l1;
-    cin >> m1;
-    Ulamek ulamek1;
-    ulamek1.licznik = l1;
-    // ulamek1.mianownik=m1; tak nie możemy bo wlasność mianownik jest prywatna.
-    ulamek1.setMianownik(m1);//używamy więc publicznych getterów i setterów
-    ulamek1.getMianownik(mianownik1);
-    cout<<ulamek1.licznik<<endl;
-    cout<<mianownik1<<endl;
-    cout<<ulamek1.getMianownik();
+    Ulamek ulamek;
+    int licznik;
+    int mianownik;
+
+    cout << "Podaj licznik: ";
+    cin >> licznik;
+    ulamek.setLicznik(licznik);
+
+    do
+    {
+        cout << "Podaj mianownik: ";
+        cin >> mianownik;
+    } while (ulamek.setMianownik(mianownik) == false);
+
+    // ulamek.mianownik = 0;     // BŁĄD - pole prywatne
+
+    int odczytany;
+    ulamek.getMianownik(odczytany);
+    cout << ulamek.getLicznik() << "/" << odczytany << endl;
+    cout << "Mianownik (getter przez wartosc): " << ulamek.getMianownik() << endl;
+
     return 0;
 }

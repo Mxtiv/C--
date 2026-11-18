@@ -4,16 +4,17 @@
 // ======================================================================
 
 #include <iostream>
+using namespace std;
 
-#define DEBUG  // Define DEBUG
+#define DEBUG       // zdefiniuj DEBUG
+#undef DEBUG        // ...i usun definicje - od tego miejsca DEBUG nie istnieje
 
-#undef DEBUG  // Undefine DEBUG
-
-int main() {
-    #ifdef DEBUG
-        std::cout << "Debug mode is ON" << std::endl;
-    #else
-        std::cout << "Debug mode is OFF" << std::endl;
-    #endif
+int main()
+{
+#ifdef DEBUG
+    cout << "Tryb DEBUG wlaczony" << endl;
+#else
+    cout << "Tryb DEBUG wylaczony" << endl;     // ta linia, bo DEBUG zostal usuniety
+#endif
     return 0;
 }

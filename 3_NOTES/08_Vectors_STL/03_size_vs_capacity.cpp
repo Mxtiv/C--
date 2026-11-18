@@ -6,26 +6,27 @@
 
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
-int main() {
+int main()
+{
+    // size     = ile elementów jest w wektorze
+    // capacity = na ile elementów wektor ma już zarezerwowaną pamięć (>= size)
+    vector<int> wektor = {10, 20, 30, 40, 50};
 
-  vector<int> wektor = {10, 20, 30, 40, 50};
+    cout << "Rozmiar oryginalny: " << wektor.size() << endl;
+    cout << "Pojemność oryginalna: " << wektor.capacity() << endl;
 
-  cout << "Rozmiar oryginalny: " << wektor.size() << endl;
-  cout << "Pojemność oryginalna: " << wektor.capacity() << endl;
+    wektor.resize(0);
 
-  wektor.resize(0);
+    cout << "Rozmiar po resize(0): " << wektor.size() << endl;
+    cout << "Pojemność po resize(0): " << wektor.capacity() << endl;   // pamięć zostaje!
 
-  cout << "Rozmiar po resize(0): " << wektor.size() << endl;
-  cout << "Pojemność po resize(0): " << wektor.capacity() << endl;
+    vector<int> drugi = {10, 20, 30, 40, 50};
+    drugi.clear();
 
-  vector<int> wiektor = {10, 20, 30, 40, 50};
-  wiektor.clear();
+    cout << "Rozmiar po clear(): " << drugi.size() << endl;
+    cout << "Pojemność po clear(): " << drugi.capacity() << endl;       // też zostaje
 
-  cout << "Rozmiar po clear(): " << wiektor.size() << endl;
-  cout << "Pojemność po clear(): " << wiektor.capacity() << endl;
-
-  return 0;
+    return 0;
 }

@@ -3,7 +3,8 @@
 // Original file: TryCatch/task1.cpp
 // ======================================================================
 
-// Szukamy zawodnika na pozycję centra. Dobry zawodnik ma między 210 -220. Pytamy czlowieka o wzrost. ŁĄpiemy trzy komunikaty błedu. "za mały, za duzy, alien
+// Szukamy zawodnika na pozycje centra. Dobry zawodnik ma miedzy 210 a 220 cm.
+// Pytamy czlowieka o wzrost. Lapiemy trzy komunikaty bledu: "za niski", "za wysoki", "alien".
 
 #include <iostream>
 using namespace std;
@@ -13,41 +14,42 @@ int main()
     try
     {
         int wzrost;
-        cout << endl << "podaj wzrost:";
+        cout << "Podaj wzrost: ";
         cin >> wzrost;
-        if(wzrost < 210)
+
+        if (wzrost < 210)
         {
-            throw wzrost;
+            throw wzrost;             // int
         }
-        if(wzrost >= 210 && wzrost <= 220)
+        if (wzrost >= 210 && wzrost <= 220)
         {
-            throw 1.0;
+            throw 1.0;                // double
         }
-        if(wzrost > 220 && wzrost <= 250)
+        if (wzrost > 220 && wzrost <= 250)
         {
-            throw 1.0f;
+            throw 1.0f;               // float
         }
-        if(wzrost > 250)
+        if (wzrost > 250)
         {
-            throw "kys";
+            throw "alien";            // const char* - nie ma dla niego catch, wiec lapie catch(...)
         }
     }
-    catch(int)
+    catch (int)
     {
-        cout << endl << "Za niski";
+        cout << "Za niski" << endl;
     }
-    catch(double)
+    catch (double)
     {
-        cout << endl << "ok";
+        cout << "OK" << endl;
     }
-    catch(float)
+    catch (float)
     {
-        cout << endl << "Za wysoki";
+        cout << "Za wysoki" << endl;
     }
-    catch(...)
+    catch (...)
     {
-        cout << endl << "Alien";
+        cout << "Alien" << endl;
     }
-    
+
     return 0;
 }

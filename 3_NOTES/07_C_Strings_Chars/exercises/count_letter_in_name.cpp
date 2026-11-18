@@ -7,10 +7,12 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
-int literkaWnapisie(char napis[30], char literka)
+
+// Version 1: walk the char array until the '\0' terminator
+int literkaWnapisie(char napis[], char literka)
 {
     int licznik = 0;
-    for (short i = 0; napis[i] != '\0'; i++)
+    for (int i = 0; napis[i] != '\0'; i++)
     {
         if (napis[i] == literka)
         {
@@ -20,24 +22,33 @@ int literkaWnapisie(char napis[30], char literka)
     }
     return licznik;
 }
-int literkaWnapisie2(char napis[30], char literka)
+
+// Version 2: jump from one match to the next with strchr
+int literkaWnapisie2(char napis[], char literka)
 {
     int licznik = 0;
-    for (char *p = strchr(napis, literka); p != nullptr; p = strchr(p + 1, literka))
+    char *p = strchr(napis, literka);
+    while (p != NULL)
+    {
         licznik++;
+        p = strchr(p + 1, literka);
+    }
     return licznik;
 }
+
 int main()
 {
-    char tablicaZnakow[30], literka;
+    char napis[30];
+    char literka;
 
-    cout << "podej imie i nazwisko" << endl;
-    cin.get(tablicaZnakow, 30);
+    cout << "podaj imie i nazwisko: ";
+    cin.get(napis, 30);
     cin.ignore(50, '\n');
-    cout << "podej literke";
+    cout << "podaj literke: ";
     cin >> literka;
+
     cout << "pozycje: ";
-    int ile = literkaWnapisie(tablicaZnakow, literka);
-    cout << endl << "liczba wystapien: " << ile << " (strchr: " << literkaWnapisie2(tablicaZnakow, literka) << ")" << endl;
+    int ile = literkaWnapisie(napis, literka);
+    cout << endl << "liczba wystapien: " << ile << " (strchr: " << literkaWnapisie2(napis, literka) << ")" << endl;
     return 0;
 }

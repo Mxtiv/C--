@@ -1,57 +1,64 @@
 // ======================================================================
 // push_back, insert(begin()+i), size, capacity, resize, erase one / range, clear, empty (Polish comments)
 // Original file: unsorted/Vectors/vectorExampleCommands.cpp
-// FIXED - the bug was: last line reads wektor[3] on an EMPTY vector (undefined behaviour)
+// FIXED - the bug was: last lines read wektor[3] and *wektor.begin() on an EMPTY vector (undefined behaviour)
 // ======================================================================
 
 #include <iostream>
-#include <vector>                                                                       // Dołączenie do programu wektorów.
+#include <vector>       // dołączenie do programu wektorów
 using namespace std;
+
+void wypisz(vector<int> wektor)
+{
+    for (int i = 0; i < wektor.size(); i++)
+    {
+        cout << "wektor[" << i << "] = " << wektor[i] << endl;
+    }
+}
+
 int main()
 {
-    vector <int> wektor = {10, 20, 30, 40, 50};                                         // Deklaracja i inicjalizacja wektora o nazwie wektor.
-    /* 
-    Wektor ma nazwe "wektor", jego typ i typ elementow w nim zawartych
-    to "int", rozmiar tego wektora wynosi "5", poniewaz ma on w sobie
-    5 elementow (10,20,30,40,50)
-     */
-    for (int i = 0; i < wektor.size(); i++)                                             //Petla wypisujaca elementy wektora.
+    // Wektor ma nazwę "wektor", typ elementów to int,
+    // rozmiar wynosi 5, ponieważ ma w sobie 5 elementów (10,20,30,40,50)
+    vector<int> wektor = {10, 20, 30, 40, 50};
+    wypisz(wektor);
+
+    wektor.push_back(60);                           // dopisanie nowego elementu na końcu wektora
+    cout << "Ostatni element (dopisany): " << wektor[wektor.size() - 1] << endl;
+
+    wektor.insert(wektor.begin(), 0);               // wstawienie 0 przed pierwszym elementem
+    cout << "Pierwszy element (dopisany): " << wektor[0] << endl;
+    wypisz(wektor);
+
+    cout << "size: " << wektor.size() << endl;          // ile elementów ma wektor
+    cout << "capacity: " << wektor.capacity() << endl;  // na ile elementów jest zarezerwowana pamięć
+
+    wektor.resize(5);                               // zmiana rozmiaru - elementy z końca są wyrzucane
+    wektor.insert(wektor.begin() + 1, 1);           // wstawienie na pozycję 1 (drugi element)
+    wektor.erase(wektor.begin() + 1);               // usunięcie elementu z pozycji 1
+    wektor.erase(wektor.begin() + 1, wektor.end()); // usunięcie przedziału: od pozycji 1 do końca
+    cout << "Po erase zostało: " << wektor.size() << " element(ów)" << endl;
+
+    wektor.clear();                                 // usunięcie wszystkich elementów (size = 0)
+
+    if (wektor.empty())                             // sprawdzenie, czy wektor jest pusty
     {
-        cout << "wektor[" << i << "] = " << wektor[i] << endl;                          //Przy kazdym przebiegu petla wypisze "wektor (numer elementu) = (wartosc elementu)".
+        cout << "Wektor jest pusty." << endl;
     }
-    wektor.push_back(60);                                                               //Dopisanie nowego elementu z zadaną wartością na końcu wektora.
-    cout << "Ostatni element (dopisany): " << wektor[wektor.size() - 1] << endl;        //Wypisanie ostatniego elementu wektora.
-    wektor.insert(wektor.begin(), 0);                                                   // Wstawienie nowego elementu o wartości "0" przed pierwszym elementem:
-    cout << "Pierwszy element (dopisany): " << wektor[0] << endl;   
-    for (int i = 0; i < wektor.size(); i++)                                             //Petla wypisujaca elementy wektora.
-    {
-        cout << "wektor[" << i << "] = " << wektor[i] << endl;                          //Przy kazdym przebiegu petla wypisze "wektor (numer elementu) = (wartosc elementu)".
-    }
-    cout << wektor.size() << endl;                                                      //Wyswietla ile elementóów ma wektor.
-    cout << wektor.capacity() << endl;                                                  //Wyświetla ile pamieci zajmuje wskażnik do wektora.
-    wektor.resize(5);                                                                   //Zmieniamy rozmiar, wyrzucając z elementy końca i robiąc wolne miejsca na koncu.
-    wektor.insert(wektor.begin() + 1, 1);                                               //Wstawiamy na pierwsze miejsce po zerowym (drugi element wektora).
-    wektor.erase(wektor.begin() + 1);                                                   //usuwamu pierwszy element po zerowym (drugi element wektora).
-    wektor.erase(wektor.begin() + 1,wektor.end());                                      //usuwamy przedzial elementów od drugieg do konca.
-    wektor.clear();                                                                     //W ten sposób można zwalniać pamięć na zaallokowaną na stercie dla wektora.
-    wektor.resize(0);                                                                   //W ten sposób tez można zwalniać pamięć na zaallokowaną na stercie dla wektora.
-    for (int i = 0; i < wektor.size(); i++)                                             //Petla wypisujaca elementy wektora.
-    {
-        cout << "wektor[" << i << "] = " << wektor[i] << endl;                          //Przy kazdym przebiegu petla wypisze "wektor (numer elementu) = (wartosc elementu)".
-    }
-    cout << *wektor.begin() << endl;                                                    //Wypisuje lokalizacje pierwszego elementu wektora          
-    if (wektor.empty())                                                                 // Sprawdzenie, czy wektor jest pusty 
-    {
-       cout << "Wektor jest pusty." << endl;
-    } 
-    else 
-    {
-       cout << "Wektor nie jest pusty." << endl;
-    }                                      
-    if (wektor.size() > 3)
-        cout << "Element na pozycji 3: " << wektor[3] << endl;
     else
+    {
+        cout << "Wektor nie jest pusty." << endl;
+    }
+
+    // Zanim odczytasz wektor[3], sprawdź czy taki element istnieje
+    if (wektor.size() > 3)
+    {
+        cout << "Element na pozycji 3: " << wektor[3] << endl;
+    }
+    else
+    {
         cout << "Wektor ma mniej niz 4 elementy - wektor[3] nie istnieje" << endl;
+    }
 
     return 0;
 }

@@ -46,7 +46,7 @@ Every source file from the original `C---main.zip` (still on the Desktop, untouc
 | `Functions/recurrent.cpp` | [3_NOTES/03_Functions/06_recursion_factorial.cpp](../3_NOTES/03_Functions/06_recursion_factorial.cpp) |
 | `Libraries/Fstreamy/fstream.cpp` | [3_NOTES/16_Files_fstream/exercises/sum_from_file/fstream.cpp](../3_NOTES/16_Files_fstream/exercises/sum_from_file/fstream.cpp) |
 | `Libraries/Fstreamy/fstream1.cpp` | [3_NOTES/16_Files_fstream/exercises/file_to_dynamic_array/fstream1.cpp](../3_NOTES/16_Files_fstream/exercises/file_to_dynamic_array/fstream1.cpp) |
-| `Libraries/Fstreamy/wyjscie.txt` | [3_NOTES/16_Files_fstream/exercises/sum_from_file/wyjscie.txt](../3_NOTES/16_Files_fstream/exercises/sum_from_file/wyjscie.txt) |
+| `Libraries/Fstreamy/wyjscie.txt` | 3_NOTES/16_Files_fstream/exercises/sum_from_file/wyjscie.txt (data file - git-ignored, create it yourself) |
 | `Libraries/Fstreamy/wyjscie1.txt` | [3_NOTES/16_Files_fstream/exercises/file_to_dynamic_array/wyjscie1.txt](../3_NOTES/16_Files_fstream/exercises/file_to_dynamic_array/wyjscie1.txt) |
 | `Libraries/ReadingFiles/maksik.cpp` | [3_NOTES/16_Files_fstream/01_random_numbers_file_average.cpp](../3_NOTES/16_Files_fstream/01_random_numbers_file_average.cpp) |
 | `Libraries/cctype.cpp` | [3_NOTES/07_C_Strings_Chars/01_cctype_functions.cpp](../3_NOTES/07_C_Strings_Chars/01_cctype_functions.cpp) |
@@ -118,12 +118,12 @@ Every source file from the original `C---main.zip` (still on the Desktop, untouc
 | `unsorted/calfmatthew/destructor.cpp` | [3_NOTES/11_Classes_OOP/07_destructor_object_lifetime.cpp](../3_NOTES/11_Classes_OOP/07_destructor_object_lifetime.cpp) |
 | `unsorted/calfmatthew/rectangle1.cpp` | [3_NOTES/11_Classes_OOP/02_class_complete_example.cpp](../3_NOTES/11_Classes_OOP/02_class_complete_example.cpp) |
 | `unsorted/classtemplate/ex2.cpp` | [3_NOTES/14_Templates/06_specialize_one_method.cpp](../3_NOTES/14_Templates/06_specialize_one_method.cpp) |
-| `unsorted/classtemplate/mxtiv.cpp` | [3_NOTES/14_Templates/exercises/class_template_ctad.cpp](../3_NOTES/14_Templates/exercises/class_template_ctad.cpp) |
+| `unsorted/classtemplate/mxtiv.cpp` | [3_NOTES/14_Templates/exercises/class_template_average_price.cpp](../3_NOTES/14_Templates/exercises/class_template_average_price.cpp) |
 | `unsorted/classtemplate/pop1.cpp` | [3_NOTES/14_Templates/exercises/task_rectangle_spec_vs_instantiation.cpp](../3_NOTES/14_Templates/exercises/task_rectangle_spec_vs_instantiation.cpp) |
 | `unsorted/diagramy/HERITAGEDesktop.cpp` | [3_NOTES/12_Inheritance/07_multiple_inheritance_computer.cpp](../3_NOTES/12_Inheritance/07_multiple_inheritance_computer.cpp) |
 | `unsorted/diagramy/aureliamotor.cpp` | [3_NOTES/11_Classes_OOP/exercises/uml_motor_friend_compare.cpp](../3_NOTES/11_Classes_OOP/exercises/uml_motor_friend_compare.cpp) |
 | `unsorted/diagramy/motorByMrKaczmarzyk.cpp` | [3_NOTES/11_Classes_OOP/exercises/uml_motor_teacher_solution.cpp](../3_NOTES/11_Classes_OOP/exercises/uml_motor_teacher_solution.cpp) |
-| `unsorted/diagramy/motorFINALcompare.cpp` | [3_NOTES/11_Classes_OOP/exercises/uml_motor_final_compare.cpp](../3_NOTES/11_Classes_OOP/exercises/uml_motor_final_compare.cpp) |
+| `unsorted/diagramy/motorFINALcompare.cpp` | merged into [3_NOTES/11_Classes_OOP/exercises/uml_motor_friend_compare.cpp](../3_NOTES/11_Classes_OOP/exercises/uml_motor_friend_compare.cpp) |
 | `unsorted/diagramy/peselClass.cpp` | [3_NOTES/17_Math_Algorithms/pesel/04_pesel_class_private_validation.cpp](../3_NOTES/17_Math_Algorithms/pesel/04_pesel_class_private_validation.cpp) |
 | `unsorted/diagramy/pizza.cpp` | [3_NOTES/11_Classes_OOP/exercises/uml_pizza_machine.cpp](../3_NOTES/11_Classes_OOP/exercises/uml_pizza_machine.cpp) |
 | `unsorted/dynArrayDemo/main.cpp` | [3_NOTES/19_Multi_File_Projects/05_osoby_dynamic_struct_array/main.cpp](../3_NOTES/19_Multi_File_Projects/05_osoby_dynamic_struct_array/main.cpp) |
@@ -138,13 +138,13 @@ Every source file from the original `C---main.zip` (still on the Desktop, untouc
 | `unsorted/spisLudnosci/main.cpp` | [3_NOTES/19_Multi_File_Projects/04_spis_ludnosci/main.cpp](../3_NOTES/19_Multi_File_Projects/04_spis_ludnosci/main.cpp) |
 | `unsorted/spisLudnosci/sprawdzian2.cpp` | [3_NOTES/19_Multi_File_Projects/04_spis_ludnosci/sprawdzian2.cpp](../3_NOTES/19_Multi_File_Projects/04_spis_ludnosci/sprawdzian2.cpp) |
 | `unsorted/spisLudnosci/sprawdzian2.h` | [3_NOTES/19_Multi_File_Projects/04_spis_ludnosci/sprawdzian2.h](../3_NOTES/19_Multi_File_Projects/04_spis_ludnosci/sprawdzian2.h) |
-| `unsorted/sprawdzian/MATEUSZCIELEN.cpp` | [3_NOTES/11_Classes_OOP/exercises/test_water_dispenser_static.cpp](../3_NOTES/11_Classes_OOP/exercises/test_water_dispenser_static.cpp) |
+| `unsorted/sprawdzian/MATEUSZCIELEN.cpp` | merged into [3_NOTES/11_Classes_OOP/exercises/test_water_dispenser_interactive.cpp](../3_NOTES/11_Classes_OOP/exercises/test_water_dispenser_interactive.cpp) |
 | `unsorted/sprawdzian/MATTHEW1.cpp` | [3_NOTES/06_Strings/exercises/string_divider_substr_stoi.cpp](../3_NOTES/06_Strings/exercises/string_divider_substr_stoi.cpp) |
 | `unsorted/sprawdzian/MATTHEW2.cpp` | [3_NOTES/06_Strings/exercises/string_divider_combine_digits.cpp](../3_NOTES/06_Strings/exercises/string_divider_combine_digits.cpp) |
 | `unsorted/sprawdzian/MATTHEW3.cpp` | [3_NOTES/06_Strings/exercises/string_divider_static_const_switch.cpp](../3_NOTES/06_Strings/exercises/string_divider_static_const_switch.cpp) |
 | `unsorted/sprawdzian/arrayStructures.cpp` | [3_NOTES/10_Structs_Unions/05_dynamic_array_of_structs.cpp](../3_NOTES/10_Structs_Unions/05_dynamic_array_of_structs.cpp) |
 | `unsorted/sprawdzian/fstreamKmak.cpp` | [3_NOTES/16_Files_fstream/02_write_read_append_sum.cpp](../3_NOTES/16_Files_fstream/02_write_read_append_sum.cpp) |
-| `unsorted/sprawdzian/fstreamMatthew.cpp` | [3_NOTES/16_Files_fstream/03_file_average_compact.cpp](../3_NOTES/16_Files_fstream/03_file_average_compact.cpp) |
+| `unsorted/sprawdzian/fstreamMatthew.cpp` | merged into [3_NOTES/16_Files_fstream/01_random_numbers_file_average.cpp](../3_NOTES/16_Files_fstream/01_random_numbers_file_average.cpp) (same program) |
 | `unsorted/sprawdzian/fstreamShroom.cpp` | [3_NOTES/16_Files_fstream/exercises/append_read_sum.cpp](../3_NOTES/16_Files_fstream/exercises/append_read_sum.cpp) |
 | `unsorted/sprawdzian/heritagepop.cpp` | [3_NOTES/12_Inheritance/05_private_inheritance.cpp](../3_NOTES/12_Inheritance/05_private_inheritance.cpp) |
 | `unsorted/sprawdzian/instrybutor.cpp` | [3_NOTES/11_Classes_OOP/exercises/test_water_dispenser_interactive.cpp](../3_NOTES/11_Classes_OOP/exercises/test_water_dispenser_interactive.cpp) |
@@ -212,7 +212,7 @@ Every source file from the original `C---main.zip` (still on the Desktop, untouc
 | `Classes/Klasy z dziedziczeniem/Protected dziedziczenie, settery i gettery dziedziczenia protected/main.cpp` | same code as unsorted/various/dziedziczenieProtected.cpp, which has the textbook comments (kept as 12_Inheritance/02_) |
 | `Classes/Klasy z dziedziczeniem/X) Zadanie publiczne dziedziczenie kilku klas/main.cpp` | same code as unsorted/various/dziedziczenie1.cpp, which has the comments (kept as 12_Inheritance/06_) |
 | `Classes/Polimorfizm/Polimorfiz poprzez wskazniki, na stosie, stos/main.cpp` | same code as unsorted/various/dziedziczenieDynamic.cpp, which has the comments (kept as 13_Polymorphism/02_) |
-| `Classes/dystrybutor.cpp` | earlier version of the dispenser; finished version: 11_Classes_OOP/exercises/test_water_dispenser_static.cpp |
+| `Classes/dystrybutor.cpp` | earlier version of the dispenser; finished version: 11_Classes_OOP/exercises/test_water_dispenser_interactive.cpp |
 | `Classes/dzieciczenie/bryly.cpp` | wrong volume formulas; corrected version polimorfizmsnejp.cpp kept (13_Polymorphism/exercises/solids_volume.cpp) |
 | `Classes/dzieciczenie/desktop.cpp` | exact duplicate of unsorted/diagramy/IgorChHeritage.cpp - broken (did not compile); the working version of this task is 12_Inheritance/07_multiple_inheritance_computer.cpp |
 | `Classes/dzieciczenie/klasaBazowaZDzieciczenie.cpp` | same as Classes/dzieciczenie/adam.cpp (12_Inheritance/04_) |
@@ -220,8 +220,8 @@ Every source file from the original `C---main.zip` (still on the Desktop, untouc
 | `Classes/dziedziczenie.cpp` | same as Classes/dzieciczenie/adam.cpp (12_Inheritance/04_) |
 | `Classes/friends/friend.cpp` | same idea as adam_I_przyjaciele.cpp (11_Classes_OOP/10_friend_classes.cpp) |
 | `Classes/spr/sprawdziandelegowanie/main.cpp` | exact duplicate of Classes/ksiazka.cpp |
-| `Libraries/ReadingFiles/czas.cpp` | buggy (*(arr)+i, writes past the array, eof loop); correct versions: 16_Files_fstream/02_ and 04_ |
-| `Libraries/ReadingFiles/obliczeniesrednizpliku.cpp` | near-duplicate of czas.cpp (buggy); correct versions: 16_Files_fstream/02_ and 04_ |
+| `Libraries/ReadingFiles/czas.cpp` | buggy (*(arr)+i, writes past the array, eof loop); correct versions: 16_Files_fstream/01_ and 02_ |
+| `Libraries/ReadingFiles/obliczeniesrednizpliku.cpp` | near-duplicate of czas.cpp (buggy); correct versions: 16_Files_fstream/01_ and 02_ |
 | `Libraries/ReadingFiles/odczyt.txt` | empty file |
 | `Libraries/ReadingFiles/odczytplikow.cpp` | same program as Libraries/Fstreamy/fstream.cpp (kept as 16_Files_fstream/exercises/sum_from_file) |
 | `Libraries/ReadingFiles/pliki.cpp` | near-duplicate of Libraries/Fstreamy/fstream1.cpp |
@@ -246,7 +246,7 @@ Every source file from the original `C---main.zip` (still on the Desktop, untouc
 | `unsorted/calculations/odleglosciDiagramu.cpp` | same Point class as diagramOdbicia.cpp (11_Classes_OOP/09_) |
 | `unsorted/calculations/silniaiteracyjna.cpp` | non-working experiment (your own comment says so) |
 | `unsorted/calculations/silniarecurrentclassic.cpp` | same as Functions/recurrent.cpp (03_Functions/06_) |
-| `unsorted/calfmatthew/CALFMATTHEW.cpp` | same features as 11_Classes_OOP/02_ and 08_ (static count, delegating + copy ctor) |
+| `unsorted/calfmatthew/CALFMATTHEW.cpp` | same features as 11_Classes_OOP/02_, 05_ and 08_ (static count, delegating + copy ctor) |
 | `unsorted/classtemplate/ex1.cpp` | duplicate of Classes/TypenameTemplate.cpp (whitespace only) |
 | `unsorted/diagramy/IgorChHeritage.cpp` | did not compile (methods defined twice, broken braces); the working version of this task is 12_Inheritance/07_multiple_inheritance_computer.cpp |
 | `unsorted/diagramy/constructors.cpp` | static object counter is covered by 11_Classes_OOP/02_ |
@@ -261,7 +261,7 @@ Every source file from the original `C---main.zip` (still on the Desktop, untouc
 | `unsorted/spisLudnosci/wystapieniaLiter.cpp` | near-duplicate of unsorted/Cstrings/letterFinder.cpp |
 | `unsorted/sprawdzian/rekurencja3.cpp` | exact duplicate of unsorted/calculations/silnia.cpp |
 | `unsorted/sprawdzian/stringQuote.cpp` | empty file |
-| `unsorted/sprawdzian/wyjscie.txt` | output file - created again when you run 16_Files_fstream/03_write_read_append_sum.cpp |
+| `unsorted/sprawdzian/wyjscie.txt` | output file - created again when you run 16_Files_fstream/02_write_read_append_sum.cpp |
 | `unsorted/stringi/ascii.cpp` | experiment; char arithmetic is covered in 01_Basics/04_operators.cpp |
 | `unsorted/strukturaProgramu/operacje.cpp` | was EMPTY - the missing definitions were written: 19_Multi_File_Projects/06_struktura_programu/operacje.cpp |
 | `unsorted/temp/test.cpp` | duplicate of unsorted/trycatch/exceptions/definition.cpp |

@@ -4,52 +4,61 @@
 // FIXED: srand() was called inside the loop - now called once at the start of main
 // ======================================================================
 
-#include <cstdlib>
 #include <iostream>
-#include <ctime>  
+#include <cstdlib>
+#include <ctime>
 using namespace std;
-void losowanie(int arr[], int size) {
-  for (int i = 0; i < size; i++) {
-    arr[i] = rand() % 11 + 10;
-  }
-}
-void wypisz(const int arr[], int size) {
-  for (int i = 0; i < size; i++) {
-    cout << arr[i] << ", ";
-  }
-}
-int liczbaPodzielnychPrzezTrzy(int arr[], int size) {
 
-  int liczbaPodzielnych{};
-
-  for (int i = 0; i < size; i++) {
-    if (arr[i] % 3 == 0) {
-      liczbaPodzielnych++;
-    }
-  }
-  return liczbaPodzielnych;
-
-}
-int elementMinimalny(int arr[], int size)
+void losowanie(int tab[], int n)
 {
-  int min = arr[0];
-  for (int i = 0; i < size; i++)
-  {
-
-    if (arr[i] < min)
+    for (int i = 0; i < n; i++)
     {
-      min = arr[i];
+        tab[i] = rand() % 11 + 10;      // 10..20
     }
-  }
-  return min;
 }
-int main() {
-  srand(time(NULL)); // ONCE, at the start of main
-  const int size = 11;
-  int arr[size];
-  losowanie(arr, size);
-  wypisz(arr, size);
-  cout << "\nIlosc liczb podzielnych przez 3: "
-       << liczbaPodzielnychPrzezTrzy(arr, size);
-  cout << "\nElement minimalny to: " << elementMinimalny(arr, size);
+
+void wypisz(int tab[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        cout << tab[i] << ", ";
+    }
+}
+
+int liczbaPodzielnychPrzezTrzy(int tab[], int n)
+{
+    int liczbaPodzielnych = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (tab[i] % 3 == 0)
+        {
+            liczbaPodzielnych++;
+        }
+    }
+    return liczbaPodzielnych;
+}
+
+int elementMinimalny(int tab[], int n)
+{
+    int min = tab[0];
+    for (int i = 1; i < n; i++)
+    {
+        if (tab[i] < min)
+        {
+            min = tab[i];
+        }
+    }
+    return min;
+}
+
+int main()
+{
+    srand(time(0)); // ONCE, at the start of main
+    const int ROZMIAR = 11;
+    int tab[ROZMIAR];
+    losowanie(tab, ROZMIAR);
+    wypisz(tab, ROZMIAR);
+    cout << "\nIlosc liczb podzielnych przez 3: " << liczbaPodzielnychPrzezTrzy(tab, ROZMIAR);
+    cout << "\nElement minimalny to: " << elementMinimalny(tab, ROZMIAR) << endl;
+    return 0;
 }

@@ -1,10 +1,10 @@
 // ======================================================================
 // test: decode an egg code (kod jaja), e.g. 1PL12345678 or 1-PL-12345678
 //   digit 0..3 = type of farming, 2 letters = country, rest = producer number
+// Shows: private helper methods called from a public setter, static counter.
 // Original file: Classes/spr/sprawdzianjajo/mainJajo.cpp
-// FIXED - the original did not compile. Corrected: `=` -> `==`, compare chars with
-// kod[1] == 'P' (no (string) cast), private setters are now called from setKod(),
-// getTypChowuSlownie() is called with (), static counter is defined outside the class.
+// FIXED - the original did not compile (`=` instead of `==`, (string) casts on chars,
+// private setters called from main, static counter not defined outside the class).
 // ======================================================================
 
 #include <iostream>
@@ -14,89 +14,114 @@ using namespace std;
 class Jajo
 {
 private:
-    string kod;
-    int typChowu;              // 0..3, -1 = wrong
-    string krajPochodzenia;
-    string reszta;
+    string kod;               // kod bez myślników, np. 1PL12345678
+    int typChowu;             // 0..3, -1 = zły
+    string kraj;
+    string producent;
     static int iloscJaj;
 
-    void setTypChowu()
+    // metody prywatne - wołane tylko z wnętrza klasy (z setKod)
+    void ustawTypChowu()
     {
         if (kod[0] >= '0' && kod[0] <= '3')
-            typChowu = kod[0] - '0';    // char digit -> int
-        else
-            typChowu = -1;
-    }
-
-    void setKrajPochodzenia()
-    {
-        // skip an optional separator after the first digit: "1PL..." or "1-PL-..."
-        size_t p = (kod.size() > 1 && (kod[1] == '-' || kod[1] == ' ')) ? 2 : 1;
-        if (kod.size() < p + 2)
         {
-            krajPochodzenia = "Brak kodu kraju";
-            return;
+            typChowu = kod[0] - '0';      // znak cyfry -> liczba
         }
-        if (kod[p] == 'P' && kod[p + 1] == 'L')
-            krajPochodzenia = "Polska";
-        else if (kod[p] == 'D' && kod[p + 1] == 'E')
-            krajPochodzenia = "Niemcy";
         else
-            krajPochodzenia = "Jajo z nieznanego kraju";
+        {
+            typChowu = -1;
+        }
     }
 
-    void setReszta()
+    void ustawKraj()
     {
-        size_t p = (kod.size() > 1 && (kod[1] == '-' || kod[1] == ' ')) ? 2 : 1;
-        p += 2;                                         // skip the country letters
-        if (p < kod.size() && (kod[p] == '-' || kod[p] == ' ')) p++;
-        reszta = (p < kod.size()) ? kod.substr(p) : "";
+        if (kod[1] == 'P' && kod[2] == 'L')
+        {
+            kraj = "Polska";
+        }
+        else if (kod[1] == 'D' && kod[2] == 'E')
+        {
+            kraj = "Niemcy";
+        }
+        else
+        {
+            kraj = "nieznany kraj";
+        }
     }
 
 public:
-    Jajo() : typChowu(-1) {}
-
-    void setKod(const string &kodJaja)
+    Jajo()
     {
-        kod = kodJaja;
-        iloscJaj++;
-        setTypChowu();            // private methods are used INSIDE the class
-        setKrajPochodzenia();
-        setReszta();
+        kod = "";
+        typChowu = -1;
+        kraj = "";
+        producent = "";
     }
 
-    string getTypChowuSlownie() const
+    void setKod(string kodJaja)
+    {
+        // usuwamy myślniki: 1-PL-12345678 -> 1PL12345678
+        kod = "";
+        for (int i = 0; i < kodJaja.length(); i++)
+        {
+            if (kodJaja[i] != '-')
+            {
+                kod = kod + kodJaja[i];
+            }
+        }
+        if (kod.length() < 4)
+        {
+            cout << "Za krotki kod!" << endl;
+            return;
+        }
+        iloscJaj++;
+        ustawTypChowu();
+        ustawKraj();
+        producent = kod.substr(3);
+    }
+
+    string getTypChowuSlownie()
     {
         switch (typChowu)
         {
-        case 0: return "Ekologiczne jajo.";
-        case 1: return "Jajo z wolnego wybiegu.";
-        case 2: return "Jajo sciolkowe.";
-        case 3: return "Jajo klatkowe.";
-        default: return "Zly numerek.";
+        case 0:
+            return "ekologiczny";
+        case 1:
+            return "wolny wybieg";
+        case 2:
+            return "sciolkowy";
+        case 3:
+            return "klatkowy";
+        default:
+            return "zly numer";
         }
     }
 
-    void print() const
+    void wypisz()
     {
-        cout << "Typ chowu twojego jaja to: " << getTypChowuSlownie() << "\n";
-        cout << "Kraj pochodzenia twojego jaja to: " << krajPochodzenia << ".\n";
-        cout << "Numer producenta: " << reszta << ".\n";
+        cout << "Typ chowu: " << getTypChowuSlownie() << endl;
+        cout << "Kraj: " << kraj << endl;
+        cout << "Numer producenta: " << producent << endl;
     }
 
-    static int getIloscJaj() { return iloscJaj; }
+    static int getIloscJaj()
+    {
+        return iloscJaj;
+    }
 };
 
-int Jajo::iloscJaj = 0;            // static member definition
+int Jajo::iloscJaj = 0;
 
 int main()
 {
     string kodJaja;
-    Jajo jajo1;
     cout << "Podaj kod jaja (np. 1PL12345678): ";
     cin >> kodJaja;
-    jajo1.setKod(kodJaja);
-    jajo1.print();
+
+    Jajo jajo;
+    jajo.setKod(kodJaja);
+    jajo.wypisz();
     cout << "Sprawdzonych jaj: " << Jajo::getIloscJaj() << endl;
+
     return 0;
 }

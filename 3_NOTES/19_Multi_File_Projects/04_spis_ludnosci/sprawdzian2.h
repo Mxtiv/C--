@@ -1,5 +1,5 @@
 // ======================================================================
-// header: struct obywatel + prototypes of the census functions
+// header: struct Obywatel + prototypes of the census functions
 // Original file: unsorted/spisLudnosci/sprawdzian2.h
 // FIXED - the bug was: the header did #include "sprawdzian2.cpp" and only forward-declared the
 // struct. Now the struct is defined here and the .cpp includes this header.
@@ -10,17 +10,18 @@
 #define SPRAWDZIAN2_H
 
 #include <string>
+using namespace std;
 
-struct obywatel                      // deklaracja struktury o nazwie obywatel
+struct Obywatel
 {
+    string imie;
     int wiek;
-    std::string imie;
 };
 
-obywatel* utworzTablice(int rozmiar);
-void pobierzDane(obywatel tablica[], int rozmiar);
-void wyszukajPoString(obywatel tablica[], int rozmiar, std::string wartosc);
-void wyszukajPoInt(obywatel tablica[], int rozmiar, int wartosc);
-void usunDane(obywatel tablica[], int rozmiar);
+Obywatel *utworzTablice(int rozmiar);
+void pobierzDane(Obywatel tablica[], int rozmiar);
+void szukajPoImieniu(Obywatel tablica[], int rozmiar, string imie);
+void szukajPoWieku(Obywatel tablica[], int rozmiar, int wiek);
+void usunTablice(Obywatel tablica[]);
 
 #endif

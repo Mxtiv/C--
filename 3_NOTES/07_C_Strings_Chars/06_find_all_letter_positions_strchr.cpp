@@ -5,57 +5,43 @@
 
 #include <iostream>
 #include <cstring>
-#include <vector>
 using namespace std;
 
-void findOccurrences(const char *text, char letter)
+void znajdzWystapienia(char tekst[], char litera)
 {
-    int count = 0;
-    vector<int> indexes;
+    int ile = 0;
+    cout << "Pozycje litery '" << litera << "' (od 1): ";
 
-    const char *ptr = text;
-    while ((ptr = strchr(ptr, letter)) != nullptr)
+    char *wskaznik = strchr(tekst, litera);        // first occurrence or NULL
+    while (wskaznik != NULL)
     {
-        count++;
-        indexes.push_back(ptr - text + 1);
-        ptr++;
+        cout << wskaznik - tekst + 1 << " ";
+        ile++;
+        wskaznik = strchr(wskaznik + 1, litera);   // search again AFTER the found one
     }
-
-    cout << "Liczba wystąpień litery '" << letter << "' w napisie: " << count << endl;
-    if (count > 0)
-    {
-        cout << "Indeksy wystąpień litery '" << letter << "':" << endl;
-        for (int i = 0; i < indexes.size(); ++i)
-        {
-            cout << indexes[i];
-            if (i != indexes.size() - 1)
-                cout << ", ";
-        }
-        cout << endl;
-    }
+    cout << endl;
+    cout << "Liczba wystąpień litery '" << litera << "' w napisie: " << ile << endl;
 }
 
 int main()
 {
-    char choice;
+    char wybor;
     do
     {
-        char text[50];
+        char tekst[50];
         cout << "Podaj dane do analizy: ";
-        cin.getline(text, 50);
+        cin.getline(tekst, 50);
 
-        char letter;
+        char litera;
         cout << "Podaj literę do znalezienia w napisie: ";
-        cin >> letter;
+        cin >> litera;
 
-        cin.ignore();
+        znajdzWystapienia(tekst, litera);
 
-        findOccurrences(text, letter);
-
-        cout << "Czy chcesz wyszukać ponownie? (Y/N): ";
-        cin >> choice;
-        cin.ignore();
-    } while (toupper(choice) == 'Y' || toupper(choice) == 'y');
+        cout << "Czy chcesz wyszukać ponownie? (T/N): ";
+        cin >> wybor;
+        cin.ignore();       // remove the Enter before the next cin.getline
+    } while (wybor == 'T' || wybor == 't');
 
     return 0;
 }

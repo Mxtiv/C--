@@ -1,7 +1,10 @@
 // ======================================================================
-// Motor + friend function porownaj(Motor, Motor)
-// Original file: unsorted/diagramy/aureliamotor.cpp
-// FIXED - the bug was: setCzyDwusuw/setCzyCross assign backwards (parameter = field)
+// UML "Motor" + friend function porownaj(Motor, Motor) that reads the
+// private fields of both motors and RETURNS the winner (a Motor object).
+// (the plain UML solution is in uml_motor_teacher_solution.cpp)
+// Original files: unsorted/diagramy/aureliamotor.cpp
+//                 + unsorted/diagramy/motorFINALcompare.cpp (returning the winner) - merged
+// FIXED - the bug was: setCzyDwusuw/setCzyCross assigned backwards (parameter = field)
 // ======================================================================
 
 #include <iostream>
@@ -11,161 +14,93 @@ using namespace std;
 class Motor
 {
 private:
+    string nazwa;
     bool czyDwusuw;
     bool czyCross;
+    bool czyLyse;
     int pojemnosc;
-    float ilePaliwa;
-    float pojemnoscBaku;
 
 public:
-    string kolor;
-    bool czyLyse;
-
-    Motor()
+    Motor(string nowaNazwa, bool dwusuw, bool cross, bool lyse, int nowaPojemnosc)
     {
-        pojemnoscBaku = 20;
-        ilePaliwa = 5;
-        kolor = "czerwony";
-        czyLyse = false;
-        czyDwusuw = true;
-        czyCross = true;
-        pojemnosc = 250;
-    }
-    Motor(string color, bool dwusuw, bool lyse, bool cross, int poj, float paliwa, float pojBaku)
-    {
-        pojemnoscBaku = pojBaku;
-        ilePaliwa = paliwa;
-        kolor = color;
-        czyLyse = lyse;
+        nazwa = nowaNazwa;
         czyDwusuw = dwusuw;
         czyCross = cross;
-        pojemnosc = poj;
-    }
-    friend void porownaj(Motor, Motor);
-    void tankuj(float wlewawanePaliwo)
-    {
-        if (wlewawanePaliwo < pojemnoscBaku - ilePaliwa)
-        {
-            ilePaliwa += wlewawanePaliwo;
-            cout << "Wlałeś " << wlewawanePaliwo << endl;
-        }
-        else
-        {
-            float temp = pojemnoscBaku - ilePaliwa;
-            ilePaliwa += temp;
-            cout << "Wlałeś " << temp << " bo nie miałeś miejsca w baku\n";
-        }
+        czyLyse = lyse;
+        pojemnosc = nowaPojemnosc;
     }
 
-    void setCzyDwusuw(bool czyDwusuw1)
+    string getNazwa()
     {
-        czyDwusuw = czyDwusuw1;
+        return nazwa;
     }
-    bool getCzyDwusuw()
-    {
-        return czyDwusuw;
-    }
-    void setCzyCross(bool czyCross1)
-    {
-        czyCross = czyCross1;
-    }
-    bool getCzyCross()
-    {
-        return czyCross;
-    }
-    void setPojemnosc(int pojemnosc1)
-    {
-        pojemnosc = pojemnosc1;
-    }
-    int getPojemnosc()
-    {
-        return pojemnosc;
-    }
-    void setkolor(string kolor1)
-    {
-        kolor = kolor1;
-    }
-    string getKolor()
-    {
-        return kolor;
-    }
-    void setCzyLyse(bool czyLyse1) 
-    {
-        czyLyse = czyLyse1;
-    }
-    bool getCzyLyse()
-    {
-        return czyLyse;
-    }
-    void czyTymPojade()
-    {
-        if (kolor == "czerwony" && czyDwusuw == true && czyLyse == false)
-        {
-            cout << "Mogę Jechać !\n";
-        }
-        else
-        {
-            cout << "Nie Mogę Jechać\n";
-        }
-    }
-    void czyNadajeSie(int oczekiwanaPojemnosc)
-    {
-        if (pojemnosc < oczekiwanaPojemnosc)
-        {
-            cout << "Nie nadaje się !\n";
-        }
-        else
-        {
-            cout << "Nadaje się !\n";
-        }
-    }
+
+    friend Motor porownaj(Motor motor1, Motor motor2);
 };
-void porownaj(Motor motor1, Motor motor2)
+
+/********************************************************
+ * nazwa funkcji: porownaj
+ * opis funkcji: przyznaje punkty za pojemność, cross, dwusuw i nie łyse opony
+ * parametry: motor1, motor2 - porównywane motory
+ * zwracany typ i opis: Motor - motor z większą liczbą punktów (przy remisie motor1)
+ ********************************************************/
+Motor porownaj(Motor motor1, Motor motor2)
 {
-    int licznik1 = 0;
-    int licznik2 = 0;
-    if (motor1.pojemnosc > motor2.pojemnosc)
-        licznik1++;
-    else if (motor1.pojemnosc < motor2.pojemnosc)
-        licznik2++;
-    if (motor1.czyCross == true && motor2.czyCross == false)
-        licznik1++;
-    else if (motor1.czyCross == false && motor2.czyCross == true)
-        licznik2++;
-    if (motor1.czyDwusuw == false && motor2.czyDwusuw == true)
-        licznik2++;
-    else if (motor1.czyDwusuw == true && motor2.czyDwusuw == false)
-        licznik1++;
-    if (motor1.czyLyse == false && motor2.czyLyse == true)
-        licznik1++;
-    else if (motor1.czyLyse == true && motor2.czyLyse == false)
-        licznik2++;
-    if (licznik1 > licznik2)
-        cout << "Motor 1 wygrał";
-    else if (licznik1 < licznik2)
-        cout << "Motor 2 wygrał";
-    else
-        cout << "Remis" << endl;
+    int punkty1 = 0;
+    int punkty2 = 0;
+
+    if (motor1.pojemnosc > motor2.pojemnosc)       // pola private - wolno, bo friend
+    {
+        punkty1++;
+    }
+    else if (motor2.pojemnosc > motor1.pojemnosc)
+    {
+        punkty2++;
+    }
+
+    if (motor1.czyCross)
+    {
+        punkty1++;
+    }
+    if (motor2.czyCross)
+    {
+        punkty2++;
+    }
+
+    if (motor1.czyDwusuw)
+    {
+        punkty1++;
+    }
+    if (motor2.czyDwusuw)
+    {
+        punkty2++;
+    }
+
+    if (motor1.czyLyse == false)
+    {
+        punkty1++;
+    }
+    if (motor2.czyLyse == false)
+    {
+        punkty2++;
+    }
+
+    cout << motor1.nazwa << ": " << punkty1 << " pkt, " << motor2.nazwa << ": " << punkty2 << " pkt" << endl;
+
+    if (punkty2 > punkty1)
+    {
+        return motor2;
+    }
+    return motor1;
 }
+
 int main()
 {
-    Motor motor1, motor2;
-    motor1.czyLyse = false;
-    motor1.kolor = "czerwony";
-    motor1.setCzyDwusuw(true);
-    motor1.setCzyCross(true);
-    motor1.setPojemnosc(600);
-    motor1.czyTymPojade();
-    motor1.czyNadajeSie(500);
+    Motor motor1("Yamaha", true, true, false, 600);
+    Motor motor2("Honda", false, false, true, 250);
 
-    motor2.czyLyse = true;
-    motor2.kolor = "niebieski";
-    motor2.setCzyDwusuw(false);
-    motor2.setCzyCross(false);
-    motor2.setPojemnosc(250);
-    motor2.czyTymPojade();
-    motor2.czyNadajeSie(500);
-    porownaj(motor1, motor2);
+    Motor zwyciezca = porownaj(motor1, motor2);
+    cout << "Wygrywa: " << zwyciezca.getNazwa() << endl;
 
     return 0;
 }

@@ -5,64 +5,96 @@
 // ======================================================================
 
 #include <iostream>
-#include <limits>
-#include <cstdlib>
-#include <ctime>
-#include "sprawdzian2.h"   // struct obywatel + prototypes
+#include "sprawdzian2.h"   // struct Obywatel + prototypy
 using namespace std;
 
-obywatel* utworzTablice(int rozmiar)                // Funkcja do tworzenia dynamicznej tablicy o podanym rozmiarze
+/********************************************************
+ * nazwa funkcji: utworzTablice
+ * opis funkcji: tworzy dynamiczna tablice obywateli
+ * parametry: rozmiar - liczba obywateli
+ * zwracany typ i opis: Obywatel* - wskaznik na nowa tablice
+ * autor: <numer zdającego>
+ ********************************************************/
+Obywatel *utworzTablice(int rozmiar)
 {
-    return new obywatel[rozmiar];
+    return new Obywatel[rozmiar];
 }
-void pobierzDane(obywatel tablica[], int rozmiar)   // Funkcja do pobierania danych o obywatelach do tablicy
+
+/********************************************************
+ * nazwa funkcji: pobierzDane
+ * opis funkcji: wczytuje imie i wiek kazdego obywatela
+ * parametry: tablica - tablica obywateli, rozmiar - liczba obywateli
+ * zwracany typ i opis: brak
+ * autor: <numer zdającego>
+ ********************************************************/
+void pobierzDane(Obywatel tablica[], int rozmiar)
 {
-    for (int i = 0; i < rozmiar; ++i) {
-        cout << "Podaj dane dla "<< i + 1 << " obywatela: " << endl;
+    for (int i = 0; i < rozmiar; i++)
+    {
+        cout << "Obywatel nr " << i + 1 << endl;
         cout << "Imie: ";
         cin >> tablica[i].imie;
         cout << "Wiek: ";
         cin >> tablica[i].wiek;
     }
 }
-void wyszukajPoString(obywatel tablica[], int rozmiar, string wartosc)          // Funkcja do wyszukiwania osoby w tablicy po imieniu/nazwisku
+
+/********************************************************
+ * nazwa funkcji: szukajPoImieniu
+ * opis funkcji: wypisuje wszystkich obywateli o podanym imieniu
+ * parametry: tablica, rozmiar - dane, imie - szukane imie
+ * zwracany typ i opis: brak
+ * autor: <numer zdającego>
+ ********************************************************/
+void szukajPoImieniu(Obywatel tablica[], int rozmiar, string imie)
 {
     bool znaleziono = false;
-    for (int i = 0; i < rozmiar; ++i) 
+    for (int i = 0; i < rozmiar; i++)
     {
-        if (tablica[i].imie == wartosc)       //jezeli imie lub nazwisko osoby ktora wpisalismy sie zgadza to wyswietli jej dane
-        {                                                                       //a jezeli nie to powie ze nie znaleziono takiego obywatela
-            znaleziono = true;                                                  //funkcja przeszukuje cala tablice za pomoca petli
-            cout << "\nObywatel znaleziony!:" << endl;
-            cout << "\nImie: " << tablica[i].imie << endl;
-            cout << "Wiek: " << tablica[i].wiek << endl;
-        }
-    }
-    if (!znaleziono) {
-        cout << "Nie znaleziono obywatela o podanej wartości." << endl;
-    }
-}
-void wyszukajPoInt(obywatel tablica[], int rozmiar, int wartosc)                // Funkcja do wyszukiwania osoby w tablicy po wieku/wzroście
-{                 
-    bool znaleziono = false;
-    for (int i = 0; i < rozmiar; ++i) 
-    {
-        if (tablica[i].wiek == wartosc)         //dziala tak samo jak funkcja wyszukujaca dane osoby po imieniu i nazwisku ale wyszukuje 
-        {                                                                       //po wieku lub wzrosice, OBIE funkcje mozna rozdzielic na osobne dla wieku imienia nawziska i wzrostu
+        if (tablica[i].imie == imie)
+        {
             znaleziono = true;
-            cout << "\nObywatel znaleziony!" << endl;
-            cout << "\nDane obywatela:" << endl;
-            cout << "\nImie: " << tablica[i].imie << endl;
-            cout << "Wiek: " << tablica[i].wiek << endl;
-
+            cout << "Znaleziono: " << tablica[i].imie << ", " << tablica[i].wiek << " lat" << endl;
         }
     }
-    if (!znaleziono) {
-        cout << "Nie znaleziono obywatela z podaną wartością." << endl;
+    if (!znaleziono)
+    {
+        cout << "Nie znaleziono obywatela o tym imieniu." << endl;
     }
 }
-void usunDane(obywatel tablica[], int rozmiar)                  // Funkcja do usuwania danych z tablicy
+
+/********************************************************
+ * nazwa funkcji: szukajPoWieku
+ * opis funkcji: wypisuje wszystkich obywateli w podanym wieku
+ * parametry: tablica, rozmiar - dane, wiek - szukany wiek
+ * zwracany typ i opis: brak
+ * autor: <numer zdającego>
+ ********************************************************/
+void szukajPoWieku(Obywatel tablica[], int rozmiar, int wiek)
+{
+    bool znaleziono = false;
+    for (int i = 0; i < rozmiar; i++)
+    {
+        if (tablica[i].wiek == wiek)
+        {
+            znaleziono = true;
+            cout << "Znaleziono: " << tablica[i].imie << ", " << tablica[i].wiek << " lat" << endl;
+        }
+    }
+    if (!znaleziono)
+    {
+        cout << "Nie znaleziono obywatela w tym wieku." << endl;
+    }
+}
+
+/********************************************************
+ * nazwa funkcji: usunTablice
+ * opis funkcji: zwalnia pamiec tablicy utworzonej przez new[]
+ * parametry: tablica - tablica do usuniecia
+ * zwracany typ i opis: brak
+ * autor: <numer zdającego>
+ ********************************************************/
+void usunTablice(Obywatel tablica[])
 {
     delete[] tablica;
 }
-

@@ -7,54 +7,68 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-
 using namespace std;
 
-void selectionSort(int tablica[]) {
-    for (int i = 0; i < 9; i++) {
-        int min = i;
-        for (int j = i + 1; j < 10; j++) {
-            if (tablica[j] < tablica[min]) {
-                min = j;
+// Find the smallest element of the unsorted part and swap it to position i
+void sortowaniePrzezWybieranie(int tablica[], int n)
+{
+    for (int i = 0; i < n - 1; i++)
+    {
+        int indeksMin = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (tablica[j] < tablica[indeksMin])
+            {
+                indeksMin = j;
             }
         }
-        int temp = tablica[i];
-        tablica[i] = tablica[min];
-        tablica[min] = temp;
+        int pomocnicza = tablica[i];
+        tablica[i] = tablica[indeksMin];
+        tablica[indeksMin] = pomocnicza;
     }
 }
-int podzielnePrzezTrzy(int tabela[], int size) {
-  int liczbaPodzielnych{};
-  for (int i = 0; i < size; i++) {
-    if (tabela[i] % 3 == 0)
-      liczbaPodzielnych++;
-  }
-  return liczbaPodzielnych;
+
+int podzielnePrzezTrzy(int tablica[], int n)
+{
+    int liczbaPodzielnych = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (tablica[i] % 3 == 0)
+        {
+            liczbaPodzielnych++;
+        }
+    }
+    return liczbaPodzielnych;
 }
 
-int main() {
-    int tablica[10];
+void wypisz(int tablica[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        cout << tablica[i] << " ";
+    }
+    cout << endl;
+}
 
-    srand(time(NULL));
+int main()
+{
+    srand(time(0));
+    const int ROZMIAR = 10;
+    int tablica[ROZMIAR];
 
-    for (int i = 0; i < 10; ++i) {
+    for (int i = 0; i < ROZMIAR; i++)
+    {
         tablica[i] = rand() % 11 + 10;
     }
 
-    // Wypisanie zawartości tablicy przed sortowaniem
     cout << "Zawartosc tablicy przed sortowaniem: ";
-    for (int i = 0; i < 10; ++i) {
-        cout << tablica[i] << " ";
-    } 
-    cout << endl;
+    wypisz(tablica, ROZMIAR);
 
-    // Sortowanie tablicy
-    selectionSort(tablica);
+    sortowaniePrzezWybieranie(tablica, ROZMIAR);
 
-    // Wypisanie zawartości tablicy po sortowaniu
     cout << "Po sortowaniu: ";
-    for (int i = 0; i < 10; ++i) cout << tablica[i] << " ";
-    cout << endl << "Podzielnych przez 3: " << podzielnePrzezTrzy(tablica, 10) << endl;
+    wypisz(tablica, ROZMIAR);
+    cout << "Podzielnych przez 3: " << podzielnePrzezTrzy(tablica, ROZMIAR) << endl;
 
     return 0;
 }

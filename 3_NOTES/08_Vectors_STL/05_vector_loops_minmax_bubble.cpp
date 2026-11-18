@@ -1,66 +1,81 @@
 // ======================================================================
-// vector<int>(n), loops, manual min/max/sum/avg, bubble sort
+// vector<int> wektor(n) used like an array, everything in main:
+// for / while loops, min/max/sum/avg, bubble sort
 // Original file: Arrays/vectors/vectorsLoops.cpp
 // ======================================================================
 
 #include <iostream>
 #include <vector>
-#include <cstdlib> // For rand()
-#include <ctime>   // For time()
-#include <algorithm> // For sort()
-
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
-int main() {
-    srand(time(0)); // Seed for random numbers
+int main()
+{
+    srand(time(0));
 
     int n;
-    cout << "Enter number of elements: ";
-    cin >> n;
+    do
+    {
+        cout << "Enter number of elements (1-50): ";
+        cin >> n;
+    } while (n < 1 || n > 50);
 
-    vector<int> vec(n);
+    vector<int> wektor(n);      // n elements at once (all 0) - then use wektor[i] like an array
 
-    // Filling vector with random numbers
-    for (int i = 0; i < n; i++) {
-        vec[i] = rand() % 100; // Random number between 0-99
+    for (int i = 0; i < n; i++)
+    {
+        wektor[i] = rand() % 100;
     }
 
-    // Display the vector using a for loop
     cout << "Vector elements: ";
-    for (int i = 0; i < n; i++) {
-        cout << vec[i] << " ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << wektor[i] << " ";
     }
     cout << endl;
 
-    // Finding min and max values using loops
-    int minVal = vec[0], maxVal = vec[0], sum = 0;
-    for (int i = 0; i < n; i++) {
-        if (vec[i] < minVal) minVal = vec[i];
-        if (vec[i] > maxVal) maxVal = vec[i];
-        sum += vec[i];
+    int min = wektor[0];
+    int max = wektor[0];
+    int suma = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (wektor[i] < min)
+        {
+            min = wektor[i];
+        }
+        if (wektor[i] > max)
+        {
+            max = wektor[i];
+        }
+        suma = suma + wektor[i];
     }
-    double average = static_cast<double>(sum) / n;
+    double srednia = (double)suma / n;
 
-    cout << "Min: " << minVal << endl;
-    cout << "Max: " << maxVal << endl;
-    cout << "Sum: " << sum << endl;
-    cout << "Average: " << average << endl;
+    cout << "Min: " << min << endl;
+    cout << "Max: " << max << endl;
+    cout << "Sum: " << suma << endl;
+    cout << "Average: " << srednia << endl;
 
-    // Sorting the vector using bubble sort
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (vec[j] > vec[j + 1]) {
-                swap(vec[j], vec[j + 1]);
+    for (int i = 0; i < n - 1; i++)
+    {
+        for (int j = 0; j < n - i - 1; j++)
+        {
+            if (wektor[j] > wektor[j + 1])
+            {
+                int pomocnicza = wektor[j];
+                wektor[j] = wektor[j + 1];
+                wektor[j + 1] = pomocnicza;
             }
         }
     }
 
-    // Display sorted vector using a while loop
-    cout << "Sorted Vector: ";
-    int index = 0;
-    while (index < n) {
-        cout << vec[index] << " ";
-        index++;
+    cout << "Sorted vector (while loop): ";
+    int indeks = 0;
+    while (indeks < n)
+    {
+        cout << wektor[indeks] << " ";
+        indeks++;
     }
     cout << endl;
 

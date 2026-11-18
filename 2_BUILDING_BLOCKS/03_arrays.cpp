@@ -8,7 +8,6 @@
 // ======================================================================
 
 #include <iostream>
-#include <vector>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
@@ -22,10 +21,12 @@ using namespace std;
  * zwracany typ i opis: brak
  * autor: <numer zdającego>
  ********************************************************/
-void wyswietlTablice(const int tab[], int n)
+void wyswietlTablice(int tab[], int n)
 {
     for (int i = 0; i < n; i++)
+    {
         cout << i << ": " << tab[i] << endl;
+    }
 }
 
 //@ ARR-02 | display the array in one line, separated by spaces | <iostream>
@@ -37,10 +38,12 @@ void wyswietlTablice(const int tab[], int n)
  * zwracany typ i opis: brak
  * autor: <numer zdającego>
  ********************************************************/
-void wyswietlWLinii(const int tab[], int n)
+void wyswietlWLinii(int tab[], int n)
 {
     for (int i = 0; i < n; i++)
+    {
         cout << tab[i] << " ";
+    }
     cout << endl;
 }
 
@@ -53,11 +56,13 @@ void wyswietlWLinii(const int tab[], int n)
  * zwracany typ i opis: int - suma elementów
  * autor: <numer zdającego>
  ********************************************************/
-int suma(const int tab[], int n)
+int suma(int tab[], int n)
 {
     int s = 0;
     for (int i = 0; i < n; i++)
-        s += tab[i];
+    {
+        s = s + tab[i];
+    }
     return s;
 }
 
@@ -70,12 +75,17 @@ int suma(const int tab[], int n)
  * zwracany typ i opis: double - średnia elementów (0 dla pustej tablicy)
  * autor: <numer zdającego>
  ********************************************************/
-double srednia(const int tab[], int n)
+double srednia(int tab[], int n)
 {
-    if (n == 0) return 0;
+    if (n == 0)
+    {
+        return 0;
+    }
     int s = 0;
     for (int i = 0; i < n; i++)
-        s += tab[i];
+    {
+        s = s + tab[i];
+    }
     return (double)s / n;
 }
 
@@ -88,12 +98,16 @@ double srednia(const int tab[], int n)
  * zwracany typ i opis: int - najmniejsza wartość
  * autor: <numer zdającego>
  ********************************************************/
-int minimum(const int tab[], int n)
+int minimum(int tab[], int n)
 {
     int min = tab[0];
     for (int i = 1; i < n; i++)
+    {
         if (tab[i] < min)
+        {
             min = tab[i];
+        }
+    }
     return min;
 }
 
@@ -106,12 +120,16 @@ int minimum(const int tab[], int n)
  * zwracany typ i opis: int - największa wartość
  * autor: <numer zdającego>
  ********************************************************/
-int maksimum(const int tab[], int n)
+int maksimum(int tab[], int n)
 {
     int max = tab[0];
     for (int i = 1; i < n; i++)
+    {
         if (tab[i] > max)
+        {
             max = tab[i];
+        }
+    }
     return max;
 }
 
@@ -126,13 +144,20 @@ int maksimum(const int tab[], int n)
  * zwracany typ i opis: brak (wyniki przez parametry referencyjne min i max)
  * autor: <numer zdającego>
  ********************************************************/
-void znajdzEkstrema(const int tab[], int n, int &min, int &max)
+void znajdzEkstrema(int tab[], int n, int &min, int &max)
 {
-    min = max = tab[0];
+    min = tab[0];
+    max = tab[0];
     for (int i = 1; i < n; i++)
     {
-        if (tab[i] < min) min = tab[i];
-        if (tab[i] > max) max = tab[i];
+        if (tab[i] < min)
+        {
+            min = tab[i];
+        }
+        if (tab[i] > max)
+        {
+            max = tab[i];
+        }
     }
 }
 
@@ -145,12 +170,16 @@ void znajdzEkstrema(const int tab[], int n, int &min, int &max)
  * zwracany typ i opis: int - indeks najmniejszego elementu (pierwszego, jeśli jest ich kilka)
  * autor: <numer zdającego>
  ********************************************************/
-int indeksMinimum(const int tab[], int n)
+int indeksMinimum(int tab[], int n)
 {
     int indeks = 0;
     for (int i = 1; i < n; i++)
+    {
         if (tab[i] < tab[indeks])
+        {
             indeks = i;
+        }
+    }
     return indeks;
 }
 
@@ -163,12 +192,16 @@ int indeksMinimum(const int tab[], int n)
  * zwracany typ i opis: int - indeks największego elementu (pierwszego, jeśli jest ich kilka)
  * autor: <numer zdającego>
  ********************************************************/
-int indeksMaksimum(const int tab[], int n)
+int indeksMaksimum(int tab[], int n)
 {
     int indeks = 0;
     for (int i = 1; i < n; i++)
+    {
         if (tab[i] > tab[indeks])
+        {
             indeks = i;
+        }
+    }
     return indeks;
 }
 
@@ -181,11 +214,13 @@ int indeksMaksimum(const int tab[], int n)
  * zwracany typ i opis: long long - iloczyn elementów
  * autor: <numer zdającego>
  ********************************************************/
-long long iloczyn(const int tab[], int n)
+long long iloczyn(int tab[], int n)
 {
     long long wynik = 1;
     for (int i = 0; i < n; i++)
-        wynik *= tab[i];
+    {
+        wynik = wynik * tab[i];
+    }
     return wynik;
 }
 
@@ -199,7 +234,7 @@ long long iloczyn(const int tab[], int n)
  * zwracany typ i opis: int - liczba wartości podzielnych przez dzielnik
  * autor: <numer zdającego>
  ********************************************************/
-int wyswietlPodzielne(const int tab[], int n, int dzielnik)
+int wyswietlPodzielne(int tab[], int n, int dzielnik)
 {
     int ile = 0;
     for (int i = 0; i < n; i++)
@@ -223,12 +258,16 @@ int wyswietlPodzielne(const int tab[], int n, int dzielnik)
  * zwracany typ i opis: int - liczba elementów parzystych
  * autor: <numer zdającego>
  ********************************************************/
-int zliczParzyste(const int tab[], int n)
+int zliczParzyste(int tab[], int n)
 {
     int ile = 0;
     for (int i = 0; i < n; i++)
+    {
         if (tab[i] % 2 == 0)        // odd: != 0, bigger than x: tab[i] > x, ...
+        {
             ile++;
+        }
+    }
     return ile;
 }
 
@@ -242,34 +281,45 @@ int zliczParzyste(const int tab[], int n)
  * zwracany typ i opis: int - indeks znalezionego elementu lub -1, gdy go nie ma
  * autor: <numer zdającego>
  ********************************************************/
-int wyszukajPierwszy(const int tab[], int n, int szukana)
+int wyszukajPierwszy(int tab[], int n, int szukana)
 {
     for (int i = 0; i < n; i++)
+    {
         if (tab[i] == szukana)
+        {
             return i;
+        }
+    }
     return -1;
 }
 
-//@ ARR-14 | ALL occurrences: vector of indexes, or {-1} when not found (exam: "zwraca indeksy lub -1") | <vector>
+//@ ARR-14 | ALL occurrences: writes indexes into indeksy[], returns how many (0 -> print -1) (exam: "zwraca indeksy lub -1") | -
 /********************************************************
  * nazwa funkcji: wyszukajWszystkie
- * opis funkcji: wyszukuje wszystkie wystąpienia wartości w tablicy
+ * opis funkcji: wyszukuje wszystkie wystąpienia wartości w tablicy i zapisuje ich indeksy
+ *               w tablicy indeksy
  * parametry: tab - tablica liczb całkowitych
  *            n - liczba elementów tablicy
  *            szukana - szukana wartość
- * zwracany typ i opis: vector<int> - indeksy znalezionych elementów lub {-1}, gdy brak
+ *            indeksy - (wyjście) tablica na znalezione indeksy (rozmiar co najmniej n)
+ * zwracany typ i opis: int - liczba znalezionych indeksów (0 - brak, wtedy wypisujemy -1)
  * autor: <numer zdającego>
  ********************************************************/
-vector<int> wyszukajWszystkie(const int tab[], int n, int szukana)
+int wyszukajWszystkie(int tab[], int n, int szukana, int indeksy[])
 {
-    vector<int> indeksy;
+    int ile = 0;
     for (int i = 0; i < n; i++)
+    {
         if (tab[i] == szukana)
-            indeksy.push_back(i);
-    if (indeksy.empty())
-        indeksy.push_back(-1);
-    return indeksy;
+        {
+            indeksy[ile] = i;
+            ile++;
+        }
+    }
+    return ile;
 }
+// use:  int ile = wyszukajWszystkie(tab, n, 8, indeksy);
+//       if (ile == 0) { cout << -1; }  else  print indeksy[0] .. indeksy[ile - 1]
 
 //@ ARR-15 | how many times a value occurs | -
 /********************************************************
@@ -281,12 +331,16 @@ vector<int> wyszukajWszystkie(const int tab[], int n, int szukana)
  * zwracany typ i opis: int - liczba wystąpień
  * autor: <numer zdającego>
  ********************************************************/
-int zliczWystapienia(const int tab[], int n, int wartosc)
+int zliczWystapienia(int tab[], int n, int wartosc)
 {
     int ile = 0;
     for (int i = 0; i < n; i++)
+    {
         if (tab[i] == wartosc)
+        {
             ile++;
+        }
+    }
     return ile;
 }
 
@@ -306,8 +360,14 @@ int wyszukajZWartownikiem(int tab[], int n, int szukana)
     tab[n] = szukana;            // the sentinel
     int i = 0;
     while (tab[i] != szukana)
+    {
         i++;
-    return (i < n) ? i : -1;     // stopped on the sentinel -> not found
+    }
+    if (i == n)                  // stopped on the sentinel -> not found
+    {
+        return -1;
+    }
+    return i;
 }
 
 //@ ARR-17 | BINARY search - the array MUST be sorted ascending | -
@@ -320,20 +380,30 @@ int wyszukajZWartownikiem(int tab[], int n, int szukana)
  * zwracany typ i opis: int - indeks znalezionego elementu lub -1, gdy go nie ma
  * autor: <numer zdającego>
  ********************************************************/
-int wyszukajBinarnie(const int tab[], int n, int szukana)
+int wyszukajBinarnie(int tab[], int n, int szukana)
 {
-    int lewy = 0, prawy = n - 1;
+    int lewy = 0;
+    int prawy = n - 1;
     while (lewy <= prawy)
     {
         int srodek = (lewy + prawy) / 2;
-        if (tab[srodek] == szukana) return srodek;
-        if (tab[srodek] < szukana) lewy = srodek + 1;
-        else prawy = srodek - 1;
+        if (tab[srodek] == szukana)
+        {
+            return srodek;
+        }
+        if (tab[srodek] < szukana)
+        {
+            lewy = srodek + 1;
+        }
+        else
+        {
+            prawy = srodek - 1;
+        }
     }
     return -1;
 }
 
-//@ ARR-18 | reverse the array in place | <utility>
+//@ ARR-18 | reverse the array in place (manual swap) | -
 /********************************************************
  * nazwa funkcji: odwrocTablice
  * opis funkcji: odwraca kolejność elementów tablicy
@@ -345,28 +415,39 @@ int wyszukajBinarnie(const int tab[], int n, int szukana)
 void odwrocTablice(int tab[], int n)
 {
     for (int i = 0; i < n / 2; i++)
-        swap(tab[i], tab[n - 1 - i]);
+    {
+        int pomocnicza = tab[i];
+        tab[i] = tab[n - 1 - i];
+        tab[n - 1 - i] = pomocnicza;
+    }
 }
 
-//@ ARR-19 | histogram: how many times each value min..max occurs (e.g. dice faces 1..6) | <iostream> <vector>
+//@ ARR-19 | histogram: how many times each value min..max occurs (e.g. dice faces 1..6), prints it | <iostream>
 /********************************************************
  * nazwa funkcji: zliczKazdaWartosc
  * opis funkcji: zlicza wystąpienia każdej wartości z przedziału min..max i je wyświetla
  * parametry: tab - tablica liczb całkowitych z przedziału min..max
  *            n - liczba elementów tablicy
  *            min - najmniejsza możliwa wartość
- *            max - największa możliwa wartość
- * zwracany typ i opis: vector<int> - licznik[w - min] = liczba wystąpień wartości w
+ *            max - największa możliwa wartość (max - min < 100)
+ * zwracany typ i opis: brak
  * autor: <numer zdającego>
  ********************************************************/
-vector<int> zliczKazdaWartosc(const int tab[], int n, int min, int max)
+void zliczKazdaWartosc(int tab[], int n, int min, int max)
 {
-    vector<int> licznik(max - min + 1, 0);
+    int licznik[100];                    // licznik[w - min] = how many times w occurs
+    for (int i = 0; i <= max - min; i++)
+    {
+        licznik[i] = 0;
+    }
     for (int i = 0; i < n; i++)
+    {
         licznik[tab[i] - min]++;
+    }
     for (int w = min; w <= max; w++)
+    {
         cout << w << ": " << licznik[w - min] << endl;
-    return licznik;
+    }
 }
 
 //@ ARR-20 | is the array sorted ascending? | -
@@ -378,11 +459,15 @@ vector<int> zliczKazdaWartosc(const int tab[], int n, int min, int max)
  * zwracany typ i opis: bool - true, gdy tablica jest posortowana rosnąco
  * autor: <numer zdającego>
  ********************************************************/
-bool czyPosortowana(const int tab[], int n)
+bool czyPosortowana(int tab[], int n)
 {
     for (int i = 1; i < n; i++)
+    {
         if (tab[i - 1] > tab[i])
+        {
             return false;
+        }
+    }
     return true;
 }
 
@@ -398,9 +483,14 @@ bool czyPosortowana(const int tab[], int n)
  ********************************************************/
 void usunElement(int tab[], int &n, int indeks)
 {
-    if (indeks < 0 || indeks >= n) return;
+    if (indeks < 0 || indeks >= n)
+    {
+        return;
+    }
     for (int i = indeks; i < n - 1; i++)
+    {
         tab[i] = tab[i + 1];
+    }
     n--;
 }
 
@@ -419,7 +509,9 @@ int *utworzTabliceLosowa(int n, int min, int max)
 {
     int *tab = new int[n];
     for (int i = 0; i < n; i++)
+    {
         tab[i] = rand() % (max - min + 1) + min;
+    }
     return tab;
 }
 
@@ -443,7 +535,7 @@ void wypelnijIWyswietl2D(int tab[][KOLUMNY], int wiersze)
         for (int k = 0; k < KOLUMNY; k++)
         {
             tab[w][k] = rand() % 10;
-            sumaWiersza += tab[w][k];
+            sumaWiersza = sumaWiersza + tab[w][k];
             cout << tab[w][k] << "\t";
         }
         cout << "| suma: " << sumaWiersza << endl;
@@ -469,10 +561,20 @@ int main()
     cout << "podzielne przez 4: ";
     int ile = wyswietlPodzielne(tab, N, 4);
     cout << "ile: " << ile << ", parzystych: " << zliczParzyste(tab, N) << endl;
+
+    int indeksy[N];
     cout << "pierwsze 8 -> " << wyszukajPierwszy(tab, N, 8) << ", wszystkie 8 ->";
-    for (int i : wyszukajWszystkie(tab, N, 8)) cout << " " << i;
+    int ileIndeksow = wyszukajWszystkie(tab, N, 8, indeksy);
+    for (int i = 0; i < ileIndeksow; i++)
+    {
+        cout << " " << indeksy[i];
+    }
     cout << ", wszystkie 99 ->";
-    for (int i : wyszukajWszystkie(tab, N, 99)) cout << " " << i;
+    ileIndeksow = wyszukajWszystkie(tab, N, 99, indeksy);
+    if (ileIndeksow == 0)
+    {
+        cout << " -1";
+    }
     cout << endl << "8 wystepuje " << zliczWystapienia(tab, N, 8) << " razy, wartownik 23 -> "
          << wyszukajZWartownikiem(tab, N, 23) << ", wartownik 7 -> " << wyszukajZWartownikiem(tab, N, 7) << endl;
 

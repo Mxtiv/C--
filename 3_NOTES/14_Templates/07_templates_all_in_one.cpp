@@ -1,146 +1,82 @@
 // ======================================================================
-// function template + specs, class template with per-method specs, class specialization
-// Original file: unsorted/typename template/ultimate.cpp
+// ALL-IN-ONE summary: function template + specialization, class template
+// + one-method specialization + class specialization, explicit vs implicit
+// instantiation (konkretyzacja jawna / niejawna)
+// Original file: unsorted/typename template/ultimate.cpp (shortened)
 // ======================================================================
 
 #include <iostream>
 #include <cmath>
 using namespace std;
 
-// Ogólny szablon funkcji
+// ---------------- szablon funkcji ----------------
 template <typename T1, typename T2>
 T1 funkcja(T1 zmienna1, T2 zmienna2)
 {
-    cout << "Ogólny szablon\n";
+    cout << "Ogolny szablon - iloczyn: ";
     return zmienna1 * zmienna2;
 }
 
-// Specjalizacja dla int, float - oblicza potęgę
+// specjalizacja dla int, float - potega
 template <>
 int funkcja<int, float>(int zmienna1, float zmienna2)
 {
-    cout << "Specjalizacja int float - potęga\n";
-    return pow(zmienna1, zmienna2);
+    cout << "Specjalizacja int float - potega: ";
+    return (int)pow(zmienna1, zmienna2);
 }
 
-// Specjalizacja dla float, double - oblicza sumę
-template <>
-float funkcja<float, double>(float zmienna1, double zmienna2)
-{
-    cout << "Specjalizacja float double - suma\n";
-    return zmienna1 + zmienna2;
-}
+// konkretyzacja JAWNA funkcji: kompilator ma od razu zbudowac wersje double,double
+template double funkcja<double, double>(double zmienna1, double zmienna2);
 
-// Szablon klasy z ogólnym zachowaniem
+// ---------------- szablon klasy ----------------
 template <typename T1, typename T2>
 class SzablonKlasy
 {
 public:
-    T1 p1;
-    T2 p2; 
+    T1 pole1;
+    T2 pole2;
 
-    void display()
+    void wyswietl()
     {
-        cout << "Konkretyzacja\n";
+        cout << "Konkretyzacja" << endl;
     }
 };
 
-// Specjalizacja dla double, float - specyficzna wiadomość
+// specjalizacja jednej metody
 template <>
-void SzablonKlasy<double, float>::display()
+void SzablonKlasy<double, float>::wyswietl()
 {
-    cout << "Specjalizacja double float\n";
-};
+    cout << "Specjalizacja metody double float" << endl;
+}
 
-// Specjalizacja dla int, float - specyficzna wiadomość
+// specjalizacja calej klasy
 template <>
-void SzablonKlasy<int, float>::display()
-{
-    cout << "Specjalizacja int float\n";
-};
-
-// Szablon klasy prostokąta z obliczaniem pola i obwodu
-template <typename T1, typename T2>
-class Prostokat
-{ 
-public:
-    T1 bok1;
-    T2 bok2;
-
-    T2 pole()
-    {
-        return bok1 * bok2;
-    }
-
-    T2 obwod();
-};
-
-// Specjalizacja dla prostokąta double, int
-template <>
-class Prostokat<double, int>
+class SzablonKlasy<int, float>
 {
 public:
-    double bok1;
-    int bok2;
-
-    int obwod()
+    void wyswietl()
     {
-        cout << "Specjalizacja Prostokat double, int\n";
-        return 2 * bok1 + 2 * bok2;
-    }
-
-    int pole()
-    {
-        return bok1 * bok2;
+        cout << "Specjalizacja klasy int float" << endl;
     }
 };
 
-// Specjalizacja dla prostokąta int, double
-template <>
-class Prostokat<int, double>
-{
-public:
-    int bok1;
-    double bok2;
+// konkretyzacja JAWNA klasy
+template class SzablonKlasy<char, char>;
 
-    double obwod()
-    {
-        cout << "Specjalizacja Prostokat int, double\n";
-        return 2 * bok1 + 2 * bok2;
-    }
-
-    double pole()
-    {
-        return bok1 * bok2;
-    }
-};
-
-// Funkcja główna
 int main()
 {
-    // Testowanie wyspecjalizowanych funkcji szablonowych
-    cout << funkcja<int, float>(2, 3.0f) << endl;      // Specjalizacja dla int, float (potęga)
-    cout << funkcja<float, double>(4.0f, 3.0) << endl; // Specjalizacja dla float, double (suma)
-    cout << funkcja(2.0, 4.0) << endl;                 // Ogólny szablon (mnożenie)
+    cout << funkcja<int, float>(2, 3.0f) << endl;   // specjalizacja (wywolanie jawne)   -> 8
+    cout << funkcja(2, 3.0f) << endl;               // specjalizacja (wywolanie niejawne) -> 8
+    cout << funkcja(2.0, 4.0) << endl;              // konkretyzacja -> 8
 
-    // Testowanie wyspecjalizowanych klas szablonowych
-    SzablonKlasy<int, float> bob1;
-    bob1.display();  // Specjalizacja dla int, float
-
-    SzablonKlasy<double, float> bob2;
-    bob2.display();  // Specjalizacja dla double, float
-
-    SzablonKlasy<int, int> bob3;
-    bob3.display();  // Ogólne zachowanie szablonu
-
-    // Testowanie wyspecjalizowanych klas szablonowych prostokąta
-    Prostokat<double, int> prostokat1{1.1, 2};
-    cout << "Pole prostokąta: " << prostokat1.pole() << endl;   // 2.2
-    cout << "Obwód prostokąta: " << prostokat1.obwod() << endl; // 4.2
-
-    Prostokat<int, double> prostokat2{3, 2.5};
-    cout << "Pole prostokąta: " << prostokat2.pole() << endl;   // 7.5
-    cout << "Obwód prostokąta: " << prostokat2.obwod() << endl; // 11
+    SzablonKlasy<int, float> obiekt1;
+    obiekt1.wyswietl();                             // specjalizacja klasy
+    SzablonKlasy<double, float> obiekt2;
+    obiekt2.wyswietl();                             // specjalizacja metody
+    SzablonKlasy<int, int> obiekt3;
+    obiekt3.wyswietl();                             // konkretyzacja niejawna (przy tworzeniu obiektu)
+    SzablonKlasy<char, char> obiekt4;
+    obiekt4.wyswietl();                             // konkretyzacja jawna (linia template class ...)
 
     return 0;
 }

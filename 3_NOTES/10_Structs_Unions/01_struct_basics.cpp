@@ -1,117 +1,81 @@
 // ======================================================================
-// struct with method, aggregate init {}, dot / -> access, array of structs, pass by const&, return a struct
+// struct with a method, init with {}, dot / -> access, array of structs,
+// struct as a function parameter, returning a struct
 // Original file: Structs/basicsStructures.cpp
-// FIXED: displayPerson/createPerson were defined inside main - moved above main
+// FIXED: wyswietlOsobe/utworzOsobe were defined inside main - moved above main
 // ======================================================================
 
 #include <iostream>
 #include <string>
-
 using namespace std;
 
-// Define a basic structure called "Person"
-struct Person {
-    string name;   // Member variable to store the name
-    int age;       // Member variable to store the age
-    double height; // Member variable to store the height
+// A struct groups several values that belong together
+struct Osoba
+{
+    string imie;
+    int wiek;
+    double wzrost;
 
-    // A member function inside the structure to display data
-    void display() {
-        cout << "Name: " << name << endl;
-        cout << "Age: " << age << endl;
-        cout << "Height: " << height << " meters" << endl;
+    // A function inside the struct (method) - sees the fields directly
+    void wyswietl()
+    {
+        cout << "Name: " << imie << ", Age: " << wiek << ", Height: " << wzrost << " m" << endl;
     }
 };
 
-// Function to display the information of a person (passing by const reference - no copy, no changes)
-void displayPerson(const Person& p) {
-    cout << "Name: " << p.name << ", Age: " << p.age << ", Height: " << p.height << endl;
+// A normal function that gets a struct (by value - a copy, only read)
+void wyswietlOsobe(Osoba osoba)
+{
+    cout << osoba.imie << " (" << osoba.wiek << ")" << endl;
 }
 
-// Function to return a structure
-Person createPerson(string name, int age, double height) {
-    Person newPerson;
-    newPerson.name = name;
-    newPerson.age = age;
-    newPerson.height = height;
-    return newPerson;
+// A function can return a whole struct
+Osoba utworzOsobe(string imie, int wiek, double wzrost)
+{
+    Osoba nowa;
+    nowa.imie = imie;
+    nowa.wiek = wiek;
+    nowa.wzrost = wzrost;
+    return nowa;
 }
 
-int main() {
+int main()
+{
+    // ---------------- creating: field by field ----------------
+    Osoba osoba1;
+    osoba1.imie = "Alice";
+    osoba1.wiek = 30;
+    osoba1.wzrost = 1.75;
+    osoba1.wyswietl();
 
-    // ---------------- Creating and Initializing Structures ----------------
-    
-    // Initializing a structure directly
-    Person person1;
-    person1.name = "Alice";
-    person1.age = 30;
-    person1.height = 1.75;
+    // ---------------- creating: all fields at once, in order ----------------
+    Osoba osoba2 = {"Bob", 25, 1.80};
+    osoba2.wyswietl();
 
-    // Displaying the information using the member function
-    cout << "Person 1 Information:" << endl;
-    person1.display();  // Output: Name, Age, Height of person1
-    cout << endl;
+    // ---------------- reading fields with a dot ----------------
+    cout << "Person 1's name is: " << osoba1.imie << endl;
 
-    // Initializing structure with an aggregate initialization
-    Person person2 = {"Bob", 25, 1.80};
+    // ---------------- through a pointer: -> instead of . ----------------
+    Osoba *wskOsoba = &osoba1;
+    cout << "Pointer accessing Person 1's age: " << wskOsoba->wiek << endl;
 
-    // Displaying information of person2
-    cout << "Person 2 Information:" << endl;
-    person2.display();  // Output: Name, Age, Height of person2
-    cout << endl;
-
-    // ---------------- Accessing Members ----------------
-
-    // You can access members of a structure using dot notation
-    cout << "Person 1's name is: " << person1.name << endl;  // Alice
-    cout << "Person 2's age is: " << person2.age << endl;    // 25
-    cout << endl;
-
-    // ---------------- Pointers to Structures ----------------
-
-    // Using pointers to structures
-    Person* ptrPerson = &person1;
-
-    // Accessing members of a structure via pointer using '->'
-    cout << "Pointer accessing Person 1's name: " << ptrPerson->name << endl; // Alice
-    cout << "Pointer accessing Person 1's age: " << ptrPerson->age << endl;  // 30
-    cout << endl;
-
-    // ---------------- Arrays of Structures ----------------
-
-    // Creating an array of structures
-    Person people[3] = {
+    // ---------------- array of structs ----------------
+    const int ILE = 3;
+    Osoba ludzie[ILE] = {
         {"Charlie", 22, 1.85},
         {"David", 28, 1.78},
         {"Eva", 26, 1.65}
     };
-
-    // Looping through an array of structures
-    cout << "Array of People Information:" << endl;
-    for (int i = 0; i < 3; ++i) {
-        people[i].display();  // Displaying details of each person in the array
-        cout << endl;
+    cout << "Array of people:" << endl;
+    for (int i = 0; i < ILE; i++)
+    {
+        ludzie[i].wyswietl();
     }
 
-    // ---------------- Passing Structures to Functions ----------------
-
-    // displayPerson() is defined ABOVE main (functions cannot be defined inside main)
-
-    // Passing a structure to the function
-    displayPerson(person1);  // Output: Name, Age, Height of person1
-    displayPerson(person2);  // Output: Name, Age, Height of person2
-
-    // ---------------- Returning Structures from Functions ----------------
-
-    // createPerson() is defined ABOVE main
-
-    // Creating a new person using the function and storing it in a variable
-    Person person3 = createPerson("Fay", 31, 1.70);
-
-    // Displaying the new person details
-    cout << "New Person created:" << endl;
-    displayPerson(person3);  // Output: Name, Age, Height of person3
-    cout << endl;
+    // ---------------- struct to / from a function ----------------
+    wyswietlOsobe(osoba2);
+    Osoba osoba3 = utworzOsobe("Fay", 31, 1.70);
+    wyswietlOsobe(osoba3);
 
     return 0;
 }

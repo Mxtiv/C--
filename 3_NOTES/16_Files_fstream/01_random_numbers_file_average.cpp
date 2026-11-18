@@ -1,104 +1,120 @@
 // ======================================================================
-// ofstream write, if(!plik) check, while(plik >> x) count, read into new int[], average
+// ofstream write, if (!plik) check, while (plik >> x) read into an array, average
 // Original file: Libraries/ReadingFiles/maksik.cpp
 // FIXED: removed the extra srand() calls inside the loop (srand once is enough)
 // ======================================================================
 
-#include <fstream>
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 #include <ctime>
-
 using namespace std;
 
-void wypisz(int numery[], int rozmiar)
-{
-    for (int i = 0; i < rozmiar; i++)
-    {
-        cout << numery[i] << " ";
-    }
-    cout << endl;
-}
+const int ROZMIAR = 100;
 
-void randomNumbersToFile(int n, int minVal, int maxVal)
+/********************************************************
+ * nazwa funkcji: zapiszLosoweDoPliku
+ * opis funkcji: zapisuje n losowych liczb z zakresu min..max do pliku
+ * parametry: n - ile liczb, min - najmniejsza, max - najwieksza
+ * zwracany typ i opis: brak
+ * autor: <numer zdającego>
+ ********************************************************/
+void zapiszLosoweDoPliku(int n, int min, int max)
 {
-    ofstream plik("wyjscie.txt");
-    if (!plik)
+    ofstream plik("wyjscie.txt");       // ofstream = zapis, tworzy / nadpisuje plik
+    if (!plik)                          // ZAWSZE sprawdz, czy plik sie otworzyl
     {
-        cerr << "Error opening the file for writing." << endl;
+        cout << "Nie mozna otworzyc pliku do zapisu" << endl;
         return;
     }
 
-    srand(time(NULL));
-    plik << rand() % (maxVal - minVal + 1) + minVal;
-    for (int i = 1; i < n; i++)
-    {
-        plik << " " << rand() % (maxVal - minVal + 1) + minVal;
-    }
-}
-
-int fileSize()
-{
-    ifstream plik("wyjscie.txt");
-    int i = 0;
-    int fromFile;
-    while (plik >> fromFile)
-    {
-        i++;
-    }
-    return i;
-}
-
-int *fileToArray(int n)
-{
-    int *arr = new int[n];
-    ifstream plik("wyjscie.txt");
-    int fromFile;
     for (int i = 0; i < n; i++)
     {
-        plik >> fromFile;
-        arr[i] = fromFile;
+        int liczba = rand() % (max - min + 1) + min;
+        plik << liczba << " ";
     }
-    return arr;
+    plik.close();
 }
 
-double averageFromArray(const int arr[], int size)
+/********************************************************
+ * nazwa funkcji: wczytajZPliku
+ * opis funkcji: wczytuje liczby z pliku do tablicy
+ * parametry: tab - tablica na liczby
+ * zwracany typ i opis: int - ile liczb wczytano
+ * autor: <numer zdającego>
+ ********************************************************/
+int wczytajZPliku(int tab[])
 {
-    double sum = 0;
-    for (int i = 0; i < size; i++)
+    ifstream plik("wyjscie.txt");       // ifstream = odczyt
+    if (!plik)
     {
-        sum += arr[i];
+        cout << "Nie mozna otworzyc pliku do odczytu" << endl;
+        return 0;
     }
-    return sum / static_cast<double>(size);
+
+    int ile = 0;
+    int liczba;
+    while (ile < ROZMIAR && plik >> liczba)   // poprawna petla - konczy sie dokladnie na koncu danych
+    {
+        tab[ile] = liczba;
+        ile++;
+    }
+    plik.close();
+    return ile;
+}
+
+/********************************************************
+ * nazwa funkcji: srednia
+ * opis funkcji: liczy srednia arytmetyczna elementow tablicy
+ * parametry: tab - tablica liczb, n - liczba elementow
+ * zwracany typ i opis: double - srednia (0 dla pustej tablicy)
+ * autor: <numer zdającego>
+ ********************************************************/
+double srednia(int tab[], int n)
+{
+    if (n == 0)
+    {
+        return 0;
+    }
+
+    int suma = 0;
+    for (int i = 0; i < n; i++)
+    {
+        suma = suma + tab[i];
+    }
+    return (double)suma / n;
 }
 
 int main()
 {
-    int numCount, minVal, maxVal;
-    cout << "Enter the number of random numbers to generate: ";
-    cin >> numCount;
-    cout << "Enter the minimum value: ";
-    cin >> minVal;
-    cout << "Enter the maximum value: ";
-    cin >> maxVal;
+    srand(time(0));
 
-    randomNumbersToFile(numCount, minVal, maxVal);
-
-    int size = fileSize();
-    int *arr = fileToArray(size);
-    cout << "Numbers from the file: ";
-    wypisz(arr, size);
-
-    double average = averageFromArray(arr, size);
-    cout << "Average: " << average << endl;
-
-    int sum = 0;
-    for (int i = 0; i < size; i++)
+    int ileLiczb, min, max;
+    do
     {
-        sum += arr[i];
-    }
-    cout << "Sum of elements: " << sum << endl;
+        cout << "Ile liczb wylosowac (1-100): ";
+        cin >> ileLiczb;
+    } while (ileLiczb < 1 || ileLiczb > ROZMIAR);
+    cout << "Podaj minimum: ";
+    cin >> min;
+    do
+    {
+        cout << "Podaj maksimum (>= minimum): ";
+        cin >> max;
+    } while (max < min);
 
-    delete[] arr;
+    zapiszLosoweDoPliku(ileLiczb, min, max);
+
+    int liczby[ROZMIAR];
+    int ile = wczytajZPliku(liczby);
+
+    cout << "Liczby z pliku: ";
+    for (int i = 0; i < ile; i++)
+    {
+        cout << liczby[i] << " ";
+    }
+    cout << endl;
+    cout << "Srednia: " << srednia(liczby, ile) << endl;
+
     return 0;
 }

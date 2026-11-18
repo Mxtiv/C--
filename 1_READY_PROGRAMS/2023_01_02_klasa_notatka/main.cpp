@@ -28,12 +28,12 @@ protected:                      // dostępne dla klas potomnych
     string tresc;
 
 public:
-    Notatka(string tytul, string tresc)
+    Notatka(string nowyTytul, string nowaTresc)
     {
         licznikNotatek++;               // najpierw licznik...
         id = licznikNotatek;            // ...potem id = licznik (1, 2, 3...)
-        this->tytul = tytul;
-        this->tresc = tresc;
+        tytul = nowyTytul;
+        tresc = nowaTresc;
     }
 
     void wyswietl()

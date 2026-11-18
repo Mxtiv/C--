@@ -1,137 +1,135 @@
 // ======================================================================
-// switch menu: getline into char[], strcat, strcmp, strstr + position (ptr - base), strcpy
+// switch menu: cin.getline into char[], strcat, strcmp, strstr + position (ptr - base), strcpy
 // Original file: unsorted/Cstrings/cstringExcerciseExamples.cpp
+// FIXED: option 6 cut off everything after the replaced fragment - now the rest is kept
 // ======================================================================
 
 #include <iostream>
 #include <cstring>
 using namespace std;
 
-// Function to ask for car information
-void askForCarInfo()
+const int DLUGOSC = 100;
+
+void informacjeOSamochodzie()
 {
-    char brand[30], model[30], year[30];
+    char marka[DLUGOSC];
+    char model[DLUGOSC];
+    char rok[DLUGOSC];
 
     cout << "Enter the brand of the car: ";
-    cin.getline(brand, 30);
-
+    cin.getline(marka, DLUGOSC);
     cout << "Enter the model of the car: ";
-    cin.getline(model, 30);
-
+    cin.getline(model, DLUGOSC);
     cout << "Enter the production year of the car: ";
-    cin.getline(year, 30);
+    cin.getline(rok, DLUGOSC);
 
-    cout << "Brand: " << brand << endl;
+    cout << "Brand: " << marka << endl;
     cout << "Model: " << model << endl;
-    cout << "Production Year: " << year << endl;
+    cout << "Production Year: " << rok << endl;
 }
 
-// Function to concatenate strings
-void concatenateStrings()
+void polaczNapisy()
 {
-    char string1[30], string2[30], string3[30];
+    char napis1[3 * DLUGOSC];       // big enough for all three
+    char napis2[DLUGOSC];
+    char napis3[DLUGOSC];
 
     cout << "Enter first string: ";
-    cin.getline(string1, 30);
-
+    cin.getline(napis1, DLUGOSC);
     cout << "Enter second string: ";
-    cin.getline(string2, 30);
-
+    cin.getline(napis2, DLUGOSC);
     cout << "Enter third string: ";
-    cin.getline(string3, 30);
+    cin.getline(napis3, DLUGOSC);
 
-    strcat(string1, " ");
-    strcat(string1, string2);
-    strcat(string1, " ");
-    strcat(string1, string3);
+    strcat(napis1, " ");
+    strcat(napis1, napis2);
+    strcat(napis1, " ");
+    strcat(napis1, napis3);
 
-    cout << "Concatenated string: " << string1 << endl;
+    cout << "Concatenated string: " << napis1 << endl;
 }
 
-// Function to compare strings
-void compareStrings()
+void porownajNapisy()
 {
-    char text1[30], text2[30];
+    char tekst1[DLUGOSC];
+    char tekst2[DLUGOSC];
 
     cout << "Enter first string: ";
-    cin.getline(text1, 30);
-
+    cin.getline(tekst1, DLUGOSC);
     cout << "Enter second string: ";
-    cin.getline(text2, 30);
+    cin.getline(tekst2, DLUGOSC);
 
-    cout << "Are the strings identical? ";
-    if (strcmp(text1, text2) == 0)
+    if (strcmp(tekst1, tekst2) == 0)
     {
-        cout << "Yes" << endl;
+        cout << "The strings are identical" << endl;
     }
     else
     {
-        cout << "No" << endl;
+        cout << "The strings are different" << endl;
     }
 }
 
-// Function to find substring
-void findSubstring()
+void znajdzFragment()
 {
-    char check1[30], check2[30];
+    char szukany[DLUGOSC];
+    char tekst[DLUGOSC];
 
     cout << "Enter substring to find: ";
-    cin.getline(check1, 30);
-
+    cin.getline(szukany, DLUGOSC);
     cout << "Enter string to search in: ";
-    cin.getline(check2, 30);
+    cin.getline(tekst, DLUGOSC);
 
-    if (strstr(check2, check1) == nullptr)
+    char *gdzie = strstr(tekst, szukany);     // pointer to the match or NULL
+    if (gdzie == NULL)
     {
-        cout << "\"" << check1 << "\" is not a substring of \"" << check2 << "\"" << endl;
+        cout << "\"" << szukany << "\" is not a substring of \"" << tekst << "\"" << endl;
     }
     else
     {
-        cout << "The substring \"" << check1 << "\" is found in \"" << check2
-             << "\" starting from position " << strstr(check2, check1) - check2 << endl;
+        // index = pointer to the match - pointer to the start
+        cout << "\"" << szukany << "\" found at position " << gdzie - tekst << endl;
     }
 }
 
-// Function to ask for a city name
-void askForCityName()
+void podajMiasto()
 {
-    char cityName[30];
-
+    char miasto[DLUGOSC];
     cout << "Enter the name of the city: ";
-    cin.getline(cityName, 30);
-    cout << "City: " << cityName << endl;
+    cin.getline(miasto, DLUGOSC);
+    cout << "City: " << miasto << endl;
 }
 
-// Function to modify strings
-void modifyStrings()
+void zamienFragment()
 {
-    char replace1[30], replace2[30], replace3[30];
+    char tekst[2 * DLUGOSC];
+    char stary[DLUGOSC];
+    char nowy[DLUGOSC];
+    char reszta[2 * DLUGOSC];
 
     cout << "Enter the original string: ";
-    cin.getline(replace1, 30);
-
+    cin.getline(tekst, DLUGOSC);
     cout << "Enter the substring to replace: ";
-    cin.getline(replace2, 30);
-
+    cin.getline(stary, DLUGOSC);
     cout << "Enter the new substring: ";
-    cin.getline(replace3, 30);
+    cin.getline(nowy, DLUGOSC);
 
-    char *pos = strstr(replace1, replace2);
-    if (pos != nullptr)
+    char *gdzie = strstr(tekst, stary);
+    if (gdzie != NULL)
     {
-        strcpy(pos, replace3);
-        cout << "Modified string: " << replace1 << endl;
+        strcpy(reszta, gdzie + strlen(stary));   // 1) remember what is AFTER the old fragment
+        strcpy(gdzie, nowy);                     // 2) write the new fragment over the old one
+        strcat(tekst, reszta);                   // 3) add the remembered rest back
+        cout << "Modified string: " << tekst << endl;
     }
     else
     {
-        cout << "\"" << replace2 << "\" not found in the original string." << endl;
+        cout << "\"" << stary << "\" not found in the original string." << endl;
     }
 }
 
 int main()
 {
-    int choice;
-
+    int wybor;
     do
     {
         cout << "\n*** MENU ***" << endl;
@@ -143,37 +141,37 @@ int main()
         cout << "6. Modify a string by replacing a substring" << endl;
         cout << "0. Exit" << endl;
         cout << "Enter your choice: ";
-        cin >> choice;
+        cin >> wybor;
+        cin.ignore();           // remove the Enter before cin.getline
 
-        cin.ignore(); // Clear the input buffer
-
-        switch (choice)
+        switch (wybor)
         {
         case 1:
-            askForCarInfo();
+            informacjeOSamochodzie();
             break;
         case 2:
-            concatenateStrings();
+            polaczNapisy();
             break;
         case 3:
-            compareStrings();
+            porownajNapisy();
             break;
         case 4:
-            findSubstring();
+            znajdzFragment();
             break;
         case 5:
-            askForCityName();
+            podajMiasto();
             break;
         case 6:
-            modifyStrings();
+            zamienFragment();
             break;
         case 0:
             cout << "Exiting..." << endl;
             break;
         default:
             cout << "Invalid choice. Please enter a number from the menu." << endl;
+            break;
         }
-    } while (choice != 0);
+    } while (wybor != 0);
 
     return 0;
 }

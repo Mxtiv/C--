@@ -1,142 +1,120 @@
 // ======================================================================
-// composition (not a singleton): Library holds Book* array, new/delete in destructor, const getters
+// Composition (kompozycja): class Biblioteka HAS books - an array of
+// Ksiazka* created with new and freed with delete in the destructor.
+// (despite the original file name, this is not a singleton)
 // Original file: Singleton/librarySingleton.cpp
 // ======================================================================
 
 #include <iostream>
 #include <string>
 using namespace std;
-const int MAX_BOOKS = 10; // Maximum number of books in the library
 
-// Book class
-class Book
+const int MAX_KSIAZEK = 10;
+
+class Ksiazka
 {
 private:
-    string title;
-    string author;
-    bool isCheckedOut;
+    string tytul;
+    string autor;
+    bool wypozyczona;
 
 public:
-    // Constructor
-    Book(const string &title, const string &author)
-        : title(title), author(author), isCheckedOut(false) {}
-
-    // Simple getter methods
-    string getTitle() const { return title; }
-    string getAuthor() const { return author; }
-    bool isCheckedOutStatus() const { return isCheckedOut; }
-
-    // Method to check out a book
-    void checkOut()
+    Ksiazka(string nowyTytul, string nowyAutor)
     {
-        if (!isCheckedOut)
+        tytul = nowyTytul;
+        autor = nowyAutor;
+        wypozyczona = false;
+    }
+
+    void wypozycz()
+    {
+        if (wypozyczona == false)
         {
-            isCheckedOut = true;
-            cout << "Book \"" << title << "\" checked out successfully.\n";
+            wypozyczona = true;
+            cout << "Wypozyczono: " << tytul << endl;
         }
         else
         {
-            cout << "Book \"" << title << "\" is already checked out.\n";
+            cout << "Juz wypozyczona: " << tytul << endl;
         }
     }
 
-    // Method to return a book
-    void returnBook()
+    void wypisz()
     {
-        if (isCheckedOut)
+        cout << tytul << " - " << autor;
+        if (wypozyczona)
         {
-            isCheckedOut = false;
-            cout << "Book \"" << title << "\" returned successfully.\n";
+            cout << " [wypozyczona]" << endl;
         }
         else
         {
-            cout << "Book \"" << title << "\" was not checked out.\n";
+            cout << " [dostepna]" << endl;
         }
     }
 };
 
-// Library class that holds books
-class Library
+class Biblioteka
 {
 private:
-    Book *books[MAX_BOOKS]; // Array of Book pointers
-    int currentBookCount;
+    Ksiazka *ksiazki[MAX_KSIAZEK];   // tablica wskaźników na książki
+    int ile;                         // ile książek naprawdę jest
 
 public:
-    // Constructor
-    Library() : currentBookCount(0) {}
-
-    // Method to add a new book to the library
-    void addBook(const string &title, const string &author)
+    Biblioteka()
     {
-        if (currentBookCount < MAX_BOOKS)
+        ile = 0;
+    }
+
+    // destruktor sprząta to, co utworzyło new
+    ~Biblioteka()
+    {
+        for (int i = 0; i < ile; i++)
         {
-            books[currentBookCount] = new Book(title, author);
-            currentBookCount++;
+            delete ksiazki[i];
+        }
+    }
+
+    void dodaj(string tytul, string autor)
+    {
+        if (ile < MAX_KSIAZEK)
+        {
+            ksiazki[ile] = new Ksiazka(tytul, autor);
+            ile++;
         }
         else
         {
-            cout << "Library is full! Cannot add more books.\n";
+            cout << "Biblioteka pelna!" << endl;
         }
     }
 
-    // Method to display all books in the library
-    void displayBooks() const
+    void wypozycz(int numer)
     {
-        cout << "Library Collection:\n";
-        for (int i = 0; i < currentBookCount; ++i)
+        if (numer >= 0 && numer < ile)
         {
-            cout << "Title: " << books[i]->getTitle() << ", Author: " << books[i]->getAuthor();
-            cout << (books[i]->isCheckedOutStatus() ? " [Checked Out]" : " [Available]") << "\n";
+            ksiazki[numer]->wypozycz();
         }
     }
-    // Destructor to clean up dynamically allocated memory
-    ~Library()
+
+    void wypisz()
     {
-        for (int i = 0; i < currentBookCount; ++i)
+        for (int i = 0; i < ile; i++)
         {
-            delete books[i]; // Free the dynamically allocated books
+            cout << i << ". ";
+            ksiazki[i]->wypisz();
         }
     }
 };
 
-// LibrarySystem class to handle all library operations
-class LibrarySystem
-{
-private:
-    Library library;
-
-public:
-    // Constructor
-    LibrarySystem() {}
-
-    // Method to register a book in the library
-    void registerBook(const string &title, const string &author) // explain to me so i understand why is it written like &this
-    {
-        library.addBook(title, author);
-    }
-
-    // Method to show all books
-    void showAllBooks()
-    {
-        library.displayBooks();
-    }
-
-};
-
-// Main function to interact with the library system
 int main()
 {
-    // Create library system
-    LibrarySystem system;
+    Biblioteka biblioteka;
+    biblioteka.dodaj("Rok 1984", "George Orwell");
+    biblioteka.dodaj("Lalka", "Boleslaw Prus");
+    biblioteka.dodaj("Pan Tadeusz", "Adam Mickiewicz");
 
-    // Register some books
-    system.registerBook("1984", "George Orwell");
-    system.registerBook("To Kill a Mockingbird", "Harper Lee");
-    system.registerBook("The Great Gatsby", "F. Scott Fitzgerald");
-
-    // Show all books in the library
-    system.showAllBooks();
+    biblioteka.wypozycz(1);
+    biblioteka.wypozycz(1);
+    biblioteka.wypisz();
 
     return 0;
-}
+}   // tu destruktor Biblioteki usuwa książki

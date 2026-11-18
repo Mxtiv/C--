@@ -4,18 +4,24 @@
 // ======================================================================
 
 #include <iostream>
-#include <string>
 using namespace std;
 
 class Bazowa
 {
-public:
+protected:
     int wartosc;
 
-    void display()
+public:
+    Bazowa()
     {
-        cout<<wartosc<<endl;
+        wartosc = 1;
     }
+
+    void wyswietl()
+    {
+        cout << "Bazowa, wartosc = " << wartosc << endl;
+    }
+
     void powieksz()
     {
         wartosc++;
@@ -24,31 +30,30 @@ public:
 
 class Pochodna : public Bazowa
 {
-public:  
-    void display()
+public:
+    // REDEFINICJA (przesloniecie) - ta sama nazwa i parametry co w bazie.
+    // Bez virtual: ktora wersja sie wywola, zalezy od TYPU OBIEKTU w kodzie.
+    void wyswietl()
     {
-        cout<<wartosc<<endl;
+        cout << "Pochodna, wartosc = " << wartosc << endl;
     }
+
     void powieksz()
     {
-        wartosc += 2;
+        wartosc = wartosc + 2;
     }
 };
-
 
 int main()
 {
     Bazowa bazowa;
     Pochodna pochodna;
 
-    bazowa.wartosc=1;
-    pochodna.wartosc=1;
-    bazowa.powieksz();
-    
-    pochodna.powieksz();
+    bazowa.powieksz();          // Bazowa::powieksz  -> 2
+    pochodna.powieksz();        // Pochodna::powieksz -> 3
 
-    bazowa.display();
-    pochodna.display();
-
+    bazowa.wyswietl();
+    pochodna.wyswietl();
+    pochodna.Bazowa::wyswietl();    // wersja z bazy mozna wywolac jawnie
     return 0;
 }

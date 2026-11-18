@@ -1,58 +1,64 @@
 // ======================================================================
-// combine chosen digits: result += s.substr(pos,1); stoi
+// combine chosen digits: wynik = wynik + tekst.substr(pozycja, 1); stoi
 // Original file: unsorted/sprawdzian/MATTHEW2.cpp
 // ======================================================================
 
 #include <iostream>
 #include <string>
+using namespace std;
 
-class StringDivider {
-    std::string numberString;  // Przechowuje 15-cyfrowy string
+class DzielnikNapisu
+{
+private:
+    string cyfry;   // Przechowuje 15-cyfrowy string
 
 public:
     // Konstruktor przyjmujący 15-cyfrowy string
-    StringDivider(const std::string& input) : numberString(input) {
-        if (input.length() != 15) {
-            std::cerr << "String musi mieć dokładnie 15 cyfr!" << std::endl;
-            exit(1);
+    DzielnikNapisu(string napis)
+    {
+        if (napis.length() != 15)
+        {
+            cout << "String musi mieć dokładnie 15 cyfr! Uzywam samych zer." << endl;
+            napis = "000000000000000";
         }
+        cyfry = napis;
     }
 
-    // Publiczna metoda przyjmująca tablicę pozycji cyfr i zwracająca połączone cyfry jako int
-    int getCombined(int positions[], int size) {
-        std::string result;
-
-        // Łączenie cyfr na podstawie wybranych pozycji z tablicy
-        for (int i = 0; i < size; ++i) {
-            int pos = positions[i];
-            if (pos >= 0 && pos < numberString.length()) {
-                result += numberString.substr(pos, 1);  // Pobieranie jednej cyfry
-            } else {
-                std::cerr << "Pozycja " << pos << " poza zakresem!" << std::endl;
-                exit(1);
+    // Przyjmuje tablicę pozycji cyfr i zwraca połączone cyfry jako int
+    int polaczone(int pozycje[], int ile)
+    {
+        string wynik = "";
+        for (int i = 0; i < ile; i++)
+        {
+            int pozycja = pozycje[i];
+            if (pozycja >= 0 && pozycja < cyfry.length())
+            {
+                wynik = wynik + cyfry.substr(pozycja, 1);   // pobranie jednej cyfry
+            }
+            else
+            {
+                cout << "Pozycja " << pozycja << " poza zakresem!" << endl;
             }
         }
-
-        return std::stoi(result);  // Konwersja połączonych cyfr na int
+        if (wynik == "")
+        {
+            return 0;
+        }
+        return stoi(wynik);   // konwersja połączonych cyfr na int
     }
 };
 
-int main() {
-    StringDivider divider("123456789012345");  // Przykładowy 15-cyfrowy string
+int main()
+{
+    DzielnikNapisu dzielnik("123456789012345");   // przykładowy 15-cyfrowy string
 
-    // Przykład łączenia cyfr: 4. i 15. cyfra
-    int positions1[] = {3, 14};  // Tablica pozycji
-    int size1 = sizeof(positions1) / sizeof(positions1[0]);  // Rozmiar tablicy
-    int combined1 = divider.getCombined(positions1, size1);
+    // 4. i 15. cyfra
+    int pozycje1[2] = {3, 14};
+    cout << "Połączone cyfry z pozycji 4 i 15: " << dzielnik.polaczone(pozycje1, 2) << endl;
 
-    std::cout << "Połączone cyfry z pozycji 4 i 15: " << combined1 << std::endl;
-
-    // Przykład łączenia większej liczby cyfr: 1., 2., 5. i 10. cyfra
-    int positions2[] = {0, 1, 4, 9};  // Inna tablica pozycji
-    int size2 = sizeof(positions2) / sizeof(positions2[0]);  // Rozmiar tablicy
-    int combined2 = divider.getCombined(positions2, size2);
-
-    std::cout << "Połączone cyfry z pozycji 1, 2, 5 i 10: " << combined2 << std::endl;
+    // 1., 2., 5. i 10. cyfra
+    int pozycje2[4] = {0, 1, 4, 9};
+    cout << "Połączone cyfry z pozycji 1, 2, 5 i 10: " << dzielnik.polaczone(pozycje2, 4) << endl;
 
     return 0;
 }

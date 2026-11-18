@@ -33,14 +33,14 @@ public:
         liczbaOsob++;
     }
 
-    Osoba(int id, string imie)
+    Osoba(int noweId, string noweImie)
     {
-        this->id = id;
-        this->imie = imie;
+        id = noweId;
+        imie = noweImie;
         liczbaOsob++;
     }
 
-    Osoba(const Osoba &inna)
+    Osoba(Osoba &inna)                 // konstruktor kopiujący
     {
         id = inna.id;
         imie = inna.imie;

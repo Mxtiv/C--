@@ -1,74 +1,102 @@
 // ======================================================================
-// Point: 3 ctors, reflect, move, distance to a line, point symmetry, const getters, static method
+// Punkt: constructors, reflect, move, point symmetry, distance to a line,
+// static method (called as Punkt::odleglosc(p1, p2), no object needed).
 // Original file: unsorted/calculations/diagramOdbicia.cpp
 // ======================================================================
 
 #include <iostream>
 #include <cmath>
+using namespace std;
 
-class Point {
+class Punkt
+{
 private:
-    float x, y;
+    double x;
+    double y;
 
 public:
-    Point() : x(0), y(0) {} // konstruktor bezparametryczny
+    Punkt()
+    {
+        x = 0;
+        y = 0;
+    }
 
-    Point(float xVal, float yVal) : x{xVal}, y{yVal} {} // konstruktor parametryczny
+    Punkt(double noweX, double noweY)
+    {
+        x = noweX;
+        y = noweY;
+    }
 
-    Point(const Point &copied) : x{copied.x}, y{copied.y} {} // konstruktor kopiujący
+    double getX()
+    {
+        return x;
+    }
 
-    void odbijX() { // odbicie względem X
+    double getY()
+    {
+        return y;
+    }
+
+    void odbijWzgledemX()
+    {
         y = -y;
     }
-    void odbijY() { // odbicię względem Y
+
+    void odbijWzgledemY()
+    {
         x = -x;
     }
 
-    void przesun(float dx, float dy) { // przesunięcie
-        x += dx;
-        y += dy;
+    void przesun(double dx, double dy)
+    {
+        x = x + dx;
+        y = y + dy;
     }
 
-    float odlegloscOdProstej(float A, float B, float C) const { // dystans od prostej
-        return std::fabs(A * x + B * y + C) / std::sqrt(A * A + B * B);
-    }
-
-    void symetriaPunkt(float px, float py) { // odbicie lustrzane względem podanych koordynat
+    // symetria względem punktu (px, py)
+    void symetriaWzgledemPunktu(double px, double py)
+    {
         x = 2 * px - x;
         y = 2 * py - y;
     }
 
-    void wyswietl() const { // wyświetlanei
-        std::cout << "Point(" << x << ", " << y << ")" << std::endl;
+    // odległość od prostej Ax + By + C = 0
+    double odlegloscOdProstej(double a, double b, double c)
+    {
+        return fabs(a * x + b * y + c) / sqrt(a * a + b * b);
     }
 
-    float getX() const { return x; } // getters
-    float getY() const { return y; }
+    void wypisz()
+    {
+        cout << "(" << x << ", " << y << ")" << endl;
+    }
 
-    // obliczanie odległości
-    static float odlegloscPunktow(const Point& p1, const Point& p2) { // distance between points
-        return std::sqrt(std::pow(p2.getX() - p1.getX(), 2) + std::pow(p2.getY() - p1.getY(), 2));
+    // metoda statyczna - nie ma "swojego" obiektu, dostaje oba punkty
+    static double odleglosc(Punkt p1, Punkt p2)
+    {
+        double dx = p2.x - p1.x;
+        double dy = p2.y - p1.y;
+        return sqrt(dx * dx + dy * dy);
     }
 };
 
-int main() {
-    // ustalenie wartości p1
-    Point p1{3, 4};
-    p1.wyswietl(); // (1) p1
-    // konstruktor kopiujący w użyciu
-    Point p2 = p1;
-    p2.wyswietl(); // (2) p2 przyjmuje wartość p1
-    // metody klasy
+int main()
+{
+    Punkt p1(3, 4);
+    Punkt p2 = p1;            // kopia
+    p1.wypisz();
+
     p1.przesun(1, -2);
-    p1.wyswietl(); // (3) p1 przesunięty o podane wartości
-    p1.odbijX();
-    p1.wyswietl();  // (4) p1 odbity względem X
-    p1.odbijY();
-    p1.wyswietl(); // (5) p1 odbity względem Y
-    std::cout << "Dystans P1 od prostej: " << p1.odlegloscOdProstej(2, 3, 1) << std::endl;
-    p1.symetriaPunkt(1, 1);
-    p1.wyswietl(); // (6) p1 moved symmetrically to provided coordinate
-    // dystans między p1 a p2
-    std::cout << "Dystans między P1 a P2: " << Point::odlegloscPunktow(p1, p2) << std::endl;
+    p1.wypisz();              // (4, 2)
+    p1.odbijWzgledemX();
+    p1.wypisz();              // (4, -2)
+    p1.odbijWzgledemY();
+    p1.wypisz();              // (-4, -2)
+    p1.symetriaWzgledemPunktu(1, 1);
+    p1.wypisz();              // (6, 4)
+
+    cout << "Odleglosc od prostej 2x + 3y + 1 = 0: " << p1.odlegloscOdProstej(2, 3, 1) << endl;
+    cout << "Odleglosc p1 - p2: " << Punkt::odleglosc(p1, p2) << endl;
+
     return 0;
 }

@@ -4,39 +4,31 @@
 // ======================================================================
 
 #include <iostream>
-#include <cmath> // Required for math functions
+#include <cmath>      // funkcje matematyczne
+using namespace std;
 
-int main() {
-    double num = -9.5, base = 2, exponent = 3;
+int main()
+{
+    double liczba = -9.5;
 
-    // Absolute value
-    std::cout << "abs(" << num << ") = " << abs(num) << " (Absolute value)" << std::endl;
-    
-    // Square root
-    std::cout << "sqrt(25) = " << sqrt(25) << " (Square root)" << std::endl;
-    
-    // Power function
-    std::cout << "pow(" << base << ", " << exponent << ") = " << pow(base, exponent) << " (Base raised to exponent)" << std::endl;
-    
-    // Natural logarithm (ln)
-    std::cout << "log(2.71828) = " << log(2.71828) << " (Natural logarithm)" << std::endl;
-    
-    // Exponential function (e^x)
-    std::cout << "exp(1) = " << exp(1) << " (e raised to the power of 1)" << std::endl;
-    
-    // Logarithm base 10
-    std::cout << "log10(100) = " << log10(100) << " (Logarithm base 10)" << std::endl;
-    
-    // Trigonometric functions (in radians)
-    std::cout << "sin(3.14159/2) = " << sin(3.14159/2) << " (Sine of pi/2)" << std::endl;
-    std::cout << "cos(0) = " << cos(0) << " (Cosine of 0)" << std::endl;
-    std::cout << "tan(3.14159/4) = " << tan(3.14159/4) << " (Tangent of pi/4)" << std::endl;
-    
-    // Rounding functions
-    std::cout << "ceil(" << num << ") = " << ceil(num) << " (Rounds up)" << std::endl;
-    std::cout << "floor(" << num << ") = " << floor(num) << " (Rounds down)" << std::endl;
-    std::cout << "trunc(" << num << ") = " << trunc(num) << " (Truncates decimal part)" << std::endl;
-    std::cout << "round(" << num << ") = " << round(num) << " (Rounds to nearest integer)" << std::endl;
+    cout << "abs(-9.5)    = " << abs(liczba) << "   (wartosc bezwzgledna)" << endl;
+    cout << "sqrt(25)     = " << sqrt(25) << "   (pierwiastek kwadratowy)" << endl;
+    cout << "pow(2, 3)    = " << pow(2, 3) << "   (potega: 2 do 3)" << endl;
+    cout << "log(2.71828) = " << log(2.71828) << "   (logarytm naturalny ln)" << endl;
+    cout << "exp(1)       = " << exp(1) << "   (e do potegi 1)" << endl;
+    cout << "log10(100)   = " << log10(100) << "   (logarytm dziesietny)" << endl;
+
+    // funkcje trygonometryczne licza w RADIANACH (180 stopni = 3.14159 rad)
+    double pi = 3.14159;
+    cout << "sin(pi/2)    = " << sin(pi / 2) << endl;
+    cout << "cos(0)       = " << cos(0) << endl;
+    cout << "tan(pi/4)    = " << tan(pi / 4) << endl;
+
+    // zaokraglanie (wiecej w 02_rounding_ceil_floor_trunc_round.cpp)
+    cout << "ceil(-9.5)   = " << ceil(liczba) << "   (w gore)" << endl;
+    cout << "floor(-9.5)  = " << floor(liczba) << "   (w dol)" << endl;
+    cout << "trunc(-9.5)  = " << trunc(liczba) << "   (obciecie czesci ulamkowej)" << endl;
+    cout << "round(-9.5)  = " << round(liczba) << "   (do najblizszej calkowitej)" << endl;
 
     return 0;
 }

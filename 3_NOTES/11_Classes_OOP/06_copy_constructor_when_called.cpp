@@ -1,116 +1,84 @@
 // ======================================================================
-// methods defined OUTSIDE the class (Prostokat::), implicit vs explicit copy, copies when passing/returning by value
+// WHEN is the copy constructor called? 4 cases:
+//   Prostokat p2 = p1;   Prostokat p3(p1);   passing by value;   returning by value
+// Also: methods defined OUTSIDE the class (Prostokat::pole).
 // Original file: unsorted/various/konstruktorKopiujacy.cpp
 // ======================================================================
 
 #include <iostream>
 using namespace std;
-// Definicja klasy Prostokat:
-class Prostokat {
+
+class Prostokat
+{
 private:
-double bok1;
-double bok2;
+    double bok1;
+    double bok2;
+
 public:
-// Prototypy konstruktorów:
-Prostokat(); // konstruktor domyślny
-Prostokat(double, double); // konstruktor z parametrami
-// Prototyp konstruktora kopiującego:
-// Prostokat(const Prostokat &); // konstruktor kopiujący
-// Prototypy metod publicznych:
-void pobierzBoki(double&, double&);
-void ustawBoki(double, double);
-double pole();
-double obwod();
+    Prostokat();                              // prototypy - definicje niżej
+    Prostokat(double nowyBok1, double nowyBok2);
+    Prostokat(const Prostokat &wzor);         // kopiujący - parametr MUSI być referencją
+    double pole();
 };
-// Definicje „zwykłych” konstruktorów:
-Prostokat::Prostokat() {
-cout << "Nastąpiło wywołanie konstruktora domyślnego ..." << endl;
-}
-Prostokat::Prostokat(double pBok1, double pBok2) {
-cout << "Nastąpiło wywołanie konstruktora parametrycznego ..." << endl;
-bok1 = pBok1;
-bok2 = pBok2;
-}
-// Definicja konstruktora kopiującego:
-// Prostokat::Prostokat(const Prostokat& wzorzec) {
 
-// cout << "Nastąpiło wywołanie konstruktora kopiującego ..." << endl;
-// bok1 = wzorzec.bok1;
-// bok2 = wzorzec.bok2;
-// }
-// Definicje metod publicznych należących do klasy Prostokat:
-void Prostokat::pobierzBoki(double &pBok1, double &pBok2) {
-pBok1 = bok1;
-pBok2 = bok2;
+Prostokat::Prostokat()
+{
+    cout << "konstruktor domyslny" << endl;
+    bok1 = 0;
+    bok2 = 0;
 }
-void Prostokat::ustawBoki(double pBok1, double pBok2) {
-bok1 = pBok1;
-bok2 = pBok2;
-}
-double Prostokat::pole() {
-return bok1 * bok2;
-}
-double Prostokat::obwod() {
-return 2 * bok1 + 2 * bok2;
-}
-// Definicja funkcji zewnętrznej, niezależnej od klasy Prostokat:
-Prostokat kopiujProstokat(Prostokat prostokat) {
-return prostokat;
-}
-/* UWAGA
-* Parametrem formalnym funkcji kopiujProstokat() jest obiekt klasy Prostokat, który jest przekazywany do funkcji
-* przez wartość. Dlatego też na stosie podczas wywołania tej funkcji zostanie wykonana kopia obiektu jako argumentu
-* tego wywołania.
-* Funkcja zwraca na zewnątrz obiekt typu Prostokat. Tym samym na stosie w trakcie wywołania tej funkcji ponownie
-* zostanie wykonana kopia obiektu.
-*/
-int main() {
-double b1, b2; // zmienne pomocnicze
-cout << "PIERWSZY PROSTOKĄT" << endl;
-// Utworzenie obiektu wzorcowego:
-Prostokat p1(1, 2); // wywołanie konstruktora parametrycznego
-// Wyświetlenie wartości zmiennych członkowskich obiektu p1:
-p1.pobierzBoki(b1, b2);
-cout << "bok1 = " << b1 << endl;
-cout << "bok2 = " << b2 << endl;
-cout << endl;
-cout << "DRUGI PROSTOKĄT" << endl;
 
-// Utworzenie obiektu p2 na podstawie obiektu p1:
-Prostokat p2 = p1;
-/* UWAGA
-* Na stosie utworzony zostaje nowy obiekt p2 jako kopia obiektu wzorcowego p1.
-* Konstruktor kopiujący jest wywoływany w sposób niejawny.
-*/
-p2.pobierzBoki(b1, b2);
-cout << "bok1 = " << b1 << endl;
-cout << "bok2 = " << b2 << endl;
-cout << endl;
-cout << "TRZECI PROSTOKĄT" << endl;
-// Utworzenie obiektu p3 na podstawie obiektu p1:
-Prostokat p3(p1);
-/* UWAGA
-* Na stosie utworzony zostaje nowy obiekt p3, należący do klasy Prostokat, jako kopia obiektu wzorcowego p1.
-* Konstruktor kopiujący jest wywoływany w sposób jawny — bezpośredni.
-* Argumentem wywołania konstruktora kopiującego jest referencja do obiektu p1, traktowanego jako stała const.
-*/
-p3.pobierzBoki(b1, b2);
-cout << "bok1 = " << b1 << endl;
-cout << "bok2 = " << b2 << endl;
-cout << endl;
-cout << "CZWARTY PROSTOKĄT" << endl;
-// Utworzenie obiektu p4 przez użycie konstruktora domyślnego:
-Prostokat p4;
-// Skopiowanie obiektu p1 do obiektu p4:
-p4 = kopiujProstokat(p1);
-/* UWAGA
-* Konstruktor kopiujący został w tym przypadku wywołany dwukrotnie: pierwszy raz — podczas kopiowania
-* argumentu do funkcji kopiujProstokat(), a drugi — podczas zwracania wartości przez tę funkcję.
-* Obydwa wywołania konstruktora kopiującego są niejawne.
-*/
-p4.pobierzBoki(b1, b2);
-cout << "bok1 = " << b1 << endl;
-cout << "bok2 = " << b2 << endl;
-cout << endl;
-return 0;
-}//w tym kodzie wywolujemy konstruktor domyślny kopiujący 4 razy
+Prostokat::Prostokat(double nowyBok1, double nowyBok2)
+{
+    cout << "konstruktor z parametrami" << endl;
+    bok1 = nowyBok1;
+    bok2 = nowyBok2;
+}
+
+Prostokat::Prostokat(const Prostokat &wzor)
+{
+    cout << "konstruktor KOPIUJACY" << endl;
+    bok1 = wzor.bok1;
+    bok2 = wzor.bok2;
+}
+
+double Prostokat::pole()
+{
+    return bok1 * bok2;
+}
+
+// parametr przez wartość -> kopia przy wejściu
+double policzPole(Prostokat prostokat)
+{
+    return prostokat.pole();
+}
+
+// zwracanie przez wartość -> (może być) kopia przy wyjściu
+Prostokat zrobKwadrat(double bok)
+{
+    Prostokat kwadrat(bok, bok);
+    return kwadrat;     // kompilator często pomija tę kopię (tzw. copy elision)
+}
+
+int main()
+{
+    cout << "--- p1" << endl;
+    Prostokat p1(1, 2);
+
+    cout << "--- p2 = p1" << endl;
+    Prostokat p2 = p1;         // niejawne wywołanie kopiującego
+
+    cout << "--- p3(p1)" << endl;
+    Prostokat p3(p1);          // jawne wywołanie kopiującego
+
+    cout << "--- przekazanie przez wartosc" << endl;
+    double wynik = policzPole(p1);
+    cout << "pole = " << wynik << endl;
+
+    cout << "--- zwracanie przez wartosc" << endl;
+    Prostokat p4 = zrobKwadrat(3);
+    cout << "pole p4 = " << p4.pole() << endl;
+
+    cout << "pole p2 = " << p2.pole() << ", pole p3 = " << p3.pole() << endl;
+    return 0;
+}

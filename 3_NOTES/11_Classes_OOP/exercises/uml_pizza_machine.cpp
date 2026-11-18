@@ -1,72 +1,79 @@
 // ======================================================================
-// UML pizza machine: init list, this-> setters, calculation methods
+// UML pizza machine (automat do pizzy): constructor with prices,
+// setters, getters, calculation methods.
 // Original file: unsorted/diagramy/pizza.cpp
-// FIXED - the bugs were: constructor assigned to its PARAMETERS (shadowing) instead of fields; `ileSera *= cenaSera` changed the field; large pizza price was set to 2.0
+// FIXED - the bugs were: constructor assigned to its PARAMETERS (shadowing) instead of fields;
+// `ileSera *= cenaSera` changed the field; large pizza price was set to 2.0.
+// Lesson: give parameters different names than fields (nowaCena vs cena) - then no this-> is needed.
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-class automat_do_pizzy
+class AutomatDoPizzy
 {
 private:
     int ileSera;
     int ileSzynki;
-    int ileBrokuly;
+    int ileBrokulow;
     bool czyDuza;
-
-    float cenaSera;
-    float cenaSzynki;
-    float cenaBrokuly;
-    float cenaCiastaMalego;
+    double cenaSera;
+    double cenaSzynki;
+    double cenaBrokulow;
+    double cenaCiastaMalego;
 
 public:
-    // Constructor
-    automat_do_pizzy(float cenaSera, float cenaSzynki, float cenaBrokuly, float cenaCiastaMalego)
-        : cenaSera(cenaSera), cenaSzynki(cenaSzynki), cenaBrokuly(cenaBrokuly), cenaCiastaMalego(cenaCiastaMalego)
+    AutomatDoPizzy(double nowaCenaSera, double nowaCenaSzynki, double nowaCenaBrokulow, double nowaCenaCiasta)
     {
+        cenaSera = nowaCenaSera;
+        cenaSzynki = nowaCenaSzynki;
+        cenaBrokulow = nowaCenaBrokulow;
+        cenaCiastaMalego = nowaCenaCiasta;
         ileSera = 0;
         ileSzynki = 0;
-        ileBrokuly = 0;
+        ileBrokulow = 0;
         czyDuza = false;
-        // (prices are already set by the initializer list above)
     }
 
-    // Setters
-    void setIleSera(int ileSera) { this->ileSera = ileSera; }
-    void setIleSzynki(int ileSzynki) { this->ileSzynki = ileSzynki; }
-    void setIleBrokuly(int ileBrokuly) { this->ileBrokuly = ileBrokuly; }
-    void setCzyDuza(bool czyDuza) { this->czyDuza = czyDuza; }
-
-    // Getters
-    int getIleSera() { return ileSera; }
-    int getIleSzynki() { return ileSzynki; }
-    int getIleBrokuly() { return ileBrokuly; }
-    bool getCzyDuza() { return czyDuza; }
-
-    // Methods
-    float cenaPizzy()
+    void setIleSera(int ile)
     {
-        float cena = cenaCiastaMalego;
+        ileSera = ile;
+    }
+
+    void setIleSzynki(int ile)
+    {
+        ileSzynki = ile;
+    }
+
+    void setIleBrokulow(int ile)
+    {
+        ileBrokulow = ile;
+    }
+
+    void setCzyDuza(bool duza)
+    {
+        czyDuza = duza;
+    }
+
+    double cenaPizzy()
+    {
+        double cena = cenaCiastaMalego;
         if (czyDuza)
         {
-            cena = 2 * cenaCiastaMalego;   // large dough costs twice the small one
+            cena = 2 * cenaCiastaMalego;   // duże ciasto kosztuje dwa razy tyle
         }
-        cena += 3;
-        cena += ileSera * cenaSera;
-        cena += ileSzynki * cenaSzynki;
-        cena += ileBrokuly * cenaBrokuly;
+        cena = cena + ileSera * cenaSera + ileSzynki * cenaSzynki + ileBrokulow * cenaBrokulow;
         return cena;
     }
 
     int ileKalorii()
     {
-        int kalorie = 200; // Wartość bazowa dla małej pizzy
-        kalorie += ileSera / 402;
-        kalorie += ileSzynki / 145;
-        kalorie += ileBrokuly / 37;
+        int kalorie = 200 + ileSera * 100 + ileSzynki * 70 + ileBrokulow * 10;
         if (czyDuza)
-            kalorie *= 2;
+        {
+            kalorie = kalorie * 2;
+        }
         return kalorie;
     }
 
@@ -78,30 +85,36 @@ public:
 
 int main()
 {
-    int choiceSer, choiceSzynka, choiceBrokuly;
-    string choiceRozmiar;
+    int ser;
+    int szynka;
+    int brokuly;
+    string rozmiar;
 
-    cout << "Podaj ilość sera: ";
-    cin >> choiceSer;
+    cout << "Ile porcji sera: ";
+    cin >> ser;
+    cout << "Ile porcji szynki: ";
+    cin >> szynka;
+    cout << "Ile porcji brokulow: ";
+    cin >> brokuly;
+    cout << "Rozmiar (D - duza, inny - mala): ";
+    cin >> rozmiar;
 
-    cout << "Podaj ilość szynki: ";
-    cin >> choiceSzynka;
+    AutomatDoPizzy pizza(3, 2, 1, 5);
+    pizza.setIleSera(ser);
+    pizza.setIleSzynki(szynka);
+    pizza.setIleBrokulow(brokuly);
+    pizza.setCzyDuza(rozmiar == "D" || rozmiar == "d");
 
-    cout << "Podaj ilość brokuły: ";
-    cin >> choiceBrokuly;
-
-    cout << "Podaj rozmiar pizzy (D - duża, inny - mała): ";
-    cin >> choiceRozmiar;
-
-    automat_do_pizzy pizza(3, 2, 1, 5.0);
-    pizza.setIleSera(choiceSer);
-    pizza.setIleSzynki(choiceSzynka);
-    pizza.setIleBrokuly(choiceBrokuly);
-    pizza.setCzyDuza(choiceRozmiar == "D" || choiceRozmiar == "d");
-
-    std::cout << "Cena pizzy: " << pizza.cenaPizzy() << std::endl;
-    std::cout << "Ilość kalorii: " << pizza.ileKalorii() << std::endl;
-    std::cout << "Czy pizza jest wegetariańska? " << (pizza.czyVege() ? "Tak" : "Nie") << std::endl;
+    cout << "Cena pizzy: " << pizza.cenaPizzy() << " zl" << endl;
+    cout << "Kalorie: " << pizza.ileKalorii() << endl;
+    if (pizza.czyVege())
+    {
+        cout << "Pizza wegetarianska: tak" << endl;
+    }
+    else
+    {
+        cout << "Pizza wegetarianska: nie" << endl;
+    }
 
     return 0;
 }

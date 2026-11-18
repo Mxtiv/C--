@@ -26,7 +26,7 @@ header above **szyfruj** (in `szyfr.cpp`): nazwa funkcji / opis funkcji / parame
 **Unit tests in Visual Studio (C++):**
 1. Solution → Add → New Project → **Native Unit Test Project**.
 2. Put the tested function in a `.h` + `.cpp` pair. In the test project: Add → Existing Item → the `.cpp`, and `#include "../Projekt/plik.h"`.
-3. `TEST_METHOD(Nazwa) { Assert::AreEqual(std::string("def"), szyfruj("abc", 3)); }`
+3. `TEST_METHOD(Nazwa) { Assert::AreEqual(string("def"), szyfruj("abc", 3)); }`
 4. **Test → Run All Tests** → screenshot the Test Explorer.
 
 This solution was built with MSBuild and its 5 tests passed in vstest.

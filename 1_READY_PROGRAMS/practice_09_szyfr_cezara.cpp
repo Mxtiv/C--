@@ -25,13 +25,23 @@ using namespace std;
  ********************************************************/
 string szyfrujCezarem(string tekst, int klucz)
 {
-    klucz = ((klucz % 26) + 26) % 26;
-    for (char &c : tekst)
+    klucz = klucz % 26;
+    if (klucz < 0)
     {
-        if (c >= 'a' && c <= 'z')
-            c = 'a' + (c - 'a' + klucz) % 26;
-        else if (c >= 'A' && c <= 'Z')
-            c = 'A' + (c - 'A' + klucz) % 26;
+        klucz = klucz + 26;            // e.g. -3 -> 23 (the same as 3 back)
+    }
+
+    int dlugosc = tekst.length();
+    for (int i = 0; i < dlugosc; i++)
+    {
+        if (tekst[i] >= 'a' && tekst[i] <= 'z')
+        {
+            tekst[i] = 'a' + (tekst[i] - 'a' + klucz) % 26;
+        }
+        else if (tekst[i] >= 'A' && tekst[i] <= 'Z')
+        {
+            tekst[i] = 'A' + (tekst[i] - 'A' + klucz) % 26;
+        }
     }
     return tekst;
 }
@@ -44,7 +54,7 @@ string szyfrujCezarem(string tekst, int klucz)
  * zwracany typ i opis: string - odszyfrowany tekst
  * autor: <numer zdającego>
  ********************************************************/
-string deszyfrujCezarem(const string &tekst, int klucz)
+string deszyfrujCezarem(string tekst, int klucz)
 {
     return szyfrujCezarem(tekst, -klucz);
 }
@@ -55,20 +65,27 @@ int main()
     do
     {
         cout << "\n1. Szyfruj\n2. Odszyfruj\n0. Koniec\nWybierz: ";
-        if (!(cin >> wybor)) break;
-        if (wybor != 1 && wybor != 2) continue;
+        cin >> wybor;
 
-        string tekst;
-        int klucz;
-        cout << "Podaj tekst: ";
-        getline(cin >> ws, tekst);
-        cout << "Podaj klucz: ";
-        cin >> klucz;
+        if (wybor == 1 || wybor == 2)
+        {
+            string tekst;
+            int klucz;
+            cout << "Podaj tekst: ";
+            cin.ignore();
+            getline(cin, tekst);
+            cout << "Podaj klucz: ";
+            cin >> klucz;
 
-        if (wybor == 1)
-            cout << "Zaszyfrowany tekst: " << szyfrujCezarem(tekst, klucz) << endl;
-        else
-            cout << "Odszyfrowany tekst: " << deszyfrujCezarem(tekst, klucz) << endl;
+            if (wybor == 1)
+            {
+                cout << "Zaszyfrowany tekst: " << szyfrujCezarem(tekst, klucz) << endl;
+            }
+            else
+            {
+                cout << "Odszyfrowany tekst: " << deszyfrujCezarem(tekst, klucz) << endl;
+            }
+        }
     } while (wybor != 0);
 
     cout << "Koniec programu." << endl;

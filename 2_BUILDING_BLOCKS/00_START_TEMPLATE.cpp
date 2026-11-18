@@ -4,15 +4,14 @@
 // boxes. Then paste blocks (ARR-.., SORT-.., NUM-.., STR-.., CLS-..) above main.
 //
 // Order inside the file:  includes -> constants -> classes/structs -> functions -> main
+// Style: see CODE_STYLE.md (plain arrays, own loops, no const &, no ?:)
 // ======================================================================
 
 #include <iostream>   // cout, cin
 #include <string>     // string, getline, stoi, to_string
 #include <cstdlib>    // rand, srand
 #include <ctime>      // time
-#include <vector>     // vector (e.g. a function that returns many indexes)
-#include <algorithm>  // sort, swap, min, max, reverse
-#include <cmath>      // sqrt, pow, round
+#include <cmath>      // sqrt, pow, round (only if you need them)
 using namespace std;
 
 const int ROZMIAR = 10;   // constants go here
@@ -30,7 +29,10 @@ private:
     int pole;
 
 public:
-    NazwaKlasy(int wartosc) : pole(wartosc) {}
+    NazwaKlasy(int wartosc)
+    {
+        pole = wartosc;
+    }
 
     /********************************************************
      * nazwa funkcji: <nazwaMetody>
@@ -39,7 +41,7 @@ public:
      * zwracany typ i opis: <typ> - <opis>   (lub: brak)
      * autor: <numer zdającego>
      ********************************************************/
-    int getPole() const
+    int getPole()
     {
         return pole;
     }

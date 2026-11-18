@@ -1,58 +1,58 @@
 // ======================================================================
-// three ways: int, logic_error-derived, exception-derived
+// three ways: throw int, throw runtime_error, throw own class derived from exception
 // Original file: TryCatch/task4.cpp
 // ======================================================================
 
-// Pobieramy liczbę. Jeżeli jest dwucyfrowa to wypisz jom. Obsłuż na trzy sposoby błędy:
+// Pobieramy liczbe. Jezeli jest dwucyfrowa, to ja wypisz. Obsluz na trzy sposoby bledy:
 // liczba jednocyfrowa
 // liczba trzycyfrowa
-// liczba cztero i więcej cyfrowa
+// liczba cztero- i wiecej cyfrowa
 
 #include <iostream>
 #include <stdexcept>
 using namespace std;
 
-class my_exception : public exception
+// wlasna klasa pochodna od exception - what() z naglowkiem jak w klasie bazowej
+class ZaDlugaLiczba : public exception
 {
 public:
-    const char *what() const noexcept override
+    const char* what() const noexcept
     {
-        return "Podales liczbe trzycyfrową lub więcej\n";
+        return "Podales liczbe cztero- lub wiecej cyfrowa";
     }
-};
-
-class MyLogicError : public logic_error
-{
-public:
-    MyLogicError(const string &msg) : logic_error(msg) {}
 };
 
 int main()
 {
-    try // catche łapią po typie wyrzucanej zmiennej
+    try
     {
-        double a = 0;
-        cout << "podaj liczbe : ";
-        cin >> a;
-        if ((a - (int)a) != 0)
-            throw logic_error("Liczba niecałkowita");
-        if (a < 0)
-            throw MyLogicError("Liczba niedodatnia");
-        if (a >= 100)
-            throw my_exception();
-        if (a < 10)
-            throw (int)a;
-        cout << "twoja liczba to : " << a;
+        int liczba;
+        cout << "Podaj liczbe: ";
+        cin >> liczba;
+
+        if (liczba < 0)
+        {
+            liczba = -liczba;                 // liczymy cyfry bez minusa
+        }
+        if (liczba < 10)
+        {
+            throw liczba;                                         // sposob 1: int
+        }
+        if (liczba >= 100 && liczba < 1000)
+        {
+            throw runtime_error("Podales liczbe trzycyfrowa");    // sposob 2: runtime_error
+        }
+        if (liczba >= 1000)
+        {
+            throw ZaDlugaLiczba();                                // sposob 3: wlasna klasa
+        }
+        cout << "Twoja liczba to: " << liczba << endl;
     }
     catch (int)
     {
         cout << "Podales liczbe jednocyfrowa" << endl;
     }
-    catch (const logic_error &e)
-    {
-        cout << e.what() << endl;
-    }
-    catch (const exception &e)
+    catch (exception &e)        // lapie runtime_error ORAZ ZaDlugaLiczba (obie pochodza od exception)
     {
         cout << e.what() << endl;
     }

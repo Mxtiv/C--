@@ -4,48 +4,70 @@
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
-// Definicja klasy bazowej Pracownik:
-class Pracownik {
-public: // wszystkie elementy członkowskie klasy są publiczne
-// Definicje zmiennych członkowskich:
-string imie {""};
-string nazwisko {""};
-// Definicja funkcji członkowskiej:
-string zwrocDane() {
-return imie + " " + nazwisko;
-}
-};
-// Definicja klasy pochodnej Nauczyciel:
-class Nauczyciel: public Pracownik{ // dziedziczenie publiczne
+
+// poziom 1 - klasa bazowa
+class Pracownik
+{
+protected:
+    string imie;
+    string nazwisko;
+
 public:
-// Definicja zmiennej członkowskiej:
-string przedmiot {""};
-// Definicja funkcji członkowskiej:
-string zwrocDane() {
-return imie + " " + nazwisko + ", przedmiot: " + przedmiot;
-}};
-class Wychowawca: public Nauczyciel {
-public:
-string klasa {""};
-string zwrocDane() {
-return imie + " " + nazwisko + ", klasa: " + klasa + ", przedmiot: " + przedmiot;
-}
+    Pracownik(string noweImie, string noweNazwisko)
+    {
+        imie = noweImie;
+        nazwisko = noweNazwisko;
+    }
+
+    string zwrocDane()
+    {
+        return imie + " " + nazwisko;
+    }
 };
-int main() {
-// Utworzenie obiektu nauczyciel jako instancji klasy pochodnej Wychowawca:
-Wychowawca wychowawca;
-// Nadanie wartości zmiennym członkowskim obiektu nauczyciel:
-wychowawca.imie = "Jan"; // zmienna odziedziczona po klasie bazowej
-wychowawca.nazwisko = "Cieślar"; // zmienna odziedziczona
-wychowawca.przedmiot = "Wychowanie Fizyczne"; // zmienna natywna — zdefiniowana w klasie pochodnej
-wychowawca.klasa = "5A";
-/* UWAGA
-* Ze względu na to, że dziedziczenie jest publiczne, w klasie pochodnej dostępne są wszystkie publiczne zmienne
-* członkowskie odziedziczone po klasie bazowej. W klasie pochodnej zmienne te (imie i nazwisko)
-* również są publiczne.
-*/
-// Wywołanie metody zwrocDane() zdefiniowanej w klasie pochodnej:
-cout << "Dane wychowawcy: " << wychowawca.zwrocDane() << endl;
-return 0;
+
+// poziom 2 - dziedziczy po Pracownik
+class Nauczyciel : public Pracownik
+{
+protected:
+    string przedmiot;
+
+public:
+    Nauczyciel(string noweImie, string noweNazwisko, string nowyPrzedmiot) : Pracownik(noweImie, noweNazwisko)
+    {
+        przedmiot = nowyPrzedmiot;
+    }
+
+    string zwrocDane()
+    {
+        return imie + " " + nazwisko + ", przedmiot: " + przedmiot;
+    }
+};
+
+// poziom 3 - dziedziczy po Nauczyciel (a wiec posrednio tez po Pracownik)
+class Wychowawca : public Nauczyciel
+{
+private:
+    string klasa;
+
+public:
+    Wychowawca(string noweImie, string noweNazwisko, string nowyPrzedmiot, string nowaKlasa) : Nauczyciel(noweImie, noweNazwisko, nowyPrzedmiot)
+    {
+        klasa = nowaKlasa;
+    }
+
+    // imie i nazwisko (z Pracownik) oraz przedmiot (z Nauczyciel) sa tu dostepne,
+    // bo w obu klasach sa protected, a dziedziczenie jest publiczne
+    string zwrocDane()
+    {
+        return imie + " " + nazwisko + ", klasa: " + klasa + ", przedmiot: " + przedmiot;
+    }
+};
+
+int main()
+{
+    Wychowawca wychowawca("Jan", "Cieslar", "wychowanie fizyczne", "5A");
+    cout << "Dane wychowawcy: " << wychowawca.zwrocDane() << endl;
+    return 0;
 }

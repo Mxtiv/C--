@@ -22,7 +22,7 @@
 header of any function (here `generujHaslo`; the 2026 pattern has no stars): nazwa funkcji / opis funkcji / parametry / zwracany typ i opis / autor. Replace `00000000000` with **your exam number**.
 
 ## Notes
-Polish letters → **wide strings** (`wstring`, `wcout` in UTF-16 mode). The file is saved as UTF-8 **with BOM**.
+Plain `string` only. Polish letters are kept in an **array of strings** (`string polskie[16] = {"ą", ...}`), because one Polish letter can take more than one `char`. The 12 characters go into `string znaki[12]` in order (3+3+2+2+2), get mixed by swapping each one with a random position, and are joined into one `string`. `setlocale(LC_ALL, "")` = Polish letters in the console.
 
 ## Related building blocks
 `RND-06` · `RND-07` – see the [catalog](../../README.md#building-blocks---full-catalog)

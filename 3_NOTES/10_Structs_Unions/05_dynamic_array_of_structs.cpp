@@ -1,49 +1,49 @@
 // ======================================================================
-// new Struct[n], const& param, fixed << setprecision(2)
+// new Struct[n] with n from the user, fill in a loop, print with a function, delete[]
 // Original file: unsorted/sprawdzian/arrayStructures.cpp
 // ======================================================================
 
 #include <iostream>
-#include <iomanip> // For std::setprecision
-
 using namespace std;
 
-// Define a structure for grade and wage
-struct GradeWage {
-    int grade;
-    double wage;
+struct OcenaStypendium
+{
+    int ocena;
+    double stypendium;
 };
 
-// Function to display grade and wage details
-void displayGradeWage(const GradeWage& gw) {
-    cout << "Grade: " << gw.grade << ", Wage: $" << fixed << setprecision(2) << gw.wage << endl;
+void wyswietl(OcenaStypendium dane)
+{
+    cout << "Grade: " << dane.ocena << ", Wage: " << dane.stypendium << " zl" << endl;
 }
 
-int main() {
-    int numStudents;
-    cout << "Enter the number of students: ";
-    cin >> numStudents;
+int main()
+{
+    int ileUczniow;
+    do
+    {
+        cout << "Enter the number of students: ";
+        cin >> ileUczniow;
+    } while (ileUczniow < 1);
 
-    // Dynamic allocation of array based on user input
-    GradeWage* arr = new GradeWage[numStudents];
+    // array of structs with a size known only now
+    OcenaStypendium *uczniowie = new OcenaStypendium[ileUczniow];
 
-    // Input grade and wage for each student
-    for (int i = 0; i < numStudents; ++i) {
+    for (int i = 0; i < ileUczniow; i++)
+    {
         cout << "Enter grade for student " << i + 1 << ": ";
-        cin >> arr[i].grade;
+        cin >> uczniowie[i].ocena;
         cout << "Enter wage for student " << i + 1 << ": ";
-        cin >> arr[i].wage;
+        cin >> uczniowie[i].stypendium;
     }
 
-    // Display all grade and wage details
     cout << "Grade and Wage Details:" << endl;
-    for (int i = 0; i < numStudents; ++i) {
+    for (int i = 0; i < ileUczniow; i++)
+    {
         cout << "Student " << i + 1 << ": ";
-        displayGradeWage(arr[i]);
+        wyswietl(uczniowie[i]);
     }
 
-    // Free allocated memory
-    delete[] arr;
-
+    delete[] uczniowie;
     return 0;
 }

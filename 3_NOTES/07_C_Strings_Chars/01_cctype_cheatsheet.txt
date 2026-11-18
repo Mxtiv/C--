@@ -5,3 +5,5 @@ isdigit(c)	c jest cyfrą
 ispunct(c)	c jest znakiem interpunkcyjnym
 isalnum(c)	c jest literą lub cyfrą
 isspace(c)	c to spacja, tab, enter itp.
+toupper(c)	zwraca dużą literę (inne znaki bez zmian)
+tolower(c)	zwraca małą literę (inne znaki bez zmian)

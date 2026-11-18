@@ -1,46 +1,43 @@
 // ======================================================================
-// class derived from logic_error with a message ctor
+// two ways: runtime_error and logic_error with a message
 // Original file: TryCatch/task3.cpp
-// FIXED - the bug was: condition is reversed: `a - (int)a == 0` is true for WHOLE numbers - should be != 0
+// FIXED - the bug was: condition reversed: `a - (int)a == 0` is true for WHOLE numbers - should be != 0
+// (simplified: the original derived its own class from logic_error - plain logic_error is enough)
 // ======================================================================
 
-// Obsłuż na dwa sposoby błąd podania przez użytkownika liczby ujemnej i niecałkowitej.
-// Jeżeli liczba jest nieujemna i całkowita to ją wypisujemy. Jeżeli jest ujemna albo niecałkowita to wypisujemy komunikat o błędzie.
+// Obsluz na dwa sposoby blad podania przez uzytkownika liczby ujemnej i niecalkowitej.
+// Jezeli liczba jest nieujemna i calkowita, to ja wypisujemy. Jezeli jest ujemna albo niecalkowita,
+// to wypisujemy komunikat o bledzie.
 
 #include <iostream>
 #include <stdexcept>
 using namespace std;
-
-class MyLogicError : public logic_error
-{
-public:
-    MyLogicError(const string &msg) : logic_error(msg) {}
-};
 
 int main()
 {
     try
     {
         double a;
-        cout << "Podaj liczbe : ";
+        cout << "Podaj liczbe: ";
         cin >> a;
+
         if (a < 0)
         {
             throw runtime_error("Liczba jest ujemna");
         }
-        else if (a - (int)a != 0)
+        if (a - (int)a != 0)
         {
-            throw MyLogicError("Liczba jest niecałkowita");
+            throw logic_error("Liczba jest niecalkowita");
         }
-        cout << "Podana liczba : " << a;
+        cout << "Podana liczba: " << a << endl;
     }
-    catch (const runtime_error &e)
+    catch (runtime_error &e)
     {
-        cout << "Caught MyRuntimeError: " << e.what() << endl;
+        cout << "runtime_error: " << e.what() << endl;
     }
-    catch (const logic_error &e)
+    catch (logic_error &e)
     {
-        cout << "Caught MyLogicError: " << e.what() << endl;
+        cout << "logic_error: " << e.what() << endl;
     }
 
     return 0;

@@ -10,7 +10,7 @@
 #include "kosc.h"
 using namespace std;
 
-void pokazKosc(Kosc &kosc)
+void pokazKosc(Kosc kosc)
 {
     cout << "Liczba utworzonych kosci: " << Kosc::liczbaInstancji << endl;
     cout << "Wyrzucono: " << kosc.liczbaOczek << " (" << kosc.wartoscSlownie() << ")" << endl;
@@ -19,7 +19,7 @@ void pokazKosc(Kosc &kosc)
 
 int main()
 {
-    srand((unsigned)time(0));
+    srand(time(0));
 
     int wartosc;
     cout << "Podaj liczbe oczek dla pierwszej kosci (1..6): ";

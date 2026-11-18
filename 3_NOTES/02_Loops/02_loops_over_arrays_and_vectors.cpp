@@ -1,98 +1,97 @@
 // ======================================================================
-// for/while/do-while/range-for over static array, dynamic array and vector; min/max/sum/avg; bubble sort
+// for / while / do-while over an array and a vector; min/max/sum/avg; bubble sort
 // Original file: Arrays/arraysLoops.cpp
 // ======================================================================
 
 #include <iostream>
 #include <vector>
-#include <cstdlib> // for rand()
-
 using namespace std;
 
-int main() {
+int main()
+{
     // ----- FOR LOOP WITH ARRAY -----
-    const int SIZE = 5;
-    int arr[SIZE] = {10, 20, 30, 40, 50};
-    
-    cout << "For loop iterating over static array:" << endl;
-    for (int i = 0; i < SIZE; i++) {
-        cout << arr[i] << " ";
+    const int ROZMIAR = 5;
+    int tab[ROZMIAR] = {10, 20, 30, 40, 50};
+
+    cout << "For loop over array:" << endl;
+    for (int i = 0; i < ROZMIAR; i++)
+    {
+        cout << tab[i] << " ";
     }
     cout << endl;
 
     // ----- WHILE LOOP WITH ARRAY -----
-    cout << "While loop iterating over static array:" << endl;
-    int index = 0;
-    while (index < SIZE) {
-        cout << arr[index] << " ";
-        index++;
+    cout << "While loop over array:" << endl;
+    int indeks = 0;
+    while (indeks < ROZMIAR)
+    {
+        cout << tab[indeks] << " ";
+        indeks++;
     }
     cout << endl;
 
     // ----- DO-WHILE LOOP WITH ARRAY -----
-    cout << "Do-while loop iterating over static array:" << endl;
-    int idx = 0;
-    do {
-        cout << arr[idx] << " ";
-        idx++;
-    } while (idx < SIZE);
+    cout << "Do-while loop over array:" << endl;
+    indeks = 0;
+    do
+    {
+        cout << tab[indeks] << " ";
+        indeks++;
+    } while (indeks < ROZMIAR);
     cout << endl;
 
-    // ----- LOOPING THROUGH A DYNAMIC ARRAY -----
-    int* dynArr = new int[SIZE];
-    
-    // Filling dynamic array with random numbers
-    for (int i = 0; i < SIZE; i++) {
-        dynArr[i] = rand() % 100;
-    }
-    
-    cout << "For loop iterating over dynamic array:" << endl;
-    for (int i = 0; i < SIZE; i++) {
-        cout << dynArr[i] << " ";
-    }
-    cout << endl;
-    
-    delete[] dynArr; // Free memory
-    
-    // ----- LOOPING THROUGH VECTORS -----
-    vector<int> vec = {5, 10, 15, 20, 25};
-    
-    cout << "For loop iterating over vector:" << endl;
-    for (size_t i = 0; i < vec.size(); i++) {
-        cout << vec[i] << " ";
+    // ----- LOOP OVER A VECTOR (the same index loop, size comes from .size()) -----
+    vector<int> wektor;
+    wektor.push_back(5);
+    wektor.push_back(10);
+    wektor.push_back(15);
+
+    cout << "For loop over vector:" << endl;
+    for (int i = 0; i < wektor.size(); i++)
+    {
+        cout << wektor[i] << " ";
     }
     cout << endl;
-    
-    cout << "Range-based for loop iterating over vector:" << endl;
-    for (int num : vec) {
-        cout << num << " ";
+
+    // ----- MIN, MAX, SUM, AVERAGE IN ARRAY -----
+    int min = tab[0];
+    int max = tab[0];
+    int suma = 0;
+    for (int i = 0; i < ROZMIAR; i++)
+    {
+        if (tab[i] < min)
+        {
+            min = tab[i];
+        }
+        if (tab[i] > max)
+        {
+            max = tab[i];
+        }
+        suma = suma + tab[i];
     }
-    cout << endl;
-    
-    // ----- FINDING MIN, MAX, SUM, AVERAGE IN ARRAY -----
-    int minVal = arr[0], maxVal = arr[0], sum = 0;
-    for (int i = 0; i < SIZE; i++) {
-        if (arr[i] < minVal) minVal = arr[i];
-        if (arr[i] > maxVal) maxVal = arr[i];
-        sum += arr[i];
-    }
-    double avg = static_cast<double>(sum) / SIZE;
-    cout << "Min: " << minVal << ", Max: " << maxVal << ", Sum: " << sum << ", Avg: " << avg << endl;
-    
+    double srednia = (double)suma / ROZMIAR;
+    cout << "Min: " << min << ", Max: " << max << ", Sum: " << suma << ", Avg: " << srednia << endl;
+
     // ----- SORTING AN ARRAY (Bubble Sort) -----
-    int sortedArr[SIZE] = {10, 5, 30, 20, 15};
-    for (int i = 0; i < SIZE - 1; i++) {
-        for (int j = 0; j < SIZE - i - 1; j++) {
-            if (sortedArr[j] > sortedArr[j + 1]) {
-                swap(sortedArr[j], sortedArr[j + 1]);
+    int doSortowania[ROZMIAR] = {10, 5, 30, 20, 15};
+    for (int i = 0; i < ROZMIAR - 1; i++)
+    {
+        for (int j = 0; j < ROZMIAR - i - 1; j++)
+        {
+            if (doSortowania[j] > doSortowania[j + 1])
+            {
+                int pomocnicza = doSortowania[j];
+                doSortowania[j] = doSortowania[j + 1];
+                doSortowania[j + 1] = pomocnicza;
             }
         }
     }
     cout << "Sorted array: ";
-    for (int i = 0; i < SIZE; i++) {
-        cout << sortedArr[i] << " ";
+    for (int i = 0; i < ROZMIAR; i++)
+    {
+        cout << doSortowania[i] << " ";
     }
     cout << endl;
-    
+
     return 0;
 }

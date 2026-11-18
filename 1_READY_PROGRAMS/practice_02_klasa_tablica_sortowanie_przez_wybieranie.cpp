@@ -14,20 +14,19 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <utility>
 using namespace std;
+
+const int ROZMIAR = 10;
 
 /********************************************************
  * nazwa klasy: Tablica
  * opis klasy: przechowuje tablicę 10 liczb całkowitych i sortuje ją przez wybieranie
- * pola: ROZMIAR - (stała) liczba elementów tablicy
- *       tab - tablica liczb całkowitych
+ * pola: tab - tablica ROZMIAR liczb całkowitych
  * autor: <numer zdającego>
  ********************************************************/
 class Tablica
 {
 private:
-    static const int ROZMIAR = 10;
     int tab[ROZMIAR];
 
 public:
@@ -42,7 +41,9 @@ public:
     void wypelnij(int min, int max)
     {
         for (int i = 0; i < ROZMIAR; i++)
+        {
             tab[i] = rand() % (max - min + 1) + min;
+        }
     }
 
     /********************************************************
@@ -52,10 +53,12 @@ public:
      * zwracany typ i opis: brak
      * autor: <numer zdającego>
      ********************************************************/
-    void wyswietl() const
+    void wyswietl()
     {
         for (int i = 0; i < ROZMIAR; i++)
+        {
             cout << tab[i] << " ";
+        }
         cout << endl;
     }
 
@@ -74,9 +77,15 @@ public:
         {
             int indeksMin = i;
             for (int j = i + 1; j < ROZMIAR; j++)
+            {
                 if (tab[j] < tab[indeksMin])
+                {
                     indeksMin = j;
-            swap(tab[i], tab[indeksMin]);
+                }
+            }
+            int pomocnicza = tab[i];
+            tab[i] = tab[indeksMin];
+            tab[indeksMin] = pomocnicza;
         }
     }
 
@@ -94,9 +103,15 @@ public:
         {
             int indeksMax = i;
             for (int j = i + 1; j < ROZMIAR; j++)
+            {
                 if (tab[j] > tab[indeksMax])
+                {
                     indeksMax = j;
-            swap(tab[i], tab[indeksMax]);
+                }
+            }
+            int pomocnicza = tab[i];
+            tab[i] = tab[indeksMax];
+            tab[indeksMax] = pomocnicza;
         }
     }
 
@@ -107,12 +122,16 @@ public:
      * zwracany typ i opis: int - najmniejsza wartość
      * autor: <numer zdającego>
      ********************************************************/
-    int minimum() const
+    int minimum()
     {
         int min = tab[0];
         for (int i = 1; i < ROZMIAR; i++)
+        {
             if (tab[i] < min)
+            {
                 min = tab[i];
+            }
+        }
         return min;
     }
 
@@ -123,12 +142,16 @@ public:
      * zwracany typ i opis: int - największa wartość
      * autor: <numer zdającego>
      ********************************************************/
-    int maksimum() const
+    int maksimum()
     {
         int max = tab[0];
         for (int i = 1; i < ROZMIAR; i++)
+        {
             if (tab[i] > max)
+            {
                 max = tab[i];
+            }
+        }
         return max;
     }
 };

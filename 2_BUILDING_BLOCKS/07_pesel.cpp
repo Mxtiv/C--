@@ -21,12 +21,19 @@ using namespace std;
  * zwracany typ i opis: bool - true, gdy format jest poprawny
  * autor: <numer zdającego>
  ********************************************************/
-bool czyPoprawnyFormatPesel(const string &pesel)
+bool czyPoprawnyFormatPesel(string pesel)
 {
-    if (pesel.length() != 11) return false;
-    for (char c : pesel)
-        if (!isdigit(c))
+    if (pesel.length() != 11)
+    {
+        return false;
+    }
+    for (int i = 0; i < 11; i++)
+    {
+        if (!isdigit(pesel[i]))
+        {
             return false;
+        }
+    }
     return true;
 }
 
@@ -38,12 +45,14 @@ bool czyPoprawnyFormatPesel(const string &pesel)
  * zwracany typ i opis: int - obliczona cyfra kontrolna (0..9)
  * autor: <numer zdającego>
  ********************************************************/
-int cyfraKontrolnaPesel(const string &pesel)
+int cyfraKontrolnaPesel(string pesel)
 {
-    const int wagi[10] = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
+    int wagi[10] = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
     int suma = 0;
     for (int i = 0; i < 10; i++)
+    {
         suma += (pesel[i] - '0') * wagi[i];        // - '0' : char digit -> number
+    }
     return (10 - suma % 10) % 10;
 }
 
@@ -55,18 +64,32 @@ int cyfraKontrolnaPesel(const string &pesel)
  * zwracany typ i opis: bool - true, gdy PESEL jest poprawny
  * autor: <numer zdającego>
  ********************************************************/
-bool czyPoprawnyPesel(const string &pesel)
+bool czyPoprawnyPesel(string pesel)
 {
-    if (pesel.length() != 11) return false;
-    for (char c : pesel)
-        if (!isdigit(c)) return false;
+    if (pesel.length() != 11)
+    {
+        return false;
+    }
+    for (int i = 0; i < 11; i++)
+    {
+        if (!isdigit(pesel[i]))
+        {
+            return false;
+        }
+    }
 
-    const int wagi[10] = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
+    int wagi[10] = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
     int suma = 0;
     for (int i = 0; i < 10; i++)
+    {
         suma += (pesel[i] - '0') * wagi[i];
+    }
     int kontrolna = (10 - suma % 10) % 10;
-    return kontrolna == pesel[10] - '0';
+    if (kontrolna == pesel[10] - '0')
+    {
+        return true;
+    }
+    return false;
 }
 
 //@ PESEL-04 | sex from PESEL: 'K' (woman) or 'M' (man) | <string>
@@ -78,10 +101,12 @@ bool czyPoprawnyPesel(const string &pesel)
  * zwracany typ i opis: char - 'K' dla kobiety, 'M' dla mężczyzny
  * autor: <numer zdającego>
  ********************************************************/
-char plecZPesel(const string &pesel)
+char plecZPesel(string pesel)
 {
     if ((pesel[9] - '0') % 2 == 0)
+    {
         return 'K';
+    }
     return 'M';
 }
 
@@ -97,31 +122,59 @@ char plecZPesel(const string &pesel)
  * zwracany typ i opis: brak (wyniki przez parametry referencyjne)
  * autor: <numer zdającego>
  ********************************************************/
-void dataUrodzeniaZPesel(const string &pesel, int &dzien, int &miesiac, int &rok)
+void dataUrodzeniaZPesel(string pesel, int &dzien, int &miesiac, int &rok)
 {
     rok = (pesel[0] - '0') * 10 + (pesel[1] - '0');
     miesiac = (pesel[2] - '0') * 10 + (pesel[3] - '0');
     dzien = (pesel[4] - '0') * 10 + (pesel[5] - '0');
 
-    if (miesiac > 80)      { rok += 1800; miesiac -= 80; }
-    else if (miesiac > 60) { rok += 2200; miesiac -= 60; }
-    else if (miesiac > 40) { rok += 2100; miesiac -= 40; }
-    else if (miesiac > 20) { rok += 2000; miesiac -= 20; }
-    else                   { rok += 1900; }
+    if (miesiac > 80)
+    {
+        rok = rok + 1800;
+        miesiac = miesiac - 80;
+    }
+    else if (miesiac > 60)
+    {
+        rok = rok + 2200;
+        miesiac = miesiac - 60;
+    }
+    else if (miesiac > 40)
+    {
+        rok = rok + 2100;
+        miesiac = miesiac - 40;
+    }
+    else if (miesiac > 20)
+    {
+        rok = rok + 2000;
+        miesiac = miesiac - 20;
+    }
+    else
+    {
+        rok = rok + 1900;
+    }
 }
 
 // ====================== DEMO (don't copy) ======================
 int main()
 {
-    string numery[] = {"55030101193", "02270803624", "55030101194", "1234"};
-    for (const string &p : numery)
+    string numery[4] = {"55030101193", "02270803624", "55030101194", "1234"};
+    for (int i = 0; i < 4; i++)
     {
-        cout << p << ": format " << (czyPoprawnyFormatPesel(p) ? "OK" : "zly");
-        if (!czyPoprawnyFormatPesel(p)) { cout << endl; continue; }
-        int d, m, r;
-        dataUrodzeniaZPesel(p, d, m, r);
-        cout << ", kontrolna " << cyfraKontrolnaPesel(p) << ", poprawny " << (czyPoprawnyPesel(p) ? "TAK" : "NIE")
-             << ", plec " << plecZPesel(p) << ", urodzony " << d << "." << m << "." << r << endl;
+        string p = numery[i];
+        cout << p << ": ";
+        if (!czyPoprawnyFormatPesel(p))
+        {
+            cout << "zly format" << endl;
+        }
+        else
+        {
+            int d;
+            int m;
+            int r;
+            dataUrodzeniaZPesel(p, d, m, r);
+            cout << "kontrolna " << cyfraKontrolnaPesel(p) << ", poprawny " << czyPoprawnyPesel(p)
+                 << ", plec " << plecZPesel(p) << ", urodzony " << d << "." << m << "." << r << endl;
+        }
     }
     return 0;
 }

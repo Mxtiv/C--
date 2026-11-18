@@ -30,7 +30,7 @@ void sortujBabelkowo(int tablica[], int rozmiar)
 
 int main()
 {
-    srand((unsigned)time(0));
+    srand(time(0));
 
     // ===== test (the same code is in test.cpp) =====
     int tablica[ROZMIAR];
@@ -56,7 +56,14 @@ int main()
             posortowana = false;
         }
     }
-    cout << "Test sortowania: " << (posortowana ? "OK - tablica jest posortowana" : "BLAD") << endl;
+    if (posortowana)
+    {
+        cout << "Test sortowania: OK - tablica jest posortowana" << endl;
+    }
+    else
+    {
+        cout << "Test sortowania: BLAD" << endl;
+    }
     // ===== end of test =====
     return 0;
 }

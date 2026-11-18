@@ -4,26 +4,42 @@
 // FIXED: removed the duplicate struct definition (it already comes from operacje.h)
 // ======================================================================
 
-#include "operacje.h"
 #include <iostream>
+#include "operacje.h"
 using namespace std;
 
-// (struct normalizator is NOT defined here again - it comes from operacje.h.
-//  Defining it twice in one file was the "redefinition of struct" compile error.)
+// (struct Normalizator NIE jest tu definiowana drugi raz - pochodzi z operacje.h.
+//  Dwie definicje w jednym pliku = blad "redefinition of struct".)
 
-void wypiszInformacje(normalizator liter) 
+/********************************************************
+ * nazwa funkcji: policzLitry
+ * opis funkcji: rozklada litry na cysterny (1000 l), wanny (200 l), galony (5 l) i litry
+ * parametry: wszystkieLitry - ilosc litrow, wynik - struktura do wypelnienia
+ * zwracany typ i opis: brak (wynik przez referencje)
+ * autor: <numer zdającego>
+ ********************************************************/
+void policzLitry(int wszystkieLitry, Normalizator &wynik)
 {
-    std::cout << "Objętość znormalizowana podanego płynu wynosi: " <<  liter.cysterna << " cystern, " << liter.wanna << " wanien, " << liter.galon << " galonów, oraz  " << liter.litr << " litrów pozostałego płynu." << endl;
+    wynik.cysterny = wszystkieLitry / 1000;
+    wszystkieLitry = wszystkieLitry % 1000;
+    wynik.wanny = wszystkieLitry / 200;
+    wszystkieLitry = wszystkieLitry % 200;
+    wynik.galony = wszystkieLitry / 5;
+    wszystkieLitry = wszystkieLitry % 5;
+    wynik.litry = wszystkieLitry;
 }
 
-void liczienieLitrow(int totalLiter, normalizator &liter)
+/********************************************************
+ * nazwa funkcji: wypiszInformacje
+ * opis funkcji: wypisuje wynik rozkladu
+ * parametry: wynik - struktura z rozkladem
+ * zwracany typ i opis: brak
+ * autor: <numer zdającego>
+ ********************************************************/
+void wypiszInformacje(Normalizator wynik)
 {
-    liter.cysterna = totalLiter / 1000 ;
-    totalLiter %= 1000;
-    liter.wanna = totalLiter / 200;
-    totalLiter %= 200;
-    liter.galon = totalLiter / 5;
-    totalLiter %=5 ;
-    liter.litr = totalLiter / 1;
-    totalLiter %=1;
+    cout << "Cysterny: " << wynik.cysterny << endl;
+    cout << "Wanny: " << wynik.wanny << endl;
+    cout << "Galony: " << wynik.galony << endl;
+    cout << "Litry: " << wynik.litry << endl;
 }

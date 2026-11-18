@@ -4,23 +4,25 @@
 // ======================================================================
 
 #include <iostream>
+using namespace std;
 
-// Global function
-void globalFunction() {
-    std::cout << "This is a global function!" << std::endl;
+// Global function - the normal way, use this in exam code
+int kwadrat(int x)
+{
+    return x * x;
 }
 
-int main() {
-    // Local function (C++ doesn't support nested functions directly, so using lambda)
-    auto localFunction = []() {
-        std::cout << "This is a local function (lambda)!" << std::endl;
+int main()
+{
+    // C++ does not allow a function inside a function. A lambda is a nameless
+    // function written inside main and stored in a variable (it needs auto).
+    auto kwadratLambda = [](int x)
+    {
+        return x * x;
     };
 
-    // Calling the global function
-    globalFunction();
-
-    // Calling the local function
-    localFunction();
+    cout << "global function: " << kwadrat(4) << endl;
+    cout << "lambda:          " << kwadratLambda(4) << endl;
 
     return 0;
 }

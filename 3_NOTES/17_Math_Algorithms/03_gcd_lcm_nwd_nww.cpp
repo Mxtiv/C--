@@ -4,32 +4,49 @@
 // ======================================================================
 
 #include <iostream>
+using namespace std;
 
-// Function to calculate the GCD (NWD)
-int gcd(int a, int b) {
-    while (b != 0) {
-        int temp = b;
+/********************************************************
+ * nazwa funkcji: nwd
+ * opis funkcji: najwiekszy wspolny dzielnik - algorytm Euklidesa (wersja z modulo)
+ * parametry: a, b - liczby calkowite dodatnie
+ * zwracany typ i opis: int - NWD(a, b)
+ * autor: <numer zdającego>
+ ********************************************************/
+int nwd(int a, int b)
+{
+    while (b != 0)
+    {
+        int pomocnicza = b;
         b = a % b;
-        a = temp;
+        a = pomocnicza;
     }
     return a;
 }
 
-// Function to calculate the LCM (NWW)
-int lcm(int a, int b) {
-    return (a * b) / gcd(a, b);
+/********************************************************
+ * nazwa funkcji: nww
+ * opis funkcji: najmniejsza wspolna wielokrotnosc
+ * parametry: a, b - liczby calkowite dodatnie
+ * zwracany typ i opis: int - NWW(a, b)
+ * autor: <numer zdającego>
+ ********************************************************/
+int nww(int a, int b)
+{
+    return a / nwd(a, b) * b;      // najpierw dzielenie - mniejsza szansa na przepelnienie
 }
 
-int main() {
+int main()
+{
     int a, b;
-    
-    // User input
-    std::cout << "Enter two integers: ";
-    std::cin >> a >> b;
-    
-    // Calculate and display the GCD and LCM
-    std::cout << "NWD (GCD) of " << a << " and " << b << " is: " << gcd(a, b) << std::endl;
-    std::cout << "NWW (LCM) of " << a << " and " << b << " is: " << lcm(a, b) << std::endl;
+    do
+    {
+        cout << "Podaj dwie liczby dodatnie: ";
+        cin >> a >> b;
+    } while (a <= 0 || b <= 0);
+
+    cout << "NWD(" << a << ", " << b << ") = " << nwd(a, b) << endl;
+    cout << "NWW(" << a << ", " << b << ") = " << nww(a, b) << endl;
 
     return 0;
 }

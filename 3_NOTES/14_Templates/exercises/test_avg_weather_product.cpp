@@ -1,40 +1,43 @@
 // ======================================================================
 // test: specializations int,float / double,double + generic
 // Original file: unsorted/typename template/sprawdzian.cpp
-// FIXED - the bug was: int return type truncates the average (your comment notes it)
+// FIXED - the bug was: int return type truncates the average (now returns double)
 // ======================================================================
 
-// Napisz szablon funkcji pobierającej dwa argumenty, która bedzie się dwa razy specjalizować i raz konkretyzować dla zmiennych typu:
-// int,float -zwraca srednią argumentów (Z przecinkiem).
-// float,int-komunikat o pogodzie 
-// double,double-iloczyn argumentów
-// Spróbuj tak skonstruować szablon by były możliwe wywołania niejawne. Wywołaj jawnie i niejawnie w sumie trzy razy funkcję.
+// Napisz szablon funkcji pobierajacej dwa argumenty, ktora bedzie sie dwa razy specjalizowac i raz konkretyzowac dla zmiennych typu:
+// int,float     - zwraca srednia argumentow (z przecinkiem)
+// float,int     - komunikat o pogodzie
+// double,double - iloczyn argumentow
+// Sprobuj tak skonstruowac szablon, by byly mozliwe wywolania niejawne. Wywolaj jawnie i niejawnie w sumie trzy razy funkcje.
+
 #include <iostream>
 using namespace std;
+
 template <typename T1, typename T2>
-double bbpbpbp(T1 zmienna1, T2 zmienna2)   // return type double so the int,float average keeps its fraction
+double funkcja(T1 zmienna1, T2 zmienna2)        // typ zwracany double, zeby srednia miala przecinek
 {
-    cout << "piękna pogoda dzisiaj. temperatura w stopniach celsjusza:" << endl;
-    return 28; 
+    cout << "Piekna pogoda dzisiaj. Temperatura w stopniach Celsjusza:" << endl;
+    return 28;
 }
-template <> 
-double bbpbpbp<int, float>(int zmienna1, float zmienna2)
+
+template <>
+double funkcja<int, float>(int zmienna1, float zmienna2)
 {
-    cout << "Int float średnia" << endl;
-    return ((zmienna2 + zmienna1)/2.0f); // teraz zwraca z przecinkiem (typ zwracany double) 
+    cout << "Int float - srednia" << endl;
+    return (zmienna1 + zmienna2) / 2.0;
 }
-template <> 
-double bbpbpbp<double, double>(double zmienna1, double zmienna2)
+
+template <>
+double funkcja<double, double>(double zmienna1, double zmienna2)
 {
-    cout << "Iloczyn double double" << endl;
+    cout << "Double double - iloczyn" << endl;
     return zmienna1 * zmienna2;
 }
+
 int main()
 {
-    cout << bbpbpbp<int, float>(6, 3.0f) << endl;      
-    cout << bbpbpbp<float, int>(2.5f, 3) << endl; 
-    cout << bbpbpbp<double, double>(2.0, 3.0) << endl;
-    cout << bbpbpbp(6, 3.0f) << endl;        // wywolanie niejawne -> specjalizacja int,float 
+    cout << funkcja<int, float>(6, 3.0f) << endl;      // jawnie    -> specjalizacja
+    cout << funkcja<float, int>(2.5f, 3) << endl;      // jawnie    -> konkretyzacja (pogoda)
+    cout << funkcja(2.0, 3.0) << endl;                 // niejawnie -> specjalizacja double,double
     return 0;
 }
- 

@@ -9,12 +9,19 @@ parametry:      tekst - tekst jawny (małe litery i spacje)
 zwracany typ i opis: string - tekst zaszyfrowany
 autor:          00000000000
 ***********************************************/
-std::string szyfruj(std::string tekst, int klucz)
+string szyfruj(string tekst, int klucz)
 {
-    int przesuniecie = ((klucz % 26) + 26) % 26;   // -3 -> 23, 29 -> 3, 0 -> 0
-    std::string wynik = "";
-    for (char znak : tekst)
+    int przesuniecie = klucz % 26;                 // 29 -> 3, -29 -> -3
+    if (przesuniecie < 0)
     {
+        przesuniecie = przesuniecie + 26;          // -3 -> 23 (to samo co 3 w lewo)
+    }
+
+    string wynik = "";
+    int dlugosc = tekst.length();
+    for (int i = 0; i < dlugosc; i++)
+    {
+        char znak = tekst[i];
         if (znak >= 'a' && znak <= 'z')            // kody ASCII 97..122
         {
             wynik += (char)('a' + (znak - 'a' + przesuniecie) % 26);

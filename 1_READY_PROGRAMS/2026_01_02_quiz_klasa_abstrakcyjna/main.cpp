@@ -19,18 +19,14 @@ protected:                      // dostępne w klasie i w klasach potomnych
     bool poprawna;
 
 public:
-    Pytanie(string tresc, string nazwaPliku)
+    Pytanie(string nowaTresc, string nowaNazwaPliku)
     {
-        this->tresc = tresc;
-        this->nazwaPliku = nazwaPliku;
+        tresc = nowaTresc;
+        nazwaPliku = nowaNazwaPliku;
         poprawna = false;
     }
 
     virtual bool sprawdzOdpowiedz(char odpowiedz) = 0;   // abstrakcyjna, bez implementacji
-
-    virtual ~Pytanie()
-    {
-    }
 };
 
 class PytanieZamkniete : public Pytanie
@@ -42,14 +38,14 @@ private:                        // niedostępne w klasach potomnych
     char poprawnaOdpowiedz;
 
 public:
-    PytanieZamkniete(string tresc, string nazwaPliku, string odpowiedzA, string odpowiedzB,
-                     string odpowiedzC, char poprawnaOdpowiedz)
-        : Pytanie(tresc, nazwaPliku)                       // konstruktor klasy bazowej
+    // ": Pytanie(...)" = wywołanie konstruktora klasy bazowej (tak to się zapisuje w C++)
+    PytanieZamkniete(string nowaTresc, string nowaNazwaPliku, string a, string b, string c,
+                     char poprawnaLitera) : Pytanie(nowaTresc, nowaNazwaPliku)
     {
-        this->odpowiedzA = odpowiedzA;
-        this->odpowiedzB = odpowiedzB;
-        this->odpowiedzC = odpowiedzC;
-        this->poprawnaOdpowiedz = poprawnaOdpowiedz;
+        odpowiedzA = a;
+        odpowiedzB = b;
+        odpowiedzC = c;
+        poprawnaOdpowiedz = poprawnaLitera;
     }
 
     /************************************************
@@ -59,7 +55,7 @@ public:
     zwracany typ i opis: bool - true, gdy odpowiedź jest poprawna
     autor:      00000000000
     ************************************************/
-    bool sprawdzOdpowiedz(char odpowiedz) override
+    bool sprawdzOdpowiedz(char odpowiedz)
     {
         if (toupper(odpowiedz) == poprawnaOdpowiedz)
         {

@@ -8,9 +8,9 @@
 //
 // Treść zadania (wariant): Abstrakcyjna klasa bazowa Figura z czysto wirtualnymi
 // metodami pole(), obwod() i nazwa(). Klasy pochodne Kolo, Prostokat i Trojkat
-// implementują te metody. Program tworzy figury dynamicznie, przechowuje je
-// w tablicy wskaźników do klasy bazowej, wyświetla ich pola i obwody oraz figurę
-// o największym polu. Na końcu zwalnia pamięć.
+// implementują te metody. Program tworzy po jednej figurze każdego rodzaju,
+// przechowuje ich adresy w tablicy wskaźników do klasy bazowej, wyświetla pola
+// i obwody figur oraz figurę o największym polu.
 
 #include <iostream>
 #include <string>
@@ -28,10 +28,9 @@ const double PI = 3.14159265358979;
 class Figura
 {
 public:
-    virtual double pole() const = 0;
-    virtual double obwod() const = 0;
-    virtual string nazwa() const = 0;
-    virtual ~Figura() {}
+    virtual double pole() = 0;
+    virtual double obwod() = 0;
+    virtual string nazwa() = 0;
 
     /********************************************************
      * nazwa funkcji: wyswietl
@@ -40,7 +39,7 @@ public:
      * zwracany typ i opis: brak
      * autor: <numer zdającego>
      ********************************************************/
-    void wyswietl() const
+    void wyswietl()
     {
         cout << nazwa() << ": pole = " << pole() << ", obwod = " << obwod() << endl;
     }
@@ -58,10 +57,25 @@ private:
     double r;
 
 public:
-    Kolo(double r) : r(r) {}
-    double pole() const override { return PI * r * r; }
-    double obwod() const override { return 2 * PI * r; }
-    string nazwa() const override { return "Kolo"; }
+    Kolo(double promien)
+    {
+        r = promien;
+    }
+
+    double pole()
+    {
+        return PI * r * r;
+    }
+
+    double obwod()
+    {
+        return 2 * PI * r;
+    }
+
+    string nazwa()
+    {
+        return "Kolo";
+    }
 };
 
 /********************************************************
@@ -73,13 +87,30 @@ public:
 class Prostokat : public Figura
 {
 private:
-    double a, b;
+    double a;
+    double b;
 
 public:
-    Prostokat(double a, double b) : a(a), b(b) {}
-    double pole() const override { return a * b; }
-    double obwod() const override { return 2 * (a + b); }
-    string nazwa() const override { return "Prostokat"; }
+    Prostokat(double bokA, double bokB)
+    {
+        a = bokA;
+        b = bokB;
+    }
+
+    double pole()
+    {
+        return a * b;
+    }
+
+    double obwod()
+    {
+        return 2 * (a + b);
+    }
+
+    string nazwa()
+    {
+        return "Prostokat";
+    }
 };
 
 /********************************************************
@@ -91,34 +122,52 @@ public:
 class Trojkat : public Figura
 {
 private:
-    double a, b, c;
+    double a;
+    double b;
+    double c;
 
 public:
-    Trojkat(double a, double b, double c) : a(a), b(b), c(c) {}
-    double pole() const override
+    Trojkat(double bokA, double bokB, double bokC)
+    {
+        a = bokA;
+        b = bokB;
+        c = bokC;
+    }
+
+    double pole()
     {
         double p = (a + b + c) / 2;                      // half of the perimeter
         return sqrt(p * (p - a) * (p - b) * (p - c));
     }
-    double obwod() const override { return a + b + c; }
-    string nazwa() const override { return "Trojkat"; }
+
+    double obwod()
+    {
+        return a + b + c;
+    }
+
+    string nazwa()
+    {
+        return "Trojkat";
+    }
 };
 
 int main()
 {
-    const int N = 3;
-    Figura *figury[N] = {new Kolo(2), new Prostokat(3, 4), new Trojkat(3, 4, 5)};
+    Kolo kolo(2);
+    Prostokat prostokat(3, 4);
+    Trojkat trojkat(3, 4, 5);
+
+    Figura *figury[3] = {&kolo, &prostokat, &trojkat};
 
     int najwieksza = 0;
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < 3; i++)
     {
         figury[i]->wyswietl();                           // the right version thanks to virtual
         if (figury[i]->pole() > figury[najwieksza]->pole())
+        {
             najwieksza = i;
+        }
     }
     cout << "Najwieksze pole ma: " << figury[najwieksza]->nazwa() << endl;
-
-    for (int i = 0; i < N; i++)
-        delete figury[i];                                // virtual ~Figura() -> correct destructor
     return 0;
 }

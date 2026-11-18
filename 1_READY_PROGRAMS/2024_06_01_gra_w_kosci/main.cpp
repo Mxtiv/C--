@@ -18,12 +18,6 @@ int wczytajLiczbeKostek()
     {
         cout << "Ile kostek chcesz rzucic? (3 - 10): ";
         cin >> liczba;
-        if (!cin)
-        {
-            cin.clear();
-            cin.ignore(10000, '\n');
-            liczba = 0;
-        }
     } while (liczba < 3 || liczba > 10);
     return liczba;
 }
@@ -52,7 +46,7 @@ parametry:  kostki - tablica z wynikami rzutów
 zwracany typ i opis: int - liczba zdobytych punktów
 autor:      00000000000
 ************************************************/
-int policzPunkty(const int kostki[], int liczbaKostek)
+int policzPunkty(int kostki[], int liczbaKostek)
 {
     int punkty = 0;
     for (int oczka = 1; oczka <= 6; oczka++)
@@ -75,7 +69,7 @@ int policzPunkty(const int kostki[], int liczbaKostek)
 
 int main()
 {
-    srand((unsigned)time(0));
+    srand(time(0));
     int kostki[MAKS_KOSTEK];
     int liczbaKostek = wczytajLiczbeKostek();
     char odpowiedz;

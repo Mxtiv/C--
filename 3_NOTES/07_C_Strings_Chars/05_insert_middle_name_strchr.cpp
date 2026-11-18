@@ -1,74 +1,48 @@
 // ======================================================================
-// insert a middle name: strchr, strncpy, new char[], strcat, delete[]
+// insert a middle name: strchr, strncpy, strcat
 // Original file: unsorted/Cstrings/cstringImieNazwisko.cpp
 // ======================================================================
 
 #include <iostream>
 #include <cstring>
 using namespace std;
-const int maxLength = 100;
 
-// Function to input the full name
-void inputFullName(char fullName[])
-{
-    std::cout << "Enter first name and last name (e.g., 'Mariusz Pudzianowski'): ";
-    std::cin.getline(fullName, maxLength);
-}
+const int DLUGOSC = 100;
 
-// Function to input the middle name
-void inputMiddleName(char middleName[])
+void wstawDrugieImie(char imieNazwisko[], char drugieImie[])
 {
-    std::cout << "Enter middle name: ";
-    std::cin.getline(middleName, maxLength);
-}
-
-// Function to insert middle name into the full name
-void insertMiddleName(char fullName[], char middleName[])
-{
-    // Find the position to insert the middle name (after the first name)
-    char *insertPos = std::strchr(fullName, ' ');
-    if (insertPos != nullptr)
+    // strchr - pointer to the first space (after the first name), or NULL
+    char *spacja = strchr(imieNazwisko, ' ');
+    if (spacja == NULL)
     {
-        // Calculate the size needed for the resulting string
-        size_t resultLength = std::strlen(fullName) + std::strlen(middleName) + 2; // 2 for space and null terminator
-
-        // Allocate memory for the result
-        char *result = new char[resultLength];
-
-        // Copy the first part of the full name
-        std::strncpy(result, fullName, insertPos - fullName);
-        result[insertPos - fullName] = '\0'; // Null-terminate the copied part
-
-        // Concatenate the middle name
-        std::strcat(result, " ");
-        std::strcat(result, middleName);
-
-        // Concatenate the last part of the full name
-        std::strcat(result, insertPos);
-
-        std::cout << "Full name with middle name: " << result << std::endl;
-
-        // Clean up memory
-        delete[] result;
+        cout << "Invalid format. Enter first name and last name separated by space." << endl;
+        return;
     }
-    else
-    {
-        std::cout << "Invalid full name format. Please enter first name and last name separated by space." << std::endl;
-    }
+
+    char wynik[2 * DLUGOSC + 2];
+    int dlugoscImienia = spacja - imieNazwisko;
+
+    strncpy(wynik, imieNazwisko, dlugoscImienia);   // copy only the first name
+    wynik[dlugoscImienia] = '\0';                   // strncpy does not add '\0' here - add it yourself
+
+    strcat(wynik, " ");
+    strcat(wynik, drugieImie);
+    strcat(wynik, spacja);                          // " Nazwisko" (starts with the space)
+
+    cout << "Full name with middle name: " << wynik << endl;
 }
 
 int main()
 {
-    char fullName[maxLength], middleName[maxLength];
+    char imieNazwisko[DLUGOSC];
+    char drugieImie[DLUGOSC];
 
-    // Input the full name
-    inputFullName(fullName);
+    cout << "Enter first name and last name (e.g. 'Mariusz Pudzianowski'): ";
+    cin.getline(imieNazwisko, DLUGOSC);
+    cout << "Enter middle name: ";
+    cin.getline(drugieImie, DLUGOSC);
 
-    // Input the middle name
-    inputMiddleName(middleName);
-
-    // Insert middle name into the full name and display the result
-    insertMiddleName(fullName, middleName);
+    wstawDrugieImie(imieNazwisko, drugieImie);
 
     return 0;
 }

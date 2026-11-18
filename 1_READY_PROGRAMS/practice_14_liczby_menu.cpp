@@ -7,33 +7,27 @@
 
 #include <iostream>
 #include <string>
-#include <limits>
-#include <algorithm>
-#include <cstdlib>
 using namespace std;
 
 /********************************************************
  * nazwa funkcji: wczytajLiczbe
- * opis funkcji: wczytuje liczbę całkowitą z zakresu min..max, ponawiając pytanie przy błędzie
+ * opis funkcji: wczytuje liczbę całkowitą z zakresu min..max - pyta tak długo,
+ *               aż użytkownik poda liczbę z tego zakresu
  * parametry: komunikat - tekst wyświetlany użytkownikowi
  *            min - najmniejsza dopuszczalna wartość
  *            max - największa dopuszczalna wartość
  * zwracany typ i opis: int - poprawna liczba
  * autor: <numer zdającego>
  ********************************************************/
-int wczytajLiczbe(const string &komunikat, int min, int max)
+int wczytajLiczbe(string komunikat, int min, int max)
 {
     int liczba;
-    while (true)
+    do
     {
         cout << komunikat;
-        if (cin >> liczba && liczba >= min && liczba <= max)
-            return liczba;
-        if (cin.eof()) exit(0);
-        cout << "Podaj liczbe od " << min << " do " << max << "." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
+        cin >> liczba;
+    } while (liczba < min || liczba > max);
+    return liczba;
 }
 
 /********************************************************
@@ -45,9 +39,17 @@ int wczytajLiczbe(const string &komunikat, int min, int max)
  ********************************************************/
 bool czyPierwsza(int n)
 {
-    if (n < 2) return false;
+    if (n < 2)
+    {
+        return false;
+    }
     for (int d = 2; d * d <= n; d++)
-        if (n % d == 0) return false;
+    {
+        if (n % d == 0)
+        {
+            return false;
+        }
+    }
     return true;
 }
 
@@ -60,11 +62,23 @@ bool czyPierwsza(int n)
  ********************************************************/
 bool czyDoskonala(int n)
 {
-    if (n < 2) return false;
+    if (n < 2)
+    {
+        return false;
+    }
     int suma = 0;
     for (int d = 1; d <= n / 2; d++)
-        if (n % d == 0) suma += d;
-    return suma == n;
+    {
+        if (n % d == 0)
+        {
+            suma = suma + d;
+        }
+    }
+    if (suma == n)
+    {
+        return true;
+    }
+    return false;
 }
 
 /********************************************************
@@ -77,7 +91,10 @@ bool czyDoskonala(int n)
 long long silnia(int n)
 {
     long long wynik = 1;
-    for (int i = 2; i <= n; i++) wynik *= i;
+    for (int i = 2; i <= n; i++)
+    {
+        wynik = wynik * i;
+    }
     return wynik;
 }
 
@@ -90,7 +107,8 @@ long long silnia(int n)
  ********************************************************/
 void wypiszFibonacciego(int n)
 {
-    long long a = 0, b = 1;
+    long long a = 0;
+    long long b = 1;
     for (int i = 0; i < n; i++)
     {
         cout << a << " ";
@@ -112,30 +130,33 @@ int nwd(int a, int b)
 {
     while (b != 0)
     {
-        int r = a % b;
+        int reszta = a % b;
         a = b;
-        b = r;
+        b = reszta;
     }
     return a;
 }
 
 /********************************************************
  * nazwa funkcji: naBinarny
- * opis funkcji: zamienia liczbę dziesiętną na zapis dwójkowy (reszty z dzielenia przez 2)
+ * opis funkcji: zamienia liczbę dziesiętną na zapis dwójkowy - kolejne reszty
+ *               z dzielenia przez 2 dopisywane są na początku napisu
  * parametry: n - liczba nieujemna
  * zwracany typ i opis: string - zapis dwójkowy
  * autor: <numer zdającego>
  ********************************************************/
 string naBinarny(int n)
 {
-    if (n == 0) return "0";
-    string wynik;
+    if (n == 0)
+    {
+        return "0";
+    }
+    string wynik = "";
     while (n > 0)
     {
-        wynik += char('0' + n % 2);
-        n /= 2;
+        wynik = to_string(n % 2) + wynik;
+        n = n / 2;
     }
-    reverse(wynik.begin(), wynik.end());
     return wynik;
 }
 
@@ -148,9 +169,13 @@ string naBinarny(int n)
  ********************************************************/
 int sumaCyfr(int n)
 {
-    int s = 0;
-    for (; n > 0; n /= 10) s += n % 10;
-    return s;
+    int suma = 0;
+    while (n > 0)
+    {
+        suma = suma + n % 10;
+        n = n / 10;
+    }
+    return suma;
 }
 
 int main()
@@ -158,15 +183,15 @@ int main()
     int wybor;
     do
     {
-        cout << "\n===== LICZBY =====\n"
-             << "1. Czy liczba jest pierwsza\n"
-             << "2. Czy liczba jest doskonala\n"
-             << "3. Silnia\n"
-             << "4. Ciag Fibonacciego\n"
-             << "5. NWD dwoch liczb\n"
-             << "6. Zamiana na system dwojkowy\n"
-             << "7. Suma cyfr\n"
-             << "0. Koniec\n";
+        cout << "\n===== LICZBY =====" << endl;
+        cout << "1. Czy liczba jest pierwsza" << endl;
+        cout << "2. Czy liczba jest doskonala" << endl;
+        cout << "3. Silnia" << endl;
+        cout << "4. Ciag Fibonacciego" << endl;
+        cout << "5. NWD dwoch liczb" << endl;
+        cout << "6. Zamiana na system dwojkowy" << endl;
+        cout << "7. Suma cyfr" << endl;
+        cout << "0. Koniec" << endl;
         wybor = wczytajLiczbe("Wybierz: ", 0, 7);
 
         switch (wybor)
@@ -174,13 +199,27 @@ int main()
         case 1:
         {
             int n = wczytajLiczbe("Podaj liczbe: ", 0, 1000000000);
-            cout << n << (czyPierwsza(n) ? " jest" : " nie jest") << " liczba pierwsza" << endl;
+            if (czyPierwsza(n))
+            {
+                cout << n << " jest liczba pierwsza" << endl;
+            }
+            else
+            {
+                cout << n << " nie jest liczba pierwsza" << endl;
+            }
             break;
         }
         case 2:
         {
             int n = wczytajLiczbe("Podaj liczbe: ", 1, 100000);
-            cout << n << (czyDoskonala(n) ? " jest" : " nie jest") << " liczba doskonala" << endl;
+            if (czyDoskonala(n))
+            {
+                cout << n << " jest liczba doskonala" << endl;
+            }
+            else
+            {
+                cout << n << " nie jest liczba doskonala" << endl;
+            }
             break;
         }
         case 3:
@@ -190,8 +229,11 @@ int main()
             break;
         }
         case 4:
-            wypiszFibonacciego(wczytajLiczbe("Ile wyrazow (1-90): ", 1, 90));
+        {
+            int n = wczytajLiczbe("Ile wyrazow (1-90): ", 1, 90);
+            wypiszFibonacciego(n);
             break;
+        }
         case 5:
         {
             int a = wczytajLiczbe("Pierwsza liczba: ", 1, 1000000000);
@@ -212,8 +254,10 @@ int main()
             break;
         }
         case 0:
+        {
             cout << "Koniec programu." << endl;
             break;
+        }
         }
     } while (wybor != 0);
     return 0;

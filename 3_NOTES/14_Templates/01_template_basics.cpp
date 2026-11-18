@@ -1,8 +1,8 @@
 // ======================================================================
-// ADDED (gap-fill): the simplest templates - one-type function template,
-// class template Box<T>, explicit vs implicit (deduced) types, non-type parameter
+// ADDED (gap-fill): the simplest templates - function template,
+// class template Pudelko<T>, explicit vs implicit (deduced) types
 // Not from your original repo - written to fill a missing topic.
-// Then continue with your files 02..07 (specialization = specjalizacja,
+// Then continue with files 02..07 (specialization = specjalizacja,
 // instantiation = konkretyzacja).
 // ======================================================================
 
@@ -10,69 +10,76 @@
 #include <string>
 using namespace std;
 
-// ---------------- function template ----------------
-// T is a placeholder type. The compiler generates maxOf<int>, maxOf<double>... when used.
+// ---------------- szablon funkcji (function template) ----------------
+// T to "typ zastepczy". Kompilator sam tworzy wieksza<int>, wieksza<double>...
+// dopiero gdy funkcja zostanie uzyta (to jest konkretyzacja).
 template <typename T>
-T maxOf(T a, T b)
+T wieksza(T a, T b)
 {
-    return (a > b) ? a : b;
+    if (a > b)
+    {
+        return a;
+    }
+    else
+    {
+        return b;
+    }
 }
 
 template <typename T>
-void printArray(const T arr[], int n)
+void wypiszTablice(T tab[], int n)
 {
-    for (int i = 0; i < n; i++) cout << arr[i] << " ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << tab[i] << " ";
+    }
     cout << endl;
 }
 
-// ---------------- class template ----------------
+// ---------------- szablon klasy (class template) ----------------
 template <typename T>
-class Box
+class Pudelko
 {
 private:
-    T value;
+    T wartosc;
+
 public:
-    Box(T v) : value(v) {}
-    T get() const { return value; }
-    void set(T v) { value = v; }
-    void show() const;                    // defined outside below
+    Pudelko(T nowaWartosc)
+    {
+        wartosc = nowaWartosc;
+    }
+
+    T getWartosc()
+    {
+        return wartosc;
+    }
+
+    void pokaz();                         // definicja ponizej, poza klasa
 };
 
-template <typename T>                     // outside definition needs the template line again
-void Box<T>::show() const
+template <typename T>                     // poza klasa trzeba znowu napisac linie template
+void Pudelko<T>::pokaz()
 {
-    cout << "Box holds: " << value << endl;
+    cout << "Pudelko zawiera: " << wartosc << endl;
 }
-
-// ---------------- non-type template parameter (a number known at compile time) ----------------
-template <typename T, int SIZE>
-class FixedArray
-{
-public:
-    T data[SIZE];
-    int size() const { return SIZE; }
-};
 
 int main()
 {
-    cout << maxOf(3, 7) << endl;               // implicit (niejawne): T deduced as int
-    cout << maxOf(2.5, 1.5) << endl;           // T = double
-    cout << maxOf<double>(3, 7.5) << endl;     // explicit (jawne): needed when types differ
-    cout << maxOf<string>("ala", "ola") << endl;
+    cout << wieksza(3, 7) << endl;               // niejawnie (implicit): T = int, kompilator sam zgaduje
+    cout << wieksza(2.5, 1.5) << endl;           // T = double
+    cout << wieksza<double>(3, 7.5) << endl;     // jawnie (explicit): potrzebne, gdy typy sa rozne
+    cout << wieksza<string>("ala", "ola") << endl;
 
-    int ints[] = {1, 2, 3};
-    string words[] = {"one", "two"};
-    printArray(ints, 3);
-    printArray(words, 2);
+    int liczby[3] = {1, 2, 3};
+    string slowa[2] = {"jeden", "dwa"};
+    wypiszTablice(liczby, 3);
+    wypiszTablice(slowa, 2);
 
-    Box<int> bi(42);
-    Box<string> bs("text");
-    bi.set(bi.get() + 1);
-    bi.show();
-    bs.show();
-
-    FixedArray<double, 4> fa;
-    cout << "FixedArray size: " << fa.size() << endl;
+    Pudelko<int> pudelkoInt(42);                 // przy klasie typ piszemy w < >
+    Pudelko<string> pudelkoTekst("tekst");
+    cout << pudelkoInt.getWartosc() + 1 << endl;
+    pudelkoInt.pokaz();
+    pudelkoTekst.pokaz();
 
     return 0;
 }

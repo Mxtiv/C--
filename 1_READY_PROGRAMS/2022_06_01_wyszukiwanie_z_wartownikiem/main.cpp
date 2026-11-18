@@ -39,7 +39,7 @@ int szukajZWartownikiem(int tablica[], int rozmiar, int szukana)
     return i;
 }
 
-void wyswietlTablice(const int tablica[], int rozmiar)
+void wyswietlTablice(int tablica[], int rozmiar)
 {
     for (int i = 0; i < rozmiar; i++)
     {
@@ -54,7 +54,7 @@ void wyswietlTablice(const int tablica[], int rozmiar)
 
 int main()
 {
-    srand((unsigned)time(0));
+    srand(time(0));
     int tablica[ROZMIAR + 1];            // +1 = miejsce na wartownika
     wypelnijTablice(tablica, ROZMIAR);
 

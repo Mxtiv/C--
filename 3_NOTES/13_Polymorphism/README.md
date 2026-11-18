@@ -5,40 +5,61 @@
 > **Paste-ready code for this topic:** [2_BUILDING_BLOCKS/08_classes.cpp](../../2_BUILDING_BLOCKS/08_classes.cpp)
 
 ```cpp
-class Shape {
+class Figura
+{
 public:
-    virtual double area() const { return 0; }   // virtual = decided at RUNTIME
-    virtual void draw() = 0;                    // pure virtual -> Shape is ABSTRACT (no objects)
-    virtual ~Shape() {}                         // ALWAYS virtual destructor in a base class
+    virtual double pole()        // virtual = wersja wybierana w czasie dzialania, wg typu OBIEKTU
+    {
+        return 0;
+    }
+    virtual void rysuj() = 0;    // czysto wirtualna -> Figura jest ABSTRAKCYJNA (brak obiektow)
 };
-class Circle : public Shape {
+
+class Kolo : public Figura
+{
+private:
+    double r;
+
 public:
-    double area() const override { ... }        // override = compiler checks the signature
-    void draw() override { ... }
+    Kolo(double promien)
+    {
+        r = promien;
+    }
+    double pole()                // ta sama nazwa i parametry co w bazie
+    {
+        return 3.14 * r * r;
+    }
+    void rysuj()
+    {
+        cout << "kolo" << endl;
+    }
 };
-Shape *s = new Circle(2);   s->area();   delete s;   // calls Circle::area
+
+Kolo kolo(2);
+Figura *wsk = &kolo;
+cout << wsk->pole();             // Kolo::pole - dzieki virtual
 ```
-Without `virtual`, a base pointer always calls the **base** version (see 02_). Objects can live on the stack (`Circle c; Shape *s = &c;`) or the heap (`new` / `delete`).
+Without `virtual`, a base pointer always calls the **base** version (see 02_). Objects can live on the stack (`Kolo k(2); Figura *wsk = &k;`) or the heap (`wsk = new Kolo(2); ... delete wsk;`) - for the heap version the base class also gets `virtual ~Figura() {}` (see 05_). `override` is optional and not needed at the exam.
 
 ## Files
 
 | File | What it shows | |
 |---|---|---|
 | [01_method_redefinition_no_virtual.cpp](01_method_redefinition_no_virtual.cpp) | derived class redefines methods (no virtual, called directly on objects) |  |
-| [02_base_pointer_without_virtual.cpp](02_base_pointer_without_virtual.cpp) | base-class pointer to derived objects WITHOUT virtual -&gt; base method is called (why you need virtual) | ⭐ 🔧 fixed |
-| [03_virtual_on_heap_animals.cpp](03_virtual_on_heap_animals.cpp) | Zwierze* = new Lew/Pies/Kot, virtual method, delete | ⭐ 🔧 fixed |
-| [04_pure_virtual_abstract_class.cpp](04_pure_virtual_abstract_class.cpp) | pure virtual = 0, abstract class Animal, Dog/Cat on the heap | 🔧 fixed |
-| [05_abstract_class_virtual_destructor_override.cpp](05_abstract_class_virtual_destructor_override.cpp) | virtual ~Base(), pure virtual const = 0, override keyword | ⭐ |
-| [06_virtual_with_multiple_inheritance.cpp](06_virtual_with_multiple_inheritance.cpp) | virtual + multiple inheritance, Base::method() calls |  |
+| [02_base_pointer_without_virtual.cpp](02_base_pointer_without_virtual.cpp) | base-class pointer to a derived object WITHOUT virtual -&gt; base method is called (why you need virtual) | ⭐ 🔧 fixed |
+| [03_virtual_on_heap_animals.cpp](03_virtual_on_heap_animals.cpp) | `Zwierze *z = new Lew(...)`, virtual method, delete | ⭐ |
+| [04_pure_virtual_abstract_class.cpp](04_pure_virtual_abstract_class.cpp) | pure virtual `= 0`, abstract class Zwierze (no objects), Pies/Kot through a base pointer | ⭐ |
+| [05_abstract_class_virtual_destructor_override.cpp](05_abstract_class_virtual_destructor_override.cpp) | `virtual ~Pojazd()` and the `override` keyword - when you need them (override: never at the exam) |  |
+| [06_virtual_with_multiple_inheritance.cpp](06_virtual_with_multiple_inheritance.cpp) | virtual + multiple inheritance, `Imie::zwrocDane()` calls |  |
 
 ### exercises/ - tests (sprawdziany), tasks and classmates' versions
 
 | File | What it shows | |
 |---|---|---|
 | [shapes_area_heap.cpp](exercises/shapes_area_heap.cpp) | same shapes created with new/delete | 🔧 fixed |
-| [shapes_area_stack.cpp](exercises/shapes_area_stack.cpp) | Figury -&gt; Trojkat/Rownoleglobok/Kolo, base pointer to stack objects | 🔧 fixed |
-| [solids_volume.cpp](exercises/solids_volume.cpp) | corrected solids version (r*r) | 🔧 fixed |
-| [task_abstract_animal_dog_cat_parrot.cpp](exercises/task_abstract_animal_dog_cat_parrot.cpp) | task text + abstract Animal with 3 subclasses on the heap | 🔧 fixed |
+| [shapes_area_stack.cpp](exercises/shapes_area_stack.cpp) | Figura -&gt; Trojkat/Rownoleglobok/Kolo, base pointer to stack objects | 🔧 fixed |
+| [solids_volume.cpp](exercises/solids_volume.cpp) | Bryla -&gt; Walec -&gt; Stozek, Bryla -&gt; Prostopadloscian, virtual objetosc() | 🔧 fixed |
+| [task_abstract_animal_dog_cat_parrot.cpp](exercises/task_abstract_animal_dog_cat_parrot.cpp) | task text + abstract Animal with 3 subclasses on the heap |  |
 
 ---
 ⭐ best file to learn the topic from · 🆕 added to fill a gap · 🔧 bug fixed (the file header says what was wrong)

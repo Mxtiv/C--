@@ -13,7 +13,6 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include <limits>
 using namespace std;
 
 /********************************************************
@@ -30,68 +29,76 @@ using namespace std;
 string generujHaslo(int dlugosc, bool wielkie, bool cyfry, bool specjalne)
 {
     string znaki = "abcdefghijklmnopqrstuvwxyz";
-    if (wielkie)   znaki += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if (cyfry)     znaki += "0123456789";
-    if (specjalne) znaki += "!@#$%^&*()_+-=";
+    if (wielkie)
+    {
+        znaki = znaki + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    }
+    if (cyfry)
+    {
+        znaki = znaki + "0123456789";
+    }
+    if (specjalne)
+    {
+        znaki = znaki + "!@#$%^&*()_+-=";
+    }
 
-    string haslo;
+    int ileZnakow = znaki.length();
+    string haslo = "";
     for (int i = 0; i < dlugosc; i++)
-        haslo += znaki[rand() % znaki.length()];
+    {
+        haslo = haslo + znaki[rand() % ileZnakow];
+    }
     return haslo;
 }
 
 /********************************************************
- * nazwa funkcji: wczytajLiczbe
- * opis funkcji: wczytuje liczbę całkowitą z zakresu min..max, ponawiając pytanie przy błędzie
- * parametry: komunikat - tekst wyświetlany użytkownikowi
- *            min - najmniejsza dopuszczalna wartość
- *            max - największa dopuszczalna wartość
- * zwracany typ i opis: int - poprawna liczba
- * autor: <numer zdającego>
- ********************************************************/
-int wczytajLiczbe(const string &komunikat, int min, int max)
-{
-    int liczba;
-    while (true)
-    {
-        cout << komunikat;
-        if (cin >> liczba && liczba >= min && liczba <= max)
-            return liczba;
-        cout << "Podaj liczbe od " << min << " do " << max << "." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-}
-
-/********************************************************
  * nazwa funkcji: zapytajTakNie
- * opis funkcji: zadaje pytanie i czeka na odpowiedź t lub n
+ * opis funkcji: zadaje pytanie tak długo, aż użytkownik odpowie t albo n
  * parametry: pytanie - tekst pytania
  * zwracany typ i opis: bool - true dla 't', false dla 'n'
  * autor: <numer zdającego>
  ********************************************************/
-bool zapytajTakNie(const string &pytanie)
+bool zapytajTakNie(string pytanie)
 {
-    char odp;
-    while (true)
+    char odpowiedz;
+    do
     {
         cout << pytanie;
-        if (!(cin >> odp)) return false;
-        if (odp == 't' || odp == 'T') return true;
-        if (odp == 'n' || odp == 'N') return false;
+        cin >> odpowiedz;
+    } while (odpowiedz != 't' && odpowiedz != 'n');
+
+    if (odpowiedz == 't')
+    {
+        return true;
     }
+    return false;
 }
 
 int main()
 {
     srand(time(0));
-    int dlugosc = wczytajLiczbe("Dlugosc hasla (4-32): ", 4, 32);
+
+    int dlugosc;
+    do
+    {
+        cout << "Dlugosc hasla (4-32): ";
+        cin >> dlugosc;
+    } while (dlugosc < 4 || dlugosc > 32);
+
     bool wielkie = zapytajTakNie("Wielkie litery? (t/n): ");
     bool cyfry = zapytajTakNie("Cyfry? (t/n): ");
     bool specjalne = zapytajTakNie("Znaki specjalne? (t/n): ");
-    int ile = wczytajLiczbe("Ile hasel wygenerowac? (1-10): ", 1, 10);
+
+    int ile;
+    do
+    {
+        cout << "Ile hasel wygenerowac? (1-10): ";
+        cin >> ile;
+    } while (ile < 1 || ile > 10);
 
     for (int i = 1; i <= ile; i++)
+    {
         cout << "Haslo " << i << ": " << generujHaslo(dlugosc, wielkie, cyfry, specjalne) << endl;
+    }
     return 0;
 }

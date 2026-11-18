@@ -9,3 +9,5 @@ Double-click **`sprawdz_wszystko.bat`**, or run it from a terminal. It:
 4. builds the two Visual Studio solutions with **MSBuild** and runs their **unit tests** with vstest (5 + 2 tests).
 
 It ends with `N passed, 0 failed`. Visual Studio steps are skipped when VS (C++ workload) is not installed.
+
+**After changing a building block**, run `python 9_SELF_TESTS/odswiez_katalog.py`. It rebuilds the block catalogs in `README.md` and `2_BUILDING_BLOCKS/README.md`, fixes the `#L` line number of every block link in every `.md` file, and regenerates the VS Code snippets (`.vscode/inf04_blocks.code-snippets`). It lists any link to a block that no longer exists.

@@ -1,5 +1,5 @@
 // ======================================================================
-// ADDED (gap-fill): if / else if / else, nested if, switch (with fall-through), ternary
+// ADDED (gap-fill): if / else if / else, switch (with fall-through), ternary
 // Not from your original repo - written to fill a missing topic.
 // ======================================================================
 
@@ -9,33 +9,36 @@ using namespace std;
 
 int main()
 {
-    int points = 73;
+    int punkty = 73;
 
     // ---------------- if / else if / else ----------------
-    if (points >= 90)
-        cout << "grade 6" << endl;
-    else if (points >= 75)
-        cout << "grade 5" << endl;
-    else if (points >= 50)
-        cout << "grade 3" << endl;      // <- this one
-    else
-        cout << "grade 1" << endl;
-
-    // Always use { } when there is more than one statement:
-    if (points > 50)
+    if (punkty >= 90)
     {
-        cout << "passed" << endl;
-        cout << "congratulations" << endl;
+        cout << "grade 6" << endl;
+    }
+    else if (punkty >= 75)
+    {
+        cout << "grade 5" << endl;
+    }
+    else if (punkty >= 50)
+    {
+        cout << "grade 3" << endl;      // <- this one
+    }
+    else
+    {
+        cout << "grade 1" << endl;
     }
 
-    // ---------------- nested if + logical operators ----------------
-    int year = 2024;
-    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
-        cout << year << " is a leap year" << endl;
+    // ---------------- condition with logical operators ----------------
+    int rok = 2024;
+    if ((rok % 4 == 0 && rok % 100 != 0) || rok % 400 == 0)
+    {
+        cout << rok << " is a leap year" << endl;
+    }
 
-    // ---------------- switch: only for int / char / enum (NOT string) ----------------
-    int option = 2;
-    switch (option)
+    // ---------------- switch: only for int / char (NOT string) ----------------
+    int opcja = 2;
+    switch (opcja)
     {
     case 1:
         cout << "Option one" << endl;
@@ -49,10 +52,11 @@ int main()
         break;
     default:                    // when nothing matched
         cout << "Unknown option" << endl;
+        break;
     }
 
-    char answer = 'T';
-    switch (answer)
+    char odpowiedz = 'T';
+    switch (odpowiedz)
     {
     case 't':
     case 'T':
@@ -64,26 +68,28 @@ int main()
         break;
     }
 
-    // Declaring a variable inside a case needs its own { } block:
-    switch (option)
-    {
-    case 2:
-    {
-        int local = option * 10;
-        cout << "local = " << local << endl;
-        break;
-    }
-    default:
-        break;
-    }
+    // ---------------- ternary  condition ? ifTrue : ifFalse ----------------
+    // Short form of if/else that gives a value. You will SEE it in other code;
+    // in your own exam code just write the if/else below - it does the same.
+    string parzystosc = (punkty % 2 == 0) ? "even" : "odd";
+    cout << punkty << " is " << parzystosc << endl;
 
-    // ---------------- ternary ----------------
-    string parity = (points % 2 == 0) ? "even" : "odd";
-    cout << points << " is " << parity << endl;
+    if (punkty % 2 == 0)
+    {
+        parzystosc = "even";
+    }
+    else
+    {
+        parzystosc = "odd";
+    }
+    cout << punkty << " is " << parzystosc << endl;
 
     // ---------------- comparing strings works with == for std::string ----------------
-    string password = "abc";
-    if (password == "abc") cout << "access granted" << endl;
+    string haslo = "abc";
+    if (haslo == "abc")
+    {
+        cout << "access granted" << endl;
+    }
 
     return 0;
 }

@@ -24,4 +24,11 @@
             posortowana = false;
         }
     }
-    cout << "Test sortowania: " << (posortowana ? "OK - tablica jest posortowana" : "BLAD") << endl;
+    if (posortowana)
+    {
+        cout << "Test sortowania: OK - tablica jest posortowana" << endl;
+    }
+    else
+    {
+        cout << "Test sortowania: BLAD" << endl;
+    }

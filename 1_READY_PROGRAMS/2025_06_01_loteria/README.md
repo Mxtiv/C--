@@ -8,7 +8,7 @@
 ## Task (from the sheet)
 - read n = number of sets
 - each set: 6 **different** random numbers from 1..49
-- store in a **2D array n × 6** (here `vector<vector<int>>`, because n comes from the keyboard)
+- store in a **2D array n × 6** (here a plain `int zestawy[100][6]`; n is read from the keyboard in a do-while loop until it is 1..100, only the first n rows are used)
 - at least 2 functions: fill, display (no globals)
 - count how many times each number 1..49 appears in all sets and display it
 

@@ -1,54 +1,48 @@
 // ======================================================================
-// divide by zero with a custom exception class
+// divide by zero: throw runtime_error from a function, catch it in main
 // Original file: TryCatch/task2.cpp
+// (simplified: the original used an own class derived from exception -
+//  that version is in 01_custom_exception_what.cpp)
 // ======================================================================
 
-// Obsłuż błąd dzielenia przez zero.
-
-/*Definicja klasy exception z bibliteki <exception>
-class exception {
-public:
-    exception() noexcept;// piszemy noexcept aby kompilator dla tej metody nie implementował obsługi błędów
-    exception(const exception&) noexcept; //w niższych standardach zamiast noexcept piszemy  throw()
-    exception& operator=(const exception&) noexcept; Rule of three
-    virtual ~exception() noexcept;
-    virtual const char* what() const noexcept;//const znaczy że funkcja nie zmienia obiektu.
-};*/
+// Obsluz blad dzielenia przez zero.
 
 #include <iostream>
-#include <exception>
+#include <stdexcept>      // runtime_error
 using namespace std;
 
-class divideZeroException : public exception
+/********************************************************
+ * nazwa funkcji: podziel
+ * opis funkcji: dzieli a przez b, przy b = 0 rzuca wyjatek runtime_error
+ * parametry: a - dzielna
+ *            b - dzielnik
+ * zwracany typ i opis: double - iloraz
+ ********************************************************/
+double podziel(double a, double b)
 {
-public:
-    const char *what() const noexcept override
+    if (b == 0)
     {
-        return "nie dziel przez zero";
+        throw runtime_error("Nie dziel przez zero!");
     }
-};
-// obsługa błędów pzry pomocy klasy exception polega na redefiniowaniu funkcji what() w klasie pochodnej od exception.
+    return a / b;
+}
+
 int main()
 {
+    double a, b;
+    cout << "Podaj a: ";
+    cin >> a;
+    cout << "Podaj b: ";
+    cin >> b;
 
     try
     {
-        int a, b;
-        cout << "Podaj a : ";
-        cin >> a;
-        cout << "Podaj b : ";
-        cin >> b;
-
-        if (b == 0)
-        {
-            throw divideZeroException();
-        }
-
-        cout << a/b;
+        double wynik = podziel(a, b);     // gdy podziel rzuci wyjatek, skaczemy od razu do catch
+        cout << "Wynik: " << wynik << endl;
     }
-    catch (const exception &e)
+    catch (runtime_error &e)          // e.what() zwraca tekst podany przy throw
     {
-        cout << "Caught exception: " << e.what() << endl;
+        cout << "Blad: " << e.what() << endl;
     }
     return 0;
 }

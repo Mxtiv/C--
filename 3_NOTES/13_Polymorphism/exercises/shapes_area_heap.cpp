@@ -6,70 +6,91 @@
 
 #include <iostream>
 using namespace std;
-class Figury
+
+class Figura
 {
 public:
-    virtual ~Figury() {}   // objects are deleted through Figury* -> virtual destructor
-    virtual double polePowierzchni()
+    virtual double pole()
     {
-        cout << endl
-             << "wywołałeś funkcję z klasy bazowej";
+        cout << "wywolales metode z klasy bazowej" << endl;
         return 0;
-    };
-};
-class Trojkat : public Figury
-{
-public:
-    int podstawa;
-    int wysokosc;
-    Trojkat() {};
-    Trojkat(int podstawa1, int wysokosc1)
-    {
-        podstawa = podstawa1;
-        wysokosc = wysokosc1;
     }
-    double polePowierzchni()
+
+    // potrzebny, bo usuwamy obiekty przez Figura* (wiecej w ../05_)
+    virtual ~Figura()
     {
-        return podstawa * wysokosc / 2.0;
     }
 };
-class Rownoleglobok : public Figury
+
+class Trojkat : public Figura
 {
-public:
+private:
     int podstawa;
     int wysokosc;
-    Rownoleglobok() {};
-    Rownoleglobok(int podstawa1, int wysokosc1) {podstawa=podstawa1; wysokosc=wysokosc1;};
-    double polePowierzchni()
+
+public:
+    Trojkat(int nowaPodstawa, int nowaWysokosc)
+    {
+        podstawa = nowaPodstawa;
+        wysokosc = nowaWysokosc;
+    }
+
+    double pole()
+    {
+        return podstawa * wysokosc / 2.0;   // 2.0, nie 2 - inaczej dzielenie calkowite
+    }
+};
+
+class Rownoleglobok : public Figura
+{
+private:
+    int podstawa;
+    int wysokosc;
+
+public:
+    Rownoleglobok(int nowaPodstawa, int nowaWysokosc)
+    {
+        podstawa = nowaPodstawa;
+        wysokosc = nowaWysokosc;
+    }
+
+    double pole()
     {
         return podstawa * wysokosc;
     }
 };
-class Kolo : public Figury
+
+class Kolo : public Figura
 {
-public:
+private:
     int promien;
-    Kolo() {};
-    Kolo(int promien1)
+
+public:
+    Kolo(int nowyPromien)
     {
-        promien = promien1;
+        promien = nowyPromien;
     }
-    double polePowierzchni()
+
+    double pole()
     {
-        return 3.14 * (promien * promien);
+        return 3.14 * promien * promien;
     }
 };
+
 int main()
 {
-    Figury *figura;
-    figura=new Trojkat(2,1);
-    cout<<endl<<figura->polePowierzchni()<<endl;
+    Figura *figura;
+
+    figura = new Trojkat(2, 1);     // obiekt na stercie
+    cout << "Pole trojkata: " << figura->pole() << endl;
     delete figura;
-    figura=new Rownoleglobok(1,1);
-    cout<<figura->polePowierzchni()<<endl;
+
+    figura = new Rownoleglobok(1, 1);
+    cout << "Pole rownolegloboku: " << figura->pole() << endl;
     delete figura;
-    figura=new Kolo(1);
-    cout<<figura->polePowierzchni();
+
+    figura = new Kolo(1);
+    cout << "Pole kola: " << figura->pole() << endl;
     delete figura;
     return 0;
 }

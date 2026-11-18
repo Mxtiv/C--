@@ -1,19 +1,22 @@
 // ======================================================================
 // #if / #elif / #else / #endif
 // Original file: Preprocessing/conditions.cpp
+// Kompilowany jest TYLKO jeden fragment - reszty kompilator w ogole nie widzi.
 // ======================================================================
 
 #include <iostream>
+using namespace std;
 
-#define VERSION 2
+#define WERSJA 2
 
-int main() {
-    #if VERSION == 1
-        std::cout << "Version 1" << std::endl;
-    #elif VERSION == 2
-        std::cout << "Version 2" << std::endl;
-    #else
-        std::cout << "Unknown Version" << std::endl;
-    #endif
+int main()
+{
+#if WERSJA == 1
+    cout << "Wersja 1" << endl;
+#elif WERSJA == 2
+    cout << "Wersja 2" << endl;
+#else
+    cout << "Nieznana wersja" << endl;
+#endif
     return 0;
 }

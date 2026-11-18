@@ -1,56 +1,75 @@
 // ======================================================================
-// private inheritance (task text included); access through derived-class setters
+// private inheritance (task text included); access through derived-class methods
 // Original file: unsorted/sprawdzian/heritagepop.cpp
 // ======================================================================
 
-// W klasie bazowej jedna wlasność ma być dostępna w programie bezposrednio, a druga  nie, ale ma być dostępna w klasie pochodnej poprzez nazwę.
-// W klasie pochodnej odziedziczone własności mają być private. Wyedytuj wszystkie wlasnosci klasy pochodnej w programie głównym.
+// Zadanie: W klasie bazowej jedna wlasnosc ma byc dostepna w programie bezposrednio, a druga nie,
+// ale ma byc dostepna w klasie pochodnej poprzez nazwe.
+// W klasie pochodnej odziedziczone wlasnosci maja byc private. Wyedytuj wszystkie wlasnosci
+// klasy pochodnej w programie glownym.
+
 #include <iostream>
 using namespace std;
 
-class base
+class Bazowa
 {
 protected:
-    int p1 = 1;
+    int p1;                     // niedostepna w main, dostepna w pochodnej
 
 public:
-    int p2 = 3;
-    int getp1() { return p1; }
-    int getp2() { return p2; }
-    void setp1(int pp1) { p1 = pp1; }
-    void setp2(int pp2) { p2 = pp2; }
+    int p2;                     // dostepna w main (dla obiektu klasy Bazowa)
+
+    Bazowa()
+    {
+        p1 = 1;
+        p2 = 3;
+    }
+
+    void setP1(int wartosc)
+    {
+        p1 = wartosc;
+    }
+
+    void setP2(int wartosc)
+    {
+        p2 = wartosc;
+    }
 };
 
-class dollop : private base
+// dziedziczenie PRIVATE: wszystko z bazy jest w Pochodnej private,
+// wiec main moze zmieniac wartosci tylko przez publiczne metody Pochodnej
+class Pochodna : private Bazowa
 {
 public:
-    dollop(int ip1, int ip2)
+    Pochodna(int nowe1, int nowe2)
     {
-        setp2(ip2);
-        setp1(ip1);
+        p1 = nowe1;
+        p2 = nowe2;
     }
 
-    void display()
+    void zmienP1(int wartosc)
     {
-        cout << p2 << " ," << getp1() << endl;
+        setP1(wartosc);
     }
 
-    void setSetP1(int pp1)
+    void zmienP2(int wartosc)
     {
-        setp1(pp1);
+        setP2(wartosc);
     }
 
-    void setSetP2(int pp2)
+    void wyswietl()
     {
-        setp2(pp2);
+        cout << "p1 = " << p1 << ", p2 = " << p2 << endl;
     }
 };
 
 int main()
 {
-    dollop point(1, 3);
-    point.setSetP1(4);
-    point.setSetP2(6);
-    point.display();
+    Pochodna obiekt(1, 3);
+    // obiekt.p2 = 5;       // BLAD - po dziedziczeniu private p2 jest private
+    // obiekt.setP2(5);     // BLAD - setP2 tez jest teraz private
+    obiekt.zmienP1(4);
+    obiekt.zmienP2(6);
+    obiekt.wyswietl();
     return 0;
 }

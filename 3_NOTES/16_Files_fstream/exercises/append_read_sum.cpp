@@ -5,56 +5,64 @@
 // loops processed the last number twice -> now while (plik >> x)
 // ======================================================================
 
-#include <fstream>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
-void Plikewpisywanie()
+/********************************************************
+ * nazwa funkcji: dopiszLiczby
+ * opis funkcji: pyta o liczby i dopisuje je na koncu pliku plik.txt
+ * parametry: brak
+ * zwracany typ i opis: brak
+ * autor: <numer zdającego>
+ ********************************************************/
+void dopiszLiczby()
 {
-    fstream plik;
-    plik.open("plik.txt", ios::app);           // append: keeps what is already in the file
-    int powturzenie = 0, dodanielicbydopliku = 0;
-    cout << "podej ile liczb w pliku" << endl;
-    cin >> powturzenie;
-    for (int i = 1; i <= powturzenie; i++)
+    ofstream plik("plik.txt", ios::app);       // app = dopisz, nie kasuj starej zawartosci
+    int ile;
+    do
     {
-        cout << "podej liczbe" << endl;
-        cin >> dodanielicbydopliku;
-        plik << " " << dodanielicbydopliku;
+        cout << "Ile liczb dopisac (1-20): ";
+        cin >> ile;
+    } while (ile < 1 || ile > 20);
+
+    for (int i = 0; i < ile; i++)
+    {
+        int liczba;
+        cout << "Podaj liczbe: ";
+        cin >> liczba;
+        plik << liczba << " ";
     }
     plik.close();
 }
 
-void otwieranie()
+/********************************************************
+ * nazwa funkcji: wypiszISumuj
+ * opis funkcji: wypisuje liczby z pliku plik.txt i liczy ich sume
+ * parametry: brak
+ * zwracany typ i opis: int - suma liczb z pliku
+ * autor: <numer zdającego>
+ ********************************************************/
+int wypiszISumuj()
 {
-    int zPliku;
     ifstream plik("plik.txt");
-    cout << " liczby w piku " << endl;
-    while (plik >> zPliku)
+    int liczba;
+    int suma = 0;
+    cout << "Liczby w pliku: ";
+    while (plik >> liczba)
     {
-        cout << zPliku << ", ";
+        cout << liczba << " ";
+        suma = suma + liczba;
     }
     cout << endl;
     plik.close();
-}
-
-void sumapliku()
-{
-    int zPliku, suma = 0;
-    cout << "suma " << endl;
-    ifstream sumaa("plik.txt");
-    while (sumaa >> zPliku)
-    {
-        suma = zPliku + suma;
-    }
-    sumaa.close();
-    cout << suma << endl;
+    return suma;
 }
 
 int main()
 {
-    Plikewpisywanie();
-    otwieranie();
-    sumapliku();
+    dopiszLiczby();
+    int suma = wypiszISumuj();
+    cout << "Suma: " << suma << endl;
     return 0;
 }

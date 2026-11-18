@@ -1,80 +1,67 @@
 // ======================================================================
-// template<T1,T2> class Prostokat, method defined outside, full class specializations vs instantiation (konkretyzacja)
+// template<T1,T2> class Prostokat, method defined outside, full class specialization vs instantiation (konkretyzacja)
 // Original file: Classes/TypenameTemplate.cpp
 // ======================================================================
 
 #include <iostream>
 using namespace std;
-// Definicja szablonu klasy Prostokat:
+
+// Szablon klasy Prostokat - dwa typy uogolnione T1 i T2
 template <typename T1, typename T2>
-/* UWAGA
- * Parametr szablonu klasy Prostokat jest uogólnionym typem danych T. To jedyny parametr tego szablonu.
- */
 class Prostokat
 {
 public:
-    // Deklaracje (szablonów) zmiennych członkowskich:
     T1 bok1;
     T2 bok2;
-    // Definicja (szablonu) metody pole():
-    T2 pole()
+
+    T2 pole()                     // metoda zdefiniowana w klasie
     {
         return bok1 * bok2;
     }
-    // Deklaracja (szablonu) metody obwod():
-    T2 obwod();
+
+    T2 obwod();                   // tylko deklaracja
 };
-// Definicja (szablonu) metody obwod():
+
+// definicja metody poza klasa - znowu linia template i Prostokat<T1, T2>::
 template <typename T1, typename T2>
 T2 Prostokat<T1, T2>::obwod()
 {
     return 2 * bok1 + 2 * bok2;
 }
+
+// SPECJALIZACJA calej klasy dla <double, int> - piszemy klase od nowa
 template <>
-class
-    Prostokat<double, int>
+class Prostokat<double, int>
 {
 public:
     double bok1;
     int bok2;
-    int obwod()
-    {
-        cout<<"to je z szablonu double,int";
-        return 2 * bok1 + 2 * bok2;
-    }
+
     int pole()
     {
-        return bok1 * bok2;
+        return (int)(bok1 * bok2);
+    }
+
+    int obwod()
+    {
+        cout << "(specjalizacja double,int) ";
+        return (int)(2 * bok1 + 2 * bok2);
     }
 };
-template <>
-class
-    Prostokat<int, double>
-{
-public:
-    int bok1;
-    double bok2;
-    double obwod()
-    {
-        cout<<"to je z szablonu int,double";
-        return 2 * bok1 + 2 * bok2;
-    }
-    double pole()
-    {
-        return bok1 * bok2;
-    }
-};
+
 int main()
 {
-    // Utworzenie obiektu prostokat1:
-    Prostokat<double, int> prostokat1{1.1, 2};             // specjalizacja odbywa się w konstruktorze
-    cout << "Pole wynosi " << prostokat1.pole() << endl;   // 2
-    cout << "Obwód wynosi " << prostokat1.obwod() << endl; // 6
-    Prostokat<int, double> prostokat2{1, 2.1};             // specjalizacja odbywa się w konstruktorze
-    cout << "Pole wynosi " << prostokat2.pole() << endl;   // 2.1
-    cout << "Obwód wynosi " << prostokat2.obwod() << endl; // 6.2
-    Prostokat<int, int> prostokat3{1, 2};             // konkretyzacja odbywa się w konstruktorze
-    cout << "Pole wynosi " << prostokat3.pole() << endl;   // 2
-    cout << "Obwód wynosi " << prostokat3.obwod() << endl; // 6
-    return 0;//niejawnie nima
+    Prostokat<double, int> prostokat1;        // uzyta specjalizacja
+    prostokat1.bok1 = 1.1;
+    prostokat1.bok2 = 2;
+    cout << "Pole wynosi " << prostokat1.pole() << endl;     // 2
+    cout << "Obwod wynosi " << prostokat1.obwod() << endl;   // 6
+
+    Prostokat<int, double> prostokat2;        // brak specjalizacji -> konkretyzacja
+    prostokat2.bok1 = 1;
+    prostokat2.bok2 = 2.1;
+    cout << "Pole wynosi " << prostokat2.pole() << endl;     // 2.1
+    cout << "Obwod wynosi " << prostokat2.obwod() << endl;   // 6.2
+
+    return 0;
 }

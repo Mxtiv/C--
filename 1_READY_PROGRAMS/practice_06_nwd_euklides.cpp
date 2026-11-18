@@ -10,8 +10,6 @@
 // wspólną wielokrotność NWW(a, b) = a * b / NWD(a, b).
 
 #include <iostream>
-#include <string>
-#include <limits>
 using namespace std;
 
 /********************************************************
@@ -28,9 +26,13 @@ int nwdOdejmowanie(int a, int b)
     while (a != b)
     {
         if (a > b)
+        {
             a = a - b;
+        }
         else
+        {
             b = b - a;
+        }
     }
     return a;
 }
@@ -57,6 +59,7 @@ int nwdModulo(int a, int b)
 /********************************************************
  * nazwa funkcji: nww
  * opis funkcji: wyznacza najmniejszą wspólną wielokrotność dwóch liczb
+ *               (najpierw dzielimy przez NWD, żeby iloczyn nie był za duży)
  * parametry: a - pierwsza liczba
  *            b - druga liczba
  * zwracany typ i opis: long long - najmniejsza wspólna wielokrotność
@@ -64,36 +67,25 @@ int nwdModulo(int a, int b)
  ********************************************************/
 long long nww(int a, int b)
 {
-    return (long long)a / nwdModulo(a, b) * b;
-}
-
-/********************************************************
- * nazwa funkcji: wczytajLiczbe
- * opis funkcji: wczytuje liczbę całkowitą z zakresu min..max, ponawiając pytanie przy błędzie
- * parametry: komunikat - tekst wyświetlany użytkownikowi
- *            min - najmniejsza dopuszczalna wartość
- *            max - największa dopuszczalna wartość
- * zwracany typ i opis: int - poprawna liczba
- * autor: <numer zdającego>
- ********************************************************/
-int wczytajLiczbe(const string &komunikat, int min, int max)
-{
-    int liczba;
-    while (true)
-    {
-        cout << komunikat;
-        if (cin >> liczba && liczba >= min && liczba <= max)
-            return liczba;
-        cout << "Podaj liczbe od " << min << " do " << max << "." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
+    long long wynik = a / nwdModulo(a, b);
+    wynik = wynik * b;
+    return wynik;
 }
 
 int main()
 {
-    int a = wczytajLiczbe("Podaj pierwsza liczbe dodatnia: ", 1, 1000000);
-    int b = wczytajLiczbe("Podaj druga liczbe dodatnia: ", 1, 1000000);
+    int a, b;
+    do
+    {
+        cout << "Podaj pierwsza liczbe dodatnia: ";
+        cin >> a;
+    } while (a < 1);
+
+    do
+    {
+        cout << "Podaj druga liczbe dodatnia: ";
+        cin >> b;
+    } while (b < 1);
 
     cout << "NWD(" << a << ", " << b << ") metoda odejmowania = " << nwdOdejmowanie(a, b) << endl;
     cout << "NWD(" << a << ", " << b << ") metoda z reszta    = " << nwdModulo(a, b) << endl;

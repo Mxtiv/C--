@@ -1,89 +1,100 @@
 // ======================================================================
 // task text + abstract Animal with 3 subclasses on the heap
 // Original file: unsorted/sprawdzian/virtuals.cpp
-// FIXED: added virtual ~Animal() (objects are deleted through a base pointer)
 // ======================================================================
 
-// Zadanie 1: Zwierzęta
-// Napisz program, w którym:
-
-// Istnieje abstrakcyjna klasa Animal z czysto wirtualną metodą makeSound().
-// Klasy pochodne, takie jak Dog i Cat, implementują tę metodę.
-// Utwórz dynamicznie obiekty zwierząt.
-//  wywołaj metodę makeSound() dla każdego zwierzęcia.
-// Przykładowy wynik:
+// Zadanie 1: Zwierzeta
+// Napisz program, w ktorym:
+// - istnieje abstrakcyjna klasa Animal z czysto wirtualna metoda makeSound(),
+// - klasy pochodne, takie jak Dog i Cat, implementuja te metode,
+// - utworz dynamicznie obiekty zwierzat,
+// - wywolaj metode makeSound() dla kazdego zwierzecia.
+// Przykladowy wynik:
 // Hau!
 // Miau!
+// (nazwy klas po angielsku, bo tak podaje tresc zadania)
 
 #include <iostream>
-using namespace std; 
+#include <string>
+using namespace std;
+
 class Animal
 {
 public:
-    string opowiadaj;
-    virtual void makeSound()=0;
-    virtual ~Animal() {}
-    
-}; 
+    virtual void makeSound() = 0;   // czysto wirtualna -> Animal jest abstrakcyjna
+
+    // potrzebny, bo usuwamy obiekty przez Animal* (wiecej w ../05_)
+    virtual ~Animal()
+    {
+    }
+};
+
 class Dog : public Animal
 {
+private:
+    string glos;
+
 public:
-    string bark;
-    Dog() {};
-    Dog(string bark)
+    Dog(string nowyGlos)
     {
-        this->bark = bark;
+        glos = nowyGlos;
     }
-    virtual void makeSound()
+
+    void makeSound()
     {
-        cout << bark << endl;
+        cout << glos << endl;
     }
-}; 
+};
+
 class Cat : public Animal
 {
+private:
+    string glos;
+
 public:
-    string meow;
-    Cat() {};
-    Cat(string meow)
+    Cat(string nowyGlos)
     {
-        this->meow = meow;
+        glos = nowyGlos;
     }
-    virtual void makeSound()
+
+    void makeSound()
     {
-        cout << meow << endl;
+        cout << glos << endl;
     }
-}; 
+};
+
 class Parrot : public Animal
 {
+private:
+    string glos;
+
 public:
-    string talking;
-    Parrot() {};
-    Parrot(string talking)
+    Parrot(string nowyGlos)
     {
-        this->talking = talking;
+        glos = nowyGlos;
     }
-    virtual void makeSound()
+
+    void makeSound()
     {
-        cout << talking << endl;
+        cout << glos << endl;
     }
 };
 
 int main()
 {
-    Animal *zwierz;
+    Animal *zwierze;
 
-    cout << "Dog's Sound:\n";
-    zwierz = new Dog("Woof");
-    zwierz->makeSound();
-    delete zwierz;
- 
-    cout << "Cat's Sound:\n";
-    zwierz = new Cat("Meow");
-    zwierz->makeSound();
-    delete zwierz;
+    // "dynamicznie" = przez new (obiekt na stercie)
+    zwierze = new Dog("Hau!");
+    zwierze->makeSound();
+    delete zwierze;
 
-    cout << "Parrots's Sound:\n";
-    zwierz = new Parrot("Give");
-    zwierz->makeSound();
-    delete zwierz;
+    zwierze = new Cat("Miau!");
+    zwierze->makeSound();
+    delete zwierze;
+
+    zwierze = new Parrot("Daj ciastko!");
+    zwierze->makeSound();
+    delete zwierze;
+    return 0;
 }

@@ -1,65 +1,54 @@
 // ======================================================================
-// count numbers, then read them into new int[] (fstream modes in comments)
+// count numbers in a file, then read them into new int[]
 // Original file: Libraries/Fstreamy/fstream1.cpp
 // FIXED - the bug was: while(!eof()) loop miscounts
+//
+// fstream modes (fstream plik; plik.open("a.txt", TRYB);):
+//   ios::in  - odczyt          ios::out - zapis (kasuje stara zawartosc)
+//   ios::app - dopisywanie na koncu
+// Prosciej: ifstream = odczyt, ofstream = zapis, ofstream(..., ios::app) = dopisywanie.
 // ======================================================================
 
-/*#include <fstream>
 #include <iostream>
-#include <cstdlib>
-using namespace std;
-
-int main()
-{
-    int dane;
-    fstream plik;
-   plik.open("wyjscie1.txt");
-   ios::in;
-   plik<< 6 <<" "<< 9<<" ";
-   ios::out;
-   ios::app;
-   plik<< 6 <<" "<< 9;
-     plik>> dane;
-   cout<< dane<<endl;
-    return 0;
-}*/
 #include <fstream>
-#include <iostream>
 using namespace std;
 
 int main()
 {
-    int zPliku,iterator=0;
+    // 1. pierwsze przejscie przez plik - tylko liczymy, ile jest liczb
     fstream plik;
-    // plik.open ("wyjscie.txt", ios::out);
-    // plik << 5 << " " << 50 ;
-    // plik.close();
-    // plik.open("wyjscie.txt", ios::app);
-    // plik << " "<<15 << " " << 60 ;
-    // plik.close();
-    plik.open ("wyjscie1.txt" ,ios::in);
-    while (plik >> zPliku)
+    plik.open("wyjscie1.txt", ios::in);
+    if (!plik)
     {
-        cout << zPliku << endl;
-        iterator++;
+        cout << "Nie mozna otworzyc pliku wyjscie1.txt" << endl;
+        return 1;
     }
-    int *liczby;
-    liczby=new int[iterator];
-    plik.close();
-    plik.open ("wyjscie1.txt" ,ios::in);
-    int i=0;
-     while (i < iterator && plik >> zPliku)
+    int liczba;
+    int ile = 0;
+    while (plik >> liczba)
     {
-        liczby[i]=zPliku;
-        i++;
+        ile++;
     }
     plik.close();
-    for (short i = 0; i < iterator; i++)
+
+    // 2. tablica dynamiczna dokladnie na tyle liczb
+    int *liczby = new int[ile];
+
+    // 3. drugie przejscie - wczytanie do tablicy
+    plik.open("wyjscie1.txt", ios::in);
+    for (int i = 0; i < ile; i++)
     {
-        cout<<liczby[i]<<' ';
+        plik >> liczby[i];
     }
-    
-    delete[] liczby;
-// cout<<iterator;
+    plik.close();
+
+    cout << "Wczytano " << ile << " liczb: ";
+    for (int i = 0; i < ile; i++)
+    {
+        cout << liczby[i] << " ";
+    }
+    cout << endl;
+
+    delete[] liczby;        // new[] -> delete[]
     return 0;
 }

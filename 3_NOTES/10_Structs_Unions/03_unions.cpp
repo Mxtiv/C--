@@ -1,84 +1,43 @@
 // ======================================================================
-// union, anonymous union inside struct, sizeof, strcpy
+// union basics: all members share ONE place in memory, sizeof, overwriting
 // Original file: Structs/Unions/overviewUnions.cpp
 // ======================================================================
 
 #include <iostream>
-#include <cstring> // For strcpy function
-
 using namespace std;
 
-// Union declaration
-union Data {
-    int i;           // Integer member
-    float f;         // Float member
-    char str[20];    // String member
+// A union looks like a struct, but its members are stored in the SAME memory.
+// Its size = the size of the biggest member. Only the member written last is valid.
+union Dane
+{
+    int liczba;          // 4 bytes
+    double ulamek;       // 8 bytes
+    char znak;           // 1 byte
 };
 
-// Struct with a union inside
-struct DataContainer {
-    int type; // 0 for int, 1 for float, 2 for string
-    union {
-        int i;
-        float f;
-        char str[20];
+int main()
+{
+    Dane dane;
+
+    dane.liczba = 10;
+    cout << "int: " << dane.liczba << endl;
+
+    dane.ulamek = 220.5;             // overwrites liczba - now only ulamek is valid
+    cout << "double: " << dane.ulamek << endl;
+
+    dane.znak = 'A';                 // overwrites ulamek - now only znak is valid
+    cout << "char: " << dane.znak << endl;
+
+    cout << "sizeof(Dane) = " << sizeof(Dane) << " bytes (the biggest member: double)" << endl;
+
+    // For comparison: a struct keeps every field separately, so it needs more memory
+    struct DaneStruktura
+    {
+        int liczba;
+        double ulamek;
+        char znak;
     };
-};
-
-// Main function demonstrating union usage
-int main() {
-    // Demonstrating basic union usage
-    Data data;
-
-    // Assigning and accessing integer member of union
-    data.i = 10;
-    cout << "Integer: " << data.i << endl;
-
-    // Now assign a value to the float member
-    data.f = 220.5;
-    cout << "Float: " << data.f << endl;
-
-    // Assigning a string to the string member
-    strcpy(data.str, "Hello, Union!");
-    cout << "String: " << data.str << endl;
-
-    // When we assign a new value to a union member, the previous value is overwritten
-    cout << "\nAfter overwriting with string:" << endl;
-    cout << "Integer: " << data.i << endl;  // This will print undefined behavior
-    cout << "Float: " << data.f << endl;    // This will also print undefined behavior
-    cout << "String: " << data.str << endl; // This will print the string
-
-    // Demonstrating union in a struct
-    DataContainer container;
-
-    // Store an integer
-    container.type = 0;
-    container.i = 42;
-    cout << "\nInteger stored in container: " << container.i << endl;
-
-    // Store a float
-    container.type = 1;
-    container.f = 3.14;
-    cout << "Float stored in container: " << container.f << endl;
-
-    // Store a string
-    container.type = 2;
-    strcpy(container.str, "Union in C++");
-    cout << "String stored in container: " << container.str << endl;
-
-    // Size of the union
-    cout << "\nSize of union Data: " << sizeof(data) << " bytes" << endl;
-    cout << "Size of union DataContainer: " << sizeof(container) << " bytes" << endl;
-
-    // Memory usage demonstration
-    union MyUnion {
-        int i;      // 4 bytes
-        double d;   // 8 bytes
-        char c;     // 1 byte
-    };
-
-    MyUnion u;
-    cout << "\nSize of union MyUnion: " << sizeof(u) << " bytes" << endl;
+    cout << "sizeof(DaneStruktura) = " << sizeof(DaneStruktura) << " bytes" << endl;
 
     return 0;
 }

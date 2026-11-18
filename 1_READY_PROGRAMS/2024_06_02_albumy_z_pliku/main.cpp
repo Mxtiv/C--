@@ -1,16 +1,17 @@
 // ======================================================================
-// INF.04-02-24.06-SG - wczytanie albumów z pliku Data.txt do kolekcji i wyświetlenie ich.
+// INF.04-02-24.06-SG - wczytanie albumów z pliku Data.txt do tablicy i wyświetlenie ich.
 // Rekord = 5 linii (artist, "album", songsNumber, year, downloadNumber) + pusta linia.
-// Klasa/struktura: 2 napisy + 3 liczby całkowite (pobrania >= 32 bit: max 1 506 404 300).
-// Wczytanie i wyświetlenie w osobnych funkcjach; działa dla dowolnej liczby rekordów.
+// Struktura: 2 napisy + 3 liczby całkowite (int = 32 bity, max 1 506 404 300 się mieści).
+// Wczytanie i wyświetlenie w osobnych funkcjach; pętla czyta tyle rekordów, ile jest w pliku.
 // Data.txt must be in the working folder (VS: next to the .vcxproj; g++: where you run it).
 // Spec + key checklist: README.md in this folder.
 // ======================================================================
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
 using namespace std;
+
+const int MAKS_ALBUMOW = 100;
 
 struct Album
 {
@@ -18,66 +19,67 @@ struct Album
     string album;
     int liczbaUtworow;
     int rok;
-    long long liczbaPobran;       // 64 bit - bezpiecznie (int też by wystarczył)
+    int liczbaPobran;             // int ma 32 bity - wystarczy do 2 147 483 647
 };
 
-// usuwa \r (plik ma końce linii Windows) i znak BOM UTF-8 na początku pliku
-string oczysc(string linia)
+// usuwa znak '\r' z końca linii (plik ma końce linii Windows)
+// i 3 znaki BOM UTF-8 z początku pliku
+string oczyscLinie(string linia)
 {
-    if (linia.size() >= 3 && (unsigned char)linia[0] == 0xEF && (unsigned char)linia[1] == 0xBB && (unsigned char)linia[2] == 0xBF)
+    int dlugosc = linia.length();
+    if (dlugosc > 0 && linia[dlugosc - 1] == '\r')
+    {
+        linia = linia.substr(0, dlugosc - 1);
+    }
+    if (linia.length() >= 3 && linia[0] == (char)0xEF)
     {
         linia = linia.substr(3);
-    }
-    if (!linia.empty() && linia.back() == '\r')
-    {
-        linia.pop_back();
     }
     return linia;
 }
 
 /**********************************************
 nazwa funkcji:  wczytajAlbumy
-opis funkcji:   czyta z pliku kolejne rekordy (5 linii + pusta linia) i zapisuje je do wektora
+opis funkcji:   czyta z pliku kolejne rekordy (5 linii + pusta linia) i zapisuje je do tablicy
 parametry:      nazwaPliku - ścieżka do pliku z danymi
-zwracany typ i opis: vector<Album> - wszystkie wczytane albumy (pusty, gdy brak pliku)
+                albumy - tablica, do której zapisywane są wczytane albumy
+zwracany typ i opis: int - liczba wczytanych albumów (0, gdy brak pliku)
 autor:          00000000000
 ***********************************************/
-vector<Album> wczytajAlbumy(string nazwaPliku)
+int wczytajAlbumy(string nazwaPliku, Album albumy[])
 {
-    vector<Album> albumy;
     ifstream plik(nazwaPliku);
     if (!plik.is_open())
     {
         cout << "Nie mozna otworzyc pliku " << nazwaPliku << endl;
-        return albumy;
+        return 0;
     }
+    int ile = 0;
     string linia;
-    while (getline(plik, linia))
+    while (ile < MAKS_ALBUMOW && getline(plik, linia))
     {
-        linia = oczysc(linia);
-        if (linia == "")
+        linia = oczyscLinie(linia);
+        if (linia != "")                      // pusta linia między rekordami jest pomijana
         {
-            continue;                         // pusta linia między rekordami
+            albumy[ile].artysta = linia;
+            getline(plik, linia);
+            albumy[ile].album = oczyscLinie(linia);
+            getline(plik, linia);
+            albumy[ile].liczbaUtworow = stoi(linia);
+            getline(plik, linia);
+            albumy[ile].rok = stoi(linia);
+            getline(plik, linia);
+            albumy[ile].liczbaPobran = stoi(linia);
+            ile++;
         }
-        Album nowy;
-        nowy.artysta = linia;
-        getline(plik, linia);
-        nowy.album = oczysc(linia);
-        getline(plik, linia);
-        nowy.liczbaUtworow = stoi(oczysc(linia));
-        getline(plik, linia);
-        nowy.rok = stoi(oczysc(linia));
-        getline(plik, linia);
-        nowy.liczbaPobran = stoll(oczysc(linia));
-        albumy.push_back(nowy);
     }
     plik.close();
-    return albumy;
+    return ile;
 }
 
-void wyswietlAlbumy(const vector<Album> &albumy)
+void wyswietlAlbumy(Album albumy[], int ile)
 {
-    for (int i = 0; i < (int)albumy.size(); i++)
+    for (int i = 0; i < ile; i++)
     {
         cout << albumy[i].artysta << endl;
         cout << albumy[i].album << endl;
@@ -90,8 +92,9 @@ void wyswietlAlbumy(const vector<Album> &albumy)
 
 int main()
 {
-    vector<Album> albumy = wczytajAlbumy("Data.txt");
-    wyswietlAlbumy(albumy);
-    cout << "Wczytano albumow: " << albumy.size() << endl;
+    Album albumy[MAKS_ALBUMOW];
+    int ile = wczytajAlbumy("Data.txt", albumy);
+    wyswietlAlbumy(albumy, ile);
+    cout << "Wczytano albumow: " << ile << endl;
     return 0;
 }

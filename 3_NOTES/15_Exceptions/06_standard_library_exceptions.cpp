@@ -1,97 +1,55 @@
 // ======================================================================
-// ADDED (gap-fill): exceptions thrown BY THE STANDARD LIBRARY and how to catch them -
-// stoi (invalid_argument, out_of_range), vector::at / string::at (out_of_range),
-// new (bad_alloc), catch order, rethrow, function that validates and throws
+// ADDED (gap-fill): exceptions thrown BY THE LIBRARY and how to catch them -
+// stoi (invalid_argument), string.at() (out_of_range), own runtime_error,
+// catch order: specific first, exception & next, (...) last
 // Not from your original repo - written to fill a missing topic.
 // ======================================================================
 
 #include <iostream>
-#include <stdexcept>   // invalid_argument, out_of_range, runtime_error, logic_error
 #include <string>
-#include <vector>
-#include <new>         // bad_alloc
+#include <stdexcept>   // runtime_error, invalid_argument, out_of_range
 using namespace std;
-
-double safeDivide(double a, double b)
-{
-    if (b == 0) throw runtime_error("division by zero");
-    return a / b;
-}
-
-int parseAge(const string &text)
-{
-    int age = stoi(text);                         // may throw invalid_argument / out_of_range
-    if (age < 0 || age > 130) throw out_of_range("age must be 0-130");
-    return age;
-}
 
 int main()
 {
-    // ---------------- stoi ----------------
-    string inputs[] = {"25", "abc", "99999999999", "-4"};
-    for (const string &s : inputs)
-    {
-        try
-        {
-            int age = parseAge(s);                       // if this throws, the next line is skipped
-            cout << "parseAge(\"" << s << "\") = " << age << endl;
-        }
-        catch (const invalid_argument &e) { cout << s << ": not a number (" << e.what() << ")" << endl; }
-        catch (const out_of_range &e)     { cout << s << ": out of range (" << e.what() << ")" << endl; }
-    }
-
-    // ---------------- .at() checks bounds, [] does NOT ----------------
-    vector<int> v = {1, 2, 3};
+    // ---------------- stoi: tekst, ktory nie jest liczba ----------------
     try
     {
-        cout << v.at(10) << endl;
+        int liczba = stoi("abc");          // rzuca invalid_argument
+        cout << liczba << endl;            // ta linia sie nie wykona
     }
-    catch (const out_of_range &e)
+    catch (invalid_argument &e)
     {
-        cout << "vector.at(10): " << e.what() << endl;
-    }
-
-    // ---------------- catch ORDER: specific first, general last ----------------
-    try
-    {
-        safeDivide(1, 0);
-    }
-    catch (const runtime_error &e) { cout << "runtime_error: " << e.what() << endl; }
-    catch (const exception &e)     { cout << "any std exception: " << e.what() << endl; }
-    catch (...)                    { cout << "anything else" << endl; }
-
-    // ---------------- bad_alloc: not enough memory for new ----------------
-    try
-    {
-        long long huge = 1LL << 62;
-        int *p = new int[huge];
-        delete[] p;
-    }
-    catch (const bad_alloc &e)
-    {
-        cout << "bad_alloc: " << e.what() << endl;
-    }
-    catch (const exception &e)        // some compilers throw bad_array_new_length (also an exception)
-    {
-        cout << "allocation failed: " << e.what() << endl;
+        cout << "To nie jest liczba" << endl;
     }
 
-    // ---------------- rethrow: handle partly, pass it up ----------------
+    // ---------------- .at() sprawdza zakres, [] NIE sprawdza ----------------
+    string tekst = "Ala";
     try
     {
-        try
-        {
-            throw logic_error("inner problem");
-        }
-        catch (const exception &e)
-        {
-            cout << "inner catch logs: " << e.what() << endl;
-            throw;                     // rethrow the SAME exception
-        }
+        cout << tekst.at(10) << endl;      // rzuca out_of_range
     }
-    catch (const logic_error &e)
+    catch (out_of_range &e)
     {
-        cout << "outer catch got: " << e.what() << endl;
+        cout << "Indeks poza napisem" << endl;
+    }
+
+    // ---------------- kolejnosc catch: szczegolowe najpierw, ogolne na koncu ----------------
+    try
+    {
+        throw runtime_error("cos poszlo nie tak");
+    }
+    catch (runtime_error &e)
+    {
+        cout << "runtime_error: " << e.what() << endl;
+    }
+    catch (exception &e)                   // klasa bazowa WSZYSTKICH wyjatkow biblioteki
+    {
+        cout << "inny wyjatek biblioteki: " << e.what() << endl;
+    }
+    catch (...)                            // cokolwiek innego (int, tekst...)
+    {
+        cout << "nieznany blad" << endl;
     }
 
     return 0;

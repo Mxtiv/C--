@@ -1,83 +1,61 @@
 // ======================================================================
-// ADDED (gap-fill): <algorithm> + <numeric> cheat sheet on a vector -
-// sort, reverse, find, count, count_if, min/max_element, accumulate, unique,
-// remove_if (erase-remove), any_of/all_of, iterators, lambdas
+// ADDED (gap-fill): the basic idea of <algorithm> / <numeric> on a vector -
+// sort, reverse, find, count, min_element / max_element, accumulate
 // Not from your original repo - written to fill a missing topic.
+// Exam code: write these yourself with a loop (see 01_overview_vectors.cpp) -
+// this file is only so you RECOGNISE them in other people's code.
 // ======================================================================
 
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <numeric>
-#include <string>
+#include <algorithm>   // sort, reverse, find, count, min_element, max_element
+#include <numeric>     // accumulate
 using namespace std;
 
-void print(const string &label, const vector<int> &v)
+void wypisz(vector<int> wektor)
 {
-    cout << label;
-    for (int x : v) cout << x << " ";
+    for (int i = 0; i < wektor.size(); i++)
+    {
+        cout << wektor[i] << " ";
+    }
     cout << endl;
 }
 
 int main()
 {
-    vector<int> v = {5, 3, 8, 3, 9, 1, 8, 3};
-    print("start:       ", v);
+    vector<int> wektor = {5, 3, 8, 3, 9, 1, 8, 3};
+    wypisz(wektor);
 
-    // ---------------- iterators ----------------
-    // v.begin() -> first element, v.end() -> one PAST the last. Most algorithms take (begin, end).
-    cout << "first " << *v.begin() << ", last " << *(v.end() - 1) << ", back() " << v.back() << endl;
+    // The algorithms take a RANGE: wektor.begin() = first element,
+    // wektor.end() = one place PAST the last element.
 
-    // ---------------- min / max / sum / average ----------------
-    auto minIt = min_element(v.begin(), v.end());
-    auto maxIt = max_element(v.begin(), v.end());
-    int sum = accumulate(v.begin(), v.end(), 0);       // 0 = start value (use 0.0 for double sum)
-    cout << "min " << *minIt << " at " << (minIt - v.begin())
-         << ", max " << *maxIt << ", sum " << sum
-         << ", avg " << (double)sum / v.size() << endl;
+    sort(wektor.begin(), wektor.end());             // ascending
+    cout << "sorted:   ";
+    wypisz(wektor);
 
-    // ---------------- find / count ----------------
-    auto it = find(v.begin(), v.end(), 9);
-    cout << "9 found? " << (it != v.end()) << ", count of 3: " << count(v.begin(), v.end(), 3) << endl;
-    int evens = count_if(v.begin(), v.end(), [](int x) { return x % 2 == 0; });   // lambda condition
-    cout << "even numbers: " << evens << endl;
+    reverse(wektor.begin(), wektor.end());          // reverse order
+    cout << "reversed: ";
+    wypisz(wektor);
 
-    // ---------------- any_of / all_of / none_of ----------------
-    cout << boolalpha
-         << "any > 8? " << any_of(v.begin(), v.end(), [](int x) { return x > 8; })
-         << ", all > 0? " << all_of(v.begin(), v.end(), [](int x) { return x > 0; }) << endl;
+    cout << "count of 3: " << count(wektor.begin(), wektor.end(), 3) << endl;
 
-    // ---------------- sort / reverse ----------------
-    vector<int> s = v;
-    sort(s.begin(), s.end());                  print("sorted:      ", s);
-    sort(s.begin(), s.end(), greater<int>());  print("descending:  ", s);
-    reverse(s.begin(), s.end());               print("reversed:    ", s);
+    // find gives the place of the value, or wektor.end() if it is not there
+    if (find(wektor.begin(), wektor.end(), 9) != wektor.end())
+    {
+        cout << "9 found" << endl;
+    }
 
-    // ---------------- remove duplicates (needs sorted data) ----------------
-    s.erase(unique(s.begin(), s.end()), s.end());
-    print("unique:      ", s);
+    // min_element / max_element give a place; * reads the value from that place
+    cout << "min: " << *min_element(wektor.begin(), wektor.end()) << endl;
+    cout << "max: " << *max_element(wektor.begin(), wektor.end()) << endl;
 
-    // ---------------- erase-remove idiom: delete all elements matching a condition ----------------
-    vector<int> r = v;
-    r.erase(remove_if(r.begin(), r.end(), [](int x) { return x == 3; }), r.end());
-    print("without 3s:  ", r);
+    // accumulate adds everything up, starting from 0
+    cout << "sum: " << accumulate(wektor.begin(), wektor.end(), 0) << endl;
 
-    // ---------------- transform: apply a function to every element ----------------
-    vector<int> doubled(v.size());
-    transform(v.begin(), v.end(), doubled.begin(), [](int x) { return x * 2; });
-    print("doubled:     ", doubled);
-
-    // ---------------- fill / iota ----------------
-    vector<int> seq(5);
-    iota(seq.begin(), seq.end(), 1);           // 1 2 3 4 5
-    print("iota:        ", seq);
-    fill(seq.begin(), seq.end(), 7);
-    print("fill 7:      ", seq);
-
-    // ---------------- the same algorithms work on plain arrays ----------------
-    int arr[] = {4, 2, 6};
-    sort(arr, arr + 3);
-    cout << "array sorted: " << arr[0] << arr[1] << arr[2] << ", max " << *max_element(arr, arr + 3) << endl;
+    // The same works on a plain array: tab and tab + n are its begin and end
+    int tab[3] = {4, 2, 6};
+    sort(tab, tab + 3);
+    cout << "array sorted: " << tab[0] << " " << tab[1] << " " << tab[2] << endl;
 
     return 0;
 }

@@ -5,61 +5,45 @@
 // ======================================================================
 
 #include <iostream>
-#include <iomanip>   // setw, setprecision, fixed, setfill, left, right
 #include <string>
-#include <limits>    // numeric_limits (for clearing bad input)
+#include <iomanip>   // setprecision, fixed, setw  <- the topic of this file (exam code: plain cout)
 using namespace std;
 
 int main()
 {
     // ---------------- cin >> reads ONE word / number (stops at space) ----------------
-    int age;
-    cout << "Age: ";
-    cin >> age;
-
-    // ---------------- input validation (user typed letters instead of a number) ----------------
-    while (cin.fail() || age < 0)
+    int wiek;
+    do
     {
-        cin.clear();                                            // reset the error flag
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');    // throw away the bad line
-        cout << "Wrong value, try again: ";
-        cin >> age;
-    }
+        cout << "Age (0-120): ";
+        cin >> wiek;
+    } while (wiek < 0 || wiek > 120);      // simple validation: ask again until it is OK
 
     // ---------------- getline reads a WHOLE line (with spaces) ----------------
     // After cin >> there is a leftover '\n' in the buffer -> getline would read an empty line.
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');        // so: ignore it first!
-    string fullName;
+    cin.ignore();                           // so: ignore it first!
+    string imieNazwisko;
     cout << "Full name (with space): ";
-    getline(cin, fullName);
+    getline(cin, imieNazwisko);
 
     // ---------------- several values in one line ----------------
     double a, b;
     cout << "Two numbers separated by space: ";
     cin >> a >> b;
 
-    // ---------------- OUTPUT FORMATTING ----------------
-    cout << "\nHello " << fullName << ", age " << age << endl;
+    cout << "Hello " << imieNazwisko << ", age " << wiek << endl;
+    if (b != 0)
+    {
+        cout << "a / b = " << a / b << endl;          // plain cout: e.g. 3.33333
+    }
 
-    cout << fixed << setprecision(2);                   // always 2 digits after the dot
-    cout << "a / b = " << a / b << endl;                // e.g. 3.33
-    cout << "pi    = " << 3.14159265 << endl;           // 3.14
-    cout.unsetf(ios::fixed);                            // back to default formatting
-    cout << setprecision(6);
+    // ---------------- iomanip (the topic) ----------------
+    cout << fixed << setprecision(2);                 // from now on: 2 digits after the dot
+    cout << "pi = " << 3.14159265 << endl;            // 3.14
 
-    // table with columns: setw(n) sets the width of the NEXT item only
-    cout << left  << setw(10) << "Name" << right << setw(8) << "Score" << endl;
-    cout << left  << setw(10) << "Ala"  << right << setw(8) << 95 << endl;
-    cout << left  << setw(10) << "Bartek" << right << setw(8) << 7 << endl;
-
-    // leading zeros, e.g. dates 05.03.2024
-    cout << setfill('0') << setw(2) << 5 << "." << setw(2) << 3 << ".2024" << setfill(' ') << endl;
-
-    // other number formats
-    cout << "255 in hex: " << hex << 255 << ", in oct: " << oct << 255 << dec << endl;
-
-    // ---------------- cerr = error stream ----------------
-    if (b == 0) cerr << "Warning: division by zero above!" << endl;
+    // setw(n) sets the width of the NEXT item only (for simple tables)
+    cout << setw(10) << "Name" << setw(8) << "Score" << endl;
+    cout << setw(10) << "Ala" << setw(8) << 95 << endl;
 
     return 0;
 }

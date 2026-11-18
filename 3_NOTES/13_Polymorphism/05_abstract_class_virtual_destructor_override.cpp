@@ -1,65 +1,85 @@
 // ======================================================================
-// virtual ~Base(), pure virtual const = 0, override keyword
+// virtual destructor + override keyword (override is NOT needed at the exam;
+// virtual destructor only when you delete through a base pointer)
 // Original file: unsorted/various/virtual1.cpp
 // ======================================================================
 
 #include <iostream>
+using namespace std;
 
-// Base class
-class Vehicle {
+class Pojazd
+{
 public:
-    virtual ~Vehicle() {} // Virtual destructor
-    virtual void displayType() const = 0; // Pure virtual function
-    virtual void displaySpeed() const = 0; // Pure virtual function
+    // virtual destruktor: dzieki niemu "delete wskaznikBazowy;" wywola tez
+    // destruktor klasy pochodnej. Potrzebny TYLKO gdy obiekt pochodny tworzysz
+    // przez new i usuwasz przez wskaznik do bazy. Gdy obiekty sa zwyklymi
+    // zmiennymi (Samochod s(120); Pojazd *p = &s;) - niepotrzebny.
+    virtual ~Pojazd()
+    {
+    }
+
+    virtual void wyswietlTyp() = 0;
+    virtual void wyswietlPredkosc() = 0;
 };
 
-// Derived class: Car
-class Car : public Vehicle {
+class Samochod : public Pojazd
+{
 private:
-    int speed; // Speed of the car
-public:
-    Car(int s) : speed(s) {}
+    int predkosc;
 
-    void displayType() const override {
-        std::cout << "Vehicle Type: Car" << std::endl;
+public:
+    Samochod(int nowaPredkosc)
+    {
+        predkosc = nowaPredkosc;
     }
 
-    void displaySpeed() const override {
-        std::cout << "Speed: " << speed << " km/h" << std::endl;
+    // override = kompilator sprawdza, czy w bazie jest taka metoda virtual
+    // (chroni przed literowka). Opcjonalne - na egzaminie niepotrzebne.
+    void wyswietlTyp() override
+    {
+        cout << "Typ: samochod" << endl;
+    }
+
+    void wyswietlPredkosc() override
+    {
+        cout << "Predkosc: " << predkosc << " km/h" << endl;
     }
 };
 
-// Derived class: Bike
-class Bike : public Vehicle {
+class Rower : public Pojazd
+{
 private:
-    int speed; // Speed of the bike
-public:
-    Bike(int s) : speed(s) {}
+    int predkosc;
 
-    void displayType() const override {
-        std::cout << "Vehicle Type: Bike" << std::endl;
+public:
+    Rower(int nowaPredkosc)
+    {
+        predkosc = nowaPredkosc;
     }
 
-    void displaySpeed() const override {
-        std::cout << "Speed: " << speed << " km/h" << std::endl;
+    // bez override tez dziala tak samo
+    void wyswietlTyp()
+    {
+        cout << "Typ: rower" << endl;
+    }
+
+    void wyswietlPredkosc()
+    {
+        cout << "Predkosc: " << predkosc << " km/h" << endl;
     }
 };
 
-int main() {
-    // Create raw pointers to manage the Vehicle objects on the heap
-    Vehicle* vehicle1 = new Car(120);
-    Vehicle* vehicle2 = new Bike(80);
+int main()
+{
+    Pojazd *pojazd1 = new Samochod(120);
+    Pojazd *pojazd2 = new Rower(25);
 
-    // Display vehicle types and speeds using dynamic polymorphism
-    vehicle1->displayType(); // Calls Car's displayType
-    vehicle1->displaySpeed(); // Calls Car's displaySpeed
+    pojazd1->wyswietlTyp();
+    pojazd1->wyswietlPredkosc();
+    pojazd2->wyswietlTyp();
+    pojazd2->wyswietlPredkosc();
 
-    vehicle2->displayType(); // Calls Bike's displayType
-    vehicle2->displaySpeed(); // Calls Bike's displaySpeed
-
-    // Clean up memory
-    delete vehicle1;
-    delete vehicle2;
-
-    return 0; // Memory is manually cleaned up
+    delete pojazd1;     // OK - bo ~Pojazd() jest virtual
+    delete pojazd2;
+    return 0;
 }

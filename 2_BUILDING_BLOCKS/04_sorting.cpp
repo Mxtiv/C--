@@ -1,17 +1,17 @@
 // ======================================================================
 // BUILDING BLOCKS: sorting (sortowanie) - bubble, selection, insertion (ascending
-// and descending), quicksort, counting sort, std::sort
+// and descending), quicksort, counting sort
 // HOW TO USE: copy the comment box + code under a //@ line, up to the next //@ line.
 // Descending = flip the comparison sign (marked with  <-  in every block).
+// Swapping two elements is always written by hand with a helper variable:
+//     int pomocnicza = tab[a];  tab[a] = tab[b];  tab[b] = pomocnicza;
 // ======================================================================
 
 #include <iostream>
-#include <algorithm>
-#include <functional>
-#include <vector>
+#include <string>
 using namespace std;
 
-//@ SORT-01 | bubble sort ASCENDING (stops early when nothing was swapped) | <utility>
+//@ SORT-01 | bubble sort ASCENDING (stops early when nothing was swapped) | -
 /********************************************************
  * nazwa funkcji: sortujBabelkowo
  * opis funkcji: sortuje tablicę rosnąco metodą bąbelkową - porównuje sąsiednie elementy
@@ -30,15 +30,20 @@ void sortujBabelkowo(int tab[], int n)
         {
             if (tab[j] > tab[j + 1])            // <-  > ascending,  < descending
             {
-                swap(tab[j], tab[j + 1]);
+                int pomocnicza = tab[j];
+                tab[j] = tab[j + 1];
+                tab[j + 1] = pomocnicza;
                 zamiana = true;
             }
         }
-        if (!zamiana) break;
+        if (!zamiana)
+        {
+            break;
+        }
     }
 }
 
-//@ SORT-02 | bubble sort DESCENDING | <utility>
+//@ SORT-02 | bubble sort DESCENDING | -
 /********************************************************
  * nazwa funkcji: sortujBabelkowoMalejaco
  * opis funkcji: sortuje tablicę malejąco metodą bąbelkową
@@ -56,15 +61,20 @@ void sortujBabelkowoMalejaco(int tab[], int n)
         {
             if (tab[j] < tab[j + 1])            // <-
             {
-                swap(tab[j], tab[j + 1]);
+                int pomocnicza = tab[j];
+                tab[j] = tab[j + 1];
+                tab[j + 1] = pomocnicza;
                 zamiana = true;
             }
         }
-        if (!zamiana) break;
+        if (!zamiana)
+        {
+            break;
+        }
     }
 }
 
-//@ SORT-03 | selection sort ASCENDING (find the minimum, put it at position i) | <utility>
+//@ SORT-03 | selection sort ASCENDING (find the minimum, put it at position i) | -
 /********************************************************
  * nazwa funkcji: sortujPrzezWybieranie
  * opis funkcji: sortuje tablicę rosnąco przez wybieranie - w każdym kroku wyszukuje
@@ -80,13 +90,19 @@ void sortujPrzezWybieranie(int tab[], int n)
     {
         int indeksMin = i;
         for (int j = i + 1; j < n; j++)
+        {
             if (tab[j] < tab[indeksMin])         // <-  < ascending,  > descending
+            {
                 indeksMin = j;
-        swap(tab[i], tab[indeksMin]);
+            }
+        }
+        int pomocnicza = tab[i];
+        tab[i] = tab[indeksMin];
+        tab[indeksMin] = pomocnicza;
     }
 }
 
-//@ SORT-04 | selection sort DESCENDING (find the maximum) | <utility>
+//@ SORT-04 | selection sort DESCENDING (find the maximum) | -
 /********************************************************
  * nazwa funkcji: sortujPrzezWybieranieMalejaco
  * opis funkcji: sortuje tablicę malejąco przez wybieranie - w każdym kroku wyszukuje
@@ -102,9 +118,15 @@ void sortujPrzezWybieranieMalejaco(int tab[], int n)
     {
         int indeksMax = i;
         for (int j = i + 1; j < n; j++)
+        {
             if (tab[j] > tab[indeksMax])         // <-
+            {
                 indeksMax = j;
-        swap(tab[i], tab[indeksMax]);
+            }
+        }
+        int pomocnicza = tab[i];
+        tab[i] = tab[indeksMax];
+        tab[indeksMax] = pomocnicza;
     }
 }
 
@@ -133,7 +155,7 @@ void sortujPrzezWstawianie(int tab[], int n)
     }
 }
 
-//@ SORT-06 | quicksort (fast, recursive) - call: sortujSzybko(tab, 0, n - 1) | <utility>
+//@ SORT-06 | quicksort (fast, recursive) - call: sortujSzybko(tab, 0, n - 1) | -
 /********************************************************
  * nazwa funkcji: sortujSzybko
  * opis funkcji: sortuje rosnąco fragment tablicy algorytmem szybkiego sortowania (quicksort)
@@ -145,16 +167,28 @@ void sortujPrzezWstawianie(int tab[], int n)
  ********************************************************/
 void sortujSzybko(int tab[], int lewy, int prawy)
 {
-    if (lewy >= prawy) return;
+    if (lewy >= prawy)
+    {
+        return;
+    }
     int pivot = tab[(lewy + prawy) / 2];
-    int i = lewy, j = prawy;
+    int i = lewy;
+    int j = prawy;
     while (i <= j)
     {
-        while (tab[i] < pivot) i++;
-        while (tab[j] > pivot) j--;
+        while (tab[i] < pivot)
+        {
+            i++;
+        }
+        while (tab[j] > pivot)
+        {
+            j--;
+        }
         if (i <= j)
         {
-            swap(tab[i], tab[j]);
+            int pomocnicza = tab[i];
+            tab[i] = tab[j];
+            tab[j] = pomocnicza;
             i++;
             j--;
         }
@@ -163,7 +197,7 @@ void sortujSzybko(int tab[], int lewy, int prawy)
     sortujSzybko(tab, i, prawy);
 }
 
-//@ SORT-07 | counting sort - for small value ranges (e.g. grades 1..6, dice) | <vector>
+//@ SORT-07 | counting sort - for small value ranges (e.g. grades 1..6, dice) | -
 /********************************************************
  * nazwa funkcji: sortujPrzezZliczanie
  * opis funkcji: sortuje rosnąco tablicę liczb z przedziału min..max przez zliczanie
@@ -171,61 +205,83 @@ void sortujSzybko(int tab[], int lewy, int prawy)
  * parametry: tab - tablica do posortowania
  *            n - liczba elementów tablicy
  *            min - najmniejsza możliwa wartość
- *            max - największa możliwa wartość
+ *            max - największa możliwa wartość (max - min < 100)
  * zwracany typ i opis: brak
  * autor: <numer zdającego>
  ********************************************************/
 void sortujPrzezZliczanie(int tab[], int n, int min, int max)
 {
-    vector<int> licznik(max - min + 1, 0);
+    int licznik[100];                    // licznik[w - min] = how many times w occurs
+    for (int i = 0; i <= max - min; i++)
+    {
+        licznik[i] = 0;
+    }
     for (int i = 0; i < n; i++)
+    {
         licznik[tab[i] - min]++;
+    }
     int k = 0;
     for (int w = min; w <= max; w++)
+    {
         for (int ile = 0; ile < licznik[w - min]; ile++)
-            tab[k++] = w;
-}
-
-//@ SORT-08 | library sort std::sort - ascending / descending (when the task doesn't require your own algorithm) | <algorithm> <functional>
-/********************************************************
- * nazwa funkcji: sortujBiblioteka
- * opis funkcji: sortuje tablicę funkcją std::sort rosnąco lub malejąco
- * parametry: tab - tablica do posortowania
- *            n - liczba elementów tablicy
- *            malejaco - true = sortowanie malejące, false = rosnące
- * zwracany typ i opis: brak
- * autor: <numer zdającego>
- ********************************************************/
-void sortujBiblioteka(int tab[], int n, bool malejaco)
-{
-    if (malejaco)
-        sort(tab, tab + n, greater<int>());
-    else
-        sort(tab, tab + n);                  // vector: sort(v.begin(), v.end());
+        {
+            tab[k] = w;
+            k++;
+        }
+    }
 }
 
 // ====================== DEMO (don't copy) ======================
-void pokaz(const char *nazwa, const int tab[], int n)
+void kopiuj(int skad[], int dokad[], int n)
+{
+    for (int i = 0; i < n; i++)
+    {
+        dokad[i] = skad[i];
+    }
+}
+
+void pokaz(string nazwa, int tab[], int n)
 {
     cout << nazwa;
-    for (int i = 0; i < n; i++) cout << tab[i] << " ";
+    for (int i = 0; i < n; i++)
+    {
+        cout << tab[i] << " ";
+    }
     cout << endl;
 }
 
 int main()
 {
     const int N = 9;
-    const int dane[N] = {29, 3, 72, 15, 3, 88, 41, 0, 6};
+    int dane[N] = {29, 3, 72, 15, 3, 88, 41, 0, 6};
     int t[N];
 
-    copy(dane, dane + N, t); sortujBabelkowo(t, N);               pokaz("babelkowo:          ", t, N);
-    copy(dane, dane + N, t); sortujBabelkowoMalejaco(t, N);       pokaz("babelkowo malejaco: ", t, N);
-    copy(dane, dane + N, t); sortujPrzezWybieranie(t, N);         pokaz("wybieranie:         ", t, N);
-    copy(dane, dane + N, t); sortujPrzezWybieranieMalejaco(t, N); pokaz("wybieranie malejaco:", t, N);
-    copy(dane, dane + N, t); sortujPrzezWstawianie(t, N);         pokaz("wstawianie:         ", t, N);
-    copy(dane, dane + N, t); sortujSzybko(t, 0, N - 1);           pokaz("szybkie:            ", t, N);
-    copy(dane, dane + N, t); sortujBiblioteka(t, N, true);        pokaz("std::sort malejaco: ", t, N);
+    kopiuj(dane, t, N);
+    sortujBabelkowo(t, N);
+    pokaz("babelkowo:          ", t, N);
+
+    kopiuj(dane, t, N);
+    sortujBabelkowoMalejaco(t, N);
+    pokaz("babelkowo malejaco: ", t, N);
+
+    kopiuj(dane, t, N);
+    sortujPrzezWybieranie(t, N);
+    pokaz("wybieranie:         ", t, N);
+
+    kopiuj(dane, t, N);
+    sortujPrzezWybieranieMalejaco(t, N);
+    pokaz("wybieranie malejaco:", t, N);
+
+    kopiuj(dane, t, N);
+    sortujPrzezWstawianie(t, N);
+    pokaz("wstawianie:         ", t, N);
+
+    kopiuj(dane, t, N);
+    sortujSzybko(t, 0, N - 1);
+    pokaz("szybkie:            ", t, N);
+
     int oceny[] = {4, 2, 6, 1, 4, 3, 5, 2};
-    sortujPrzezZliczanie(oceny, 8, 1, 6);                         pokaz("zliczanie:          ", oceny, 8);
+    sortujPrzezZliczanie(oceny, 8, 1, 6);
+    pokaz("zliczanie:          ", oceny, 8);
     return 0;
 }

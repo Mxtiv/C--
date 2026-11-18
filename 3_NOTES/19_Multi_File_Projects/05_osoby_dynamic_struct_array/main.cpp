@@ -13,14 +13,16 @@ using namespace std;
 int main()
 {
     int liczbaOsob;
-    cout << "Podaj ile osob chcesz wprowadzic: ";
-    cin >> liczbaOsob;                               // read the size FIRST...
+    do
+    {
+        cout << "Ile osob wprowadzic (1-50): ";
+        cin >> liczbaOsob;                       // NAJPIERW wczytaj rozmiar...
+    } while (liczbaOsob < 1 || liczbaOsob > 50);
 
-    Osoby *tablica = utworzTablice(liczbaOsob);      // ...then allocate
-    cout << "\n";
-    wypelnianie(liczbaOsob, tablica);
-    wypisanieOsob(liczbaOsob, tablica);
+    Osoba *tablica = utworzTablice(liczbaOsob);  // ...POTEM utworz tablice
+    wypelnij(tablica, liczbaOsob);
+    wypisz(tablica, liczbaOsob);
 
-    delete[] tablica;                                // free what new[] allocated
+    delete[] tablica;                            // zwolnij to, co przydzielil new[]
     return 0;
 }

@@ -6,43 +6,49 @@
 #include <iostream>
 #include <string>
 using namespace std;
-string szyfrowanie(string s1,string s2)
+
+// 'a'..'w' -> +3,   'x', 'y', 'z' -> wrap to 'a', 'b', 'c'.  Other characters stay.
+string szyfrowanie(string tekst)
 {
-    int i1 = size(s1);
-    for (int i = 0; i < i1; i++) 
+    for (int i = 0; i < tekst.length(); i++)
     {
-        if (s1[i] >= 97 && s1[i] <= 119) {
-            s2[i] = s1[i] + 3;
+        if (tekst[i] >= 'a' && tekst[i] <= 'w')
+        {
+            tekst[i] = tekst[i] + 3;
         }
-        if (s1[i] >= 120 && s1[i] <= 122) {
-            s2[i] = s1[i] + 3 - 26;
+        else if (tekst[i] >= 'x' && tekst[i] <= 'z')
+        {
+            tekst[i] = tekst[i] + 3 - 26;
         }
     }
-    return s2;
+    return tekst;
 }
-string deszyfrowanie(string s1,string s2)
+
+// The other way: 'd'..'z' -> -3,  'a', 'b', 'c' -> wrap to 'x', 'y', 'z'
+string deszyfrowanie(string tekst)
 {
-    
-    int i1 = size(s1);
-    for (int i = 0; i < i1; i++) 
+    for (int i = 0; i < tekst.length(); i++)
     {
-        if (s1[i] >= 100 && s1[i] <= 122) {
-            s2[i] = s1[i] - 3;
+        if (tekst[i] >= 'd' && tekst[i] <= 'z')
+        {
+            tekst[i] = tekst[i] - 3;
         }
-        if (s1[i] >= 97 && s1[i] <= 99) {
-            s2[i] = s1[i] - 3 + 26;
+        else if (tekst[i] >= 'a' && tekst[i] <= 'c')
+        {
+            tekst[i] = tekst[i] - 3 + 26;
         }
     }
-    return s2;
+    return tekst;
 }
-int main() {
-string s1;
-cout << "podaj napis ";
-getline(cin,s1);
-string s2=s1;
-s2=szyfrowanie(s1,s2);
-cout << endl << s2;
-s2=deszyfrowanie(s2,s2);
-cout << endl << s2;
-return 0;
+
+int main()
+{
+    string tekst;
+    cout << "podaj napis: ";
+    getline(cin, tekst);
+
+    string zaszyfrowany = szyfrowanie(tekst);
+    cout << zaszyfrowany << endl;
+    cout << deszyfrowanie(zaszyfrowany) << endl;
+    return 0;
 }

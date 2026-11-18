@@ -1,43 +1,56 @@
 // ======================================================================
-// weighted average; dynamic struct array passed as pointer BY REFERENCE (srednia *&)
+// weighted average; dynamic array of structs (grade + weight) passed to functions
 // Original file: unsorted/various/sredniaWazona.cpp
 // ======================================================================
 
 #include <iostream>
 using namespace std;
-struct srednia {
-  int ocena;
-  int waga;
+
+struct Ocena
+{
+    int ocena;
+    int waga;
 };
-// Function to get input from the user
-void get_input(int &ilosc, srednia *&srednie) {
-  cout << "Podaj ilosc ocen ktore uczen bedzie posiadac";
-  cin >> ilosc;
-  // Allocate memory for the dynamic array of structures
-  srednie = new srednia[ilosc];
-  cout << "Podaj teraz oceny oraz ich wagi";
-  for (int x = 0; x < ilosc; x++) {
-    cin >> srednie[x].ocena >> srednie[x].waga;
-  }
+
+void wczytajOceny(Ocena oceny[], int ilosc)
+{
+    cout << "Podaj teraz oceny oraz ich wagi (ocena waga):" << endl;
+    for (int i = 0; i < ilosc; i++)
+    {
+        cin >> oceny[i].ocena >> oceny[i].waga;
+    }
 }
-// Function to calculate the average
-double calculate_average(srednia *srednie, int ilosc) {
-  double sum_ocen = 0;
-  double sum_wag = 0;
-  for (int x = 0; x < ilosc; x++) {
-    sum_ocen += srednie[x].ocena * srednie[x].waga;
-    sum_wag += srednie[x].waga;
-  }
-  return sum_ocen / sum_wag;
+
+// srednia wazona = suma (ocena * waga) / suma wag
+double sredniaWazona(Ocena oceny[], int ilosc)
+{
+    double sumaOcen = 0;
+    double sumaWag = 0;
+    for (int i = 0; i < ilosc; i++)
+    {
+        sumaOcen = sumaOcen + oceny[i].ocena * oceny[i].waga;
+        sumaWag = sumaWag + oceny[i].waga;
+    }
+    if (sumaWag == 0)
+    {
+        return 0;
+    }
+    return sumaOcen / sumaWag;
 }
-int main() {
-  srednia *srednie = nullptr;
-  int ilosc;
-  get_input(ilosc, srednie);
-  // Calculate the average
-  double average = calculate_average(srednie, ilosc);
-  cout << "Srednia ocen wynosi: " << average << endl;
-  // Free the memory allocated for the dynamic array
-  delete[] srednie;
-  return 0;
+
+int main()
+{
+    int ilosc;
+    do
+    {
+        cout << "Podaj ilosc ocen ktore uczen bedzie posiadac: ";
+        cin >> ilosc;
+    } while (ilosc < 1);
+
+    Ocena *oceny = new Ocena[ilosc];    // dynamic array of structs
+    wczytajOceny(oceny, ilosc);
+    cout << "Srednia ocen wynosi: " << sredniaWazona(oceny, ilosc) << endl;
+
+    delete[] oceny;
+    return 0;
 }

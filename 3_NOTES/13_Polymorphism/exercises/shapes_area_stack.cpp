@@ -1,84 +1,93 @@
 // ======================================================================
-// Figury -> Trojkat/Rownoleglobok/Kolo, base pointer to stack objects
+// Figura -> Trojkat/Rownoleglobok/Kolo, base pointer to stack objects
 // Original file: Classes/Polimorfizm/X) Zadanie figury stos, virtual/main.cpp
-// FIXED - the bugs were: no virtual destructor in Figury; podstawa * wysokosc / 2 is integer division
+// FIXED - the bug was: podstawa * wysokosc / 2 is integer division
 // ======================================================================
 
 #include <iostream>
 using namespace std;
-class Figury
+
+class Figura
 {
 public:
-    virtual ~Figury() {}   // objects are deleted through Figury* -> virtual destructor
-    virtual double polePowierzchni()
+    virtual double pole()
     {
-        cout << endl
-             << "wywołałeś funkcję z klasy bazowej";
+        cout << "wywolales metode z klasy bazowej" << endl;
         return 0;
-    };
+    }
 };
-class Trojkat : public Figury
+
+class Trojkat : public Figura
 {
-public:
+private:
     int podstawa;
     int wysokosc;
-    Trojkat() {};
-    Trojkat(int podstawa1, int wysokosc1)
+
+public:
+    Trojkat(int nowaPodstawa, int nowaWysokosc)
     {
-        podstawa = podstawa1;
-        wysokosc = wysokosc1;
+        podstawa = nowaPodstawa;
+        wysokosc = nowaWysokosc;
     }
-    double polePowierzchni()
+
+    double pole()
     {
         return podstawa * wysokosc / 2.0;
     }
 };
-class Rownoleglobok : public Figury
+
+class Rownoleglobok : public Figura
 {
-public:
+private:
     int podstawa;
     int wysokosc;
-    Rownoleglobok() {};
-    Rownoleglobok(int podstawa1, int wysokosc1) 
+
+public:
+    Rownoleglobok(int nowaPodstawa, int nowaWysokosc)
     {
-        podstawa = podstawa1;
-        wysokosc = wysokosc1;
+        podstawa = nowaPodstawa;
+        wysokosc = nowaWysokosc;
     }
-    double polePowierzchni()
+
+    double pole()
     {
         return podstawa * wysokosc;
     }
 };
-class Kolo : public Figury
+
+class Kolo : public Figura
 {
-public:
+private:
     int promien;
-    Kolo() {};
-    Kolo(int promien1)
+
+public:
+    Kolo(int nowyPromien)
     {
-        promien = promien1;
+        promien = nowyPromien;
     }
-    double polePowierzchni()
+
+    double pole()
     {
-        return 3.14 * (promien * promien);
+        return 3.14 * promien * promien;
     }
 };
+
 int main()
 {
-    Figury *figura;
-    Trojkat trojkat1;
-    figura = &trojkat1;
-    trojkat1.podstawa = 1;
-    trojkat1.wysokosc = 2;
-    cout<<figura->polePowierzchni()<<endl;
-    Rownoleglobok rownoleglobok1;
-    figura = &rownoleglobok1;
-    rownoleglobok1.podstawa = 2;
-    rownoleglobok1.wysokosc = 1;
-    cout<<figura->polePowierzchni()<<endl;
-    Kolo kolo1;
-    figura = &kolo1;
-    kolo1.promien = 4;
-    cout<<figura->polePowierzchni()<<endl;
+    // obiekty na STOSIE (zwykle zmienne) - nie trzeba new ani delete
+    Trojkat trojkat(1, 2);
+    Rownoleglobok rownoleglobok(2, 1);
+    Kolo kolo(4);
+
+    Figura *figura;
+
+    figura = &trojkat;
+    cout << "Pole trojkata: " << figura->pole() << endl;
+
+    figura = &rownoleglobok;
+    cout << "Pole rownolegloboku: " << figura->pole() << endl;
+
+    figura = &kolo;
+    cout << "Pole kola: " << figura->pole() << endl;
     return 0;
 }

@@ -1,54 +1,64 @@
 // ======================================================================
-// singleton that stores a value; second GetInstance returns the first object
+// singleton that stores a value; the second getInstance returns the first object
 // Original file: Singleton/singletonAI.cpp
 // ======================================================================
 
 #include <iostream>
 #include <string>
+#include <cstdlib>      // NULL
+using namespace std;
 
-class Singleton
+/********************************************************
+ * nazwa klasy: Ustawienia
+ * opis klasy: singleton - jedyny obiekt z nazwa programu
+ * pola: instancja - wskaznik na jedyny obiekt
+ *       nazwa - zapamietana wartosc
+ * autor: <numer zdającego>
+ ********************************************************/
+class Ustawienia
 {
 private:
-    // Private static instance pointer to hold the unique instance
-    static Singleton* instance_;
-    std::string value_;
+    static Ustawienia *instancja;
+    string nazwa;
 
-    // Private constructor to prevent direct instantiation
-    Singleton(const std::string& value) : value_(value) {}
-
-public:
-    // Static method to get the instance of the Singleton class
-    static Singleton* GetInstance(const std::string& value)
+    Ustawienia(string nowaNazwa)       // prywatny konstruktor
     {
-        // If no instance exists, create one
-        if (instance_ == nullptr)
-        {
-            instance_ = new Singleton(value);
-        }
-        return instance_; // Return the existing instance
+        nazwa = nowaNazwa;
     }
 
-    // Method to get the value of the Singleton instance
-    std::string value() const {
-        return value_;
+public:
+    static Ustawienia *getInstance(string nowaNazwa)
+    {
+        if (instancja == NULL)
+        {
+            instancja = new Ustawienia(nowaNazwa);   // wartosc liczy sie tylko przy PIERWSZYM wywolaniu
+        }
+        return instancja;
+    }
+
+    string getNazwa()
+    {
+        return nazwa;
     }
 };
 
-// Initialize the static instance pointer to nullptr
-Singleton* Singleton::instance_ = nullptr;
+Ustawienia *Ustawienia::instancja = NULL;
 
 int main()
 {
-    // Get the Singleton instance using GetInstance
-    Singleton* singleton1 = Singleton::GetInstance("First Instance");
-    std::cout << singleton1->value() << "\n";  // Output: First Instance
+    Ustawienia *u1 = Ustawienia::getInstance("Pierwszy");
+    cout << u1->getNazwa() << endl;          // Pierwszy
 
-    // Trying to create another instance (but it's the same one)
-    Singleton* singleton2 = Singleton::GetInstance("Second Instance");
-    std::cout << singleton2->value() << "\n";  // Output: First Instance
+    Ustawienia *u2 = Ustawienia::getInstance("Drugi");
+    cout << u2->getNazwa() << endl;          // nadal Pierwszy - to ten sam obiekt
 
-    // Both should point to the same instance
-    std::cout << (singleton1 == singleton2 ? "Same instance!" : "Different instances!") << "\n";
-
+    if (u1 == u2)
+    {
+        cout << "Ten sam obiekt!" << endl;
+    }
+    else
+    {
+        cout << "Rozne obiekty!" << endl;
+    }
     return 0;
 }

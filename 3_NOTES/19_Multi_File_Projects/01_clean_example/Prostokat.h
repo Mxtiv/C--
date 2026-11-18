@@ -5,27 +5,37 @@
 // Build:  g++ main.cpp Prostokat.cpp -o program.exe
 // ======================================================================
 
-#ifndef PROSTOKAT_H        // include guard: if not defined yet...
-#define PROSTOKAT_H        // ...define it, so a second #include is skipped
-                           // (modern alternative: #pragma once)
-#include <string>
+#ifndef PROSTOKAT_H        // include guard: jesli jeszcze nie zdefiniowane...
+#define PROSTOKAT_H        // ...zdefiniuj - drugi #include tego pliku zostanie pominiety
 
+#include <string>
+using namespace std;       // w duzych projektach unika sie tego w .h - na egzaminie mozna
+
+/********************************************************
+ * nazwa klasy: Prostokat
+ * opis klasy: prostokat o bokach a i b, liczy pole i obwod
+ * pola: a, b - dlugosci bokow
+ *       liczbaProstokatow - wspolny licznik utworzonych obiektow
+ * autor: <numer zdającego>
+ ********************************************************/
 class Prostokat
 {
 private:
     double a;
     double b;
-    static int count;      // declared here, DEFINED in Prostokat.cpp
+    static int liczbaProstokatow;   // tu tylko DEKLARACJA, definicja w Prostokat.cpp
 
 public:
-    Prostokat(double a = 1, double b = 1);
-    double pole() const;
-    double obwod() const;
-    std::string opis() const;   // no "using namespace std" in headers -> write std::
+    Prostokat();                    // same naglowki metod (prototypy)
+    Prostokat(double bokA, double bokB);
+    double pole();
+    double obwod();
+    bool czyKwadrat();
+    void wypisz();
     static int ile();
 };
 
-// free function declaration (prototype)
-bool czyKwadrat(const Prostokat &p, double a, double b);
+// prototyp zwyklej funkcji (definicja w Prostokat.cpp)
+bool czyWiekszy(Prostokat p1, Prostokat p2);
 
 #endif // PROSTOKAT_H

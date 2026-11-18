@@ -3,8 +3,13 @@
 // Original file: unsorted/strukturaProgramu/operacje.h
 // ======================================================================
 
-double poleKw(double);
-double obwodKw(double);
+#ifndef OPERACJE_H
+#define OPERACJE_H
 
-double PolePr(double, double);
-double ObwodPr(double, double);
+double poleKwadratu(double bok);
+double obwodKwadratu(double bok);
+
+double poleProstokata(double a, double b);
+double obwodProstokata(double a, double b);
+
+#endif

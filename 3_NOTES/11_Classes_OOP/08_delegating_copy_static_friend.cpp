@@ -1,5 +1,6 @@
 // ======================================================================
-// delegating ctor, initializer list, copy ctor, static counter (int Ksiazka::x = 0), friend function
+// Ksiazka: copy constructor, static counter (int Ksiazka::licznik = 0),
+// friend function; delegating constructor shown in a comment only.
 // Original file: Classes/ksiazka.cpp
 // ======================================================================
 
@@ -9,75 +10,81 @@ using namespace std;
 
 class Ksiazka
 {
-    private:
-        string tytul;
-        string autor;
-        int rokWydania;
-        static int zliczanieKsiazek;
-    public:
+private:
+    string tytul;
+    string autor;
+    int rokWydania;
+    static int licznik;       // ile książek utworzono (wspólne dla wszystkich)
 
-    Ksiazka() : Ksiazka("brak","brak",0000) {zliczanieKsiazek++;};                                                                   
-    Ksiazka(string TYTUL, string AUTOR, int ROK) : tytul(TYTUL), autor(AUTOR), rokWydania(ROK) {zliczanieKsiazek++;}                  
-    Ksiazka(const Ksiazka &copied) : tytul{copied.tytul}, autor{copied.autor}, rokWydania{copied.rokWydania} {zliczanieKsiazek++;}    
+public:
+    Ksiazka()
+    {
+        tytul = "brak";
+        autor = "brak";
+        rokWydania = 0;
+        licznik++;
+    }
 
-    void setTytul()                                                                 
-        {
-            string tytul1;
-            cout << "Podaj tytul: ";
-            cin >> tytul1;
-            tytul=tytul1;
-        }
-        void setAutor()                                                                
-        {
-            string autor1;
-            cout << "Podaj Autora: ";
-            cin >> autor1;
-            autor=autor1;
-        }
-        void setRok(int podanyRok)                                                                 
-        {
-            rokWydania=podanyRok;
-        }
-        string getTytul()                                                              
-        {
-            return tytul;
-        }
-        string getAutor()                                                              
-        {
-            return autor;
-        }
-        int getRok()                                                                  
-        {
-            return rokWydania;
-        }
-        void wypisz()
-        {
-            cout << "Tytul ksiazki: " << tytul << ".\n";
-            cout << "Autor ksiazki: " << autor << ".\n";
-            cout << "Rok wydania ksiazki: " << rokWydania << ".\n";
-        }
-    friend Ksiazka pomniejszonyRok(Ksiazka ksiazkaPomniejszana);
+    // Konstruktor delegujący = jeden konstruktor woła drugi (tylko do rozpoznania):
+    // Ksiazka() : Ksiazka("brak", "brak", 0)
+    // {
+    // }
+
+    Ksiazka(string nowyTytul, string nowyAutor, int rok)
+    {
+        tytul = nowyTytul;
+        autor = nowyAutor;
+        rokWydania = rok;
+        licznik++;
+    }
+
+    // konstruktor kopiujący - parametr musi być referencją
+    Ksiazka(const Ksiazka &wzor)
+    {
+        tytul = wzor.tytul;
+        autor = wzor.autor;
+        rokWydania = wzor.rokWydania;
+        licznik++;
+    }
+
+    void wypisz()
+    {
+        cout << tytul << ", " << autor << ", " << rokWydania << endl;
+    }
+
+    static int getLicznik()
+    {
+        return licznik;
+    }
+
+    // funkcja zaprzyjaźniona - NIE jest metodą, ale widzi pola private
+    friend Ksiazka cofnijRok(Ksiazka ksiazka, int ileLat);
 };
 
-int Ksiazka::zliczanieKsiazek = 0;
+int Ksiazka::licznik = 0;     // definicja pola static poza klasą
 
-Ksiazka pomniejszonyRok(Ksiazka ksiazkaPomniejszana)
+/********************************************************
+ * nazwa funkcji: cofnijRok
+ * opis funkcji: zwraca kopię książki z rokiem wydania mniejszym o ileLat
+ * parametry: ksiazka - książka (kopia), ileLat - o ile lat cofnąć
+ * zwracany typ i opis: Ksiazka - zmieniona kopia
+ ********************************************************/
+Ksiazka cofnijRok(Ksiazka ksiazka, int ileLat)
 {
-    int pomniejszonyRok;
-    pomniejszonyRok = ksiazkaPomniejszana.getRok()-100;
-    ksiazkaPomniejszana.setRok(pomniejszonyRok);
-    return ksiazkaPomniejszana;
+    ksiazka.rokWydania = ksiazka.rokWydania - ileLat;   // dostęp do private dzięki friend
+    return ksiazka;
 }
+
 int main()
 {
-    Ksiazka ksiazka1("Balladyna", "Adam",1987);
-    Ksiazka ksiazka2=ksiazka1;
-    Ksiazka ksiazka3("Maly Ksiaze", "Leonardo", 2000);
-    ksiazka1.wypisz();
-    cout << "=================================\n";
-    ksiazka2.wypisz();
-    cout << "=================================\n";
-    Ksiazka ksiazka4=pomniejszonyRok(ksiazka3);
-    ksiazka4.wypisz();
-    return 1;
+    Ksiazka k1("Balladyna", "Slowacki", 1839);
+    Ksiazka k2 = k1;                       // konstruktor kopiujący
+    Ksiazka k3 = cofnijRok(k1, 100);       // funkcja friend
+
+    k1.wypisz();
+    k2.wypisz();
+    k3.wypisz();
+    cout << "Utworzono ksiazek: " << Ksiazka::getLicznik() << endl;
+
+    return 0;
 }

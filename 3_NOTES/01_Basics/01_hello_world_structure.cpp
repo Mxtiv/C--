@@ -10,24 +10,24 @@
 using namespace std;  // 2) lets you write cout instead of std::cout (fine for school/exam code)
 
 // 3) Global constants / functions / classes go ABOVE main (or declare a prototype above main)
-const string GREETING = "Hello, World!";
+const string POWITANIE = "Hello, World!";
 
-void sayHello()                 // a function that returns nothing (void)
+void przywitaj()                // a function that returns nothing (void)
 {
-    cout << GREETING << endl;   // endl = new line + flush ; "\n" = new line only (faster)
+    cout << POWITANIE << endl;  // endl = new line + flush ; "\n" = new line only (faster)
 }
 
 // 4) main() is where the program STARTS. It must return int.
 int main()
 {
-    sayHello();
+    przywitaj();
 
     // Statements end with ;   Blocks are in { }
     // Comments: // single line     /* multi
     //                                 line */
 
     cout << "Line 1\n";
-    cout << "Value: " << 42 << ", text: " << "abc" << '\n';   // chain with <<
+    cout << "Value: " << 42 << ", text: " << "abc" << endl;   // chain with <<
 
     return 0;   // 0 = "program ended OK". Any other number = error code.
 }

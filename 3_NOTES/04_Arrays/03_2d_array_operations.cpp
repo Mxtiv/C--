@@ -1,32 +1,37 @@
 // ======================================================================
 // ADDED (gap-fill): 2D arrays - declare, init, pass to function, row/column sums,
-// max element with position, diagonal, dynamic 2D array, vector of vectors
+// max element with position, diagonal
 // Not from your original repo - written to fill a missing topic.
 // ======================================================================
 
 #include <iostream>
-#include <vector>
 #include <cstdlib>
 #include <ctime>
 using namespace std;
 
-const int ROWS = 3;
-const int COLS = 4;
+const int WIERSZE = 3;
+const int KOLUMNY = 4;
 
 // When passing a 2D array, every dimension except the first must be given.
-void fill(int tab[][COLS], int rows)
+void wypelnij(int tab[][KOLUMNY], int wiersze)
 {
-    for (int r = 0; r < rows; r++)
-        for (int c = 0; c < COLS; c++)
-            tab[r][c] = rand() % 10;
+    for (int w = 0; w < wiersze; w++)
+    {
+        for (int k = 0; k < KOLUMNY; k++)
+        {
+            tab[w][k] = rand() % 10;
+        }
+    }
 }
 
-void print(const int tab[][COLS], int rows)
+void wypisz(int tab[][KOLUMNY], int wiersze)
 {
-    for (int r = 0; r < rows; r++)
+    for (int w = 0; w < wiersze; w++)
     {
-        for (int c = 0; c < COLS; c++)
-            cout << tab[r][c] << "\t";
+        for (int k = 0; k < KOLUMNY; k++)
+        {
+            cout << tab[w][k] << "\t";
+        }
         cout << endl;
     }
 }
@@ -36,67 +41,62 @@ int main()
     srand(time(0));
 
     // ---------------- declaration + initialization ----------------
-    int fixed[2][3] = { {1, 2, 3},
+    int stala[2][3] = { {1, 2, 3},
                         {4, 5, 6} };
-    cout << "fixed[1][2] = " << fixed[1][2] << endl;     // row 1, column 2 -> 6
+    cout << "stala[1][2] = " << stala[1][2] << endl;     // row 1, column 2 -> 6
 
-    int tab[ROWS][COLS];
-    fill(tab, ROWS);
-    print(tab, ROWS);
+    int tab[WIERSZE][KOLUMNY];
+    wypelnij(tab, WIERSZE);
+    wypisz(tab, WIERSZE);
 
     // ---------------- row sums ----------------
-    for (int r = 0; r < ROWS; r++)
+    for (int w = 0; w < WIERSZE; w++)
     {
-        int rowSum = 0;
-        for (int c = 0; c < COLS; c++) rowSum += tab[r][c];
-        cout << "row " << r << " sum = " << rowSum << endl;
+        int sumaWiersza = 0;
+        for (int k = 0; k < KOLUMNY; k++)
+        {
+            sumaWiersza = sumaWiersza + tab[w][k];
+        }
+        cout << "row " << w << " sum = " << sumaWiersza << endl;
     }
 
     // ---------------- column sums (swap the loops) ----------------
-    for (int c = 0; c < COLS; c++)
+    for (int k = 0; k < KOLUMNY; k++)
     {
-        int colSum = 0;
-        for (int r = 0; r < ROWS; r++) colSum += tab[r][c];
-        cout << "col " << c << " sum = " << colSum << endl;
+        int sumaKolumny = 0;
+        for (int w = 0; w < WIERSZE; w++)
+        {
+            sumaKolumny = sumaKolumny + tab[w][k];
+        }
+        cout << "col " << k << " sum = " << sumaKolumny << endl;
     }
 
     // ---------------- max with its position ----------------
-    int maxR = 0, maxC = 0;
-    for (int r = 0; r < ROWS; r++)
-        for (int c = 0; c < COLS; c++)
-            if (tab[r][c] > tab[maxR][maxC]) { maxR = r; maxC = c; }
-    cout << "max " << tab[maxR][maxC] << " at [" << maxR << "][" << maxC << "]" << endl;
+    int maxW = 0;
+    int maxK = 0;
+    for (int w = 0; w < WIERSZE; w++)
+    {
+        for (int k = 0; k < KOLUMNY; k++)
+        {
+            if (tab[w][k] > tab[maxW][maxK])
+            {
+                maxW = w;
+                maxK = k;
+            }
+        }
+    }
+    cout << "max " << tab[maxW][maxK] << " at [" << maxW << "][" << maxK << "]" << endl;
 
     // ---------------- square matrix diagonal ----------------
-    int sq[3][3] = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
-    int diag = 0, anti = 0;
+    int kw[3][3] = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
+    int przekatna = 0;
+    int drugaPrzekatna = 0;
     for (int i = 0; i < 3; i++)
     {
-        diag += sq[i][i];          // main diagonal
-        anti += sq[i][2 - i];      // other diagonal
+        przekatna = przekatna + kw[i][i];               // main diagonal
+        drugaPrzekatna = drugaPrzekatna + kw[i][2 - i]; // other diagonal
     }
-    cout << "diagonal sum " << diag << ", anti-diagonal sum " << anti << endl;
-
-    // ---------------- dynamic 2D array (size known only at runtime) ----------------
-    int rows = 2, cols = 5;
-    int **dyn = new int*[rows];            // array of row pointers
-    for (int r = 0; r < rows; r++)
-        dyn[r] = new int[cols];            // each row
-    for (int r = 0; r < rows; r++)
-        for (int c = 0; c < cols; c++)
-            dyn[r][c] = r * cols + c;
-    cout << "dyn[1][4] = " << dyn[1][4] << endl;
-    for (int r = 0; r < rows; r++) delete[] dyn[r];   // free rows first
-    delete[] dyn;                                     // then the row-pointer array
-
-    // ---------------- easier: vector of vectors ----------------
-    vector<vector<int>> grid(rows, vector<int>(cols, 0));   // rows x cols filled with 0
-    grid[0][3] = 7;
-    for (const auto &row : grid)
-    {
-        for (int v : row) cout << v << " ";
-        cout << endl;
-    }
+    cout << "diagonal sum " << przekatna << ", anti-diagonal sum " << drugaPrzekatna << endl;
 
     return 0;
 }

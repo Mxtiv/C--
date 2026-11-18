@@ -1,12 +1,14 @@
 // ======================================================================
-// static member of a struct type; access through a pointer with ->
+// static field whose type is a struct; using an object through a pointer
+// with -> (wskaznik->metoda() is the same as (*wskaznik).metoda()).
 // Original file: unsorted/various/obslugaPrzezPointer.cpp
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-struct DataZatrudnienia
+struct Data
 {
     int dzien;
     int miesiac;
@@ -15,34 +17,44 @@ struct DataZatrudnienia
 
 class Pracownik
 {
-public:
+private:
     string imie;
-    string nazwisko;
-    static DataZatrudnienia data_zatrudnienia;
+    static Data dataZatrudnienia;    // jedna data wspólna dla wszystkich pracowników
 
-    void wyswietlDane()
+public:
+    void setImie(string noweImie)
     {
-        cout << "Imię: " << imie << endl;
-        cout << "Nazwisko: " << nazwisko << endl;
-        cout << "Data zatrudnienia: " << data_zatrudnienia.dzien << "."
-             << data_zatrudnienia.miesiac << "." << data_zatrudnienia.rok << endl;
+        imie = noweImie;
+    }
+
+    static void setData(int dzien, int miesiac, int rok)
+    {
+        dataZatrudnienia.dzien = dzien;
+        dataZatrudnienia.miesiac = miesiac;
+        dataZatrudnienia.rok = rok;
+    }
+
+    void wypisz()
+    {
+        cout << imie << ", zatrudniony: " << dataZatrudnienia.dzien << "."
+             << dataZatrudnienia.miesiac << "." << dataZatrudnienia.rok << endl;
     }
 };
 
-DataZatrudnienia Pracownik::data_zatrudnienia;
+Data Pracownik::dataZatrudnienia;     // definicja pola static poza klasą
 
 int main()
 {
+    Pracownik::setData(9, 11, 2001);      // static - przez nazwę klasy
 
     Pracownik pracownik;
-    Pracownik *w_pracownik = &pracownik;
-    w_pracownik->imie = "Jan";
-    w_pracownik->nazwisko = "Kowalski";
-    w_pracownik->data_zatrudnienia.dzien = 9;
-    w_pracownik->data_zatrudnienia.miesiac = 11;
-    w_pracownik->data_zatrudnienia.rok = 2001;
+    Pracownik *wskaznik = &pracownik;     // wskaźnik na obiekt
+    wskaznik->setImie("Jan Kowalski");    // -> zamiast .
+    wskaznik->wypisz();
 
-    w_pracownik->wyswietlDane();
+    Pracownik drugi;
+    drugi.setImie("Anna Nowak");
+    drugi.wypisz();                       // ta sama data - pole static
 
     return 0;
 }

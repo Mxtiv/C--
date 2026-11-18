@@ -1,33 +1,42 @@
 // ======================================================================
-// std::exception definition (comment), override what() noexcept, catch(const exception&)
+// own exception class derived from std::exception - redefine what()
 // Original file: unsorted/trycatch/exceptions/definition.cpp
 // ======================================================================
 
-/*Definicja klasy exception z bibliteki <exception>
-class exception {
+/* Tak wyglada (w skrocie) klasa exception z biblioteki <exception>:
+class exception
+{
 public:
-    exception() noexcept;// piszemy noexcept aby kompilator dla tej metody nie implementował obsługi błędów
-    exception(const exception&) noexcept; //w niższych standardach zamiast noexcept piszemy  throw()
-    exception& operator=(const exception&) noexcept; Rule of three
-    virtual ~exception() noexcept;
-    virtual const char* what() const noexcept;//const znaczy że funkcja nie zmienia obiektu.
-};*/
+    virtual const char* what() const noexcept;   // zwraca opis bledu
+};
+   Obsluga bledow przy pomocy klasy exception polega na napisaniu klasy
+   pochodnej i zdefiniowaniu w niej na nowo metody what(). */
 
 #include <iostream>
 #include <exception>
 using namespace std;
-class my_exception : public exception {
+
+class MojWyjatek : public exception
+{
 public:
-    const char* what() const noexcept override {
-        return "My custom exception";
+    // naglowek musi byc DOKLADNIE taki jak w klasie exception:
+    // const = metoda nie zmienia obiektu, noexcept = sama nie rzuca wyjatkow
+    // (to jedyne miejsce, gdzie const/noexcept sa potrzebne)
+    const char* what() const noexcept
+    {
+        return "Moj wlasny wyjatek";
     }
 };
-//obsługa błędów pzry pomocy klasy exception polega na redefiniowaniu funkcji what() w klasie pochodnej od exception.
-int main() {
-    try {
-        throw my_exception();
-    } catch (const exception& e) {
-        cout << "Caught exception: " << e.what() << endl;
+
+int main()
+{
+    try
+    {
+        throw MojWyjatek();
+    }
+    catch (exception &e)          // wyjatki-klasy lapiemy przez referencje &
+    {
+        cout << "Zlapano wyjatek: " << e.what() << endl;
     }
     return 0;
 }

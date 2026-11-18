@@ -1,37 +1,58 @@
 // ======================================================================
 // minimal singleton: private ctor, static instance pointer, getInstance()
 // Original file: Singleton/singletonTailored.cpp
+//
+// Singleton = klasa, ktora moze miec TYLKO JEDEN obiekt.
+//   1. konstruktor prywatny     -> nie da sie napisac  Singleton s;
+//   2. static wskaznik instancja -> pamieta ten jeden obiekt
+//   3. static getInstance()      -> tworzy obiekt przy pierwszym wywolaniu,
+//                                   potem zwraca wciaz ten sam
 // ======================================================================
 
 #include <iostream>
+#include <cstdlib>      // NULL
 using namespace std;
 
 class Singleton
 {
 private:
-    static Singleton *instance;
-    Singleton() {}
+    static Singleton *instancja;
+
+    Singleton()                       // prywatny konstruktor
+    {
+        cout << "Tworze jedyny obiekt" << endl;
+    }
 
 public:
     static Singleton *getInstance()
     {
-        if (instance == nullptr)
+        if (instancja == NULL)        // pierwszy raz - utworz obiekt
         {
-            instance = new Singleton();
+            instancja = new Singleton();
         }
-        return instance;
+        return instancja;             // kazdy nastepny raz - ten sam obiekt
     }
-    void sayHi()
+
+    void przywitaj()
     {
-        cout << "I am Singleton" << endl;
+        cout << "Jestem Singletonem" << endl;
     }
 };
-Singleton *Singleton::instance = nullptr;
+
+Singleton *Singleton::instancja = NULL;   // definicja pola static poza klasa
+
 int main()
 {
-    Singleton *s = Singleton::getInstance();
-    s->sayHi();
-    Singleton *t = Singleton::getInstance();
-    t->sayHi();
+    // Singleton s;                   // BLAD - konstruktor jest prywatny
+
+    Singleton *s1 = Singleton::getInstance();
+    s1->przywitaj();
+    Singleton *s2 = Singleton::getInstance();   // "Tworze..." NIE wypisze sie drugi raz
+    s2->przywitaj();
+
+    if (s1 == s2)
+    {
+        cout << "s1 i s2 to ten sam obiekt" << endl;
+    }
     return 0;
 }

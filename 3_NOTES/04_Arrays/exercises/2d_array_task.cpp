@@ -1,5 +1,5 @@
 // ======================================================================
-// 2D array random fill + print
+// 2D array random fill + print (everything in main)
 // Original file: Arrays/dwuwymiaroweTablice/zadanie.cpp
 // FIXED - the bug was: array declared [3][4] but loops only go 2x3
 // ======================================================================
@@ -8,24 +8,27 @@
 #include <cstdlib>
 #include <ctime>
 using namespace std;
+
 int main()
 {
-int arr[3][4];
-srand(time(NULL));
-for (int i = 0; i < 3; i++)
+    srand(time(0));
+    int tab[3][4];
+
+    for (int i = 0; i < 3; i++)
     {
-      for (short j = 0; j < 4; j++)
-      {
-        arr[i][j] = rand() % 11;
-      }
+        for (int j = 0; j < 4; j++)
+        {
+            tab[i][j] = rand() % 11;
+        }
     }
-     for (short i = 0; i < 3; i++)
-  {
-    for (short j = 0; j < 4; j++)
+
+    for (int i = 0; i < 3; i++)
     {
-      cout << arr[i][j] << " ";
+        for (int j = 0; j < 4; j++)
+        {
+            cout << tab[i][j] << " ";
+        }
+        cout << endl;
     }
-    cout << endl;
-  }
-return 0;
+    return 0;
 }

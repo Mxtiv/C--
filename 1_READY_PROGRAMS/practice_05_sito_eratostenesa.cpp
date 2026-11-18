@@ -10,66 +10,64 @@
 // i (dopóki i*i <= n) wykreślamy ich wielokrotności, zaczynając od i*i.
 
 #include <iostream>
-#include <vector>
-#include <string>
-#include <limits>
 using namespace std;
+
+const int MAX_N = 10000;
 
 /********************************************************
  * nazwa funkcji: sitoEratostenesa
  * opis funkcji: wyznacza liczby pierwsze nie większe od n metodą sita Eratostenesa
+ *               i zapisuje je do tablicy pierwsze
  * parametry: n - górna granica przedziału
- * zwracany typ i opis: vector<int> - liczby pierwsze z przedziału 2..n
+ *            pierwsze - tablica, do której trafiają znalezione liczby pierwsze
+ * zwracany typ i opis: int - liczba znalezionych liczb pierwszych
  * autor: <numer zdającego>
  ********************************************************/
-vector<int> sitoEratostenesa(int n)
+int sitoEratostenesa(int n, int pierwsze[])
 {
-    vector<bool> czyPierwsza(n + 1, true);     // vector<bool> instead of bool tab[n+1]
-    vector<int> pierwsze;
+    bool czyPierwsza[MAX_N + 1];
+    for (int i = 0; i <= n; i++)
+    {
+        czyPierwsza[i] = true;
+    }
+
+    int ile = 0;
     for (int i = 2; i <= n; i++)
     {
-        if (!czyPierwsza[i]) continue;
-        pierwsze.push_back(i);
-        for (long long j = (long long)i * i; j <= n; j += i)
-            czyPierwsza[j] = false;              // cross out multiples of i
+        if (czyPierwsza[i])
+        {
+            pierwsze[ile] = i;
+            ile++;
+            for (int j = i * i; j <= n; j = j + i)
+            {
+                czyPierwsza[j] = false;          // cross out multiples of i
+            }
+        }
     }
-    return pierwsze;
-}
-
-/********************************************************
- * nazwa funkcji: wczytajLiczbe
- * opis funkcji: wczytuje liczbę całkowitą z zakresu min..max, ponawiając pytanie przy błędzie
- * parametry: komunikat - tekst wyświetlany użytkownikowi
- *            min - najmniejsza dopuszczalna wartość
- *            max - największa dopuszczalna wartość
- * zwracany typ i opis: int - poprawna liczba
- * autor: <numer zdającego>
- ********************************************************/
-int wczytajLiczbe(const string &komunikat, int min, int max)
-{
-    int liczba;
-    while (true)
-    {
-        cout << komunikat;
-        if (cin >> liczba && liczba >= min && liczba <= max)
-            return liczba;
-        cout << "Podaj liczbe od " << min << " do " << max << "." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
+    return ile;
 }
 
 int main()
 {
-    int n = wczytajLiczbe("Podaj gorna granice przedzialu n (2-10000): ", 2, 10000);
-    vector<int> pierwsze = sitoEratostenesa(n);
+    int n;
+    do
+    {
+        cout << "Podaj gorna granice przedzialu n (2-10000): ";
+        cin >> n;
+    } while (n < 2 || n > MAX_N);
+
+    int pierwsze[MAX_N];
+    int ile = sitoEratostenesa(n, pierwsze);
 
     cout << "Liczby pierwsze z przedzialu 2.." << n << ":" << endl;
-    for (size_t i = 0; i < pierwsze.size(); i++)
+    for (int i = 0; i < ile; i++)
     {
         cout << pierwsze[i] << " ";
-        if ((i + 1) % 15 == 0) cout << endl;     // 15 numbers per line
+        if ((i + 1) % 15 == 0)
+        {
+            cout << endl;                        // 15 numbers per line
+        }
     }
-    cout << endl << "Liczba znalezionych liczb pierwszych: " << pierwsze.size() << endl;
+    cout << endl << "Liczba znalezionych liczb pierwszych: " << ile << endl;
     return 0;
 }

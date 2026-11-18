@@ -13,7 +13,6 @@
 #include <iostream>
 #include <string>
 #include <cctype>
-#include <iomanip>
 using namespace std;
 
 /********************************************************
@@ -23,12 +22,19 @@ using namespace std;
  * zwracany typ i opis: bool - true, gdy format jest poprawny
  * autor: <numer zdającego>
  ********************************************************/
-bool czyPoprawnyFormat(const string &pesel)
+bool czyPoprawnyFormat(string pesel)
 {
-    if (pesel.length() != 11) return false;
-    for (char c : pesel)
-        if (!isdigit(c))
+    if (pesel.length() != 11)
+    {
+        return false;
+    }
+    for (int i = 0; i < 11; i++)
+    {
+        if (!isdigit(pesel[i]))
+        {
             return false;
+        }
+    }
     return true;
 }
 
@@ -40,14 +46,20 @@ bool czyPoprawnyFormat(const string &pesel)
  * zwracany typ i opis: bool - true, gdy suma kontrolna jest zgodna
  * autor: <numer zdającego>
  ********************************************************/
-bool sprawdzSumeKontrolna(const string &pesel)
+bool sprawdzSumeKontrolna(string pesel)
 {
-    const int wagi[10] = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
+    int wagi[10] = {1, 3, 7, 9, 1, 3, 7, 9, 1, 3};
     int suma = 0;
     for (int i = 0; i < 10; i++)
-        suma += (pesel[i] - '0') * wagi[i];
+    {
+        suma = suma + (pesel[i] - '0') * wagi[i];
+    }
     int kontrolna = (10 - suma % 10) % 10;
-    return kontrolna == pesel[10] - '0';
+    if (kontrolna == pesel[10] - '0')
+    {
+        return true;
+    }
+    return false;
 }
 
 /********************************************************
@@ -58,9 +70,13 @@ bool sprawdzSumeKontrolna(const string &pesel)
  * zwracany typ i opis: char - 'K' (kobieta) lub 'M' (mężczyzna)
  * autor: <numer zdającego>
  ********************************************************/
-char plec(const string &pesel)
+char plec(string pesel)
 {
-    return ((pesel[9] - '0') % 2 == 0) ? 'K' : 'M';
+    if ((pesel[9] - '0') % 2 == 0)
+    {
+        return 'K';
+    }
+    return 'M';
 }
 
 /********************************************************
@@ -72,40 +88,77 @@ char plec(const string &pesel)
  * zwracany typ i opis: brak (wyniki przez parametry referencyjne)
  * autor: <numer zdającego>
  ********************************************************/
-void dataUrodzenia(const string &pesel, int &dzien, int &miesiac, int &rok)
+void dataUrodzenia(string pesel, int &dzien, int &miesiac, int &rok)
 {
     rok = (pesel[0] - '0') * 10 + (pesel[1] - '0');
     miesiac = (pesel[2] - '0') * 10 + (pesel[3] - '0');
     dzien = (pesel[4] - '0') * 10 + (pesel[5] - '0');
 
-    if (miesiac > 80)      { rok += 1800; miesiac -= 80; }
-    else if (miesiac > 60) { rok += 2200; miesiac -= 60; }
-    else if (miesiac > 40) { rok += 2100; miesiac -= 40; }
-    else if (miesiac > 20) { rok += 2000; miesiac -= 20; }
-    else                   { rok += 1900; }
+    if (miesiac > 80)
+    {
+        rok = rok + 1800;
+        miesiac = miesiac - 80;
+    }
+    else if (miesiac > 60)
+    {
+        rok = rok + 2200;
+        miesiac = miesiac - 60;
+    }
+    else if (miesiac > 40)
+    {
+        rok = rok + 2100;
+        miesiac = miesiac - 40;
+    }
+    else if (miesiac > 20)
+    {
+        rok = rok + 2000;
+        miesiac = miesiac - 20;
+    }
+    else
+    {
+        rok = rok + 1900;
+    }
 }
 
 int main()
 {
     string pesel;
-    cout << "Podaj numer PESEL: ";
-    cin >> pesel;
-
-    while (!czyPoprawnyFormat(pesel))
+    do
     {
-        cout << "PESEL musi skladac sie z 11 cyfr. Podaj ponownie: ";
-        if (!(cin >> pesel)) return 1;
-    }
+        cout << "Podaj numer PESEL (11 cyfr): ";
+        cin >> pesel;
+    } while (!czyPoprawnyFormat(pesel));
 
     if (sprawdzSumeKontrolna(pesel))
+    {
         cout << "Suma kontrolna: poprawna" << endl;
+    }
     else
+    {
         cout << "Suma kontrolna: NIEPOPRAWNA - numer PESEL jest bledny" << endl;
+    }
 
-    cout << "Plec: " << (plec(pesel) == 'K' ? "kobieta" : "mezczyzna") << endl;
+    if (plec(pesel) == 'K')
+    {
+        cout << "Plec: kobieta" << endl;
+    }
+    else
+    {
+        cout << "Plec: mezczyzna" << endl;
+    }
 
     int d, m, r;
     dataUrodzenia(pesel, d, m, r);
-    cout << "Data urodzenia: " << setfill('0') << setw(2) << d << "." << setw(2) << m << "." << r << endl;
+    cout << "Data urodzenia: ";
+    if (d < 10)
+    {
+        cout << "0";
+    }
+    cout << d << ".";
+    if (m < 10)
+    {
+        cout << "0";
+    }
+    cout << m << "." << r << endl;
     return 0;
 }

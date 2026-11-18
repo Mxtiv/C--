@@ -24,25 +24,24 @@
 //   działanie wszystkich metod; komunikacja z użytkownikiem musi być zrozumiała
 
 #include <iostream>
-#include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <limits>
-#include <string>
 using namespace std;
+
+const int MAX_ROZMIAR = 100;
 
 /********************************************************
  * nazwa klasy: Tablica
  * opis klasy: przechowuje tablicę liczb całkowitych wypełnioną losowo (1..6)
  *             i udostępnia operacje na niej
- * pola: tab - wskaźnik na dynamiczną tablicę liczb całkowitych
+ * pola: tab - tablica liczb całkowitych (miejsce na MAX_ROZMIAR elementów)
  *       rozmiar - faktyczna liczba elementów tablicy
  * autor: <numer zdającego>
  ********************************************************/
 class Tablica
 {
 private:
-    int *tab;
+    int tab[MAX_ROZMIAR];
     int rozmiar;
 
 public:
@@ -54,19 +53,14 @@ public:
      * zwracany typ i opis: brak
      * autor: <numer zdającego>
      ********************************************************/
-    Tablica(int n) : tab(new int[n]), rozmiar(n)
+    Tablica(int n)
     {
+        rozmiar = n;
         for (int i = 0; i < rozmiar; i++)
+        {
             tab[i] = rand() % 6 + 1;
+        }
     }
-
-    ~Tablica()
-    {
-        delete[] tab;
-    }
-
-    Tablica(const Tablica &) = delete;
-    Tablica &operator=(const Tablica &) = delete;
 
     /********************************************************
      * nazwa funkcji: wyswietl
@@ -75,29 +69,41 @@ public:
      * zwracany typ i opis: brak
      * autor: <numer zdającego>
      ********************************************************/
-    void wyswietl() const
+    void wyswietl()
     {
         for (int i = 0; i < rozmiar; i++)
+        {
             cout << i << ": " << tab[i] << endl;
+        }
     }
 
     /********************************************************
      * nazwa funkcji: wyszukaj
      * opis funkcji: wyszukuje wszystkie wystąpienia podanej wartości w tablicy
+     *               i zapisuje ich indeksy do tablicy indeksy
      * parametry: szukana - szukana wartość
-     * zwracany typ i opis: vector<int> - indeksy znalezionych elementów lub {-1},
-     *                      gdy elementu nie znaleziono
+     *            indeksy - tablica, do której trafiają znalezione indeksy
+     *                      (lub sama wartość -1, gdy elementu nie znaleziono)
+     * zwracany typ i opis: int - liczba elementów zapisanych w tablicy indeksy
      * autor: <numer zdającego>
      ********************************************************/
-    vector<int> wyszukaj(int szukana) const
+    int wyszukaj(int szukana, int indeksy[])
     {
-        vector<int> indeksy;
+        int ile = 0;
         for (int i = 0; i < rozmiar; i++)
+        {
             if (tab[i] == szukana)
-                indeksy.push_back(i);
-        if (indeksy.empty())
-            indeksy.push_back(-1);
-        return indeksy;
+            {
+                indeksy[ile] = i;
+                ile++;
+            }
+        }
+        if (ile == 0)
+        {
+            indeksy[0] = -1;
+            ile = 1;
+        }
+        return ile;
     }
 
     /********************************************************
@@ -107,7 +113,7 @@ public:
      * zwracany typ i opis: int - liczba wartości podzielnych przez dzielnik
      * autor: <numer zdającego>
      ********************************************************/
-    int wyswietlPodzielne(int dzielnik) const
+    int wyswietlPodzielne(int dzielnik)
     {
         int ile = 0;
         for (int i = 0; i < rozmiar; i++)
@@ -129,11 +135,13 @@ public:
      * zwracany typ i opis: long long - iloczyn elementów tablicy
      * autor: <numer zdającego>
      ********************************************************/
-    long long iloczyn() const
+    long long iloczyn()
     {
         long long wynik = 1;
         for (int i = 0; i < rozmiar; i++)
-            wynik *= tab[i];
+        {
+            wynik = wynik * tab[i];
+        }
         return wynik;
     }
 
@@ -145,13 +153,20 @@ public:
      * zwracany typ i opis: brak (wartości zwracane przez parametry referencyjne)
      * autor: <numer zdającego>
      ********************************************************/
-    void znajdzEkstrema(int &min, int &max) const
+    void znajdzEkstrema(int &min, int &max)
     {
-        min = max = tab[0];
+        min = tab[0];
+        max = tab[0];
         for (int i = 1; i < rozmiar; i++)
         {
-            if (tab[i] < min) min = tab[i];
-            if (tab[i] > max) max = tab[i];
+            if (tab[i] < min)
+            {
+                min = tab[i];
+            }
+            if (tab[i] > max)
+            {
+                max = tab[i];
+            }
         }
     }
 
@@ -162,37 +177,16 @@ public:
      * zwracany typ i opis: double - średnia elementów
      * autor: <numer zdającego>
      ********************************************************/
-    double srednia() const
+    double srednia()
     {
         int suma = 0;
         for (int i = 0; i < rozmiar; i++)
-            suma += tab[i];
+        {
+            suma = suma + tab[i];
+        }
         return (double)suma / rozmiar;
     }
 };
-
-/********************************************************
- * nazwa funkcji: wczytajLiczbe
- * opis funkcji: wczytuje liczbę całkowitą z zakresu min..max, ponawiając pytanie przy błędzie
- * parametry: komunikat - tekst wyświetlany użytkownikowi
- *            min - najmniejsza dopuszczalna wartość
- *            max - największa dopuszczalna wartość
- * zwracany typ i opis: int - poprawna liczba podana przez użytkownika
- * autor: <numer zdającego>
- ********************************************************/
-int wczytajLiczbe(const string &komunikat, int min, int max)
-{
-    int liczba;
-    while (true)
-    {
-        cout << komunikat;
-        if (cin >> liczba && liczba >= min && liczba <= max)
-            return liczba;
-        cout << "Niepoprawna wartosc. Podaj liczbe od " << min << " do " << max << "." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-}
 
 int main()
 {
@@ -203,14 +197,26 @@ int main()
     cout << "Elementy tablicy:" << endl;
     tablica.wyswietl();
 
-    int szukana = wczytajLiczbe("\nPodaj wartosc do wyszukania (1-6): ", 1, 6);
-    vector<int> indeksy = tablica.wyszukaj(szukana);
+    int szukana;
+    do
+    {
+        cout << "\nPodaj wartosc do wyszukania (1-6): ";
+        cin >> szukana;
+    } while (szukana < 1 || szukana > 6);
+
+    int indeksy[MAX_ROZMIAR];
+    int ileIndeksow = tablica.wyszukaj(szukana, indeksy);
     if (indeksy[0] == -1)
+    {
         cout << "Nie znaleziono wartosci " << szukana << " (wynik: -1)" << endl;
+    }
     else
     {
         cout << "Wartosc " << szukana << " znajduje sie pod indeksami: ";
-        for (int i : indeksy) cout << i << " ";
+        for (int i = 0; i < ileIndeksow; i++)
+        {
+            cout << indeksy[i] << " ";
+        }
         cout << endl;
     }
 

@@ -8,8 +8,6 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include <random>
-#include <algorithm>
 using namespace std;
 
 //@ RND-01 | random int from min..max inclusive (rand) - needs srand(time(0)) once in main | <cstdlib> <ctime>
@@ -40,7 +38,9 @@ int losujLiczbe(int min, int max)
 void wypelnijLosowo(int tab[], int n, int min, int max)
 {
     for (int i = 0; i < n; i++)
+    {
         tab[i] = rand() % (max - min + 1) + min;
+    }
 }
 
 //@ RND-03 | fill an array with random ints WITHOUT repeats (lotto: 6 of 1..49) | <cstdlib> <ctime>
@@ -65,12 +65,17 @@ void losujBezPowtorzen(int tab[], int n, int min, int max)
             tab[i] = rand() % (max - min + 1) + min;
             powtorka = false;
             for (int j = 0; j < i; j++)
-                if (tab[j] == tab[i]) { powtorka = true; break; }
+            {
+                if (tab[j] == tab[i])
+                {
+                    powtorka = true;
+                }
+            }
         } while (powtorka);
     }
 }
 
-//@ RND-04 | shuffle an array randomly (Fisher-Yates) | <cstdlib> <ctime> <algorithm>
+//@ RND-04 | shuffle an array randomly (Fisher-Yates, manual swap) | <cstdlib> <ctime>
 /********************************************************
  * nazwa funkcji: tasujTablice
  * opis funkcji: losowo przestawia elementy tablicy (algorytm Fishera-Yatesa)
@@ -84,7 +89,9 @@ void tasujTablice(int tab[], int n)
     for (int i = n - 1; i > 0; i--)
     {
         int j = rand() % (i + 1);
-        swap(tab[i], tab[j]);
+        int pomocnicza = tab[i];
+        tab[i] = tab[j];
+        tab[j] = pomocnicza;
     }
 }
 
@@ -99,7 +106,7 @@ void tasujTablice(int tab[], int n)
  ********************************************************/
 double losujRzeczywista(double min, double max)
 {
-    return min + (max - min) * rand() / RAND_MAX;
+    return min + (double)rand() / RAND_MAX * (max - min);
 }
 
 //@ RND-06 | random character from a given set of characters | <cstdlib> <string>
@@ -110,9 +117,10 @@ double losujRzeczywista(double min, double max)
  * zwracany typ i opis: char - wylosowany znak
  * autor: <numer zdającego>
  ********************************************************/
-char losujZnak(const string &znaki)
+char losujZnak(string znaki)
 {
-    return znaki[rand() % znaki.length()];
+    int dlugosc = znaki.length();
+    return znaki[rand() % dlugosc];
 }
 
 //@ RND-07 | password generator: length + options (uppercase, digits, special chars) | <cstdlib> <string>
@@ -130,30 +138,26 @@ char losujZnak(const string &znaki)
 string generujHaslo(int dlugosc, bool wielkie, bool cyfry, bool specjalne)
 {
     string znaki = "abcdefghijklmnopqrstuvwxyz";
-    if (wielkie)   znaki += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if (cyfry)     znaki += "0123456789";
-    if (specjalne) znaki += "!@#$%^&*()_+-=";
+    if (wielkie)
+    {
+        znaki = znaki + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    }
+    if (cyfry)
+    {
+        znaki = znaki + "0123456789";
+    }
+    if (specjalne)
+    {
+        znaki = znaki + "!@#$%^&*()_+-=";
+    }
 
-    string haslo;
+    int ileZnakow = znaki.length();
+    string haslo = "";
     for (int i = 0; i < dlugosc; i++)
-        haslo += znaki[rand() % znaki.length()];
+    {
+        haslo = haslo + znaki[rand() % ileZnakow];
+    }
     return haslo;
-}
-
-//@ RND-08 | modern random int (mt19937) - better quality, no srand needed | <random>
-/********************************************************
- * nazwa funkcji: losujNowoczesnie
- * opis funkcji: losuje liczbę całkowitą z przedziału min..max generatorem mt19937
- * parametry: min - dolna granica
- *            max - górna granica
- * zwracany typ i opis: int - wylosowana liczba
- * autor: <numer zdającego>
- ********************************************************/
-int losujNowoczesnie(int min, int max)
-{
-    static mt19937 generator(random_device{}());     // created once, reused
-    uniform_int_distribution<int> rozklad(min, max);
-    return rozklad(generator);
 }
 
 // ====================== DEMO (don't copy) ======================
@@ -164,19 +168,28 @@ int main()
     int tab[N];
 
     cout << "kostka: " << losujLiczbe(1, 6) << ", rzeczywista: " << losujRzeczywista(0, 1)
-         << ", znak: " << losujZnak("ABC") << ", mt19937: " << losujNowoczesnie(1, 100) << endl;
+         << ", znak: " << losujZnak("ABC") << endl;
 
     wypelnijLosowo(tab, N, 1, 6);
-    for (int i = 0; i < N; i++) cout << tab[i] << " ";
+    for (int i = 0; i < N; i++)
+    {
+        cout << tab[i] << " ";
+    }
     cout << endl;
 
     int lotto[6];
     losujBezPowtorzen(lotto, 6, 1, 49);
-    for (int x : lotto) cout << x << " ";
+    for (int i = 0; i < 6; i++)
+    {
+        cout << lotto[i] << " ";
+    }
     cout << endl;
 
     tasujTablice(tab, N);
-    for (int i = 0; i < N; i++) cout << tab[i] << " ";
+    for (int i = 0; i < N; i++)
+    {
+        cout << tab[i] << " ";
+    }
     cout << endl;
 
     cout << "haslo: " << generujHaslo(12, true, true, true) << endl;

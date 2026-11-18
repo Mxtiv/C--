@@ -1,49 +1,56 @@
 // ======================================================================
-// static const int size, digit = char - 48, switch
+// static const int ROZMIAR inside a class, digit = char - '0', switch
 // Original file: unsorted/sprawdzian/MATTHEW3.cpp
 // ======================================================================
 
 #include <iostream>
 #include <string>
+using namespace std;
 
-class StringDivider {
-    static const int size = 15; // Pole statyczne, rozmiar stringa
-    int digits[size];           // Tablica cyfr
-
-    // Prywatna metoda konwertująca string na tablicę intów
-    void convert(const std::string& input) {
-        for (int i = 0; i < size; ++i)
-            digits[i] = input[i] - 48;  // Konwersja znaku na int metodą -48
-    }
+class DzielnikNapisu
+{
+private:
+    static const int ROZMIAR = 15;   // stała wspólna dla klasy - może być rozmiarem tablicy
+    int cyfry[ROZMIAR];              // tablica cyfr
 
 public:
-    // Konstruktor, który od razu konwertuje string
-    StringDivider(const std::string& input) { convert(input); }
+    // Konstruktor od razu zamienia string na tablicę intów
+    DzielnikNapisu(string napis)
+    {
+        for (int i = 0; i < ROZMIAR; i++)
+        {
+            cyfry[i] = napis[i] - '0';   // znak cyfry -> liczba ('0' ma kod 48)
+        }
+    }
 
-    // Publiczna metoda łącząca dwie cyfry z tablicy w int
-    int getCombined(int pos1, int pos2) { return digits[pos1] * 10 + digits[pos2]; }
+    // Łączy dwie cyfry z tablicy w jedną liczbę dwucyfrową
+    int polaczone(int pozycja1, int pozycja2)
+    {
+        return cyfry[pozycja1] * 10 + cyfry[pozycja2];
+    }
 };
 
-int main() {
-    StringDivider divider("123456789012345"); // Przykładowy string
+int main()
+{
+    DzielnikNapisu dzielnik("123456789012345");
 
     // Łączenie 4. i 15. cyfry (dzień miesiąca)
-    int dayOfMonth = divider.getCombined(3, 14);
+    int dzien = dzielnik.polaczone(3, 14);
 
-    // Użycie instrukcji switch do interpretacji dnia miesiąca
-    switch (dayOfMonth) {
-        case 1:
-            std::cout << "Pierwszy dzień miesiąca" << std::endl;
-            break;
-        case 15:
-            std::cout << "Piętnasty dzień miesiąca" << std::endl;
-            break;
-        case 31:
-            std::cout << "Ostatni dzień miesiąca (dla miesięcy z 31 dniami)" << std::endl;
-            break;
-        default:
-            std::cout << "Dzień miesiąca: " << dayOfMonth << std::endl;
-            break;
+    switch (dzien)
+    {
+    case 1:
+        cout << "Pierwszy dzień miesiąca" << endl;
+        break;
+    case 15:
+        cout << "Piętnasty dzień miesiąca" << endl;
+        break;
+    case 31:
+        cout << "Ostatni dzień miesiąca (dla miesięcy z 31 dniami)" << endl;
+        break;
+    default:
+        cout << "Dzień miesiąca: " << dzien << endl;
+        break;
     }
 
     return 0;

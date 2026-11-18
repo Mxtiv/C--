@@ -1,47 +1,75 @@
 // ======================================================================
-// private fields, public setter, getter through reference params; commented lines show what is NOT allowed
+// Hermetyzacja (encapsulation): private fields, public setter and getters.
+// Commented lines in main show what is NOT allowed.
 // Original file: unsorted/hermetyzacja/hermetization.cpp
 // ======================================================================
 
-
 #include <iostream>
-#include <string>
 using namespace std;
-class liczby
+
+/********************************************************
+ * nazwa klasy: Liczby
+ * opis klasy: przechowuje dwie liczby schowane jako private
+ * pola: liczba1, liczba2 - przechowywane liczby
+ ********************************************************/
+class Liczby
 {
-// public:
-int liczba1;
-int liczba2;
+private:                 // dostęp tylko z metod tej klasy
+    int liczba1;
+    int liczba2;
+
 public:
-void wypisz()
-{
-    cout << liczba1 << endl << liczba2;
-}
-void setLiczba(int wartosc1,int wartosc2)
-{
-  liczba1=wartosc1;
-  liczba2=wartosc2;
-}
-void getLiczba(int &wartosc1,int &wartosc2)
-{
-  wartosc1=liczba1;
-  wartosc2=liczba2;
-}
+    Liczby()
+    {
+        liczba1 = 0;
+        liczba2 = 0;
+    }
+
+    // setter - jedyna droga, żeby zmienić prywatne pola
+    void setLiczby(int wartosc1, int wartosc2)
+    {
+        liczba1 = wartosc1;
+        liczba2 = wartosc2;
+    }
+
+    // gettery - zwracają kopię wartości pola
+    int getLiczba1()
+    {
+        return liczba1;
+    }
+
+    int getLiczba2()
+    {
+        return liczba2;
+    }
+
+    // getter oddający DWIE wartości naraz - przez parametry z &
+    void getLiczby(int &wartosc1, int &wartosc2)
+    {
+        wartosc1 = liczba1;
+        wartosc2 = liczba2;
+    }
 };
+
 int main()
 {
-    int jeden, dwa,wartliczba1, wartliczba2;
-    cout << "podaj liczby:" << endl;
-    cin >> jeden;
-    cin >> dwa;
-    liczby asdf; //tworzymy obiekt klasy liczby
-    // cout<<asdf.liczba1; // tego nie można bo własności liczba1 i liczba 2 są private 
-    // asdf.liczba1 = jeden;// tego nie można bo własności liczba1 i liczba 2 są private
-    // asdf.liczba2 = dwa;// tego nie można bo własności liczba1 i liczba 2 są private
-    asdf.setLiczba(jeden,dwa);// używamy publicznego setera do ustalenia wartości własności liczba1 i liczba2
-    asdf.getLiczba(wartliczba1,wartliczba2);// używamy publicznego getera do wydobycia wartości własności liczba1 i liczba2
-    cout<<wartliczba1<<endl;
-    cout<<wartliczba2<<endl;
-    // asdf.wypisz();//używamy publicznej metody do wypisania prywatnych własności
-  return 0;
+    int jeden;
+    int dwa;
+    cout << "Podaj dwie liczby: ";
+    cin >> jeden >> dwa;
+
+    Liczby obiekt;                 // tworzymy obiekt klasy Liczby
+    // cout << obiekt.liczba1;     // BŁĄD - liczba1 jest private
+    // obiekt.liczba1 = jeden;     // BŁĄD - liczba1 jest private
+    obiekt.setLiczby(jeden, dwa);  // OK - publiczny setter
+
+    cout << "liczba1 = " << obiekt.getLiczba1() << endl;
+    cout << "liczba2 = " << obiekt.getLiczba2() << endl;
+
+    int a;
+    int b;
+    obiekt.getLiczby(a, b);        // obie wartości przez referencje
+    cout << "a = " << a << ", b = " << b << endl;
+
+    return 0;
 }

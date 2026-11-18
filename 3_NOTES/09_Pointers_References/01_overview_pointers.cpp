@@ -1,108 +1,81 @@
 // ======================================================================
-// basics, dereference, pointer arithmetic, pointer to array, pointer to pointer, nullptr, function pointer, new/delete, const pointer vs pointer to const, array of pointers
+// basics, dereference, pointer arithmetic, pointer to array, pointer to pointer,
+// nullptr, pointer as a function parameter, new/delete
 // Original file: Pointers/overviewPointers.cpp
-// FIXED: function add() was defined inside main (not allowed) - moved above main
 // ======================================================================
 
 #include <iostream>
 using namespace std;
 
-// Used in section 7 (pointer to a function). Moved here from inside main().
-int add(int a, int b) {
-    return a + b;
+// A function that gets an ADDRESS can change the caller's variable
+void podwoj(int *wskaznik)
+{
+    *wskaznik = *wskaznik * 2;
 }
 
-int main() {
+int main()
+{
+    // 1. Basic pointer usage
+    int a = 10;
+    int *wsk = &a;      // pointer to int, holds the ADDRESS of a (& = "address of")
+    cout << "1. Basic pointer usage:" << endl;
+    cout << "Value of a: " << a << endl;
+    cout << "Address of a: " << &a << endl;
+    cout << "Pointer wsk holds address: " << wsk << endl;
+    cout << "Dereferencing wsk (*wsk): " << *wsk << endl << endl;   // * = "value at that address"
 
-    // 1. Basic Pointer Usage
-    int a = 10;   // Declare an integer variable
-    int* ptr = &a;  // Pointer to int, storing the address of a
-    cout << "1. Basic Pointer Usage:" << endl;
-    cout << "Value of a: " << a << endl;            // Output value of a
-    cout << "Address of a: " << &a << endl;         // Output address of a
-    cout << "Pointer ptr holds address: " << ptr << endl;   // Output address stored in pointer ptr
-    cout << "Dereferencing ptr: " << *ptr << endl << endl; // Dereference ptr to get the value at the address it points to
+    // 2. Changing a variable through a pointer
+    cout << "2. Changing a through the pointer:" << endl;
+    *wsk = 20;
+    cout << "Value of a after *wsk = 20: " << a << endl << endl;
 
-    // 2. Pointer Dereferencing
-    cout << "2. Pointer Dereferencing:" << endl;
-    *ptr = 20;  // Dereference ptr to assign a new value to a through the pointer
-    cout << "Value of a after dereferencing ptr and changing it: " << a << endl << endl;
+    // 3. Pointer arithmetic and arrays
+    cout << "3. Pointer arithmetic:" << endl;
+    int tab[5] = {1, 2, 3, 4, 5};
+    int *wskTab = tab;           // the array name is the address of its first element
+    cout << "wskTab points to: " << *wskTab << endl;                 // 1
+    wskTab++;                    // move to the next element
+    cout << "after wskTab++: " << *wskTab << endl;                   // 2
+    wskTab = wskTab + 2;         // move forward by 2 elements
+    cout << "after wskTab + 2: " << *wskTab << endl;                 // 4
 
-    // 3. Pointer Arithmetic
-    cout << "3. Pointer Arithmetic:" << endl;
-    int arr[] = {1, 2, 3, 4, 5};  // Declare an array
-    int* ptrArr = arr;  // Pointer to the first element of the array
-    cout << "Array elements accessed via pointer arithmetic:" << endl;
-    cout << "ptrArr points to: " << *ptrArr << endl;  // First element (1)
-    ptrArr++;  // Move to the next element
-    cout << "After incrementing ptrArr, it points to: " << *ptrArr << endl;  // Second element (2)
-    ptrArr += 2;  // Move forward by 2 positions
-    cout << "After incrementing ptrArr by 2, it points to: " << *ptrArr << endl << endl;  // Fourth element (4)
-
-    // 4. Pointer to Array
-    cout << "4. Pointer to Array:" << endl;
-    int* ptrToArray = arr;  // Pointer to the first element of the array
-    cout << "Array elements using pointer to array:" << endl;
-    for (int i = 0; i < 5; ++i) {
-        cout << "Element " << i + 1 << " = " << *(ptrToArray + i) << endl;  // Access elements via pointer arithmetic
+    // *(tab + i) is the same as tab[i]
+    for (int i = 0; i < 5; i++)
+    {
+        cout << "Element " << i << " = " << *(tab + i) << endl;
     }
     cout << endl;
 
-    // 5. Pointer to Pointer
-    cout << "5. Pointer to Pointer:" << endl;
+    // 4. Pointer to pointer
+    cout << "4. Pointer to pointer:" << endl;
     int x = 30;
-    int* ptrX = &x;   // Pointer to int x
-    int** ptrPtr = &ptrX;  // Pointer to pointer ptrX
-    cout << "Value of x: " << x << endl;
-    cout << "Pointer ptrX holds address of x: " << ptrX << endl;
-    cout << "Pointer-to-pointer ptrPtr holds address of ptrX: " << ptrPtr << endl;
-    cout << "Dereferencing ptrPtr gives address of x: " << *ptrPtr << endl;  // Dereferencing ptrPtr gives ptrX
-    cout << "Dereferencing ptrPtr twice gives value of x: " << **ptrPtr << endl << endl;  // Dereferencing twice to get value of x
+    int *wskX = &x;
+    int **wskWsk = &wskX;        // holds the address of the pointer wskX
+    cout << "*wskWsk gives the address of x: " << *wskWsk << endl;
+    cout << "**wskWsk gives the value of x: " << **wskWsk << endl << endl;
 
-    // 6. Null Pointer
-    cout << "6. Null Pointer:" << endl;
-    int* nullPtr = nullptr;   // Declare a null pointer
-    if (nullPtr == nullptr) {
-        cout << "nullPtr is a null pointer, it doesn't point to any address." << endl;
+    // 5. Null pointer - points nowhere; check before using *
+    cout << "5. Null pointer:" << endl;
+    int *pusty = nullptr;        // (old code writes NULL - the same idea)
+    if (pusty == nullptr)
+    {
+        cout << "pusty is a null pointer, it doesn't point to any variable." << endl << endl;
     }
-    cout << endl;
 
-    // 7. Pointer to a Function
-    cout << "7. Pointer to a Function:" << endl;
-    // (add() is defined ABOVE main - C++ does not allow a function definition inside another function)
-    // Pointer to function
-    int (*funcPtr)(int, int) = &add;  // Assign the address of the function 'add' to funcPtr
-    cout << "Using pointer to function, add(3, 4) = " << funcPtr(3, 4) << endl;  // Call the function via pointer
-    cout << endl;
+    // 6. Pointer as a function parameter
+    cout << "6. Pointer as a parameter:" << endl;
+    int liczba = 7;
+    podwoj(&liczba);             // pass the ADDRESS
+    cout << "after podwoj(&liczba): " << liczba << endl << endl;      // 14
 
-    // 8. Dynamic Memory Allocation (new and delete)
-    cout << "8. Dynamic Memory Allocation (new and delete):" << endl;
-    int* dynPtr = new int(100);  // Dynamically allocate memory for an integer and assign it the value 100
-    cout << "Dynamically allocated memory points to value: " << *dynPtr << endl;
-    delete dynPtr;  // Free the dynamically allocated memory
-    cout << "Memory freed." << endl << endl;
-
-    // 9. Const Pointer and Pointer to Const
-    cout << "9. Const Pointer and Pointer to Const:" << endl;
-    int y = 50;
-    const int* ptrToConst = &y;  // Pointer to a constant integer, we cannot modify the value of y through this pointer
-    cout << "Value of y (through ptrToConst): " << *ptrToConst << endl;
-    // *ptrToConst = 60;  // Error! Cannot modify the value of y through ptrToConst
-    cout << endl;
-
-    int* const constPtr = &y;  // Constant pointer, we cannot change the pointer to point to another address
-    cout << "Value of y (through constPtr): " << *constPtr << endl;
-    // constPtr = nullptr;  // Error! Cannot change the address stored in constPtr
-    cout << endl;
-
-    // 10. Array of Pointers
-    cout << "10. Array of Pointers:" << endl;
-    int z1 = 1, z2 = 2, z3 = 3;
-    int* arrPtr[] = {&z1, &z2, &z3};  // Array of pointers to integers
-    cout << "Array of pointers pointing to the values:" << endl;
-    for (int i = 0; i < 3; ++i) {
-        cout << "arrPtr[" << i << "] points to value: " << *arrPtr[i] << endl;  // Dereference each pointer
-    }
+    // 7. Dynamic memory (more in 03_new_delete.cpp)
+    cout << "7. new / delete:" << endl;
+    int *dynamiczna = new int;   // a new int on the heap
+    *dynamiczna = 100;
+    cout << "Value on the heap: " << *dynamiczna << endl;
+    delete dynamiczna;           // every new needs a delete
+    dynamiczna = nullptr;
+    cout << "Memory freed." << endl;
 
     return 0;
 }

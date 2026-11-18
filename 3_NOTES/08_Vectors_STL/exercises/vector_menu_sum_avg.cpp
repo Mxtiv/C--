@@ -6,86 +6,96 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-void print(vector<int> v)
+
+void wypisz(vector<int> wektor)
 {
     cout << "values: ";
-    for (int i = 0; i < v.size(); ++i)
+    for (int i = 0; i < wektor.size(); i++)
     {
-        cout << v[i];
-        if (i != v.size() - 1)
+        cout << wektor[i];
+        if (i != wektor.size() - 1)
+        {
             cout << ", ";
+        }
     }
+    cout << endl;
 }
 
-int sum(vector<int> v)
+int suma(vector<int> wektor)
 {
-    double sum{};
-    for (int val : v)
+    int wynik = 0;
+    for (int i = 0; i < wektor.size(); i++)
     {
-        sum += val;
+        wynik = wynik + wektor[i];
     }
-    return sum;
+    return wynik;
 }
-double average(vector<int> v)
+
+double srednia(vector<int> wektor)
 {
-    double elementsSum = sum(v);
-    double average = elementsSum / static_cast<double>(v.size());
-    cout << "average: ";
-    return average;
+    return (double)suma(wektor) / wektor.size();
 }
-void menu(vector<int> v)
+
+int main()
 {
-    char selection{};
+    vector<int> wektor;
+    char wybor;
     do
     {
         cout << "\nselect an option\n";
-        cout << "p - print v elements\n";
+        cout << "p - print elements\n";
         cout << "a - add new element\n";
         cout << "v - average of all elements\n";
-        cout << "s - sum \n";
+        cout << "s - sum\n";
         cout << "q - quit\n";
         cout << "Selection: ";
-        cin >> selection;
-        if (selection == 'p' || selection == 'P')
+        cin >> wybor;
+
+        if (wybor == 'p' || wybor == 'P')
         {
-            if (v.size() != 0)
-                print(v);
+            if (wektor.size() != 0)
+            {
+                wypisz(wektor);
+            }
             else
-                cout << "no data";
-            cout << endl;
+            {
+                cout << "no data" << endl;
+            }
         }
-        else if (selection == 'a' || selection == 'A')
+        else if (wybor == 'a' || wybor == 'A')
         {
-            int n;
-            cin >> n;
-            v.push_back(n);
-            cout << endl;
+            int liczba;
+            cout << "number: ";
+            cin >> liczba;
+            wektor.push_back(liczba);
         }
-        else if (selection == 's' || selection == 'S')
+        else if (wybor == 's' || wybor == 'S')
         {
-            if (v.size() != 0)
-                cout << "" << sum(v);
+            if (wektor.size() != 0)
+            {
+                cout << "sum: " << suma(wektor) << endl;
+            }
             else
-                cout << "no data";
-            cout << endl;
+            {
+                cout << "no data" << endl;
+            }
         }
-        else if (selection == 'v' || selection == 'V')
+        else if (wybor == 'v' || wybor == 'V')
         {
-            if (v.size() != 0)
-                cout << "" << average(v);
+            if (wektor.size() != 0)
+            {
+                cout << "average: " << srednia(wektor) << endl;
+            }
             else
-                cout << "no data";
-            cout << endl;
+            {
+                cout << "no data" << endl;
+            }
         }
-        else if (selection == 'q' || selection == 'Q')
+        else if (wybor == 'q' || wybor == 'Q')
         {
             cout << "Goodbye!" << endl;
         }
-    } while (selection != 'q' && selection != 'Q');
-}
-int main()
-{
-    vector<int> v{};
-    menu(v);
+    } while (wybor != 'q' && wybor != 'Q');
+
     return 0;
 }

@@ -1,5 +1,6 @@
 // ======================================================================
-// switch menu with 6 std::string tasks; pass string& / const string&; cin.ignore() before getline
+// switch menu with 6 std::string tasks; string& to read several values, by value to print;
+// cin.ignore() before getline
 // Original file: unsorted/stringi/stringZadania.cpp
 // ======================================================================
 
@@ -7,64 +8,64 @@
 #include <string>
 using namespace std;
 
-void inputCarDetails(string& brand, string& model, string& year) {
+// & - the function fills THREE variables of the caller
+void wczytajSamochod(string &marka, string &model, string &rok)
+{
     cout << "Enter the brand of the car: ";
-    getline(cin, brand);
-
+    getline(cin, marka);
     cout << "Enter the model of the car: ";
     getline(cin, model);
-
     cout << "Enter the year of production of the car: ";
-    getline(cin, year);
+    getline(cin, rok);
 }
 
-void printCarDetails(const string& brand, const string& model, const string& year) {
+// by value - the function only reads them
+void wypiszSamochod(string marka, string model, string rok)
+{
     cout << "\nCar Details:\n";
-    cout << "Brand: " << brand << endl;
+    cout << "Brand: " << marka << endl;
     cout << "Model: " << model << endl;
-    cout << "Year of Production: " << year << endl;
+    cout << "Year of Production: " << rok << endl;
 }
 
-void inputThreeWords(string& word1, string& word2, string& word3) {
+void wczytajTrzySlowa(string &slowo1, string &slowo2, string &slowo3)
+{
     cout << "Enter first word: ";
-    getline(cin, word1);
-
+    getline(cin, slowo1);
     cout << "Enter second word: ";
-    getline(cin, word2);
-
+    getline(cin, slowo2);
     cout << "Enter third word: ";
-    getline(cin, word3);
+    getline(cin, slowo3);
 }
 
-void printThreeWords(const string& word1, const string& word2, const string& word3) {
-    cout << word1 << " " << word2 << " " << word3 << endl;
+bool czyRowne(string tekst1, string tekst2)
+{
+    return tekst1 == tekst2;
 }
 
-bool compareStrings(const string& str1, const string& str2) {
-    return str1 == str2;
-}
-
-void findSubstringPosition(const string& str1, const string& str2) {
-    size_t pos = str2.find(str1);
-    if (pos != string::npos) {
-        cout << "String " << str1 << " is a substring of " << str2 << " starting at position " << pos << endl;
-    } else {
-        cout << "String " << str1 << " is not a substring of " << str2 << endl;
+void pozycjaFragmentu(string fragment, string tekst)
+{
+    if (tekst.find(fragment) != string::npos)
+    {
+        cout << fragment << " is a substring of " << tekst
+             << " starting at position " << tekst.find(fragment) << endl;
+    }
+    else
+    {
+        cout << fragment << " is not a substring of " << tekst << endl;
     }
 }
 
-void inputFullPlaceName(string& place) {
-    cout << "Enter full name of the place: ";
-    getline(cin, place);
+void skopiujDrugiDoPierwszego(string &tekst1, string tekst2)
+{
+    tekst1 = tekst2;
 }
 
-void copySecondToFirst(string& str1, const string& str2) {
-    str1 = str2;
-}
-
-int main() {
-    int choice;
-    do {
+int main()
+{
+    int wybor;
+    do
+    {
         cout << "\nMenu:\n";
         cout << "1. Input Car Details and Print\n";
         cout << "2. Input Three Words and Print\n";
@@ -74,66 +75,64 @@ int main() {
         cout << "6. Copy Second to First\n";
         cout << "7. Exit\n";
         cout << "Enter your choice: ";
-        cin >> choice;
-        cin.ignore(); // Ignore newline left in the input buffer
+        cin >> wybor;
+        cin.ignore();       // remove the Enter left after cin >> (before getline!)
 
-        switch (choice) {
-            case 1: {
-                string brand, model, year;
-                inputCarDetails(brand, model, year);
-                printCarDetails(brand, model, year);
-                break;
+        string tekst1;
+        string tekst2;
+        string tekst3;
+        switch (wybor)
+        {
+        case 1:
+            wczytajSamochod(tekst1, tekst2, tekst3);
+            wypiszSamochod(tekst1, tekst2, tekst3);
+            break;
+        case 2:
+            wczytajTrzySlowa(tekst1, tekst2, tekst3);
+            cout << tekst1 << " " << tekst2 << " " << tekst3 << endl;
+            break;
+        case 3:
+            cout << "Enter first string: ";
+            getline(cin, tekst1);
+            cout << "Enter second string: ";
+            getline(cin, tekst2);
+            if (czyRowne(tekst1, tekst2))
+            {
+                cout << "Strings are equal" << endl;
             }
-            case 2: {
-                string word1, word2, word3;
-                inputThreeWords(word1, word2, word3);
-                printThreeWords(word1, word2, word3);
-                break;
+            else
+            {
+                cout << "Strings are not equal" << endl;
             }
-            case 3: {
-                string str1, str2;
-                cout << "Enter first string: ";
-                getline(cin, str1);
-                cout << "Enter second string: ";
-                getline(cin, str2);
-                cout << (compareStrings(str1, str2) ? "Strings are equal" : "Strings are not equal") << endl;
-                break;
-            }
-            case 4: {
-                string str1, str2;
-                cout << "Enter substring: ";
-                getline(cin, str1);
-                cout << "Enter string to search in: ";
-                getline(cin, str2);
-                findSubstringPosition(str1, str2);
-                break;
-            }
-            case 5: {
-                string place;
-                inputFullPlaceName(place);
-                cout << place << endl;
-                break;
-            }
-            case 6: {
-                string str1, str2;
-                cout << "Enter first string: ";
-                getline(cin, str1);
-                cout << "Enter second string: ";
-                getline(cin, str2);
-                copySecondToFirst(str1, str2);
-                cout << "First string after copying: " << str1 << endl;
-                break;
-            }
-            case 7: {
-                cout << "Exiting program...\n";
-                break;
-            }
-            default: {
-                cout << "Invalid choice. Please enter a number between 1 and 7.\n";
-                break;
-            }
+            break;
+        case 4:
+            cout << "Enter substring: ";
+            getline(cin, tekst1);
+            cout << "Enter string to search in: ";
+            getline(cin, tekst2);
+            pozycjaFragmentu(tekst1, tekst2);
+            break;
+        case 5:
+            cout << "Enter full name of the place: ";
+            getline(cin, tekst1);
+            cout << tekst1 << endl;
+            break;
+        case 6:
+            cout << "Enter first string: ";
+            getline(cin, tekst1);
+            cout << "Enter second string: ";
+            getline(cin, tekst2);
+            skopiujDrugiDoPierwszego(tekst1, tekst2);
+            cout << "First string after copying: " << tekst1 << endl;
+            break;
+        case 7:
+            cout << "Exiting program...\n";
+            break;
+        default:
+            cout << "Invalid choice. Please enter a number between 1 and 7.\n";
+            break;
         }
-    } while (choice != 7);
+    } while (wybor != 7);
 
     return 0;
 }

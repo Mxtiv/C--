@@ -1,52 +1,50 @@
 // ======================================================================
-// pure virtual = 0, abstract class Animal, Dog/Cat on the heap
+// pure virtual = 0, abstract class Zwierze, Pies/Kot through a base pointer
 // Original file: Classes/spr/sprawdzianpolimorfia/main.cpp
-// FIXED: added virtual ~Animal() (objects are deleted through a base pointer)
 // ======================================================================
 
 #include <iostream>
 using namespace std;
 
-
-class Animal
+// klasa ABSTRAKCYJNA = ma co najmniej jedna metode czysto wirtualna (= 0)
+// - nie da sie utworzyc jej obiektu
+// - kazda klasa pochodna MUSI napisac te metode (inaczej tez jest abstrakcyjna)
+class Zwierze
 {
-    public:
-    virtual void makeSound() = 0;
-    virtual ~Animal() {}   // always give a polymorphic base class a virtual destructor
+public:
+    virtual void dajGlos() = 0;     // metoda czysto wirtualna - bez ciala
 };
 
-
-class Dog : public Animal
+class Pies : public Zwierze
 {
-    public:
-
-    void makeSound()
+public:
+    void dajGlos()
     {
-        cout << "Hau! - Dog\n";
+        cout << "Hau! - pies" << endl;
     }
 };
 
-
-class Cat : public Animal
+class Kot : public Zwierze
 {
-    public:
-
-    void makeSound()
+public:
+    void dajGlos()
     {
-        cout << "Miau! - Cat\n";
+        cout << "Miau! - kot" << endl;
     }
 };
 
 int main()
 {
-    Animal *zwierze;
+    // Zwierze zwierze;   // BLAD - nie mozna utworzyc obiektu klasy abstrakcyjnej
+    Zwierze *wskaznik;    // ale wskaznik do niej - mozna
 
-    zwierze = new Dog;
-    zwierze -> makeSound();
-    delete zwierze;
+    Pies pies;
+    Kot kot;
 
-    zwierze = new Cat;
-    zwierze -> makeSound();
-    delete zwierze;
-    return 1;
+    wskaznik = &pies;
+    wskaznik->dajGlos();  // Pies::dajGlos
+
+    wskaznik = &kot;
+    wskaznik->dajGlos();  // Kot::dajGlos
+    return 0;
 }

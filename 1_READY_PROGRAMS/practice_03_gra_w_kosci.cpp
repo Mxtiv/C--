@@ -12,10 +12,8 @@
 // Przykład: 1 2 2 5 5 5 -> 2+2 + 5+5+5 = 19 punktów.
 
 #include <iostream>
-#include <string>
 #include <cstdlib>
 #include <ctime>
-#include <limits>
 using namespace std;
 
 /********************************************************
@@ -29,7 +27,9 @@ using namespace std;
 void rzucKostkami(int kostki[], int n)
 {
     for (int i = 0; i < n; i++)
+    {
         kostki[i] = rand() % 6 + 1;
+    }
 }
 
 /********************************************************
@@ -40,10 +40,12 @@ void rzucKostkami(int kostki[], int n)
  * zwracany typ i opis: brak
  * autor: <numer zdającego>
  ********************************************************/
-void wyswietlKostki(const int kostki[], int n)
+void wyswietlKostki(int kostki[], int n)
 {
     for (int i = 0; i < n; i++)
+    {
         cout << "Kostka " << i + 1 << ": " << kostki[i] << endl;
+    }
 }
 
 /********************************************************
@@ -55,74 +57,54 @@ void wyswietlKostki(const int kostki[], int n)
  * zwracany typ i opis: int - liczba punktów
  * autor: <numer zdającego>
  ********************************************************/
-int policzPunkty(const int kostki[], int n)
+int policzPunkty(int kostki[], int n)
 {
-    int ile[7] = {0};                  // ile[w] = how many dice show w (index 0 unused)
+    int ile[7];                        // ile[w] = how many dice show w (index 0 unused)
+    for (int w = 0; w < 7; w++)
+    {
+        ile[w] = 0;
+    }
     for (int i = 0; i < n; i++)
+    {
         ile[kostki[i]]++;
+    }
 
     int punkty = 0;
     for (int w = 1; w <= 6; w++)
+    {
         if (ile[w] >= 2)
-            punkty += ile[w] * w;
+        {
+            punkty = punkty + ile[w] * w;
+        }
+    }
     return punkty;
-}
-
-/********************************************************
- * nazwa funkcji: wczytajLiczbe
- * opis funkcji: wczytuje liczbę całkowitą z zakresu min..max, ponawiając pytanie przy błędzie
- * parametry: komunikat - tekst wyświetlany użytkownikowi
- *            min - najmniejsza dopuszczalna wartość
- *            max - największa dopuszczalna wartość
- * zwracany typ i opis: int - poprawna liczba
- * autor: <numer zdającego>
- ********************************************************/
-int wczytajLiczbe(const string &komunikat, int min, int max)
-{
-    int liczba;
-    while (true)
-    {
-        cout << komunikat;
-        if (cin >> liczba && liczba >= min && liczba <= max)
-            return liczba;
-        cout << "Podaj liczbe od " << min << " do " << max << "." << endl;
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-}
-
-/********************************************************
- * nazwa funkcji: zapytajTakNie
- * opis funkcji: zadaje pytanie i czeka na odpowiedź t lub n
- * parametry: pytanie - tekst pytania
- * zwracany typ i opis: bool - true dla 't', false dla 'n'
- * autor: <numer zdającego>
- ********************************************************/
-bool zapytajTakNie(const string &pytanie)
-{
-    char odp;
-    while (true)
-    {
-        cout << pytanie;
-        if (!(cin >> odp)) return false;
-        if (odp == 't' || odp == 'T') return true;
-        if (odp == 'n' || odp == 'N') return false;
-    }
 }
 
 int main()
 {
     srand(time(0));
-    const int MAX_KOSTEK = 10;
-    int kostki[MAX_KOSTEK];
+    int kostki[10];
+    char odpowiedz;
 
     do
     {
-        int n = wczytajLiczbe("\nIloma kostkami chcesz rzucic? (3-10): ", 3, 10);
+        int n;
+        do
+        {
+            cout << "\nIloma kostkami chcesz rzucic? (3-10): ";
+            cin >> n;
+        } while (n < 3 || n > 10);
+
         rzucKostkami(kostki, n);
         wyswietlKostki(kostki, n);
         cout << "Liczba uzyskanych punktow: " << policzPunkty(kostki, n) << endl;
-    } while (zapytajTakNie("Jeszcze raz? (t/n): "));
+
+        do
+        {
+            cout << "Jeszcze raz? (t/n): ";
+            cin >> odpowiedz;
+        } while (odpowiedz != 't' && odpowiedz != 'n');
+    } while (odpowiedz == 't');
 
     cout << "Koniec gry." << endl;
     return 0;

@@ -1,68 +1,88 @@
 // ======================================================================
-// test group B: private inheritance, base ctor in init list, const getters
+// test group B: private inheritance, base ctor call, getters/setters in the derived class
 // Original file: unsorted/various/heritageA.cpp
-// FIXED: initializer list reordered to match the order the fields are declared in (removes -Wreorder)
 // ======================================================================
 
 #include <iostream>
 using namespace std;
 
-// Klasa bazowa dla Grupy B
-class BaseB {
+// klasa bazowa dla grupy B
+class BazowaB
+{
 private:
-    int privateProperty; // Właściwość prywatna
+    int wlasnoscPrywatna;
 
 public:
-    int publicProperty; // Właściwość publiczna
+    int wlasnoscPubliczna;
 
-    // Konstruktor bezparametrowy
-    BaseB() : privateProperty(0), publicProperty(0) {}
-
-    // Konstruktor parametryczny
-    BaseB(int pubProp, int privProp) : privateProperty(privProp), publicProperty(pubProp) {}
-
-    // Getter dla właściwości prywatnej
-    int getPrivateProperty() const {
-        return privateProperty;
+    BazowaB()
+    {
+        wlasnoscPrywatna = 0;
+        wlasnoscPubliczna = 0;
     }
 
-    // Setter dla właściwości prywatnej
-    void setPrivateProperty(int value) {
-        privateProperty = value;
+    BazowaB(int publiczna, int prywatna)
+    {
+        wlasnoscPubliczna = publiczna;
+        wlasnoscPrywatna = prywatna;
+    }
+
+    int getPrywatna()
+    {
+        return wlasnoscPrywatna;
+    }
+
+    void setPrywatna(int wartosc)
+    {
+        wlasnoscPrywatna = wartosc;
     }
 };
 
-// Klasa pochodna dla Grupy B
-class DerivedB : private BaseB {
+// dziedziczenie PRIVATE: wszystko z bazy jest teraz private w PochodnaB
+class PochodnaB : private BazowaB
+{
 public:
-    // Konstruktor bezparametrowy
-    DerivedB() : BaseB() {}
-
-    // Konstruktor parametryczny
-    DerivedB(int pubProp, int privProp) : BaseB(pubProp, privProp) {}
-
-    // Getter dla publicznej właściwości bazowej
-    int getPublicPropertyFromBase() const {
-        return publicProperty;
+    PochodnaB()
+    {
     }
 
-    // Setter dla publicznej właściwości bazowej
-    void setPublicPropertyFromBase(int value) {
-        publicProperty = value;
+    PochodnaB(int publiczna, int prywatna) : BazowaB(publiczna, prywatna)
+    {
+    }
+
+    int getPubliczna()
+    {
+        return wlasnoscPubliczna;
+    }
+
+    void setPubliczna(int wartosc)
+    {
+        wlasnoscPubliczna = wartosc;
+    }
+
+    // wlasnoscPrywatna nie jest widoczna nawet tutaj -> przez getter/setter z bazy
+    int pobierzPrywatna()
+    {
+        return getPrywatna();
+    }
+
+    void zmienPrywatna(int wartosc)
+    {
+        setPrywatna(wartosc);
     }
 };
 
-int main() {
-    // Obiekt utworzony za pomocą konstruktora parametrycznego
-    DerivedB objB(15, 25);
-    cout << "Public property: " << objB.getPublicPropertyFromBase() << "\n";
+int main()
+{
+    PochodnaB obiekt(15, 25);
+    // obiekt.wlasnoscPubliczna = 1;   // BLAD - po dziedziczeniu private
+    cout << "Publiczna: " << obiekt.getPubliczna() << ", prywatna: " << obiekt.pobierzPrywatna() << endl;
 
-    objB.setPublicPropertyFromBase(35);
-    cout << "Updated public property: " << objB.getPublicPropertyFromBase() << "\n";
+    obiekt.setPubliczna(35);
+    obiekt.zmienPrywatna(45);
+    cout << "Po zmianie: " << obiekt.getPubliczna() << ", " << obiekt.pobierzPrywatna() << endl;
 
-    // Obiekt utworzony za pomocą konstruktora bezparametrowego
-    DerivedB objB2;
-    cout << "Default public property: " << objB2.getPublicPropertyFromBase() << "\n";
-
+    PochodnaB obiekt2;
+    cout << "Domyslna publiczna: " << obiekt2.getPubliczna() << endl;
     return 0;
 }

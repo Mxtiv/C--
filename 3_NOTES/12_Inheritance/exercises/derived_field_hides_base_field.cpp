@@ -7,38 +7,50 @@
 #include <iostream>
 using namespace std;
 
-class Number1
+class Liczba1
 {
 public:
-    int cyfra = 0;
-    void increment();
+    int cyfra;
+
+    Liczba1()
+    {
+        cyfra = 0;
+    }
+
+    void zwieksz()
+    {
+        cyfra++;
+        cout << "Wywolanie zwieksz() z klasy Liczba1" << endl;
+    }
 };
-class Number2 : public Number1
+
+class Liczba2 : public Liczba1
 {
 public:
-    int cyfra = 0;
-    void increment();
+    int cyfra;              // NOWE pole o tej samej nazwie -> ukrywa pole z bazy
+
+    Liczba2()
+    {
+        cyfra = 0;
+    }
+
+    void zwieksz()
+    {
+        cyfra = cyfra + 2;  // zmienia Liczba2::cyfra, a nie Liczba1::cyfra
+        cout << "Wywolanie zwieksz() z klasy Liczba2" << endl;
+    }
 };
-void Number1::increment()
-{
-    cyfra++;
-    cout << "Wywołanie metody increment() zdefiniowanej w klasie N1"
-         << endl;
-}
-void Number2::increment()
-{
-    cyfra++;
-    cyfra++;
-    cout << "Wywołanie metody increment() zdefiniowanej w klasie N2"
-         << endl;
-}
+
 int main()
 {
-    Number1 liczba1;
-    liczba1.increment();
-    Number2 liczba2;
-    liczba2.increment();
-    cout << "N1.cyfra = " << liczba1.cyfra << ", N2.cyfra = " << liczba2.cyfra
-         << ", hidden base part N2.Number1::cyfra = " << liczba2.Number1::cyfra << endl;
+    Liczba1 liczba1;
+    liczba1.zwieksz();
+
+    Liczba2 liczba2;
+    liczba2.zwieksz();
+
+    cout << "liczba1.cyfra = " << liczba1.cyfra << endl;
+    cout << "liczba2.cyfra = " << liczba2.cyfra << endl;
+    cout << "ukryta czesc z bazy liczba2.Liczba1::cyfra = " << liczba2.Liczba1::cyfra << endl;
     return 0;
 }

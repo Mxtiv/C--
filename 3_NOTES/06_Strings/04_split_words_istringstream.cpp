@@ -1,32 +1,43 @@
 // ======================================================================
-// getline + istringstream >> word into vector<string>
+// getline + istringstream >> word: split a line into words (array + count)
 // Original file: unsorted/stringi/stringOG.cpp
+// (Exam code: walk the string character by character instead - see 01_overview_string.cpp.)
 // ======================================================================
 
 #include <iostream>
 #include <string>
-#include <vector>
-#include <sstream>
+#include <sstream>     // istringstream - the topic of this file
 using namespace std;
 
-vector<string> rozdziel_na_slowa(const string& napis) {
-    vector<string> slowa;
-    istringstream iss(napis);
+const int MAKS_SLOW = 50;
+
+// Writes the words into slowa[] and RETURNS how many there are
+int rozdzielNaSlowa(string napis, string slowa[])
+{
+    istringstream strumien(napis);   // reads from a string like cin reads from the keyboard
     string slowo;
-    while (iss >> slowo) {
-        slowa.push_back(slowo);
+    int ile = 0;
+    while (strumien >> slowo && ile < MAKS_SLOW)   // >> stops at spaces, just like cin >>
+    {
+        slowa[ile] = slowo;
+        ile++;
     }
-    return slowa;
+    return ile;
 }
 
-int main() {
+int main()
+{
     string napis;
     cout << "Wprowadź napis: ";
     getline(cin, napis);
-    vector<string> slowa = rozdziel_na_slowa(napis);
-    cout << "Oto rozdzielone słowa:" << endl;
-    for (const auto& slowo : slowa) {
-        cout << slowo << endl;
+
+    string slowa[MAKS_SLOW];
+    int ile = rozdzielNaSlowa(napis, slowa);
+
+    cout << "Oto rozdzielone słowa (" << ile << "):" << endl;
+    for (int i = 0; i < ile; i++)
+    {
+        cout << slowa[i] << endl;
     }
     return 0;
 }

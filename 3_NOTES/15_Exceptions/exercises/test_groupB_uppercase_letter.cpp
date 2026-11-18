@@ -3,59 +3,64 @@
 // Original file: TryCatch/test2.cpp
 // ======================================================================
 
-// Pobierz dużą literę od użytkownika: jeżeli jest dużą to jest dobrze i się wypisuje komunikat "JD". 
-// Jeżeli litera jest mała błąd z odpowiednim komunikatem jest wyrzucany przez typ zmiennej. 
-// Jeżeli jest cyfrą błąd jest wyrzucany przy pomocy klasy exception, jeżeli jest znakiem interpunkcyjnym(, . ;  ) 
-// błąd wyrzucany jest przy pomocy klasy  runtime_error. 
-// Jeżeli litera nie jest literą ani cyfrą ani znakiem interpunkcyjnym błąd wyrzucany jest przy pomocy klasy pochodnej runtime_error
+// Grupa B. Pobierz duza litere od uzytkownika: jezeli jest duza, to wypisz "JD".
+// Jezeli litera jest mala - blad wyrzucany przez typ zmiennej.
+// Jezeli jest cyfra - blad wyrzucany przy pomocy klasy exception.
+// Jezeli jest znakiem interpunkcyjnym ( , . ; ) - blad wyrzucany przy pomocy klasy runtime_error.
+// Jezeli nie jest litera ani cyfra ani znakiem interpunkcyjnym - blad wyrzucany przy pomocy klasy pochodnej od runtime_error.
+
 #include <iostream>
 #include <exception>
 #include <stdexcept>
 #include <cctype>
 using namespace std;
 
-// Wyjątek dla cyfr
-class DigitException : public exception {
+// klasa pochodna od runtime_error: komunikat przekazujemy konstruktorowi klasy bazowej po dwukropku
+class InnyZnak : public runtime_error
+{
 public:
-    const char* what() const noexcept override {
-        return "Nie można podać cyfry!";
+    InnyZnak() : runtime_error("Nieprawidlowy znak!")
+    {
     }
 };
 
-// Wyjątek dla znaków specjalnych (nie litery, nie cyfry, nie interpunkcyjne)
-class OtherCharException : public runtime_error {
-public:
-    OtherCharException() : runtime_error("Nieprawidłowy znak!") {}
-};
-
-int main() {
+int main()
+{
     char znak;
-    cout << "Podaj dużą literę: ";
+    cout << "Podaj duza litere: ";
     cin >> znak;
 
-    try {
+    try
+    {
         if (isdigit(znak))
-            throw DigitException();
-
+        {
+            throw exception();                                     // sama klasa exception
+        }
         if (znak == ',' || znak == '.' || znak == ';')
+        {
             throw runtime_error("Nie podawaj znaku interpunkcyjnego!");
-
-        if (!isalpha(znak))  // nie litera, nie cyfra, nie interpunkcja
-            throw OtherCharException();
-
+        }
+        if (!isalpha(znak))
+        {
+            throw InnyZnak();                                      // klasa pochodna od runtime_error
+        }
         if (islower(znak))
-            throw 1;
-
+        {
+            throw 1;                                               // typ zmiennej (int)
+        }
         cout << "JD" << endl;
     }
-    catch (int) {
-        cout << "Podałeś małą literę!" << endl;
+    catch (int)
+    {
+        cout << "Podales mala litere!" << endl;
     }
-    catch (const DigitException& e) {
+    catch (runtime_error &e)          // lapie runtime_error i InnyZnak
+    {
         cout << e.what() << endl;
     }
-    catch (const runtime_error& e) {
-        cout << e.what() << endl;
+    catch (exception &e)              // na koncu - zostal tylko przypadek cyfry
+    {
+        cout << "Nie mozna podac cyfry!" << endl;
     }
 
     return 0;

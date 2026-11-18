@@ -9,26 +9,26 @@
 #include <ctime>
 using namespace std;
 
+const int MAKS_ROZMIAR = 1000;
+
 class Tablica
 {
 private:                        // tylko ta klasa, niedostępne dla klas potomnych
-    int *tablica;               // tradycyjna tablica (dynamiczna - rozmiar z konstruktora)
-    int liczbaElementow;
+    int tablica[MAKS_ROZMIAR];  // tradycyjna tablica
+    int liczbaElementow;        // faktyczna liczba elementów - wszystkie pętle do tej wartości
 
 public:
     Tablica(int rozmiar)
     {
+        if (rozmiar > MAKS_ROZMIAR)
+        {
+            rozmiar = MAKS_ROZMIAR;
+        }
         liczbaElementow = rozmiar;
-        tablica = new int[liczbaElementow];
         for (int i = 0; i < liczbaElementow; i++)
         {
             tablica[i] = rand() % 1000 + 1;
         }
-    }
-
-    ~Tablica()
-    {
-        delete[] tablica;
     }
 
     void wyswietl()
@@ -86,7 +86,7 @@ public:
 
 int main()
 {
-    srand((unsigned)time(0));
+    srand(time(0));
     Tablica tablica(25);
 
     cout << "Elementy tablicy:" << endl;

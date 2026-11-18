@@ -1,7 +1,8 @@
 // ======================================================================
 // INF.04-01-23.01-SG (and AG) - NWD algorytmem Euklidesa ZGODNIE ZE SCHEMATEM:
 // dopóki a != b: jeśli a > b to a = a - b, w przeciwnym razie b = b - a.
-// Funkcja bez wejścia/wyjścia, program główny wczytuje liczby dodatnie (z kontrolą).
+// Funkcja bez wejścia/wyjścia, program główny wczytuje liczby dodatnie (pętla do-while
+// pyta ponownie, dopóki liczba nie jest dodatnia).
 // Spec + key checklist: README.md in this folder.
 // ======================================================================
 #include <iostream>
@@ -32,23 +33,22 @@ int nwd(int a, int b)
     return a;
 }
 
-int wczytajDodatnia(const char *komunikat)
-{
-    int liczba;
-    cout << komunikat;
-    while (!(cin >> liczba) || liczba <= 0)
-    {
-        cin.clear();
-        cin.ignore(10000, '\n');
-        cout << "To nie jest liczba calkowita dodatnia. Podaj ponownie: ";
-    }
-    return liczba;
-}
-
 int main()
 {
-    int a = wczytajDodatnia("Podaj liczbe a: ");
-    int b = wczytajDodatnia("Podaj liczbe b: ");
+    int a;
+    do
+    {
+        cout << "Podaj liczbe calkowita dodatnia a: ";
+        cin >> a;
+    } while (a <= 0);
+
+    int b;
+    do
+    {
+        cout << "Podaj liczbe calkowita dodatnia b: ";
+        cin >> b;
+    } while (b <= 0);
+
     cout << "NWD(" << a << ", " << b << ") = " << nwd(a, b) << endl;
     return 0;
 }

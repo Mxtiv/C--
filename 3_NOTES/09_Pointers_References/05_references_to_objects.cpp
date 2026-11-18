@@ -1,40 +1,47 @@
 // ======================================================================
-// prototypes before main, return Pracownik&, const Pracownik& parameter
+// prototypes before main, a Pracownik& parameter (the function fills the caller's object)
 // Original file: unsorted/various/referencje.cpp
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
-// Definicja klasy Pracownik:
-class Pracownik {
-public:
-string imie;
-string nazwisko;
-void wyswietlDane() {
-cout << "Imię: " << imie << endl;
-cout << "Nazwisko: " << nazwisko << endl;
-}
+
+// Definicja struktury Pracownik:
+struct Pracownik
+{
+    string imie;
+    string nazwisko;
 };
+
 // Prototypy funkcji zewnętrznych:
-Pracownik& pobierzDane(Pracownik&);
-void wyswietlDane(const Pracownik&);
+void pobierzDane(Pracownik &p);
+void wyswietlDane(Pracownik p);
+
 // PROGRAM GŁÓWNY
-int main() {
-// Utworzenie obiektu pracownik jako instancji klasy Pracownik:
-Pracownik pracownik;
-// Pobranie danych pracownika z klawiatury:
-pracownik = pobierzDane(pracownik);
-// Prezentacja danych pracownika na ekranie monitora:
-wyswietlDane(pracownik);
-return 0;
+int main()
+{
+    Pracownik pracownik;            // utworzenie obiektu
+    pobierzDane(pracownik);         // dane z klawiatury trafiają PROSTO do obiektu pracownik
+    wyswietlDane(pracownik);        // prezentacja danych na ekranie
+    return 0;
 }
+
 // Definicje funkcji zewnętrznych:
-Pracownik& pobierzDane(Pracownik& p) {
-cout << "Imię = "; cin >> p.imie;
-cout << "Nazwisko = "; cin >> p.nazwisko;
-return p;
+
+// & - p to INNA NAZWA obiektu z main, więc zmiany w p są zmianami w pracownik
+void pobierzDane(Pracownik &p)
+{
+    cout << "Imię = ";
+    cin >> p.imie;
+    cout << "Nazwisko = ";
+    cin >> p.nazwisko;
 }
-void wyswietlDane(const Pracownik& p) {
-cout << "Imię: " << p.imie << endl;
-cout << "Nazwisko: " << p.nazwisko << endl;
+
+// bez & - funkcja dostaje kopię, tylko ją czyta
+// (w książkach zobaczysz też "const Pracownik &p" - bez kopiowania i bez możliwości zmiany)
+void wyswietlDane(Pracownik p)
+{
+    cout << "Imię: " << p.imie << endl;
+    cout << "Nazwisko: " << p.nazwisko << endl;
 }

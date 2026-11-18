@@ -1,6 +1,6 @@
 // ======================================================================
 // ADDED (gap-fill): operators - arithmetic, integer division, modulo,
-// increment, compound assignment, comparison, logical, ternary, precedence
+// increment, compound assignment, comparison, logical, precedence
 // Not from your original repo - written to fill a missing topic.
 // ======================================================================
 
@@ -10,7 +10,8 @@ using namespace std;
 int main()
 {
     // ---------------- ARITHMETIC ----------------
-    int a = 7, b = 2;
+    int a = 7;
+    int b = 2;
     cout << "a + b = " << a + b << endl;      // 9
     cout << "a - b = " << a - b << endl;      // 5
     cout << "a * b = " << a * b << endl;      // 14
@@ -20,8 +21,7 @@ int main()
     // To get 3.5 at least ONE side must be a floating type:
     cout << "a / 2.0 = " << a / 2.0 << endl;                     // 3.5
     cout << "(double)a / b = " << (double)a / b << endl;         // 3.5
-    cout << "static_cast<double>(a) / b = " << static_cast<double>(a) / b << endl;
-    // Typical bug:  double avg = sum / count;   (both int) -> wrong. Cast one of them.
+    // Typical bug:  double srednia = suma / ile;   (both int) -> wrong. Cast one of them.
 
     // modulo tricks
     int n = 1234;
@@ -48,25 +48,25 @@ int main()
     // CLASSIC BUG:  if (x = 5)  assigns 5 (always true). Comparison is ==
 
     // ---------------- LOGICAL ----------------
-    bool p = true, q = false;
+    bool p = true;
+    bool q = false;
     cout << (p && q) << (p || q) << (!p) << endl;    // AND, OR, NOT -> 0 1 0
-    int age = 20;
-    if (age >= 18 && age <= 65) cout << "working age" << endl;
-    // Short-circuit: in (count != 0 && sum / count > 5) the division never runs when count == 0
-
-    // ---------------- TERNARY  condition ? ifTrue : ifFalse ----------------
-    int bigger = (a > b) ? a : b;
-    cout << "bigger = " << bigger << ", " << (n % 2 == 0 ? "even" : "odd") << endl;
+    int wiek = 20;
+    if (wiek >= 18 && wiek <= 65)
+    {
+        cout << "working age" << endl;
+    }
+    // Short-circuit: in (ile != 0 && suma / ile > 5) the division never runs when ile == 0
 
     // ---------------- PRECEDENCE (when in doubt, use parentheses) ----------------
     // * / %  before  + -  before  < > <= >=  before  == !=  before  &&  before  ||
     cout << 2 + 3 * 4 << " vs " << (2 + 3) * 4 << endl;   // 14 vs 20
 
     // ---------------- char arithmetic ----------------
-    char digit = '7';
-    int value = digit - '0';           // '7' - '0' = 7   (char digit -> number)
-    char next = 'a' + 1;               // 'b'
-    cout << value << " " << next << " " << (int)'A' << endl;   // 7 b 65
+    char cyfra = '7';
+    int wartosc = cyfra - '0';         // '7' - '0' = 7   (char digit -> number)
+    char nastepna = 'a' + 1;           // 'b'
+    cout << wartosc << " " << nastepna << " " << (int)'A' << endl;   // 7 b 65
 
     return 0;
 }

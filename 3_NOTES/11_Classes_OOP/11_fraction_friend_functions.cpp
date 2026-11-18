@@ -1,111 +1,132 @@
 // ======================================================================
-// class Ulamek: 2 ctors, private method (GCD reduce), friend functions dodaj/pomnoz, methods defined outside (was misfiled under PESEL)
+// class Ulamek: 2 constructors, private method (skracanie przez NWD),
+// friend functions dodaj / pomnoz, methods defined outside the class.
+// (was misfiled under PESEL)
 // Original file: Arrays/pesel/pesel_pyndzel.cpp
 // ======================================================================
 
-
 #include <iostream>
-#include <cmath>
 using namespace std;
 
 class Ulamek
 {
-    int licznik; // prywatne wlasnosci klasy
+private:
+    int licznik;
     int mianownik;
-    void skracaj(); // deklaracja prywatnej metody skracaj
+    void skroc();                        // metoda prywatna - tylko do użytku w klasie
+
 public:
-    Ulamek()
-    {
-        licznik = 1;
-        mianownik = 1;
-    }
-    Ulamek(int l, int m);                 // deklaracja konstruktora (przeciazamy nazwe Ulamek) przeciazamy konstruktor
-    friend Ulamek pomnoz(Ulamek, Ulamek); // deklaracja przyjazni funkcji pomnoz z klasa Ulamek
-    friend Ulamek dodaj(Ulamek, Ulamek);  // deklaracja przyjazni funkcji dodaj z klasa Ulamek
-    void zapisz(int l, int m);            // deklaracja metody publicznej
-    void wypisz()                         // przeciazane nazwy funkcji musza roznic sie lista parametrow
-    {
-        skracaj();
-        cout << licznik << "/" << mianownik; // definicja metody wypisz
-    }
-}; // koniec definicji klasy
-Ulamek::Ulamek(int l, int m) // definicja konstruktora dzieki temu ze konstruktor nazywa sie tak samo jak klasa
-                             // mozemy go uzywac do deklaracji obiektu klasy.
+    Ulamek();
+    Ulamek(int nowyLicznik, int nowyMianownik);
+    void wypisz();
+
+    // funkcje zaprzyjaźnione - zwykłe funkcje z dostępem do private
+    friend Ulamek dodaj(Ulamek a, Ulamek b);
+    friend Ulamek pomnoz(Ulamek a, Ulamek b);
+};
+
+Ulamek::Ulamek()
 {
-    licznik = l;
-    if (m != 0)
-        mianownik = m;
+    licznik = 1;
+    mianownik = 1;
+}
+
+Ulamek::Ulamek(int nowyLicznik, int nowyMianownik)
+{
+    licznik = nowyLicznik;
+    if (nowyMianownik != 0)
+    {
+        mianownik = nowyMianownik;
+    }
     else
     {
-        cout << "Mianownik nie moze miec wartosci 0 ";
-        exit(1);
+        cout << "Mianownik nie moze byc 0 - ustawiam 1" << endl;
+        mianownik = 1;
     }
 }
-void Ulamek::skracaj() // definicja prywatnej metody skracaj
+
+// skracanie: NWD metodą odejmowania
+void Ulamek::skroc()
 {
-    int a, b;
-    a = abs(licznik);
-    b = abs(mianownik);
+    if (licznik == 0)
+    {
+        mianownik = 1;
+        return;
+    }
+    int a = licznik;
+    int b = mianownik;
+    if (a < 0)
+    {
+        a = -a;
+    }
+    if (b < 0)
+    {
+        b = -b;
+    }
     while (a != b)
     {
         if (a > b)
+        {
             a = a - b;
+        }
         else
+        {
             b = b - a;
+        }
     }
     licznik = licznik / a;
     mianownik = mianownik / a;
 }
-void Ulamek::zapisz(int l, int m) // definicja metody klasy
+
+void Ulamek::wypisz()
 {
-    licznik = l;
-    if (m != 0)
-        mianownik = m;
-    else
-    {
-        cout << "Mianownik nie moze miec wartosci 0 ";
-        exit(1);
-    }
+    skroc();
+    cout << licznik << "/" << mianownik;
 }
-Ulamek dodaj(Ulamek ul1, Ulamek ul2)
+
+Ulamek dodaj(Ulamek a, Ulamek b)
 {
     Ulamek wynik;
-    wynik.licznik = ul1.licznik * ul2.mianownik + ul2.licznik * ul1.mianownik;
-    wynik.mianownik = ul1.mianownik * ul2.mianownik;
+    wynik.licznik = a.licznik * b.mianownik + b.licznik * a.mianownik;
+    wynik.mianownik = a.mianownik * b.mianownik;
     return wynik;
 }
-Ulamek pomnoz(Ulamek ul1, Ulamek ul2)
+
+Ulamek pomnoz(Ulamek a, Ulamek b)
 {
     Ulamek wynik;
-    wynik.licznik = ul1.licznik * ul2.licznik;
-    wynik.mianownik = ul1.mianownik * ul2.mianownik;
+    wynik.licznik = a.licznik * b.licznik;
+    wynik.mianownik = a.mianownik * b.mianownik;
     return wynik;
 }
+
 int main()
 {
-    int l1, m1, l2, m2;
-    cout << "podaj licznik i mianownik pierwszego ulamka\n";
-    cin >> l1;
-    cin >> m1;
-    cout << "podaj licznik i mianownik drugiego ulamka\n";
-    cin >> l2;
-    cin >> m2;
-    Ulamek ul1; // pierwszy rodzaj deklaracji obiektu klasy Ulamek
-    ul1.zapisz(l1, m1);
-    Ulamek ul2(l2, m2); // drugi rodzaj deklaracji obiektu klasy Ulamek
+    int l1;
+    int m1;
+    int l2;
+    int m2;
+    cout << "Podaj licznik i mianownik pierwszego ulamka: ";
+    cin >> l1 >> m1;
+    cout << "Podaj licznik i mianownik drugiego ulamka: ";
+    cin >> l2 >> m2;
+
+    Ulamek u1(l1, m1);
+    Ulamek u2(l2, m2);
+
+    u1.wypisz();
+    cout << " + ";
+    u2.wypisz();
+    cout << " = ";
+    dodaj(u1, u2).wypisz();
     cout << endl;
 
-    ul1.wypisz(); // mamy dwa rodzaje deklaracji poniewaz mamy dwa konstruktory
+    u1.wypisz();
     cout << " * ";
-    ul2.wypisz(); // tylko przez funkcje zapisz i wypisz mamy dostep do licznika i  mianownika
+    u2.wypisz();
     cout << " = ";
-    pomnoz(ul1, ul2).wypisz();
+    pomnoz(u1, u2).wypisz();
     cout << endl;
-    ul1.wypisz(); 
-    cout << " + ";
-    ul2.wypisz(); 
-    cout << " = ";
-    dodaj(ul1, ul2).wypisz();
-    cout << endl;
-    return 0; // dzieki temu uzytkownik moze korzystac z wlasnosci licznik i mianownik tylko w taki sposob
-} // w jaki mu pozwolilismy definiujac metody zapisz i wypisz
+
+    return 0;
+}

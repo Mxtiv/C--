@@ -1,69 +1,67 @@
 // ======================================================================
-// throw int / logic_error("...") / custom class (exercise text included)
+// throw int / logic_error("...") / own simple class (exercise text below)
 // Original file: TryCatch/practice2.cpp
 // ======================================================================
 
 #include <iostream>
-#include <exception>
+#include <string>
+#include <stdexcept>      // logic_error
 using namespace std;
 
-class tooBigNumber : public exception
+// najprostsza wlasna klasa wyjatku - zwykla klasa z polem na komunikat
+class ZaDuzaLiczba
 {
 public:
-    const char *what() const noexcept override
+    string komunikat;
+
+    ZaDuzaLiczba(string nowyKomunikat)
     {
-        return "Posrało cie i podałeś liczbę większą od 100";
+        komunikat = nowyKomunikat;
     }
 };
-int main() {
-    int num;
 
-    cout << "Give me a number: ";
-    cin >> num;
+int main()
+{
+    int liczba;
 
-    try {
-        if (num < 0)
+    cout << "Podaj liczbe: ";
+    cin >> liczba;
+
+    try
+    {
+        if (liczba < 0)
+        {
             throw -3;
-        if (num % 5 != 0)
-            throw logic_error("Number must be divisible by 5!!!"); 
-        if (num > 100)
-            throw tooBigNumber();
-        cout << "all good" << endl;
+        }
+        if (liczba % 5 != 0)
+        {
+            throw logic_error("Liczba musi byc podzielna przez 5");
+        }
+        if (liczba > 100)
+        {
+            throw ZaDuzaLiczba("Za duza liczba na konkurs");
+        }
+        cout << "Zgloszenie przyjete: " << liczba << endl;
     }
-    catch (int) { 
-        cout << "Negative numbers are not allowed" << endl;
+    catch (int)
+    {
+        cout << "Liczby ujemne nie sa dozwolone" << endl;
     }
-    catch (logic_error &e) {
-        cout << e.what();
+    catch (logic_error &e)
+    {
+        cout << e.what() << endl;
     }
-     catch (tooBigNumber &e) {
-        cout << e.what();
+    catch (ZaDuzaLiczba blad)         // zwykla klasa - mozna lapac przez wartosc
+    {
+        cout << blad.komunikat << endl;
     }
 
     return 0;
 }
-// Exercise: Validate a Number for a Contest Entry
-// Write a program that:
 
-// Asks the user to enter an integer.
-
-// If the number is less than 0, throw an int — say: "Negative number not allowed".
-
-// If the number is not divisible by 5, throw a logic_error — say: "Number must be divisible by 5".
-
-// If the number is greater than 100, throw a custom exception class derived from std::exception — say: "Too large for the contest".
-
-// If the number is valid, print: "Entry accepted: [number]".
-
-// 💡 Example output:
-// Input: -3
-// Output: Negative number not allowed
-
-// Input: 7
-// Output: Number must be divisible by 5
-
-// Input: 123
-// Output: Too large for the contest
-
-// Input: 50
-// Output: Entry accepted: 50
+// Cwiczenie: sprawdz liczbe zgloszona do konkursu
+// - liczba < 0               -> throw int,         "Liczby ujemne nie sa dozwolone"
+// - nie dzieli sie przez 5   -> throw logic_error, "Liczba musi byc podzielna przez 5"
+// - liczba > 100             -> throw wlasnej klasy, "Za duza liczba na konkurs"
+// - poprawna                 -> "Zgloszenie przyjete: [liczba]"
+// Przyklady:  -3 -> ujemna,  7 -> nie przez 5,  123 -> za duza,  50 -> przyjete

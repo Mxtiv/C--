@@ -4,13 +4,15 @@
 // FIXED: renamed from compilationConditions.cpp to myheader.h and added #include <iostream>
 // ======================================================================
 
-#ifndef MYHEADER_H
-#define MYHEADER_H  // Prevent multiple inclusions of this header file
+#ifndef MYHEADER_H      // jesli MYHEADER_H jeszcze NIE jest zdefiniowane...
+#define MYHEADER_H      // ...zdefiniuj je - drugi #include tego pliku nic juz nie wstawi
 
-#include <iostream>  // a header must include what IT uses (std::cout)
+#include <iostream>     // naglowek dolacza to, czego SAM uzywa (cout)
+using namespace std;
 
-void sayHello() {
-    std::cout << "Hello!" << std::endl;
+void przywitaj()
+{
+    cout << "Czesc z pliku myheader.h!" << endl;
 }
 
-#endif  // End of MYHEADER_H
+#endif                  // koniec MYHEADER_H

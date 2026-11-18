@@ -1,77 +1,95 @@
 // ======================================================================
-// corrected solids version (r*r)
+// solids volume: Bryla -> Walec -> Stozek, Bryla -> Prostopadloscian; virtual objetosc()
 // Original file: unsorted/various/polimorfizmsnejp.cpp
-// FIXED: return NULL from main -> return 0 (NULL is a pointer constant, main returns int)
+// FIXED: volume is double (was int); return 0 from main (was NULL)
 // ======================================================================
 
 #include <iostream>
 using namespace std;
 
-class Shape
+class Bryla
 {
+protected:
+    int wysokosc;
+
 public:
-int wysokosc;
-virtual int objetosc() { cout << endl << "wywołałeś funkcję z klasy bazowej debilu"; return 0; };
-Shape() { }
-Shape(int asdf)
-{
-    wysokosc = asdf;
-}
+    Bryla(int nowaWysokosc)
+    {
+        wysokosc = nowaWysokosc;
+    }
+
+    virtual double objetosc()
+    {
+        cout << "wywolales metode z klasy bazowej" << endl;
+        return 0;
+    }
 };
 
-class Roller : public Shape
+class Walec : public Bryla
 {
+protected:
+    int promien;
+
 public:
-int promien;
-Roller() { }
-Roller(int asdf, int aaaa) : Shape(asdf)
-{
-    promien = aaaa;
-}
-int objetosc() { cout << endl << (3.14*(promien*promien))*wysokosc; return (3.14*(promien*promien))*wysokosc; };
+    Walec(int nowaWysokosc, int nowyPromien) : Bryla(nowaWysokosc)
+    {
+        promien = nowyPromien;
+    }
+
+    double objetosc()
+    {
+        return 3.14 * promien * promien * wysokosc;
+    }
 };
 
-class Cone : public Roller
+// stozek dziedziczy po walcu (ma ten sam promien i wysokosc)
+class Stozek : public Walec
 {
 public:
-Cone() { }
-Cone(int asdf, int aaaa) : Roller(asdf, aaaa) { }
-int objetosc() { cout << endl << ((3.14*(promien*promien))*wysokosc)/3; return ((3.14*(promien*promien))*wysokosc)/3; }
+    Stozek(int nowaWysokosc, int nowyPromien) : Walec(nowaWysokosc, nowyPromien)
+    {
+    }
+
+    double objetosc()
+    {
+        return 3.14 * promien * promien * wysokosc / 3;
+    }
 };
 
-class Cuboid : public Shape
+class Prostopadloscian : public Bryla
 {
+private:
+    int dlugosc;
+    int szerokosc;
+
 public:
-int dlugosc1;
-int dlugosc2;
-Cuboid() { }
-Cuboid(int asdf, int aaaa, int bbbb) : Shape(asdf)
-{
-    dlugosc1 = aaaa;
-    dlugosc2 = bbbb;
-}
-int objetosc() { cout << endl << (dlugosc1*dlugosc2)*wysokosc; return (dlugosc1*dlugosc2)*wysokosc; }
+    Prostopadloscian(int nowaWysokosc, int nowaDlugosc, int nowaSzerokosc) : Bryla(nowaWysokosc)
+    {
+        dlugosc = nowaDlugosc;
+        szerokosc = nowaSzerokosc;
+    }
+
+    double objetosc()
+    {
+        return dlugosc * szerokosc * wysokosc;
+    }
 };
 
 int main()
 {
-    Shape *abcd;
-    Roller dddd;
-    abcd = &dddd;
-    dddd.promien = 6;
-    abcd -> wysokosc = 4;
-    abcd -> objetosc();
-    Cone jjjj;
-    abcd = &jjjj;
-    jjjj.promien = 4;
-    abcd -> wysokosc = 5;
-    abcd -> objetosc();
-    Cuboid iiii;
-    abcd = &iiii;
-    iiii.dlugosc1 = 5;
-    iiii.dlugosc2 = 4;
-    abcd -> wysokosc = 5;
-    abcd -> objetosc();
+    Walec walec(4, 6);
+    Stozek stozek(5, 4);
+    Prostopadloscian prostopadloscian(5, 5, 4);
 
+    Bryla *bryla;
+
+    bryla = &walec;
+    cout << "Objetosc walca: " << bryla->objetosc() << endl;
+
+    bryla = &stozek;
+    cout << "Objetosc stozka: " << bryla->objetosc() << endl;
+
+    bryla = &prostopadloscian;
+    cout << "Objetosc prostopadloscianu: " << bryla->objetosc() << endl;
     return 0;
 }

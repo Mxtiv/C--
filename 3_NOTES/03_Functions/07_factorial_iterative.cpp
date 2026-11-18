@@ -7,18 +7,24 @@
 using namespace std;
 
 // Funkcja do obliczania silni przy użyciu pętli
-int silniaPetla(int n) {
-    int wynik = 1;
-    for (int i = 1; i <= n; i++) {
-        wynik *= i;
+long long silniaPetla(int n)
+{
+    long long wynik = 1;
+    for (int i = 1; i <= n; i++)
+    {
+        wynik = wynik * i;
     }
     return wynik;
 }
 
-int main() {
+int main()
+{
     int liczba;
-    cout << "Podaj liczbę: ";
-    cin >> liczba;
+    do
+    {
+        cout << "Podaj liczbę (0-20): ";
+        cin >> liczba;
+    } while (liczba < 0 || liczba > 20);
 
     cout << "Silnia liczby " << liczba << " wynosi (petla): " << silniaPetla(liczba) << endl;
     return 0;

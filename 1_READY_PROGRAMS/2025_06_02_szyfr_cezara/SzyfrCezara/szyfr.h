@@ -1,5 +1,6 @@
 // Deklaracja funkcji szyfrującej - dzięki osobnemu plikowi .h projekt testów może z niej korzystać.
 #pragma once
 #include <string>
+using namespace std;
 
-std::string szyfruj(std::string tekst, int klucz);
+string szyfruj(string tekst, int klucz);

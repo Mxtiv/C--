@@ -1,107 +1,60 @@
 // ======================================================================
-// same + append the sum with ios::app
+// write numbers, read them and sum, APPEND the sum with ios::app,
+// then read the whole file line by line with getline
 // Original file: unsorted/sprawdzian/fstreamKmak.cpp
 // FIXED - the bugs were: fstream without a mode (fails if the file does not exist) -> ofstream; srand() inside the loop
 // ======================================================================
 
-#include <fstream>
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <cstdlib>
 #include <ctime>
-
 using namespace std;
-
-void wypisz(int numery[], int rozmiar)
-{
-    for (int i = 0; i < rozmiar; i++)
-    {
-        cout << numery[i] << " ";
-    }
-    cout << endl;
-}
-
-void randomNumbersToFile(int n, int minVal, int maxVal)
-{
-    ofstream plik("wyjscie.txt");   // ofstream creates the file if it does not exist
-    if (!plik)
-    {
-        cerr << "Error opening the file for writing." << endl;
-        return;
-    }
-
-    srand(time(NULL));
-    plik << rand() % (maxVal - minVal + 1) + minVal;
-    for (int i = 1; i < n; i++)
-    {
-        plik << " " << rand() % (maxVal - minVal + 1) + minVal;
-    }
-}
-
-int fileSize()
-{
-    ifstream plik("wyjscie.txt");
-    int i = 0;
-    int fromFile;
-    while (plik >> fromFile)
-    {
-        i++;
-    }
-    return i;
-}
-
-int *fileToArray(int n)
-{
-    int *arr = new int[n];
-    ifstream plik("wyjscie.txt");
-    int fromFile;
-    for (int i = 0; i < n; i++)
-    {
-        plik >> fromFile;
-        arr[i] = fromFile;
-    }
-    return arr;
-}
-
-double averageFromArray(const int arr[], int size)
-{
-    double sum = 0;
-    for (int i = 0; i < size; i++)
-    {
-        sum += arr[i];
-    }
-    return sum / static_cast<double>(size);
-}
 
 int main()
 {
-    int numCount, minVal, maxVal;
-    cout << "Enter the number of random numbers to generate: ";
-    cin >> numCount;
-    cout << "Enter the minimum value: ";
-    cin >> minVal;
-    cout << "Enter the maximum value: ";
-    cin >> maxVal;
+    srand(time(0));
 
-    randomNumbersToFile(numCount, minVal, maxVal);
-
-    int size = fileSize();
-    int *arr = fileToArray(size);
-    cout << "Numbers from the file: ";
-    wypisz(arr, size);
-
-    double average = averageFromArray(arr, size);
-    cout << "Average: " << average << endl;
-
-    int sum = 0;
-    for (int i = 0; i < size; i++)
+    // 1. zapis - ofstream tworzy plik (albo czysci stary)
+    ofstream zapis("wyjscie.txt");
+    if (!zapis)
     {
-        sum += arr[i];
+        cout << "Nie mozna otworzyc pliku" << endl;
+        return 1;
     }
-    cout << "Sum of elements: " << sum << endl;
+    for (int i = 0; i < 10; i++)
+    {
+        zapis << rand() % 100 + 1 << " ";
+    }
+    zapis << endl;
+    zapis.close();
 
-    fstream plik("wyjscie.txt", ios::app);
-    plik << " Sum:" << sum;
-    plik.close();
-    delete[] arr;
+    // 2. odczyt liczb - while (plik >> x), NIE while (!plik.eof())
+    ifstream odczyt("wyjscie.txt");
+    int liczba;
+    int suma = 0;
+    while (odczyt >> liczba)
+    {
+        suma = suma + liczba;
+    }
+    odczyt.close();
+    cout << "Suma: " << suma << endl;
+
+    // 3. dopisanie na koncu - ios::app nie kasuje tego, co juz jest w pliku
+    ofstream dopisz("wyjscie.txt", ios::app);
+    dopisz << "Suma: " << suma << endl;
+    dopisz.close();
+
+    // 4. odczyt calych linii
+    ifstream linie("wyjscie.txt");
+    string linia;
+    cout << "Zawartosc pliku:" << endl;
+    while (getline(linie, linia))
+    {
+        cout << linia << endl;
+    }
+    linie.close();
+
     return 0;
 }

@@ -4,35 +4,44 @@
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
 
-class Pracownik                                                       //klasa bazowa
+// klasa bazowa
+// (pola sa public tylko po to, zeby pokazac, ze main ma do nich dostep)
+class Pracownik
 {
 public:
-string imie;
-string nazwisko;
+    string imie;
+    string nazwisko;
 
-string zwrocDane() 
-{
-    return imie + " " + nazwisko;
-}
+    string zwrocDane()
+    {
+        return imie + " " + nazwisko;
+    }
 };
 
-class Nauczyciel: public Pracownik                                  //klasa dziedziczaca publicznie
+// klasa pochodna - dziedziczenie PUBLICZNE: public z bazy zostaje public
+class Nauczyciel : public Pracownik
 {
 public:
-string przedmiot;
-string zwrocDane() 
-{
-    return imie + " " + nazwisko + ", przedmiot: " + przedmiot;
-}
+    string przedmiot;
+
+    // ta sama nazwa co w bazie -> metoda z bazy jest PRZESLONIETA (ukryta)
+    string zwrocDane()
+    {
+        return imie + " " + nazwisko + ", przedmiot: " + przedmiot;
+    }
 };
-int main() 
+
+int main()
 {
-Nauczyciel nauczyciel;                                              
-nauczyciel.imie = "Jan";                                            //mamy dostep do imienia i nazwiska, poniewaz klasa
-nauczyciel.nazwisko = "Kowalski";                                  //dziedziczaca ma dziedziczenie publiczne
-nauczyciel.przedmiot = "elektronika";
-cout << "Dane nauczyciela: " << nauczyciel.zwrocDane() << endl;
-return 1;
+    Nauczyciel nauczyciel;
+    nauczyciel.imie = "Jan";            // mamy dostep do imienia i nazwiska,
+    nauczyciel.nazwisko = "Kowalski";   // bo dziedziczenie jest publiczne
+    nauczyciel.przedmiot = "elektronika";
+
+    cout << "Dane nauczyciela: " << nauczyciel.zwrocDane() << endl;
+    cout << "Wersja z klasy bazowej: " << nauczyciel.Pracownik::zwrocDane() << endl;
+    return 0;
 }

@@ -1,27 +1,30 @@
 // ======================================================================
-// sum numbers from wyjscie.txt
+// sum numbers from wyjscie.txt (create the file yourself, e.g. "5 10 -3")
 // Original file: Libraries/Fstreamy/fstream.cpp
 // FIXED - the bug was: `suma` is uninitialized; while(!eof()) adds the last number twice - use while (plik >> x)
 // ======================================================================
 
-#include <fstream>
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 int main()
 {
-    int suma = 0;
-    int zPliku;
-    // ofstream zapis("wyjscie.txt");
-    // zapis << 5 << " kupa " << -50;
     ifstream odczyt("wyjscie.txt");
-    while (odczyt >> zPliku)   // stops exactly at the end of data
+    if (!odczyt)
     {
-        suma=suma+zPliku;
+        cout << "Brak pliku wyjscie.txt" << endl;
+        return 1;
     }
-    cout << suma;
-    odczyt.close();
-    // zapis.close();
 
+    int suma = 0;              // zawsze zainicjuj sume!
+    int liczba;
+    while (odczyt >> liczba)   // konczy sie dokladnie na koncu danych
+    {
+        suma = suma + liczba;
+    }
+    odczyt.close();
+
+    cout << "Suma: " << suma << endl;
     return 0;
 }

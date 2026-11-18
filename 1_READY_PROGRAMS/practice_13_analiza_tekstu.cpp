@@ -1,6 +1,6 @@
 // ======================================================================
 // READY PROGRAM 13: text analysis - length, words, vowels, consonants, digits,
-// upper/lower case, palindrome, reversed, UPPER CASE, letter frequency, swap words
+// upper/lower case, palindrome, reversed, UPPER CASE, letter frequency
 // Based on: unsorted/sprawdzian/stringpoprawa.cpp + unsorted/stringi/stringZadania.cpp
 // Blocks used: IO-03, STR-03, STR-04, STR-05, STR-07, STR-10, STR-11, STR-01, STR-20, STR-22
 // ======================================================================
@@ -12,9 +12,26 @@
 
 #include <iostream>
 #include <string>
-#include <sstream>
 #include <cctype>
 using namespace std;
+
+/********************************************************
+ * nazwa funkcji: czySamogloska
+ * opis funkcji: sprawdza, czy znak jest samogłoską (a, e, i, o, u, y), bez względu
+ *               na wielkość liter
+ * parametry: znak - sprawdzany znak
+ * zwracany typ i opis: bool - true, gdy znak jest samogłoską
+ * autor: <numer zdającego>
+ ********************************************************/
+bool czySamogloska(char znak)
+{
+    znak = tolower(znak);
+    if (znak == 'a' || znak == 'e' || znak == 'i' || znak == 'o' || znak == 'u' || znak == 'y')
+    {
+        return true;
+    }
+    return false;
+}
 
 /********************************************************
  * nazwa funkcji: zliczSamogloski
@@ -23,13 +40,17 @@ using namespace std;
  * zwracany typ i opis: int - liczba samogłosek
  * autor: <numer zdającego>
  ********************************************************/
-int zliczSamogloski(const string &tekst)
+int zliczSamogloski(string tekst)
 {
-    const string samogloski = "aeiouy";
     int ile = 0;
-    for (char c : tekst)
-        if (samogloski.find(tolower(c)) != string::npos)
+    int dlugosc = tekst.length();
+    for (int i = 0; i < dlugosc; i++)
+    {
+        if (czySamogloska(tekst[i]))
+        {
             ile++;
+        }
+    }
     return ile;
 }
 
@@ -40,30 +61,39 @@ int zliczSamogloski(const string &tekst)
  * zwracany typ i opis: int - liczba spółgłosek
  * autor: <numer zdającego>
  ********************************************************/
-int zliczSpolgloski(const string &tekst)
+int zliczSpolgloski(string tekst)
 {
-    const string samogloski = "aeiouy";
     int ile = 0;
-    for (char c : tekst)
-        if (isalpha(c) && samogloski.find(tolower(c)) == string::npos)
+    int dlugosc = tekst.length();
+    for (int i = 0; i < dlugosc; i++)
+    {
+        if (isalpha(tekst[i]) && !czySamogloska(tekst[i]))
+        {
             ile++;
+        }
+    }
     return ile;
 }
 
 /********************************************************
  * nazwa funkcji: zliczSlowa
- * opis funkcji: zlicza słowa oddzielone białymi znakami
+ * opis funkcji: zlicza słowa oddzielone spacjami - nowe słowo zaczyna się tam,
+ *               gdzie po spacji (albo na początku tekstu) stoi znak inny niż spacja
  * parametry: tekst - analizowany tekst
  * zwracany typ i opis: int - liczba słów
  * autor: <numer zdającego>
  ********************************************************/
-int zliczSlowa(const string &tekst)
+int zliczSlowa(string tekst)
 {
-    istringstream strumien(tekst);
-    string slowo;
     int ile = 0;
-    while (strumien >> slowo)
-        ile++;
+    int dlugosc = tekst.length();
+    for (int i = 0; i < dlugosc; i++)
+    {
+        if (tekst[i] != ' ' && (i == 0 || tekst[i - 1] == ' '))
+        {
+            ile++;
+        }
+    }
     return ile;
 }
 
@@ -74,16 +104,26 @@ int zliczSlowa(const string &tekst)
  * zwracany typ i opis: bool - true, gdy tekst jest palindromem
  * autor: <numer zdającego>
  ********************************************************/
-bool czyPalindrom(const string &tekst)
+bool czyPalindrom(string tekst)
 {
-    string czysty;
-    for (char c : tekst)
-        if (c != ' ')
-            czysty += tolower(c);
-    int i = 0, j = (int)czysty.length() - 1;
-    while (i < j)
-        if (czysty[i++] != czysty[j--])
+    string czysty = "";
+    int dlugosc = tekst.length();
+    for (int i = 0; i < dlugosc; i++)
+    {
+        if (tekst[i] != ' ')
+        {
+            czysty = czysty + (char)tolower(tekst[i]);
+        }
+    }
+
+    int dlugoscCzystego = czysty.length();
+    for (int i = 0; i < dlugoscCzystego / 2; i++)
+    {
+        if (czysty[i] != czysty[dlugoscCzystego - 1 - i])
+        {
             return false;
+        }
+    }
     return true;
 }
 
@@ -94,9 +134,15 @@ bool czyPalindrom(const string &tekst)
  * zwracany typ i opis: string - odwrócony tekst
  * autor: <numer zdającego>
  ********************************************************/
-string odwrocNapis(const string &tekst)
+string odwrocNapis(string tekst)
 {
-    return string(tekst.rbegin(), tekst.rend());
+    string wynik = "";
+    int dlugosc = tekst.length();
+    for (int i = dlugosc - 1; i >= 0; i--)
+    {
+        wynik = wynik + tekst[i];
+    }
+    return wynik;
 }
 
 /********************************************************
@@ -108,8 +154,11 @@ string odwrocNapis(const string &tekst)
  ********************************************************/
 string naWielkie(string tekst)
 {
-    for (char &c : tekst)
-        c = toupper(c);
+    int dlugosc = tekst.length();
+    for (int i = 0; i < dlugosc; i++)
+    {
+        tekst[i] = toupper(tekst[i]);
+    }
     return tekst;
 }
 
@@ -120,15 +169,31 @@ string naWielkie(string tekst)
  * zwracany typ i opis: brak
  * autor: <numer zdającego>
  ********************************************************/
-void czestoscLiter(const string &tekst)
+void czestoscLiter(string tekst)
 {
-    int licznik[26] = {0};
-    for (char c : tekst)
-        if (isalpha(c))
-            licznik[tolower(c) - 'a']++;
+    int licznik[26];
     for (int i = 0; i < 26; i++)
+    {
+        licznik[i] = 0;
+    }
+
+    int dlugosc = tekst.length();
+    for (int i = 0; i < dlugosc; i++)
+    {
+        char znak = tolower(tekst[i]);
+        if (znak >= 'a' && znak <= 'z')
+        {
+            licznik[znak - 'a']++;
+        }
+    }
+
+    for (int i = 0; i < 26; i++)
+    {
         if (licznik[i] > 0)
+        {
             cout << (char)('a' + i) << ":" << licznik[i] << " ";
+        }
+    }
     cout << endl;
 }
 
@@ -138,21 +203,40 @@ int main()
     cout << "Podaj tekst: ";
     getline(cin, tekst);
 
-    int cyfry = 0, wielkie = 0, male = 0;
-    for (char c : tekst)
+    int cyfry = 0;
+    int wielkie = 0;
+    int male = 0;
+    int dlugosc = tekst.length();
+    for (int i = 0; i < dlugosc; i++)
     {
-        if (isdigit(c)) cyfry++;
-        else if (isupper(c)) wielkie++;
-        else if (islower(c)) male++;
+        if (isdigit(tekst[i]))
+        {
+            cyfry++;
+        }
+        else if (isupper(tekst[i]))
+        {
+            wielkie++;
+        }
+        else if (islower(tekst[i]))
+        {
+            male++;
+        }
     }
 
-    cout << "Dlugosc tekstu:      " << tekst.length() << endl;
+    cout << "Dlugosc tekstu:      " << dlugosc << endl;
     cout << "Liczba slow:         " << zliczSlowa(tekst) << endl;
     cout << "Samogloski:          " << zliczSamogloski(tekst) << endl;
     cout << "Spolgloski:          " << zliczSpolgloski(tekst) << endl;
     cout << "Cyfry:               " << cyfry << endl;
     cout << "Wielkie / male:      " << wielkie << " / " << male << endl;
-    cout << "Palindrom:           " << (czyPalindrom(tekst) ? "tak" : "nie") << endl;
+    if (czyPalindrom(tekst))
+    {
+        cout << "Palindrom:           tak" << endl;
+    }
+    else
+    {
+        cout << "Palindrom:           nie" << endl;
+    }
     cout << "Tekst odwrocony:     " << odwrocNapis(tekst) << endl;
     cout << "Wielkimi literami:   " << naWielkie(tekst) << endl;
     cout << "Czestosc liter:      ";

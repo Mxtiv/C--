@@ -1,57 +1,70 @@
 // ======================================================================
-// object created with new, passed by pointer to functions
+// object created with new, passed by pointer to functions (-> instead of .)
 // Original file: unsorted/various/sterta.cpp
 // FIXED - the bug was: DOES NOT COMPILE: free function reads private `pesel` - add a getter
 // ======================================================================
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 class Pracownik
 {
 private:
+    string imie;
+    string nazwisko;
     string pesel;
 
 public:
-    string imie;
-    string nazwisko;
-    void wyswietlDane()
+    void setDane(string noweImie, string noweNazwisko, string nowyPesel)
     {
-        cout << "Imię: " << imie << endl;
-        cout << "Nazwisko: " << nazwisko << endl;
-        cout << "Pesel: " << pesel << endl;
+        imie = noweImie;
+        nazwisko = noweNazwisko;
+        pesel = nowyPesel;
     }
-    string getPesel() const { return pesel; }
-    void setPesel(const string &newPesel)
+
+    string getImie()
     {
-        pesel = newPesel;
+        return imie;
+    }
+
+    string getNazwisko()
+    {
+        return nazwisko;
+    }
+
+    string getPesel()
+    {
+        return pesel;
     }
 };
 
-Pracownik *pobierzDane(Pracownik *w_p)
+// The function gets the ADDRESS of the object - it fills the object from main
+void pobierzDane(Pracownik *wskPracownik)
 {
+    string imie;
+    string nazwisko;
+    string pesel;
     cout << "Imię = ";
-    cin >> w_p->imie;
+    cin >> imie;
     cout << "Nazwisko = ";
-    cin >> w_p->nazwisko;
-    string newPesel;
+    cin >> nazwisko;
     cout << "Pesel = ";
-    cin >> newPesel;
-    w_p->setPesel(newPesel);
-    return w_p;
+    cin >> pesel;
+    wskPracownik->setDane(imie, nazwisko, pesel);   // -> = method through a pointer
 }
-void wyswietlDane(const Pracownik *w_p)
+
+void wyswietlDane(Pracownik *wskPracownik)
 {
-    cout << w_p->imie << " " << w_p->nazwisko << " " << w_p->getPesel() << endl;
+    cout << wskPracownik->getImie() << " " << wskPracownik->getNazwisko()
+         << " " << wskPracownik->getPesel() << endl;
 }
-Pracownik *pobierzDane(Pracownik *);
-void wyswietlDane(const Pracownik *);
 
 int main()
 {
-    Pracownik *w_pracownik = new Pracownik();
-    w_pracownik = pobierzDane(w_pracownik);
-    wyswietlDane(w_pracownik);
-    delete w_pracownik;
+    Pracownik *pracownik = new Pracownik();   // object on the heap
+    pobierzDane(pracownik);
+    wyswietlDane(pracownik);
+    delete pracownik;                         // new -> delete
     return 0;
 }

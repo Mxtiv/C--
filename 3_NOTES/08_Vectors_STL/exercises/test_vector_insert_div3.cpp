@@ -1,7 +1,7 @@
 // ======================================================================
 // test: fill, insert, push_back, erase, print divisible by 3
 // Original file: unsorted/Vectors/vectorSprawdzian.cpp
-// FIXED - the bug was: wypelnij(vector<int> wekt) takes the vector BY VALUE so the global vector stays empty - use vector<int>&
+// FIXED - the bug was: wypelnij(vector<int> wekt) takes the vector BY VALUE so the vector stays empty - use vector<int>&
 // ======================================================================
 
 #include <iostream>
@@ -10,57 +10,71 @@
 #include <ctime>
 using namespace std;
 
-vector<int> wekt;
-
-int rozmiar;
-int liczba1;
-int liczba2;
-int liczba3;
-
-void wypisz(vector<int> wekt)
+void wypisz(vector<int> wektor)
 {
-    for (const int &element : wekt)
+    for (int i = 0; i < wektor.size(); i++)
     {
-        cout << element << " ";
+        cout << wektor[i] << " ";
     }
-};
+    cout << endl;
+}
 
-void wypelnij(vector<int> &wekt)
+// & - adds elements to the caller's vector
+void wypelnij(vector<int> &wektor, int rozmiar)
 {
-    srand(time(NULL));
-    for (int i = 0; i < rozmiar; ++i)
+    for (int i = 0; i < rozmiar; i++)
     {
-        wekt.push_back(rand() % 60 + 21);
+        wektor.push_back(rand() % 60 + 21);     // 21..80
     }
-};
-void wypisz3(vector <int> wekt)
+}
+
+void wypiszPodzielnePrzez3(vector<int> wektor)
 {
-for (const int &element : wekt)
+    for (int i = 0; i < wektor.size(); i++)
     {
-       if(element%3==0) 
-       {cout << element << " ";};
+        if (wektor[i] % 3 == 0)
+        {
+            cout << wektor[i] << " ";
+        }
     }
-};
+    cout << endl;
+}
+
 int main()
 {
-    cout << "Podaj rozmiar wektoru\n ";
-    cin >> rozmiar;
-    wypelnij(wekt);
-    cout << "Zawartość wektoru:\n ";
-    wypisz(wekt);
-    cout << "Podaj 3 liczby do wektoru:\n ";
-    cin >> liczba1;
-    cin >> liczba2;
-    cin >> liczba3;
-    wekt.insert(wekt.begin() + 1, liczba3);
-    wekt.insert(wekt.begin() + 1, liczba2);
-    wekt.insert(wekt.begin() + 1, liczba1);
-    wekt.push_back(liczba1);
-    wekt.push_back(liczba2);
-    wekt.push_back(liczba3);
-    wekt.erase(wekt.begin() + 3);
-    cout << "Liczby podzielne przez 3:\n ";
-    wypisz3(wekt);
+    srand(time(0));
+    vector<int> wektor;
+
+    int rozmiar;
+    do
+    {
+        cout << "Podaj rozmiar wektora (2-50): ";
+        cin >> rozmiar;
+    } while (rozmiar < 2 || rozmiar > 50);
+
+    wypelnij(wektor, rozmiar);
+    cout << "Zawartość wektora: ";
+    wypisz(wektor);
+
+    int liczba1;
+    int liczba2;
+    int liczba3;
+    cout << "Podaj 3 liczby do wektora: ";
+    cin >> liczba1 >> liczba2 >> liczba3;
+
+    // insert at position 1 three times -> they end up in order liczba1, liczba2, liczba3
+    wektor.insert(wektor.begin() + 1, liczba3);
+    wektor.insert(wektor.begin() + 1, liczba2);
+    wektor.insert(wektor.begin() + 1, liczba1);
+    wektor.push_back(liczba1);
+    wektor.push_back(liczba2);
+    wektor.push_back(liczba3);
+    wektor.erase(wektor.begin() + 3);           // remove the element at position 3
+
+    cout << "Po zmianach: ";
+    wypisz(wektor);
+    cout << "Liczby podzielne przez 3: ";
+    wypiszPodzielnePrzez3(wektor);
 
     return 0;
 }

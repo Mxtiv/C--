@@ -7,16 +7,23 @@
 
 #include "litry.h"
 
-void litrywpojemnikach(int litr, litry &liter)   // litry& -> the caller's struct is filled in
+/********************************************************
+ * nazwa funkcji: zamienLitry
+ * opis funkcji: rozklada litry zachlannie: najpierw cysterny, potem wanny, galony, litry
+ * parametry: ileLitrow - ilosc litrow, wynik - struktura do wypelnienia
+ * zwracany typ i opis: brak (wynik przez referencje)
+ * autor: <numer zdającego>
+ ********************************************************/
+void zamienLitry(int ileLitrow, Litry &wynik)
 {
-    liter.tanks = litr / inlitery::tanks;
-    litr = litr % inlitery::tanks;
+    wynik.cysterny = ileLitrow / pojemnosci::CYSTERNA;
+    ileLitrow = ileLitrow % pojemnosci::CYSTERNA;
 
-    liter.bath = litr / inlitery::bath;
-    litr = litr % inlitery::bath;
+    wynik.wanny = ileLitrow / pojemnosci::WANNA;
+    ileLitrow = ileLitrow % pojemnosci::WANNA;
 
-    liter.galons = litr / inlitery::galons;
-    litr = litr % inlitery::galons;
+    wynik.galony = ileLitrow / pojemnosci::GALON;
+    ileLitrow = ileLitrow % pojemnosci::GALON;
 
-    liter.litr = litr;
+    wynik.litry = ileLitrow;
 }
