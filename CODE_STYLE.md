@@ -18,7 +18,7 @@ Always `using namespace std;`.
 | `<cctype>` | `isdigit`, `isalpha`, `toupper`, `tolower` |
 | `<clocale>` | only `setlocale(LC_ALL, "");` for Polish letters in the console |
 
-Used **only in their own topic** (the vector / exceptions / templates blocks and the matching 3_NOTES chapters): `<vector>`, `<stdexcept>`, `<exception>`. Not used at all: `<algorithm> <numeric> <functional> <utility> <limits> <iomanip> <sstream> <random> <map> <set> <memory>`.
+Used **only in their own topic** (the vector / exceptions / templates blocks and the matching 4_NOTES chapters): `<vector>`, `<stdexcept>`, `<exception>`. Not used at all: `<algorithm> <numeric> <functional> <utility> <limits> <iomanip> <sstream> <random> <map> <set> <memory>`.
 
 ## 2. Loops
 
