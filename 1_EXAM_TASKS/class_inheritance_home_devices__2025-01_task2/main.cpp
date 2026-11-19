@@ -14,7 +14,7 @@ public:
     /************************************************
     nazwa:      wyswietlKomunikat
     opis:       wyświetla na ekranie podany komunikat
-    parametry:  komunikat - treść do wyświetlenia
+    parametry:  komunikat - treść do wyświetlenia   
     zwracany typ i opis: brak
     autor:      00000000000
     ************************************************/

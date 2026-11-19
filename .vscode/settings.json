@@ -1,4 +1,7 @@
 {
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\msys64\\ucrt64\\bin;${env:PATH}"
+    },
     "files.associations": {
         "exception": "cpp",
         "array": "cpp",
